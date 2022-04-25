@@ -1,0 +1,209 @@
+@import "../helpers/mixins";
+@import "../helpers/variables";
+@import "../helpers/breakpoints";
+
+//Customize Forms Labels
+form {
+  .text-field,
+  .text-field-radio,
+  .text-field-level {
+    @include font-face-Inter-Regular(14px, 28px);
+  }
+
+  .mat-form-field-appearance-legacy {
+    .mat-form-field-infix {
+      padding-top: 0px;
+    }
+  }
+
+  .mat-button {
+    &.mat-icon-button {
+      color: #000;
+      right: -10px;
+
+      .mat-button-wrapper {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .mat-icon {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .example-form-field {
+    &.top_margin_new {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+      height: 35px;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-form-field {
+    .mat-form-field-wrapper {
+      padding-right: 0;
+    }
+
+    &.confidentiality {
+      .mat-form-field-wrapper {
+        margin-top: 12px;
+      }
+    }
+
+    .mat-input-element {
+      @include font-face-Inter-Regular(14px, 18px);
+      color: $black-color;
+    }
+  }
+
+  .mat-select-value {
+    @include font-face-Inter-Regular(14px, 28px);
+    color: $black-color;
+  }
+
+  .mat-select-arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+}
+
+//Checkbox styling
+
+.mat-checkbox {
+  .mat-checkbox-inner-container {
+    position: relative;
+    top: 3px;
+    border: 1px solid #bfbfbf;
+    border-radius: 1px;
+
+    .mat-checkbox-frame {
+      border: none;
+    }
+
+    .mat-checkbox-checked {
+      .mat-checkbox-checkmark {
+        display: none;
+      }
+    }
+  }
+
+  .mat-checkbox-checked {
+    .mat-checkbox-background {
+      border: 1px solid #fff !important;
+      padding: 1px !important;
+      outline: 1px solid #3f51b5;
+      background: #3f51b5 !important;
+    }
+
+    .mat-checkbox-checkmark {
+      display: none;
+    }
+  }
+
+  &.style-checked {
+    &.mat-checkbox-checked {
+      .mat-checkbox-background {
+        border: 1px solid #0089ff !important;
+        padding: 1px !important;
+        outline: 1px solid #0089ff;
+        background-color: transparent !important;
+
+        .mat-checkbox-checkmark {
+          fill: #0089ff;
+
+          .mat-checkbox-checkmark-path {
+            stroke: #0089ff !important;
+            stroke-width: 4px !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Radio Buttons
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.mat-radio-disabled {
+  .mat-radio-label {
+    .mat-radio-container {
+      .mat-radio-inner-circle {
+        background-color: #a2a2a2 !important;
+      }
+    }
+  }
+}
+
+input,
+textarea {
+  &:read-only {
+    opacity: 0.5;
+  }
+}
+
+//Form Group
+.form-group {
+  label {
+    display: block;
+  }
+
+  textarea {
+    width: 100%;
+    border: 1px solid #cfd1d7;
+  }
+}
+
+.mat-select-panel-wrap {
+  position: relative;
+  top: 36px;
+}
+
+.mat-select-panel-wrap .mat-select-panel {
+  min-width: calc(100% + 12px) !important;
+  transform: translateX(4px) !important;
+}
+
+//Custom Mat Toggle
+//mat-slide-toggle {
+//  margin: 0px 4px;
+//  vertical-align: middle;
+//
+//  .mat-slide-toggle-label {
+//    .mat-slide-toggle-bar {
+//      position: relative;
+//      width: 33px;
+//      height: 15.5px;
+//      background-color: white;
+//      border: 1px solid grey;
+//
+//      .mat-slide-toggle-thumb-container {
+//        top: 0px;
+//
+//        .mat-slide-toggle-thumb {
+//          height: 13px;
+//          width: 13px;
+//          background-color: #0089ff;
+//        }
+//      }
+//    }
+//  }
+//}
+
+//Tabing Remvoe Pagination
+
+.mat-tab-group {
+  &.workflow {
+    .mat-tab-header-pagination-before,
+    .mat-tab-header-pagination-after {
+      display: none !important;
+    }
+  }
+}

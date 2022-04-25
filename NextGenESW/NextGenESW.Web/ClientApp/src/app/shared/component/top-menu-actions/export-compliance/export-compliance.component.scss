@@ -1,0 +1,25 @@
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+
+.close-btn {
+  float: right;
+}
+.export_layout{
+  padding:20px;
+}
+.mat-header {
+  //padding: 20px 20px 0;
+  @include font-face-BarlowSemiCondensed-Medium(18px, 21px);
+}
+
+
+// ::ng-deep .mat-tab-header .mat-tab-label-active {
+//   display: none;
+// }
+
+// ::ng-deep .mat-dialog-container {
+//   overflow: hidden !important;
+//   padding: 24px !important;
+// }

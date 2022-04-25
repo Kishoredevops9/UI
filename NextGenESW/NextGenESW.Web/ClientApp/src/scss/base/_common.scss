@@ -1,0 +1,499 @@
+@import '../helpers/variables';
+@import '../helpers/mixins';
+@import '../helpers/breakpoints';
+@import '../helpers/placeholders';
+
+
+:host ::ng-deep angular-editor {
+
+    #backgroundColorPicker-editor,
+    #foregroundColorPicker-editor,
+    //#insertVideo-editor,
+    #insertImage-editor,
+    #insertHorizontalRule-editor,
+    #clearFormatting-editor,
+    #indent-editor,
+    #toggleEditorMode-editor,
+    #subscript-editor,
+    #superscript-editor,
+    #justifyLeft-editor,
+    #justifyCenter-editor,
+    #justifyRight-editor,
+    #justifyFull-editor,
+    #insertUnorderedList-editor,
+    #insertOrderedList-editor,
+    #strikeThrough-editor,
+    #unlink-editor,
+    #link-editor,
+    #outdent-editor,
+    ae-select.select-custom-style,
+    ae-select.select-font-size,
+    ae-select.select-font,
+    ae-select.select-heading {
+        display: none !important;
+    }
+
+    .angular-editor-toolbar {
+        height: 40px;
+        width: 100%;
+    }
+}
+
+:host ::ng-deep angular-editor .angular-editor-button[title="HTML Code"]:nth-last-child(6) {
+    display: none;
+}
+
+.angular-editor-toolbar .angular-editor-toolbar-set {
+    margin-right: 2px !important;
+}
+
+body {
+    @include font-face-Inter-Regular(1rem, 1rem);
+    margin: 0;
+    padding: 0;
+}
+
+//Center
+.searchHeader {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+    display: block;
+    clear: both;
+    padding-right: 10px;
+
+    .browse {
+        display: block;
+        text-align: right;
+        float: left;
+        width: 60%;
+
+        input[type="button"] {
+            float: right;
+            padding: 5px 10px;
+            color: white;
+            font-size: 12px;
+            background: #58588a;
+            display: block;
+        }
+    }
+
+    .searchButton {
+        display: block;
+        text-align: left;
+        float: rigth;
+        width: 60%;
+
+        input[type="button"] {
+            float: left;
+            padding: 5px 10px;
+            color: white;
+            font-size: 12px;
+            background: #58588a;
+            display: block;
+        }
+    }
+
+    .searchbox {
+        display: block;
+        float: left;
+        margin-top: 20px;
+        width: 100%;
+        border-bottom: 1px solid rgba(222, 222, 222, 0.87);
+
+        span {
+            float: left;
+            margin-bottom: -10px;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            outline: none;
+        }
+    }
+}
+
+.treebox {
+    clear: both;
+    display: block;
+    float: left;
+    width: 100%;
+}
+
+.fleft {
+    float: left;
+}
+
+.container {
+    width: 100%;
+    position: relative;
+
+    // margin: 0px auto;
+    // max-width: 1720px;
+    // margin-left: 7%;
+    // width: 92%;
+    // position: relative;
+
+    @include breakpoint(mobileonly) {
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .mdl-grid {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        -ms-flex-flow: row wrap;
+        flex-flow: row wrap;
+        margin: 0 auto;
+        -webkit-align-items: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+    }
+
+    // FOR Responsive  ------------ Start
+    @media only screen and (max-width: 500px) {
+        .apply-button-container {
+            text-align: right;
+            margin: 0px 0px 25px;
+            display: inline-table;
+            float: right;
+
+            button {
+                margin: 5px;
+            }
+        }
+
+        .button-container {
+            .cancel-button {
+                transform: translate(0%, 0%);
+            }
+        }
+    }
+
+    // required field validation
+    @media (max-width: 479px) {
+        .mdl-cell--12-col {
+            width: 100%;
+        }
+
+        .mdl-cell--6-col {
+            width: 100%;
+        }
+
+        .mdl-cell--8-col {
+            width: 67%;
+        }
+
+        .mdl-cell--9-col {
+            width: 75%;
+        }
+
+        .mdl-cell--4-col {
+            width: calc(24%);
+            margin-right: 50px;
+        }
+
+        .mdl-cell--2-col {
+            width: calc(16%);
+            margin-right: 50px;
+        }
+
+        .mdl-cell--3-col {
+            width: 25%;
+        }
+
+        .edit-ctm-order {
+            margin-top: 10px;
+        }
+
+        .margin-minus-top {
+            margin: 1rem 10px 1.3rem 0 !important;
+        }
+    }
+
+    @media (min-width: 840px) {
+        .mdl-cell--12-col {
+            width: 100%;
+        }
+
+        .mdl-cell--6-col {
+            width: 50%;
+        }
+
+        .mdl-cell--8-col {
+            width: 67%;
+        }
+
+        .mdl-cell--9-col {
+            width: 75%;
+        }
+
+        .mdl-cell--4-col {
+            width: calc(24%);
+            margin-right: 50px;
+        }
+
+        .mdl-cell--2-col {
+            width: calc(16%);
+            margin-right: 50px;
+        }
+
+        .mdl-cell--3-col {
+            width: 25%;
+        }
+
+        .footer-button {
+            font-size: 10px;
+            height: 43px;
+        }
+
+        .margin-reason-top {
+            margin-top: 1% !important;
+        }
+
+        .margin-minus-top {
+            margin-top: -3% !important;
+        }
+    }
+
+    @media (max-width: 839px) and (min-width: 480px) {
+        .mdl-cell--12-col {
+            width: 100%;
+        }
+
+        .mdl-cell--6-col {
+            width: 100%;
+        }
+
+        .mdl-cell--8-col {
+            width: 67%;
+        }
+
+        .mdl-cell--9-col {
+            width: 75%;
+        }
+
+        .mdl-cell--4-col {
+            width: calc(31%);
+            margin-right: 18px;
+        }
+
+        .mdl-cell--2-col {
+            width: calc(16%);
+            margin-right: 50px;
+        }
+
+        .mdl-cell--3-col {
+            width: 25%;
+        }
+
+        .margin-minus-top {
+            margin: 1rem 10px 1.3rem 0 !important;
+        }
+
+        .field-width {
+            width: 30%;
+        }
+    }
+
+    // FOR Responsive  ------------ End
+}
+
+// Header lable
+.tab-wrapper .wi,
+.gb,
+.ds,
+.kp,
+.toc,
+.rc,
+.cg,
+.ap {
+    .mat-tab-group .mat-tab-label {
+        min-width: 0px;
+        padding: 0px 15px 0px 10px;
+        margin-right: 10px;
+        font-family: "BarlowSemiCondensed-Medium";
+        font-size: 1rem;
+        letter-spacing: 0.92px;
+        opacity: 1;
+        height: 34px !important;
+    }
+}
+
+
+.header-theam {
+    color: white;
+    font-size: 29px !important;
+    padding: 2px 4px 3px 4px;
+    width: 39px;
+    text-align: center;
+    float: left;
+    height: 37px !important;
+    line-height: 32px;
+    font-family: "BarlowSemiCondensed-Medium";
+    margin-bottom: 20px !important;
+}
+
+.image_alignment {
+    margin-bottom: 0px !important;
+    width: 13px !important;
+}
+
+.global-class {
+    margin-top: 120px !important;
+}
+
+::ng-deep .tab-wrapper .wi,
+.gb,
+.ds,
+.kp,
+.toc,
+.rc,
+.cg,
+.ap {
+    .mat-tab-group .mat-tab-label:nth-child(1) {
+        padding: 0 9px 0 7px;
+    }
+}
+
+.page-container {
+    top: 64px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    left: 0;
+}
+
+.fontStyle {
+    font-family: "BarlowSemiCondensed-Medium" !important;
+    overflow: hidden;
+    margin-top: -7px;
+}
+
+.material-group {
+
+    // margin: 1rem;
+    .material-label-static {
+        position: absolute;
+        top: -10px;
+        background: #fff;
+        left: 14px;
+        padding: 1px 6px;
+    }
+}
+
+.mat-tab-body.mat-tab-body-active {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    z-index: 1;
+    flex-grow: 1;
+}
+
+.mat-drawer-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    height: 100%;
+
+}
+
+.box-field {
+    border-radius: 1px;
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    box-sizing: border-box;
+    background-color: #ebebeb;
+    width: 75%;
+    height: 7rem;
+    display: flex;
+}
+
+.divider {
+    margin-bottom: 7px;
+}
+
+
+
+/*scroll-bar.................*/
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #dedede;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #dedede;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #00a9e0;
+}
+
+/*scroll-bar.................*/
+
+.snackbar {
+    max-width: 10% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 1rem !important;
+    padding: 10px !important;
+    background-color: rgb(136, 9, 9);
+    color: color;
+
+    .mat-button-wrapper {
+        color: black !important;
+    }
+}
+
+.container[_ngcontent-acm-c303] .mdl-grid[_ngcontent-acm-c303] {
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 auto;
+    align-items: stretch;
+    width: 135%;
+}
+
+.tab-wrapper {
+    position: relative;
+}
+
+:host ::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    ol {
+        list-style: decimal;
+        margin-left: 5px;
+    }
+
+    ul {
+        list-style: disc;
+        margin-left: 5px;
+    }
+}
+
+.btn-save {
+    background-color: #3C445C;
+    border: 1px solid #3C445C !important;
+    color: #FFFFFF;
+    margin-right: 10px;
+    width: 100px;
+    border-radius: 0px !important;
+    margin-right: 20px !important;
+    margin-left: 200px !important;
+}
+
+.btn-cancel {
+    background-color: #FFFFFF;
+    border: 1px solid #3C445C !important;
+    width: 100px;
+    border-radius: 0px !important;
+}

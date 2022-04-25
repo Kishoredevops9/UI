@@ -1,0 +1,56 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- PWPI6S2
+
+
+pool:
+  vmImage: 'ubuntu-latest'
+  
+variables:
+  group: 'Hotfix Release'
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+ # variables:
+ # solution: '**/*.sln'
+ # buildPlatform: 'Any CPU'
+ # buildConfiguration: 'Release'
+
+steps:
+- task: replacetokens@4
+  inputs:
+    rootDirectory: '$(System.DefaultWorkingDirectory)'
+    targetFiles: '**/env.js'
+    encoding: 'auto'
+    tokenPattern: 'azpipelines'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: true
+    actionOnNoFiles: 'continue'
+    enableTransforms: true
+    transformPrefix: '('
+    transformSuffix: ')'
+    variableFiles: 'js'
+    useLegacyPattern: false
+    enableTelemetry: true
+- task: NodeTool@0
+  inputs:
+    versionSpec: '12.x'
+  displayName: 'Install Node.js'
+
+
+- script: |
+    cd NextGenESW.Web/ClientApp
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+  displayName: 'npm install and build'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'NextGenESW.Web/ClientApp/dist'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

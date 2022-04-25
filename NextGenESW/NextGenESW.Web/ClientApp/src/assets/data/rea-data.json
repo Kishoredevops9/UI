@@ -1,0 +1,15 @@
+{
+    "changeLetter": "Change Letter Mock Data",
+    "desiredSolution": "Desired Solution Mock Data",
+    "engineModelGroup": "BR700-710(SERIES)",
+    "initialEngineModel": "BR700-710A2-20",
+    "engineSection": "Combustor",
+    "fullEventDescription": "Full Event Description Mock Data",
+    "objectType": "Object Type Mock Data",
+    "reaResponse": "null",
+    "ReaResponse" : "This is not a Valid REA Number.",
+    "reaTaskNumberFromEKS": "REA12345",
+    "taskInformation": null,
+    "taskNumber": "Task Number Mock Data",
+    "title": "Task Title"
+}

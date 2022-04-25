@@ -1,0 +1,309 @@
+
+<div class="step" *ngIf="globalData">
+
+  <header>
+    <ng-container *ngIf="!isChecked">
+      <div *ngIf="markedCheckbox">
+      <mat-checkbox class="example-margin" *ngIf="treetype=='sf'" [(ngModel)]="fl.SP" (click)="checkChange()" >
+        <span class="contentChecks SP">SP</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="fl.A"  (click)="checkChange()">
+        <span class="contentChecks A">A</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="fl.WI" (click)="checkChange()">
+        <span class="contentChecks WI">WI</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="fl.CG" (click)="checkChange()">
+        <span class="contentChecks CG">CG</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="fl.GB" (click)="checkChange()">
+        <span class="contentChecks GB">GB</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin" [(ngModel)]="fl.RC" (click)="checkChange()">
+        <span class="contentChecks RC">RC</span>
+      </mat-checkbox>
+    </div>
+    <div *ngIf="!markedCheckbox">
+      <mat-checkbox class="example-margin" *ngIf="treetype=='sf'"  (click)="changeObj('SP')" >
+        <span class="contentChecks SP">SP</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin"     (click)="changeObj('A')"  >
+        <span class="contentChecks A">A</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin"    (click)="changeObj('WI')"  >
+        <span class="contentChecks WI">WI</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin"    (click)="changeObj('CG')" >
+        <span class="contentChecks CG">CG</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin"   (click)="changeObj('GB')"  >
+        <span class="contentChecks GB">GB</span>
+      </mat-checkbox>
+      <mat-checkbox class="example-margin"    (click)="changeObj('RC')" >
+        <span class="contentChecks RC">RC</span>
+      </mat-checkbox>
+    </div>
+
+
+
+
+
+
+      <!-- <mat-form-field >
+          <mat-label>Select One</mat-label>
+          <mat-select >
+
+            <mat-option value="D">Decepiline</mat-option>
+
+          </mat-select>
+        </mat-form-field> -->
+
+        <div style="position:relative"
+              class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new sfDropdownClass">
+              <!-- <mat-checkbox class="example-margin" [(ngModel)]="fl.D" ></mat-checkbox> -->
+              <mat-label>Select Discipline</mat-label>
+              <a mat-button matSuffix mat-icon-button [disabled]="!isDisabled" (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true">
+              <div id="btnId" #toggleButton >
+                  <mat-icon>
+                  {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+              </div>
+              </a>
+              <div #menu>
+              <mat-card class="dropbox" [hidden]="!showDisciplineDropDown">
+                  <!-- <discipline [multiflag]="true" [disciplineEvents]="eventsDiscipline.asObservable()" (setDisciplineData)="setDisciplineData($event)"  [treedata]="discipline">
+                  </discipline> -->
+
+                  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+
+                    <mat-tree-node *matTreeNodeDef="let node;let i = index" matTreeNodeToggle>
+                        <mat-checkbox class="discipline-item-margin" (change)="addDisciplineList($event,node,treetype);" tabindex="-1" [(ngModel)]="selectedBox[node.rowNo]" Checked="false">{{node.name}}</mat-checkbox>
+                      </mat-tree-node>
+                    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                      <li>
+                        <div class="mat-tree-node">
+                          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"  class="arrowSideOpen">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                          </button>
+                          {{node.name}}
+                        </div>
+                        <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                          <ng-container matTreeNodeOutlet></ng-container>
+                        </ul>
+                      </li>
+                    </mat-nested-tree-node>
+                  </mat-tree>
+
+              </mat-card>
+              </div>
+        </div>
+        <!-- <div class="mdl-grid full-width stepformData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="topChipBox" *ngIf="disciplineList.length > 0">
+              <div class="chipbox">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let chip of disciplineList" [selectable]="selectable">
+                    {{ chip.name }}
+                    <mat-icon matChipRemove (click)="removeDisciplineList(chip,treetype)">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+        </div> -->
+    </ng-container>
+
+    <div class="step-header-spacer"></div>
+
+    <div class="step-diagram-header">
+      <ng-container #diagramHeaderContainer></ng-container>
+    </div>
+
+    <div class="step-toggle">
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="treetype=='s' && isEditable && !previewMode && (!isChecked || !item.length)"
+        (click)="openDialog()"
+        class="mat-button">+ Discipline</button> &nbsp;
+      <span>List &nbsp; </span>
+      <mat-slide-toggle
+        (ngModelChange)="onCheckedChange()"
+        [ngModel]="isChecked"
+      >
+        Flow
+      </mat-slide-toggle>
+      <span class="expBtn" (click)="expandAllGlobal()" *ngIf="!isChecked">
+        <img src="/assets/icons/doubleUp.svg" class="stepOpc mgl10"   *ngIf="globalExpend"  >
+        <img src="/assets/icons/doubleDown.svg" class="stepOpc mgl10" *ngIf="!globalExpend" >
+      </span>
+    </div>
+  </header>
+
+  <div *ngIf="isChecked">
+    <app-step-flow-map
+      *ngIf="treetype == 'sf'"
+      [previewMode]="previewMode"
+      [headerContainer]="diagramHeaderContainerRef"
+    ></app-step-flow-map>
+    <app-step-map
+      *ngIf="treetype=='s'"
+      [largerDiagram]="largerDiagram"
+      [disciplines]="item"
+      [previewMode]="previewMode"
+      [headerContainer]="diagramHeaderContainerRef"
+    ></app-step-map>
+  </div>
+  <mat-menu #appMenu="matMenu" class="menuStepActivity">
+    <ng-template matMenuContent let-name="name">
+      <button mat-menu-item (click)="onAddActivity(name)" > Activity </button>
+      <!-- <button mat-menu-item >Blank Activity</button> -->
+    </ng-template>
+  </mat-menu>
+
+  <div  [ngClass]="{'hidden': isChecked}"  >
+
+
+    <ul *ngIf="treetype=='s'" >
+      <ng-container
+        *ngTemplateOutlet="recursiveListTmpl; context:{ list: item , type : 'D' }"
+      ></ng-container>
+    </ul>
+
+    <ul *ngIf="treetype=='sf'" >
+      <ng-container
+        *ngTemplateOutlet="recursiveListTmpl; context:{ list: item , type : 'SP' }"
+      ></ng-container>
+    </ul>
+
+
+
+    <ng-template #recursiveListTmpl let-list="list" let-type="type" >
+
+
+
+      <li *ngFor="let item of list; let i=index" id="index_{{i}}" >
+
+
+<div  class="licopy"  *ngIf="showChk(type,item.contentTypeId, item.selectedData)">
+  <div *ngIf="!item.selectedData">
+       <div   [ngClass]="(type=='C') ?  getID(  item.contentTypeId) : type" >
+
+          <aside class="rectBoxAside"  *ngIf="type=='C'" >
+    {{ getID(  item.contentTypeId) }}
+          </aside>
+
+          <aside class="rectBoxAside" *ngIf="type!='C'" >
+            {{type}}
+               </aside>
+
+
+
+       <span  class="title"  >  {{  item.stepTitle  ||  item.swimLaneTitle || item.name || item.title || item.stepContentId || 'N/A' }} </span>
+       <span><a style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(item)">{{item.stepContentId}}</a></span>
+
+        <span *ngIf="type == 'A'" class="contentIds"> <a style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(item)">{{item.assetContentId}}</a></span>
+       <span *ngIf="type == 'C'" class="contentIds"> <a style="color: #0076ff; cursor: pointer"  (click)="handleOnContentIDClick(item)">{{item.contentNo}}</a> </span>
+         <span *ngIf="item.assetStatus == 'Obsolete'"  class="obsolete-document-label-tag"></span>
+       </div>
+       <!-- *ngIf="item.children && item.children.length" -->
+       <span [hidden]="isChecked">
+       <div  class="toolbar" *ngIf=" type=='D' || type=='SF' ||  type=='SP'  " >
+
+
+        <span *ngIf="treetype=='s' && isEditable && !previewMode">Move : </span>
+
+        <span [globalData]="globalData"  *ngIf="treetype=='sf' && type=='SP'"   (click)="goToStep(item)">
+           <img src="./assets/images/Check_Out.svg" class="openIcon" >  </span>
+
+         <ng-container *ngIf="isEditable && !previewMode">
+        <span *ngIf="(treetype=='s' && type=='D') || (treetype=='sf' && type=='SP')" (click)="moveUp(i)"> <img src="/assets/icons/moveup.svg" > </span>
+        <span *ngIf="(treetype=='s' && type=='D') || (treetype=='sf' && type=='SP')" (click)="moveDown(i)"> <img src="/assets/icons/movedown.svg" > </span>
+
+
+        <span  style="display: inline !important;" *ngIf="treetype=='s'"  [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{name: item.swimLaneId }"   >
+          <img src="/assets/icons/add.svg" >
+        </span>
+        <span *ngIf="(treetype=='s' && type=='D' && temCheck == 'false') || (treetype=='sf' && type=='SP' && isEditable && !previewMode && temCheck == 'false')" (click)="deleteData(item,type)" > <img src="/assets/icons/delete.svg" > </span>
+
+         </ng-container>
+
+  <span>
+      <span>
+          <img src="/assets/icons/tup.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="item.active">
+          <img src="/assets/icons/tdown.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="!item.active">
+
+          <img src="/assets/icons/doubleUp.svg" class="stepOpc mgl10" (click)="expandAll(item);" *ngIf="item.expandall &&  (type=='SP' ||  ( treetype=='s' && type=='D' ) )">
+          <img src="/assets/icons/doubleDown.svg" class="stepOpc mgl10" (click)="expandAll(item);" *ngIf="!item.expandall && (type=='SP' || ( treetype=='s' && type=='D' ) )">
+        </span>
+
+  </span>
+
+
+           <!-- <span> <img src="/assets/icons/dup.svg" > </span>  -->
+       </div>
+       <div  class="toolbar" *ngIf=" type=='A'  " >
+
+
+
+          <!-- <span [globalData]="globalData"  *ngIf="treetype=='sf'"   (click)="goToStep(item.stepId)">  <img src="./assets/images/Request_Approval_Icon.svg" > ic </span> -->
+
+
+
+
+
+          <span *ngIf="(treetype=='s' && type=='A' && isEditable && !previewMode)" (click)="deleteData(item,type)" > <img src="/assets/icons/delete.svg" > </span>
+
+
+    <span  >
+       <img src="/assets/icons/tup.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="item.active" >
+      <img src="/assets/icons/tdown.svg" class="stepOpc"  (click)="item.active = (item.active)?false:true" *ngIf="!item.active" >
+    </span>
+
+
+
+       </div>
+      </span>
+</div>
+</div>
+
+
+        <ul *ngIf="(item.stepSwimLanes  && item.stepSwimLanes.length > 0 &&  ( item.active || !fl.SP  ) )">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.stepSwimLanes , type : 'D' }"
+          ></ng-container>
+        </ul>
+
+        <ul *ngIf="(item.activityBlocks && item.activityBlocks.length > 0 &&   item.active   )">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.activityBlocks , type : 'A' }"
+          ></ng-container>
+        </ul>
+
+        <ul *ngIf="(item.activityContainers && item.activityContainers.length > 0 &&   ( item.active || !fl.A  ) ) || type=='C'">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.activityContainers  , type : 'C' }"
+          ></ng-container>
+        </ul>
+
+        <ul *ngIf="( item.childList && item.childList.length > 0 && item.active ) || type=='C'">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childList   , type :  'C'  }"
+          ></ng-container>
+        </ul>
+
+
+
+      </li>
+    </ng-template>
+
+  </div>
+  </div>
+
+  <div class="stepTreeSpinner" *ngIf="loading">
+    <div class="spinnerbox">
+      <mat-spinner  diameter="60"></mat-spinner>
+    </div>
+  </div>

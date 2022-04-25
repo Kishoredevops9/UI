@@ -1,0 +1,19 @@
+@import '../../../theme/_colors';
+@import '../../../theme/_fonts';
+@import '../../../theme/_shadows';
+@import '../../../theme/_zIndexes';
+
+.app-diagram-see-through {
+  position: absolute;
+  z-index: $zindex-over-content;
+
+  &__menu.mat-menu-panel {
+    position: relative;
+    border-radius: 4px;
+    transform: translate(-50%, 0);
+    max-width: 600px;
+    min-width: 300px;
+    padding: 0;
+    @include box-shadow;
+  }
+}

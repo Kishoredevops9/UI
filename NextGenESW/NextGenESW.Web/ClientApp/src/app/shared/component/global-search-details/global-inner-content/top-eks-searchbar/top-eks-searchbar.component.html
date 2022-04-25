@@ -1,0 +1,181 @@
+<div class="eks-top-srch-popup eks_page_top">
+  <div class="menu centerMenu">
+    <span class="ekstopleft">
+      <mat-form-field class="angularformcss no-line" floatLabel="never">
+        <!-- <img matPrefix class="input-icon" src="../../../../../../assets/images/Group2745.svg" width="13px"
+          height="13px" /> -->
+        <input id="addonSearch" type="text" matInput [placeholder]="placeholder" (focus)="removePlaceHolder()"
+          (blur)="setPlaceHolder()" [(ngModel)]="searchTerm" />
+      </mat-form-field>
+    </span>
+    <span class="srch_cursor" (click)="onArrowClick()">
+      <mat-icon class="srch_icon_cls">search</mat-icon>
+      <!-- <img src="../../../../../../assets/images/rightArrow.svg" width="1.5%" style="width: 8px;
+            margin-top: 20px;" (click)="onArrowClick()" /> -->
+    </span>
+
+    <!-- <form [formGroup]="eksCollectionForm">
+      <span class="collection_dropdown">
+        <mat-form-field appearance="fill">
+          <mat-label>EKS Collection</mat-label>
+          <mat-select [formControl]="eksCollection" multiple (ngModelChange)="onCollectionChangeEvent($event)"
+            panelClass="eks-collection-form">
+            <mat-select-trigger>
+              {{ eksCollection.value ? eksCollection.value[0] : '' }}
+              <span *ngIf="eksCollection.value?.length > 1" class="example-additional-selection">
+                (+{{ eksCollection.value.length - 1 }}
+                {{ eksCollection.value?.length === 2 ? 'other' : 'others' }})
+              </span>
+            </mat-select-trigger>
+
+            <mat-option *ngFor="let eksCollection of allEKSCollection" [value]="eksCollection.keyword">
+              <span class="all_type {{ eksCollection.keyword  | uppercase}}">
+                {{eksCollection.code}}</span>
+              <span class="type-name">{{ eksCollection.name }}</span>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+    </form> -->
+
+    <span class="eks_adv_pos">
+      <a [className]="showSearch ? 'adv_btn active' : 'adv_btn'" (click)="advanceSearch()">Advance Search <i
+          [className]="showSearch ? 'arrow up' : 'arrow down'"></i></a>
+
+      <div *ngIf="showSearch" class="advance-search">
+        <form [formGroup]="advanceSearchForm">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="label-heading">Discipline
+                <a href="javascript:;" tooltip="" data-tooltip="8019" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </label>
+              <mat-form-field>
+                <mat-label>Select Discipline</mat-label>
+                <input matInput type="text" readonly [value]="selectedDisciplineValue">
+                <a mat-button matSuffix mat-icon-button
+                  (click)="showAdvanceSearchDiscipline=(showAdvanceSearchDiscipline)?false:true;showDropDown=false">
+                  <div id="" #toggleButton>
+                    <mat-icon>
+                      {{ ( showAdvanceSearchDiscipline ) ? 'expand_less' : 'expand_more' }}
+                    </mat-icon>
+                  </div>
+                </a>
+              </mat-form-field>
+              <mat-card class="dropbox" [hidden]="!showAdvanceSearchDiscipline" [config]="{backdrop: 'static'}">
+                <discipline [flag]="true" [disciplineEvents]="eventsSearchDiscipline.asObservable()"
+                  (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                </discipline>
+              </mat-card>
+            </div>
+            <div class="form-group">
+              <label class="label-heading">Discipline Code
+                <a href="javascript:;" tooltip="" data-tooltip="8012" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </label>
+              <mat-form-field>
+                <mat-select formControlName="disciplineCode">
+                  <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList" [value]="disciplineCode.code">
+                    {{ disciplineCode.code }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <label class="label-heading">Content Owner</label>
+              <mat-form-field>
+                <mat-select formControlName="contentOwner">
+                  <mat-option *ngFor="let clasifier of classifiersDropDownList" [value]="clasifier.name">
+                    {{ clasifier.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          
+          <div class="form-row">            
+            <div class="form-group">
+              <label class="label-heading">Set of Phases</label>
+              <mat-form-field>
+                <mat-select formControlName="phases" multiple>
+                  <mat-option *ngFor="let phase of setOfPhasesList" [value]="phase.id">
+                    {{ phase.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="form-group">
+              <label class="label-heading">Set of Tags</label>
+              <mat-form-field>
+                <mat-label>Select Tags</mat-label>
+                <input matInput type="text" readonly [value]="getPlaceData()" />
+                <a mat-button matSuffix mat-icon-button (click)="showDropDown = showDropDown ? false : true">
+                  <mat-icon>
+                    {{ showDropDown ? 'expand_less' : 'expand_more' }}
+                  </mat-icon>
+                </a>
+              </mat-form-field>
+              <mat-card class="dropbox" [hidden]="!showDropDown">
+                <app-left-box [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)"
+                  [treedata]="tagList" [loadDropdownData]="eventSubject.asObservable()">
+                </app-left-box>
+              </mat-card>
+            </div>
+            <div class="form-group">
+              <label class="label-heading">Version Number</label>
+              <mat-form-field>
+                <input  matInput formControlName="version" type="number" min="0"
+                onkeypress="return event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" 
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="form-row">            
+            <div class="form-group">
+              <label class="label-heading">Set of Keywords</label>
+              <mat-form-field>
+                <input matInput formControlName="keyword" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- <div class="form-row">
+            <div class="form-group">
+              <label class="label-heading">TPM Date</label>
+              <div class="form-group">
+                <mat-form-field>
+                  <input type="date" matInput formControlName="tpmDate" />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="form-group status">
+              <label class="label-heading">Content Status</label>
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="eksInternal" id="gridCheck1" />
+                  <label class="form-check-label" for="gridCheck1">Show only EKS Internal </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" formControlName="eksExternal" id="gridCheck2" />
+                  <label class="form-check-label" for="gridCheck2"> Show only EKS External </label>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          
+          <button (click)="resetFilters()" class="search-btn" mat-button mat-raised-button
+              color="primary">Reset</button>
+
+          <button (click)="onSubmitAdvSearchForm()" class="btn btn-primary search-btn" mat-button mat-raised-button
+            color="primary">
+            Search
+          </button>
+        </form>
+      </div>
+    </span>
+
+    <div style="clear: both"></div>
+  </div>
+</div>

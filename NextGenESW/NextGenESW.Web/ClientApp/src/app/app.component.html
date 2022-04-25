@@ -1,0 +1,50 @@
+<!-- <div class="spacer"></div> -->
+<!-- <mat-sidenav-container class="page-container" autosize>
+    <app-header></app-header>
+    <div>
+        <app-left-nav></app-left-nav>
+
+        <mat-sidenav #globalsidenav mode="side" opened="true" class="global-sidenav" position="end" class="mat-elevation-z8">
+            <app-global-panel></app-global-panel>
+        </mat-sidenav>
+        <div class="page-body">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</mat-sidenav-container> -->
+<div class="loading-overlay" *ngIf="loading">
+  <!-- show something fancy here, here with Angular 2 Material's loading bar or circle -->
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+
+<div class="headerBox">
+    <app-header (leftNavHeaderPanel)="leftNavHeaderPanel($event)" (leftNavAdminHeaderPanel)="leftNavAdminHeaderPanel($event)"> </app-header>
+</div>
+
+<ng-container>
+    <mat-sidenav-container class="page-container" autosize>
+        <mat-sidenav #globalsidenav mode="side" opened="true" class="global-sidenav" position="end"
+        class="mat-elevation-z8">
+            <app-global-panel></app-global-panel>
+        </mat-sidenav>
+        <section>
+            <div class="page-body">
+                <div class="flex-container">
+
+                    <div class="leftNavi" [ngClass]="{'active': active}">  
+                        <app-left-nav [leftPanelData]="leftNavHeaderPanelCreated" [leftPanelAdminData]="leftNavAdminHeaderPanelCreated" (open)="onOpen($event)"></app-left-nav>
+                    </div>
+
+                    <div class="rightContant" [ngClass]="{'activebox': active}">
+
+                        <router-outlet></router-outlet>
+                    </div>
+
+                    
+
+                </div>
+            </div>
+        </section>
+    </mat-sidenav-container>
+</ng-container>

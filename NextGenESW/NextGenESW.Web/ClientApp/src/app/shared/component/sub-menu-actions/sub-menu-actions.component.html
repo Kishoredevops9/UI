@@ -1,0 +1,97 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="sub-nav-inner title_alignment">
+  <ng-container *ngIf="globalContent?.originalAssetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC">
+    <a [href]="launchXClassPathNew | safeurl" target="_blank" *ngIf="contentType != 'ToC'">
+      <button style="left: -5px; margin-top: 2px; font-size: 10px; position: relative; top: -9px;"
+              mat-raised-button
+              mat-button
+              color="primary"
+              class="submit-btn custom"
+      >
+        Launch X-Class
+      </button>
+    </a>
+  </ng-container>
+  <ng-container *ngIf="(contentId1) && (!isPublishMode) && (broadCastMessage == 'true')">
+    <span id="circle" style="background-color: orange;"></span>
+    <b class="save_button_style">Saving</b>
+  </ng-container>
+
+  <ng-container *ngIf="(contentId1) && (!isPublishMode) && (broadCastMessage == 'false')">
+    <span id="circle"></span>
+    <b class="save_button_style">Saved</b>
+  </ng-container>
+
+  <div *ngIf="globalContent?.contentType == 'KP'">
+
+    <img src="./assets/images/Dots_menu_Icon.svg" [matMenuTriggerFor]="beforeMenu" class="" *ngIf="isPublishMode || (globalContent?.originalAssetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || globalContent?.originalAssetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC)" />
+    <mat-menu #beforeMenu="matMenu" class="contentMatMenu">
+      <button mat-menu-item (click)="sendRecallMessageToParent()" *ngIf="globalContent?.originalAssetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || globalContent?.originalAssetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC">
+        <span>Recall</span>
+      </button>
+      <ng-container *ngIf="isPublishMode">
+        <button mat-menu-item (click)="sendReviseMessageToParent()" *ngIf="globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE">
+          <span>Revise</span>
+        </button>
+        <button mat-menu-item (click)="sendMessageToParent()" >
+          <span>Save As</span>
+        </button>
+        <ng-container *ngIf="globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE">
+          <button mat-menu-item *ngIf="(contentType != 'SF') &&(contentType != 'SP') && (contentType != 'RC')">
+            <span (click)="exportToPDF()">Export PDF</span>
+          </button>
+          <button mat-menu-item *ngIf="contentType == 'SF'">
+            <span (click)="exportToExcel()">Export To Excel</span>
+          </button>
+          <button mat-menu-item *ngIf="contentType == 'SP'">
+            <span (click)="exportToExcelSP()">Export To Excel</span>
+          </button>
+        </ng-container>
+        <button mat-menu-item *ngIf="!disableObsoleteDocuments && ((globalContent?.originalAssetStatus || globalContent?.assetStatus) === ASSET_STATUSES.PUBLISHED || (globalContent?.originalAssetStatus || globalContent?.assetStatus) === ASSET_STATUSES.CURRENT) && ownerEdit" (click)="markDocumentAsObsolete()">
+          <span>Obsolete</span>
+        </button>
+      </ng-container>
+
+    </mat-menu>
+
+    </div>
+<div *ngIf="globalContent?.contentType !== 'KP'">
+  <img src="./assets/images/Dots_menu_Icon.svg" [matMenuTriggerFor]="beforeMenu" class="" *ngIf="isPublishMode || (globalContent?.originalAssetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || globalContent?.originalAssetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC)" />
+  <mat-menu #beforeMenu="matMenu" class="contentMatMenu">
+    <button mat-menu-item (click)="sendRecallMessageToParent()" *ngIf="globalContent?.originalAssetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || globalContent?.originalAssetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC">
+    <span>Recall</span>
+  </button>
+  <ng-container *ngIf="isPublishMode">
+    <button mat-menu-item *ngIf="globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE" (click)="sendReviseMessageToParent()">
+      <span>Revise</span>
+    </button>
+    <button mat-menu-item (click)="sendMessageToParent()">
+      <span>Save As</span>
+    </button>
+    <ng-container *ngIf="globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE">
+      <button mat-menu-item *ngIf="(contentType != 'SF') &&(contentType != 'SP') && (contentType != 'RC') ">
+        <span (click)="exportToPDF()">Export PDF</span>
+      </button>
+      <button mat-menu-item *ngIf="contentType == 'SF'">
+        <span (click)="exportToExcel()">Export To Excel</span>
+      </button>
+      <button mat-menu-item *ngIf="contentType == 'SP'">
+        <span (click)="exportToExcelSP()">Export To Excel</span>
+      </button>
+    </ng-container>
+    <button mat-menu-item *ngIf="!disableObsoleteDocuments && ((globalContent?.originalAssetStatus || globalContent?.assetStatus) === ASSET_STATUSES.PUBLISHED || (globalContent?.originalAssetStatus || globalContent?.assetStatus) === ASSET_STATUSES.CURRENT) && ownerEdit" (click)="markDocumentAsObsolete()">
+      <span>Obsolete</span>
+    </button>
+  </ng-container>
+  </mat-menu>
+
+</div>
+</div>
+
+<span style="display: block; margin-top: -20px; font-size: 9px; text-align: right; background: transparent" *ngIf="(contentId1) && (!isPublishMode) && (broadCastMessage == 'false')" class="save_button_style"><b>Last Modified:
+  {{appened}}</b> </span>
+
+<ng-template #warningTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

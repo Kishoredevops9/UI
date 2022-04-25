@@ -1,0 +1,143 @@
+<form [formGroup]="advanceSearchForm">
+  <div class="form-row">
+    <div class="form-group">
+      <label class="label-heading">Discipline
+        <a href="javascript:;"
+           tooltip=""
+           data-tooltip="8019"
+           placement="right">
+          <img src="./assets/icons/exclamation-circle.svg"
+               width="12" />
+        </a>
+      </label>
+      <mat-form-field>
+        <mat-label>Select Discipline</mat-label>
+        <input matInput
+               type="text"
+               readonly
+               [value]="selectedDisciplineValue">
+        <a mat-button
+           matSuffix
+           mat-icon-button
+           (click)="showAdvanceSearchDiscipline= !showAdvanceSearchDiscipline; showDropDown=false">
+          <div id=""
+               #toggleButton>
+            <mat-icon>
+              {{ ( showAdvanceSearchDiscipline ) ? 'expand_less' : 'expand_more' }}
+            </mat-icon>
+          </div>
+        </a>
+      </mat-form-field>
+      <mat-card class="dropbox" style="height: unset;"
+                [hidden]="!showAdvanceSearchDiscipline">
+        <discipline [flag]="true"
+                    (setDisciplineData)="setDisciplineData($event)"
+                    [treedata]="(disciplineList$ | async) || []">
+        </discipline>
+      </mat-card>
+    </div>
+    <div class="form-group">
+      <label class="label-heading">Discipline Code
+        <a href="javascript:;"
+           tooltip=""
+           data-tooltip="8012"
+           placement="right">
+          <img src="./assets/icons/exclamation-circle.svg"
+               width="12" />
+        </a>
+      </label>
+      <mat-form-field>
+        <mat-select formControlName="disciplineCode">
+          <mat-option *ngFor="let disciplineCode of ((wiDisciplineCodeList$ | async) || [])"
+                      [value]="disciplineCode.code">
+            {{ disciplineCode.code }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <label class="label-heading">Content Owner</label>
+      <mat-form-field>
+        <mat-select formControlName="contentOwner">
+          <mat-option *ngFor="let clasifier of ((classifierList$ | async) || [])"
+                      [value]="clasifier.name">
+            {{ clasifier.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="label-heading">Set of Phases</label>
+      <mat-form-field>
+        <mat-select formControlName="phases"
+                    multiple>
+          <mat-option *ngFor="let phase of ((phaseList$ | async) || [])"
+                      [value]="phase.id">
+            {{ phase.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="form-group">
+      <label class="label-heading">Set of Tags</label>
+      <mat-form-field>
+        <mat-label>Select Tags</mat-label>
+        <input matInput
+               type="text"
+               readonly
+               [value]="getSltTagsRenderer()" />
+        <a mat-button
+           matSuffix
+           mat-icon-button
+           (click)="showDropDown = showDropDown ? false : true">
+          <mat-icon>
+            {{ showDropDown ? 'expand_less' : 'expand_more' }}
+          </mat-icon>
+        </a>
+      </mat-form-field>
+      <mat-card class="dropbox"
+                [hidden]="!showDropDown"
+                style="height: unset; max-height: 400px; overflow-y: auto">
+        <app-left-box [flag]="true"
+                      (tagdata)="sltTags = $event || []"
+                      [treedata]="(tagList$ | async) || []">
+        </app-left-box>
+      </mat-card>
+    </div>
+    <div class="form-group">
+      <label class="label-heading">Version Number</label>
+      <mat-form-field>
+        <input matInput
+               formControlName="version"
+               min="0"
+               type="number"
+               onkeypress="event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label class="label-heading">Set of Keywords</label>
+      <mat-form-field>
+        <input matInput
+               formControlName="keywords" />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <button (click)="resetFilters()"
+          class="search-btn"
+          mat-button
+          mat-raised-button
+          color="primary">Reset</button>
+
+  <button (click)="onSubmitAdvSearchForm()"
+          class="btn btn-primary search-btn"
+          mat-button
+          mat-raised-button
+          color="primary">
+    Search
+  </button>
+</form>

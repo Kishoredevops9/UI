@@ -1,0 +1,192 @@
+<div class="announceParent">
+    <div class="manualHeader fleft">Announcements <span *ngIf="taskDatalen > 0">({{taskDatalen}})</span></div>
+    <div class="bar-icon fright" (click)="filterpop()"></div>
+    <div class="fright"><button mat-button mat-raised-button (click)="addNew()" class="addBtn">Add New</button></div>
+    <div class="cleard"></div>
+    <!-- Filter Popup-->
+    <div *ngIf="filterPopShow" fxLayout="row" fxLayoutAlign="center center" class="announcefilterDiv">
+      <mat-card class="filter-card" *ngIf="filterPopShow">
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <span (click)="closeFilterPop()" class="material-icons clsFilter">close</span>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="contentFilterForm">
+              <mat-form-field class="filter-block">
+                <mat-label>Title</mat-label>
+                <input type="text" matInput formControlName="adminTitle">
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="adminStatus">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Status
+                  </mat-option>
+                  <mat-option value="Show">Show</mat-option>
+                  <mat-option value="Hide">Hide</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Created/Modified Date</mat-label>
+                <mat-select formControlName="adminModifiDate">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Created/Modified Date
+                  </mat-option>
+                  <mat-option *ngFor="let modified of uniqueModifiDate" [value]="modified">
+                    {{ modified }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Created/Modified By</mat-label>
+                <mat-select formControlName="adminModifiBy">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Created/Modified By
+                  </mat-option>
+                  <mat-option *ngFor="let modified of uniqueModifiUser" [value]="modified">
+                    {{ modified }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Date Posted</mat-label>
+                <mat-select formControlName="adminPosted">
+                  <mat-option (click)="clearFilter()" value="">
+                    Date Posted
+                  </mat-option>
+                  <mat-option *ngFor="let modified of uniquePosted" [value]="modified">
+                    {{ modified | date: 'MM/dd/yyyy'}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Expirtaion Date</mat-label>
+                <mat-select formControlName="adminExpirtaion">
+                  <mat-option (click)="clearFilter()" value="">
+                    Expirtaion Date
+                  </mat-option>
+                  <mat-option *ngFor="let modified of uniqueExpirtaion" [value]="modified">
+                    {{ modified | date: 'MM/dd/yyyy'}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div>
+              <button mat-button mat-flat-button (click)="applyContentFilter()" class="applyBtn">Apply</button>
+              <button mat-button mat-flat-button (click)="resetFilterPop()" class="closeBtn">Reset</button>
+            </div>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+    <div [ngClass]="elementIsEdit ? 'announceTable active' : 'announceTable'">
+      <table mat-table [dataSource]="dataSource" matSort >
+        <ng-container *ngFor="let dispCol of columnsConfig; let colIndex = index" matColumnDef="{{dispCol.value}}">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <span *ngIf="dispCol !== 'editIcon'">
+              {{dispCol.header}}
+            </span>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="!element.isEdit">
+              <div class="edit-icon cursor" *ngIf="dispCol.value === 'editIcon'; deleteHeader" (click)="element.isEdit = !element.isEdit;editData(element)">
+                &nbsp;
+              </div>
+              <div class="delete-icon cursor" #deleteHeader *ngIf="dispCol.value === 'deleteIcon'; previewHeader" (click)="deleteData(element)">
+                &nbsp;
+              </div>
+              <!-- <div class="preview-icon cursor" #previewHeader *ngIf="dispCol.value === 'previewIcon'; linkHeader" >
+                &nbsp;
+              </div> -->
+              <a [href]="element[dispCol.value] | safe: 'url'" target="_blank" class="preview-icon cursor" #previewHeader *ngIf="dispCol.action === 'preview'; else linkHeader">
+                &nbsp; 
+              </a>
+              <a [href]="element[dispCol.value] | safe: 'url'" target="_blank" class="link-icon cursor" #linkHeader *ngIf="dispCol.action === 'link'; spanHeader">
+                &nbsp; 
+              </a>
+              <span #spanHeader *ngIf="dispCol.action !== 'link' && dispCol.value !== 'effectiveFrom' && dispCol.value !== 'effectiveTo' && dispCol.action !== 'preview'">
+                {{element[dispCol.value]}}
+              </span>
+              <span #spanHeader *ngIf="dispCol.value === 'effectiveFrom' || dispCol.value === 'effectiveTo'">
+                {{element[dispCol.value] | date: 'MM/dd/yyyy'}} 
+              </span>
+            </div>
+            <div *ngIf="element.isEdit">
+              <div *ngIf="dispCol.value === 'editIcon'; else deleteHeader">
+                <div class="save-icon fleft cursor" (click)="updateData(element);">
+                  &nbsp;
+                </div>
+                <div class="cancel-icon fleft cursor" (click)="element.isEdit = !element.isEdit;">
+                  &nbsp;
+                </div>
+              </div>              
+              <div class="delete-icon" #deleteHeader *ngIf="dispCol.value === 'deleteIcon'; else previewHeader" >
+                &nbsp;
+              </div>
+              <div class="preview-icon" #previewHeader *ngIf="dispCol.value === 'previewIcon'; else linkHeader" >
+                &nbsp;
+              </div>
+              <!-- <div class="btn-edit" #linkHeader *ngIf="dispCol.value === 'linkIcon'; else dateField" >
+                <button>Link</button>
+              </div>  -->
+              <form [formGroup]="addItemForm"  class="form">
+              <div class="btn-edit" *ngIf="dispCol.action === 'link';else dateField">
+                <mat-form-field>
+                  <mat-label>Link comes here</mat-label>
+                  <input type="text" matInput required [(ngModel)]="element[dispCol.value]" formControlName="{{dispCol.formControlName}}">
+                  </mat-form-field>
+              </div>          
+              <ng-template #dateField>
+                <mat-form-field *ngIf="dispCol.action === 'date'; else defaultField">
+                  <mat-label>Choose a date</mat-label>
+                  <input matInput [matDatepicker]="picker" required [min]="minDate" [max]="maxDate" formControlName="{{dispCol.formControlName}}" [(ngModel)]="element[dispCol.value]">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </ng-template>
+              <ng-template #defaultField>
+                <mat-form-field *ngIf="dispCol.action === 'text';">
+                  <mat-label>{{dispCol.header}} </mat-label>
+                  <input type="{{dispCol.action}}" matInput required formControlName="{{dispCol.formControlName}}" [(ngModel)]="element[dispCol.value]">
+                </mat-form-field>
+                <mat-form-field *ngIf="dispCol.action === 'dropdown'; ">
+                  <mat-label>{{dispCol.header}} </mat-label>
+                  <mat-select formControlName="{{dispCol.formControlName}}" placeholder="Mode" [(ngModel)]="element[dispCol.value]">
+                    <mat-option value="Show">Show</mat-option>
+                    <mat-option value="Hide">Hide</mat-option>
+                  </mat-select>
+                  <!-- <mat-select >
+                  <mat-option *ngFor="let status of status" [value]="status.value" (onSelectionChange)="onSelectionChanged(status.value)">
+                      {{status.viewValue}}
+                  </mat-option>
+                  </mat-select> -->
+                </mat-form-field>
+                <mat-form-field *ngIf="dispCol.action === 'dropdownType'; ">
+                  <mat-label>{{dispCol.header}} </mat-label>
+                  <mat-select formControlName="{{dispCol.formControlName}}" placeholder="Mode" [(ngModel)]="element[dispCol.value]">
+                    <mat-option *ngFor="let item of announceType" [value] ="item.name">{{item.name}}</mat-option>
+                  </mat-select>                  
+                </mat-form-field>
+                <mat-form-field *ngIf="dispCol.action === 'textarea'; ">
+                  <mat-label>{{dispCol.header}} </mat-label>
+                  <textarea placeholder="Textarea" matInput required formControlName="{{dispCol.formControlName}}" [(ngModel)]="element[dispCol.value]" >{{element[dispCol.value]}}</textarea>
+                </mat-form-field>              
+              </ng-template>
+            </form>
+              <div *ngIf="dispCol.action === 'noedit';">
+                  {{element[dispCol.value]}} 
+              </div>
+            </div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumnKeys; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnKeys"></tr>      
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+    
+    <span class="matspinner" *ngIf="isShowSpinner">
+      <mat-spinner></mat-spinner>
+    </span>
+  </div>

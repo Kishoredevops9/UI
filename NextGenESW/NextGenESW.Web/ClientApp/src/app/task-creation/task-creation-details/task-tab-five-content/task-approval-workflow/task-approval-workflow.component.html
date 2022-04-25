@@ -1,0 +1,174 @@
+<div class="deviation_approval" *ngIf="!showSubmitDialog">
+  <div class="heading">
+    <label *ngIf="!isDeviation"><b>SEND FOR ACTIVITY APPROVAL</b></label>
+    <label *ngIf="isDeviation"><b>SEND TO MANAGER FOR DEVIATION APPROVAL</b></label>
+    <div class="sub_heading">
+      <span class="header-theam">T</span>
+      <span id="docTitle"><sub>{{ taskTitle }}</sub></span>
+      <span id="content_Id"><sub>{{ taskReaid }}</sub></span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <span class="left_container">
+      <form [formGroup]="deviationForm">
+        <div class="first_field">
+          <mat-label>*Manager:</mat-label>
+          <input matInput class="inputMaterial" placeholder="Search Here" (ngModelChange)="filterMangerData($event,isDeviation)"
+            type="text" [matAutocomplete]="ManagerData" formControlName="manager" minlength="8" required />
+          <mat-autocomplete #ManagerData="matAutocomplete">
+            <mat-option *ngFor="let item of filteredManagerData" [value]="item.displayName"
+              (click)="selectManager(item)">
+              <span>{{ item.displayName }}</span>&nbsp;(<span class="email">{{ item.email }}</span>)
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <span *ngIf="isDeviation">
+          <div>
+            <mat-label>*Discipline Chief:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here"
+              (ngModelChange)="filterDisciplineChiefData($event)" type="text" [matAutocomplete]="disciplineChiefData"
+              formControlName="disciplineChief" minlength="8" required />
+            <mat-autocomplete #disciplineChiefData="matAutocomplete">
+              <mat-option *ngFor="let item of filteredDisciplineChiefData" [value]="item.displayName"
+                (click)="selectDisciplineChief(item)">
+                <span>{{ item.displayName }}</span>&nbsp;(<span class="email">{{ item.email }}</span>)
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div>
+            <mat-label><span *ngIf="isSystemRiskenable">*</span>CIPT Leader:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here"
+              (ngModelChange)="filterCiptLeaderData($event)" type="text" [matAutocomplete]="ciptData"
+              formControlName="ciptLeader" minlength="8" required />
+            <mat-autocomplete #ciptData="matAutocomplete">
+              <mat-option *ngFor="let item of filteredCiptLeaderData" [value]="item.displayName"
+                (click)="selectCiptLeader(item)">
+                <span>{{ item.displayName }}</span>&nbsp;(<span class="email">{{ item.email }}</span>)
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+          <div>
+            <mat-label><span *ngIf="isSystemRiskenable">*</span>Program Chief Engineer:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here"
+              (ngModelChange)="filterProgramChiefData($event)" type="text" [matAutocomplete]="programChiefData"
+              formControlName="programChiefEngineer" minlength="8" required />
+            <mat-autocomplete #programChiefData="matAutocomplete">
+              <mat-option *ngFor="let item of filteredProgramChiefData" [value]="item.displayName"
+                (click)="selectProgramChiefEngineer(item)">
+                <span>{{ item.displayName }}</span>&nbsp;(<span class="email">{{ item.email }}</span>)
+              </mat-option>
+            </mat-autocomplete>
+          </div>
+        </span>
+      </form>
+    </span>
+    <form [formGroup]="commentForm">
+      <span class="right_container">
+        <textarea matInput formControlName="comments" placeholder="Comment For Approvers Here"></textarea>
+      </span>
+    </form>
+  </div>
+
+  <div class="border_style">
+    
+    <label class="main-title" *ngIf="!isDeviation && activitySelected && activitySelected.length > 0"><b>SELECT DISCIPLINES & ACTIVITIES FOR
+        APPROVAL</b></label>
+    <label class="main-title" *ngIf="!isDeviation && activitySelected && activitySelected.length == 0"><b>NO DISCIPLINES & ACTIVITIES FOR
+        APPROVAL</b></label>
+    <label class="main-title" *ngIf="isDeviation && deviationSelected && deviationSelected.length > 0"><b>SELECT
+        DISCIPLINES & DEVIATIONS FOR APPROVAL</b></label>
+    <label class="main-title" *ngIf="isDeviation && deviationSelected && deviationSelected.length == 0"><b>NO
+        DISCIPLINES & DEVIATIONS FOR
+        APPROVAL</b></label>
+
+    <img src="./assets/icons/exclamation-circle.svg" width="16" placement="left"
+      title='The Deviations on this list have a status of "Complete"' />
+    <div *ngIf="isDeviation">
+      <div *ngIf="isLoading" id="cover-spin"></div>
+      <app-deviation-approval-dialog [item]="deviationSelected" [devAppData]="devAppDisable"
+        (eksDeviationApprovalData)="eksDeviationApprovalData($event)"></app-deviation-approval-dialog>
+    </div>
+    <div *ngIf="!isDeviation">
+      <div *ngIf="isLoading" id="cover-spin"></div>
+      <app-activity-approval-dialog [item]="activitySelected"
+        (eksActivityApprovalData)="eksActivityApprovalData($event)"></app-activity-approval-dialog>
+    </div>
+  </div>
+  <div class="button">
+    <button mat-button mat-raised-button color="primary" class="cancel_button" (click)="handleOnCancelButtonClick(showSubmitDialog)">
+      Cancel
+    </button>
+    <button *ngIf="isDeviation" [disabled]="!deviationSelectedbtn" mat-button mat-raised-button color="primary"
+      (click)="handleOnSubmitDeviationButtonClick()">Submit</button>
+    <button *ngIf="!isDeviation" [disabled]="!activitySelectedbtn" mat-button mat-raised-button color="primary"
+      (click)="handleOnSubmitActivityButtonClick()">Submit</button>
+  </div>
+</div>
+
+<div *ngIf="showSubmitDialog" class="deviation_approval results">
+  <span class="heading">
+    <label *ngIf="!isDeviation"><b>ACTIVITY APPROVAL SUBMITTED SUCCESSFULLY</b></label>
+    <label *ngIf="isDeviation"><b>DEVIATION APPROVAL SUBMITTED SUCCESSFULLY</b></label>
+  </span>
+  <div class="sub_heading">
+    <span class="header-theam">T</span>
+    <span id="docTitle"><sub>{{ taskTitle }}</sub></span>
+    <span id="content_Id"><sub>{{ taskReaid }}</sub></span>
+  </div>
+  <div *ngIf="!isDeviation" class="app_container border_style">
+    <div *ngFor="let item of activitySelected">
+      <div class="hr {{ item.Type | lowercase }} design" *ngIf="item.checked">
+        <div class="type {{ item.Type | lowercase }}">{{ item.Type }}</div>
+        <div class="title contentId" *ngIf="item.Type === 'D'">
+          <span>{{ item.Discipline1 }}</span>
+        </div>
+      </div>
+      <div *ngFor="let activity of item.Activities" class="design activity">
+        <span class="checkbox">
+          <mat-checkbox *ngIf="activity.Type == 'A' && activity.checked" [(ngModel)]="activity.checked"></mat-checkbox>
+        </span>
+        <span class="hr {{ activity.Type | lowercase }} design" *ngIf="item.checked">
+          <div class="type {{ activity.Type | lowercase }}">
+            {{ activity.Type }}
+          </div>
+          <div class="title contentId" *ngIf="activity.Type == 'A'">
+            {{ activity.Title }} &nbsp;&nbsp; {{ activity.ContentId }} /
+            {{ activity.USClassification }}
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isDeviation" class="app_container border_style">
+    <div *ngFor="let item of deviationSelected">
+      <div class="hr {{ item.Type | lowercase }} design" *ngIf="item.checked">
+        <div class="type {{ item.Type | lowercase }}">{{ item.Type }}</div>
+        <div class="title contentId" *ngIf="item.Type === 'D'">
+          <span>{{ item.Discipline1 }}</span>
+        </div>
+      </div>
+      <div *ngFor="let activity of item.Activities" class="design">
+        <span class="checkbox">
+          <mat-checkbox *ngIf="activity.Type == 'A' && activity.checked" [(ngModel)]="activity.checked"></mat-checkbox>
+        </span>
+        <span class="hr {{ activity.Type | lowercase }} design" *ngIf="item.checked">
+          <div class="type {{ activity.Type | lowercase }}">
+            {{ activity.Type }}
+          </div>
+          <div class="title contentId" *ngIf="activity.Type == 'A'">
+            {{ activity.Title }} &nbsp;&nbsp; {{ activity.ContentId }} /
+            {{ activity.USClassification }}
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="button">
+    <button mat-button mat-raised-button color="primary" (click)="handleOnCancelButtonClick(showSubmitDialog)">
+      CLOSE
+    </button>
+  </div>
+</div>

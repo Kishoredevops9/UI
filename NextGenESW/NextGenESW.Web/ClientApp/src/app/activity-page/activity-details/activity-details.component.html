@@ -1,0 +1,116 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="full-width" [class.obsolete-document-bg]="globalData?.assetStatus === ASSET_STATUSES.OBSOLETE">
+  <div [class]="documentCreateStatus ? 'document-header top-band create-doc': 'document-header top-band'">
+    <div class="header-wrapper">
+      <hr class="line-divider AP" />
+      <div [className]="previewMode ? 'top-band-wrapper' : 'top-band-wrapper no-open-doc'">
+        <span class="document-type AP" *ngIf="type">{{ type }}</span>
+        <span id="docTitle" class="doc-title name" *ngIf="globalData && globalData.title">{{ globalData.title }}
+          <span class="jc-title" *ngIf="globalData && globalData.contentId">{{globalData.contentId}}</span>
+          <span class="jc-title" *ngIf="globalData && globalData.version">/</span>
+          <span class="classifier-title" *ngIf="globalData && globalData.version">V {{globalData.version}}</span>
+          <span class="jc-title" *ngIf="UsClassification">/</span>
+          <span class="jc-title" *ngIf="UsClassification">
+            <span>{{UsJurisdiction}}</span>&nbsp;
+            <span *ngIf="UsJurisdiction != NSR">{{UsClassification}}</span>
+          </span>
+
+        </span>
+        <span class="preview" *ngIf="previewMode">PREVIEW</span>
+        <span *ngIf="showMenuActions == true">
+          <app-top-menu-actions [editMode]="!previewMode" [globalContent]="globalData" (handlePreviewMode)="handleOnPreviewClick($event)"
+            (handleApprovalAction)="handleApprovalAction($event)" (handleRequestAction)="handleRequestAction($event)" [requestApprovalOption]="requestApprovalOption">
+          </app-top-menu-actions>
+        </span>
+
+      </div>
+    </div>
+  </div>
+  <app-progressbar *ngIf="prograssBarStatus" [progressBar]='progressBar'
+                   [docType]="contentType" [docStatus]="prograssBarStatus"></app-progressbar>
+  <div class="clear">
+  </div>
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="wrapper tab-wrapper AP">
+      <mat-tab-group (selectedTabChange)="onTabChanged($event)"
+        class="criteria-Details-g AP">
+        <mat-tab label="Properties" *ngIf="!hasPublished">
+        </mat-tab>
+        <mat-tab label="Lessons Learned" *ngIf="!hasPublished" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="!hasPublished">
+        </mat-tab>
+
+        <mat-tab label="Components" (titleOutput)="setTitle($event)" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="hasPublished">
+        </mat-tab>
+        <mat-tab label="General Guidance" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="External Links" *ngIf="showExternalWI" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Nature of Change" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Lessons Learned" *ngIf="hasPublished" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Properties" *ngIf="hasPublished">
+        </mat-tab>
+      </mat-tab-group>
+      <ng-container *ngIf="showMenuActions == true">
+          <app-sub-menu-actions [contentCollaboration]="contentCollaboration" [contentType]="contentType"
+                                [globalContent]="globalData" (messageToEmit)="handleOnSaveAsClick($event)"
+                                (revisionMessageToEmit)="handleOnRevisionClick($event)" (recallMessageToEmit)="handleOnRecallClick($event)"
+                                [propertiesLastUpdateDateTime]="propertiesLastUpdateDateTime">
+          </app-sub-menu-actions>
+      </ng-container>
+    </div>
+    <div class="tab-detail-content">
+      <ng-container [ngSwitch]="currentTabList[selectedIndex]?.textLabel">
+        <ng-container *ngSwitchCase="'Properties'">
+          <ng-container *ngIf="!hasPublished">
+            <app-properties [contentType]="contentType" [disableForm]="disableForm" [globalData]="globalData"
+                            [updatedContentOwner]="updatedContentOwner" (updateContentOwnerValue)="updateContentOwnerValue($event)"  (updateRequestAproval)="updateRequestAproval($event)">
+            </app-properties>
+          </ng-container>
+          <ng-container *ngIf="hasPublished">
+            <app-properties [contentType]="contentType" [preview]="previewMode" [disableForm]="disableForm" [globalData]="globalData"
+                            [updatedContentOwner]="updatedContentOwner">
+            </app-properties>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Lessons Learned'">
+          <ng-container *ngIf="!hasPublished">
+            <app-lesson-learned [contentType]="contentType" [globalData]="globalData"
+                                (updateLastModifiedDate)="updateLastModifiedDate($event)" (updateLessonLearned)="updateLessonLearned($event)"></app-lesson-learned>
+          </ng-container>
+          <ng-container *ngIf="hasPublished">
+            <app-lesson-learned [contentType]="contentType" [globalData]="globalData"></app-lesson-learned>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Purpose'">
+          <ng-container *ngIf="hasPublished">
+            <app-activity-purpose [disableForm]="disableForm" [globalData]="globalData"></app-activity-purpose>
+          </ng-container>
+          <ng-container *ngIf="!hasPublished">
+            <app-activity-purpose [disableForm]="disableForm" [globalData]="globalData"
+                                  (updatePurposeField)="updatePurposeField($event)"></app-activity-purpose>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Components'">
+          <app-activity-components  [disableForm]="disableForm" [globalData]="globalData"
+                                    (updateLastModifiedDate)="updateLastModifiedDate($event)"></app-activity-components>
+        </ng-container>
+        <ng-container *ngSwitchCase="'General Guidance'">
+          <app-activity-general-guidance [globalData]="globalData"
+                                         (updateGeneralGuidanceField)="updateGeneralGuidanceField($event)"></app-activity-general-guidance>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Nature of Change'">
+          <app-noc [globalData]="globalData" (updateNocData)="updateNocData($event)"></app-noc>
+        </ng-container>
+        <ng-container *ngSwitchCase="'External Links'">
+          <app-external-work [globalData]="globalData"></app-external-work>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

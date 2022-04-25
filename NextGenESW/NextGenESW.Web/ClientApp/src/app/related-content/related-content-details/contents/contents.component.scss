@@ -1,0 +1,100 @@
+.headTxt {
+    text-align: left;
+    font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+    letter-spacing: 1px;
+    color: #000000;
+    opacity: 0.9;
+    font-family: 'BarlowSemiCondensed-Medium';
+    padding: 30px 20px 20px 0px;
+    font-size: 24px;
+}
+
+.uploadBox {
+    padding: 5px;
+    max-width: 1407px;
+}
+
+.infoText {
+    text-align: left;
+    font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+    letter-spacing: 1px;
+    color: #000000;
+    opacity: 0.9;
+    font-family: 'BarlowSemiCondensed-Medium';
+    padding: 20px;
+    border-left: 3px solid #00a9e0;
+    background-color: #bfe6f3;
+    font-size: 16px;
+    width: 80%;
+}
+
+.uploadArea {
+    border: 3px dashed rgb(187, 184, 184);
+    min-height: 200px;
+    margin-top: 30px;
+    border-radius: 3px;
+    position: relative;
+    width: 80%;
+}
+
+.dropTxt {
+    text-align: center;
+    font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+    letter-spacing: 1px;
+    color: #000000;
+    opacity: 0.9;
+    font-family: 'BarlowSemiCondensed-Medium';
+    font-size: 20px;
+    //padding: 10px;
+}
+
+input {
+    opacity: 0;
+    position: absolute;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    //border: 1px solid red;
+}
+
+.displayBox {
+    padding: 10px;
+}
+
+.fileNameDisplay {
+    padding: 10px;
+}
+
+.elementName {
+    color: blue;
+    padding-right: 20px;
+    font-weight: bold;
+}
+
+.downloadBtn {
+    margin-top: 3%;
+}
+
+::ng-deep .mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+    background-color: #3E485E;
+}
+
+
+.sortable:hover {
+    cursor: pointer;
+    cursor: hand;
+}
+
+.file_alignment {
+    display: inline-block;
+}
+.btn-parent{
+    position: relative;
+}
+.download-btn_{position: absolute; right: 50%;}
+.delete-btn_{position: absolute; right: 45%;}

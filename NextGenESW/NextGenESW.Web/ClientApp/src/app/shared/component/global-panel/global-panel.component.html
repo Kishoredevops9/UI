@@ -1,0 +1,30 @@
+
+<!-- for global panel -->
+<div  class="global-class">
+    <mat-list>
+      <!-- TODO: Demo <mat-list-item>
+        <mat-icon (click)="showChildComponent('notes')" matTooltip="Notes">file_copy</mat-icon>
+      </mat-list-item> -->
+      <mat-list-item tooltip=""
+      data-tooltip="8033" placement="left"  [hidden]="!isMessageVisible">
+        <img *ngIf="showChatIcon == false" src="../../../../assets/images/chat.svg" width="15"  (click)="showChildComponent('comment')"/>
+        <img *ngIf="showChatIcon == true" src="../../../../assets/images/new_msg_chat.svg" width="15"  (click)="showChildComponent('comment')"/>
+      </mat-list-item>
+    
+    </mat-list>
+  </div>
+  <ng-template cdkPortal #sidenavTemplate="cdkPortal">
+    <mat-card class="global-sidenav-expanded" >
+      <div>
+        <div *ngIf="showComponent == 'comment'">
+          <div  style="margin-left: -10%;">
+          </div>
+          <div style="margin-left: -4%; margin-top: -4%;" (click)="closeComments('comment')"><mat-icon>keyboard_arrow_right</mat-icon></div>
+          
+          <app-comments [globalData]="globalData" [screenName]="screenName"></app-comments>
+        </div>
+       
+      </div>
+    </mat-card>
+  </ng-template>
+  <!-- for global panel -->

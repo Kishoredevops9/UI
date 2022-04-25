@@ -1,0 +1,251 @@
+@import '../../../../../scss/helpers/variables';
+
+.addons{
+    .addons_inner{
+        min-height: 400px;
+        max-height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }    
+    .add-on-body{
+        padding: 20px 30px;
+    }
+    .ekssearchClose{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    .eksaddonsdot{
+        position: absolute;
+        top: 95px;
+        right: 20px;
+    }
+
+    .nodeg {
+        border-bottom: 2px solid green;
+        width: 100%;
+        span.type {
+          display: inline-block;
+          background: green;
+          color: white;
+          padding: 5px;
+          padding: 5px 10px 5px 10px;
+          border-radius: 5px 0px 0px 0px;
+        }
+        span.title {
+          display: inline-block;
+          padding: 5px;
+        }
+        span.contentId{
+        color: #FF7F00;
+        padding-left: 10px;
+    
+        }
+    }
+
+    .node-WI, .node-wi, .node-i, .node-I {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-wi;
+        span.type {
+          background: $content-type-wi;
+        }
+    }
+    .node-D {
+        @extend .nodeg;
+        border-bottom: 2px solid $task-type-d;
+        span.type {
+          background: $task-type-d;
+        }
+      }
+
+    .node-C {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-cg;
+        span.type {
+          background: $content-type-cg;
+          color: black;
+        }
+      }
+    .node-GB , .node-G{
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-gb;
+        span.type {
+            background: $content-type-gb;
+        }
+    }
+    
+    .node-DS {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-ds;
+        span.type {
+            background: $content-type-ds;
+        }
+    }
+    .node-M {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-m;
+        span.type {
+            background: $content-type-m;
+        }
+    }
+    
+    .node-AP {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-ap;
+        span.type {
+            background: $content-type-ap;
+        }
+    }
+    
+    .node-KP,.node-K {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-kp;
+        span.type {
+            background: $content-type-kp;
+        }
+    }
+    
+    .node-CG {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-cg;
+        span.type {
+            background: $content-type-cg;
+            color: black;
+        }
+    }
+    .node-TC {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-toc;
+        span.type {
+            background: $content-type-toc;
+        }
+    }
+    
+    .node-RD  , .node-R{
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-rc;
+        span.type {
+            background: $content-type-rc;
+        }
+    }
+    .node-TOC {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-toc;
+        span.type {
+            background: $content-type-toc;
+        }
+    }
+    
+    .node-RC {
+        @extend .nodeg;
+        border-bottom: 2px solid $content-type-rc;
+        span.type {
+            background: $content-type-rc;
+        }
+    }
+
+    
+    .g {
+        border-bottom: 2px solid green;
+        width: 100%;
+        float: left;
+        aside {
+          float: left;
+          background: green;
+          color: white;
+          padding: 5px;
+          float: left;
+          background: green;
+          color: white;
+          padding: 5px 10px 5px 10px;
+          border-radius: 5px 0px 0px 0px;
+        }
+        span.title {
+          display: inline-block;
+          padding: 5px;
+        }
+        span.contentId{
+        color: #FF7F00;
+        padding-left: 10px;
+    
+        }
+      }
+    
+      .A {
+        @extend .g;
+        border-bottom: 2px solid $content-type-ap;
+        aside {
+          background: $content-type-ap;
+        }
+      }
+
+}
+
+ 
+
+.add-on-footer.eksaddonsFooter {
+     text-align: center; 
+     position: static;
+     bottom: 0px; 
+}
+
+     
+.cdk-drag-placeholder {
+    display: none;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    background: #fff;
+    opacity: 0.3;
+}
+
+.drop-inside {
+    border: 1px solid #00f;
+}
+
+.drop-before {
+    border-top: 1px solid #00f;
+}
+
+.drop-after {
+    border-bottom: 1px solid #00f;
+}
+
+.node-title {
+//   padding:15px;
+    padding:5px;
+  margin: 5px;
+//   background: #eee;
+  cursor: grab;
+}
+
+.node-children {
+    position: relative;
+    transition: height 0.2s;
+    margin-left: 40px;
+}
+.item-notes { 
+  margin-left:20px;
+  color:#aaa;
+ }
+
+ .del-icon { float: right; cursor: pointer;}
+ .activityaddonsClass{
+    position: absolute;
+    top: 0px;
+    background: grey;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    margin: 0 auto;
+    left: 0px;
+    z-index: 1000;
+    .spinnerbox { width: 60px;
+        margin: 0px auto;
+        height: 0px;  }
+ }

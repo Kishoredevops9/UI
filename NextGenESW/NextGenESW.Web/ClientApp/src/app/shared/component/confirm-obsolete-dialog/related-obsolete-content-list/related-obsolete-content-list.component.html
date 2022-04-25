@@ -1,0 +1,58 @@
+<mat-table [dataSource]="contentList?.length ? contentList : emptyData" class="data-table">
+  <ng-container matColumnDef="documentType">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingsContent">Type</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="typeIcon">
+          <span class="type"
+                [ngClass]="assetTypesMapping[element.assetType] | lowercase">{{ assetTypesMapping[element.assetType] }}</span>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="contentId">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingsContent">Id#</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <ng-container>
+        <a (click)="openContent(element)" class="matCell-href"
+           matTooltip="{{element.sourceContentId || element.id}}">
+          {{element.sourceContentId || element.id}}
+        </a>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingsContent">Name</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="titlePart" matTooltip="{{element.title}}">{{element.title}}</div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="pwStatus">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingsContent">Status</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="statusPart" matTooltip="{{element.status}}">{{element.status}}</div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="jc">
+    <mat-header-cell *matHeaderCellDef>
+      <div tooltip="" data-tooltip="8005" placement="bottom" class="headingsContent">J&C</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="jcPart" matTooltip="{{element.jc}}">{{element.jc}}</div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="empty-row">
+    <mat-cell *matCellDef="let element">
+      <div class="text-center no-data-notify">No Documents</div>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedContentColumns">
+  </mat-header-row>
+  <mat-row
+    *matRowDef="let row; columns: contentList?.length ? displayedContentColumns : ['empty-row'];"
+  ></mat-row>
+</mat-table>

@@ -1,0 +1,7 @@
+<mat-menu #eksHelpMenu="matMenu" [overlapTrigger]="false">
+  <div *ngFor="let eksHelp of eksHelpList">
+    <a href="{{ eksHelp.helpUrl }}" target="_blank">
+      <button mat-menu-item>{{eksHelp.title}}</button>
+    </a>
+  </div>
+</mat-menu>

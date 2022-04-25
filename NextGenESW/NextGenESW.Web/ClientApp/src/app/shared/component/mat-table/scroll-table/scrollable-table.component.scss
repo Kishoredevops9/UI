@@ -1,0 +1,53 @@
+.scrollable-table-container {
+  .table-container {
+    overflow: auto;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  tr.mat-footer-row {
+    font-weight: bold;
+  }
+
+  .compacted-row {
+    min-height: 30px !important;
+  }
+
+  .mat-table {
+    overflow: auto;
+    max-height: 100%;
+  }
+
+  .mat-header-row,
+  .mat-footer-row {
+    min-height: 35px;
+  }
+  
+  .mat-cell:not(:first-of-type),
+  .mat-header-cell:not(:first-of-type),
+  .mat-footer-cell:not(:first-of-type) {
+    padding: 0px 5px;
+  }
+
+  .mat-row:hover {
+    background-color: whitesmoke;
+  }
+
+  .mat-table-sticky-border-elem-right {
+    border-left: 1px solid #e0e0e0;
+  }
+
+  .mat-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
+  }
+
+  .selected-row {
+    background-color: gainsboro;
+  }
+
+  .mat-checkbox {
+    margin-top: -5px;
+  }
+}

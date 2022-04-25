@@ -1,0 +1,41 @@
+@import '../../../theme/_colors';
+@import '../../../theme/_shadows';
+@import '../../../theme/_zIndexes';
+
+$icon-button-size: 26px;
+$icon-size: 18px;
+
+.app-zoom {
+  position: absolute;
+  bottom: 32px;
+  right: 16px;
+  z-index: $zindex-content;
+
+  display: flex;
+  align-items: center;
+  gap: 0 2px;
+  background: $white;
+  border: 1px solid $gray;
+  padding: 2px 4px;
+  border-radius: 4px;
+  @include box-shadow;
+
+  &__icon-button {
+    width: $icon-button-size;
+    height: $icon-button-size;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+  }
+
+  &__icon.mat-icon {
+    width: $icon-size;
+    height: $icon-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

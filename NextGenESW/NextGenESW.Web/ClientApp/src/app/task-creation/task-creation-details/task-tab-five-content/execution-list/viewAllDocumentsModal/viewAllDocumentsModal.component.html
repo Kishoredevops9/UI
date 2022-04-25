@@ -1,0 +1,12 @@
+<div class="view-all-files-wrapper">
+  <h2>{{title}}</h2>
+  <ul>
+    <!-- <li *ngFor="let item of filesContainer">{{item.uploadDestinationCode}} : {{item.documentTitle}} <img src="./assets/icons/edit_icon.svg" class="popup-edit_icon" (click)="popupEditPopup(item,item.uploadDestinationCode)" /> <img src="./assets/icons/close_icon.svg" class="popup-delete_icon"  (click)="popupDeletePopup(item)" /> </li> -->
+    <li *ngFor="let item of filesContainer">{{item.uploadDestinationCode}} : {{item.documentTitle}} </li>
+  </ul>
+  <div class="action-buttons">
+    <button mat-button mat-raised-button (click)="close()" class="mat-button mat-primary">
+      Close
+    </button>
+  </div>
+</div>

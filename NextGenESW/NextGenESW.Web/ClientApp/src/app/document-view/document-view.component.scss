@@ -1,0 +1,18 @@
+@import '../../scss/helpers/variables';
+@import '../../scss/helpers/mixins';
+@import '../../scss/helpers/breakpoints';
+@import '../../scss/helpers/placeholders';
+
+.document-wrapper {
+  padding-top: 90px;
+}
+
+mat-dialog-content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  border: 0;
+}

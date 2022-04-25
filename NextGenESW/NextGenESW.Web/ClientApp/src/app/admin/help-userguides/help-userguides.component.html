@@ -1,0 +1,19 @@
+<div class="content-wraper-help-userguides">
+
+    <div fxLayout="row" fxLayoutAlign="start center" class="selectContainer">
+        <div class="textHeaders">Select a menu to edit</div>
+        <select [(ngModel)]="selectType" class="selectValue">
+            <option class="optionClass" value="Help on this Page">Help on this Page</option>
+            <option class="optionClass" value="User Guides">User Guides</option>
+        </select>
+    </div>
+
+    <div class="bodyBox" *ngIf="selectType == 'Help on this Page'">
+        <app-admin-help-on-this-page></app-admin-help-on-this-page>
+    </div>
+
+    <div class="bodyBox" *ngIf="selectType == 'User Guides'">
+        <app-admin-user-guides></app-admin-user-guides>
+    </div>
+
+</div>

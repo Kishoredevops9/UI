@@ -1,0 +1,400 @@
+.base-wrap{
+    width: 100%;
+    float: left;
+    padding: 0 2% 2% 2%;
+    .head-wrap{
+        border: 1px solid #6e808d;
+        padding: 10px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .futureKnowAssets{
+    float: left;
+    width: 100%;
+    padding: 10px 0px 10px 10px;
+    box-sizing: border-box;
+    .head{
+        width: 100%;
+        float: left;
+        .text{
+            font-size: 20px;
+            font-weight: bold;
+            width: 33%;
+            display: inline-block;
+        }
+        .search{
+            display: inline-block;
+            width: 33%;
+        }
+        .btnRight{
+            display: inline-block;
+            width: 30%;
+            text-align: right;
+        }
+        .filterIcon{
+          display: inline-block;
+          width: 1%;
+          margin-left: 1%;
+          top: 30px;
+          position: absolute;
+      }
+    }
+    .allVideo{
+  //     display: grid;
+  // grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  grid-auto-rows: 100px;
+
+        // .videoImg{
+        //     width: 33.3%;
+        // }
+    }
+    }
+    .videoDiv{width: 25%;float: left;padding: 10px 20px 10px 0px;position: relative;
+    .titleBar{width: 100%;padding: 15px 0px 5px 0px;font-weight: bold; color:#707070;}
+    }
+}
+
+//Top Search start
+
+.content-wraper {
+    padding: 5px;
+  }
+  
+  .bodyBox {
+    width: 100%;
+    margin-top: 10px;
+  
+    .leftbox {
+      width: 30%;
+      float: left;
+      border:  1px solid #C2CDEF;
+      padding: 15px;
+      background: #FFFFFF 0% 0% no-repeat padding-box;
+      opacity: 1;
+    }
+    
+    .leftBoxHeading{
+      text-align: left;
+      letter-spacing: 0px;
+      color: #000000;
+      opacity: 1; 
+      font-size: 18px;
+      padding-bottom: 20px;
+    }
+  
+    .rightbox {
+      width: calc(70% - 20px);
+      padding: 15px;
+      float: right;
+      border: 1px solid #c2cdef;
+  
+      h3 {  font-size: 16px; }
+      
+      .propText{
+        text-align: left;
+        letter-spacing: 0px;
+        color: #000000;
+        opacity: 1; 
+        font-size: 18px;
+        padding-bottom: 20px;
+      }
+  
+      mat-form-field  { display: block; clear: both; width: 300px; }
+  
+      .formLabel{
+        width: 170px;
+        margin-bottom: none;
+      }
+      input {
+        width: 100%;
+      }
+      .example-full-width {
+        width: 100%;
+      }
+      .textBoxs{
+        opacity: 0.8;
+        width: 430px;
+      }
+      .mat-form-field-infix {
+      border-top: none;
+      }
+      .btnGroups{
+        padding: 30px 0px 15px 0px;
+      }
+    }
+  }
+  
+  .selectContainer{
+    padding: 15px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #C2CDEF;
+    opacity: 1;
+  }
+  
+  .textHeaders{
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+    font-size: 16px;
+    padding: 0px 25px 0px 10px;
+  }
+  
+  ::ng-deep .mat-form-field.formSelect {
+    padding: 0px !important;
+  
+    .mat-form-field-wrapper {
+      padding: 0px !important;
+    }
+  }
+  
+  .selectValue{
+    padding: 10px;
+    border: 1px solid #707070;
+    opacity: 0.9;
+    width: 300px;
+  }
+  
+  .optionClass{
+    padding: 5px 7px 5px 7px;
+  }
+
+  // Tab
+
+    .mat-tab-group {
+      .mat-tab-label-active {
+        background:#DF4B09;
+        color: white !important;
+        .mat-tab-label-content {
+          color: white;
+        }
+      }
+      .mat-tab-label-container {
+        border-bottom: 2px solid #DF4B09;
+      }
+    }
+  
+    .links {
+      float: right;
+    }
+    .bar-icon {
+      background: url("../../assets/images/icon-filter.svg") no-repeat;
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      cursor: pointer;
+      text-align: right;
+    }
+
+    .filter-card {
+      position: relative;
+      width: 100% !important;
+    
+      background: #ffffff 0% 0% no-repeat padding-box;
+      box-shadow: 0px 0px 5px #0000002e;
+      border: 1px solid #b2b2b22c;
+    }
+    
+    .fieldWidths {
+      width: 100%;
+    }
+    
+    .dueDateFields {
+      width: 180px;
+    }
+    
+    .filterDiv {
+      z-index: 500;
+      padding: 0px 9px 10px 0px;
+      font-size: 12px;
+    }
+    
+    .material-icons.clsFilter {
+      cursor: pointer;
+      font-size: 20px !important;
+    }
+    
+    ::ng-deep .mat-sort-header {
+      &.smallView {
+        .mat-sort-header-container {
+          .mat-sort-header-arrow {
+            display: none !important;
+          }
+        }
+      }
+    
+      &.bigView {
+        .mat-sort-header-container {
+          .mat-sort-header-arrow {
+            display: flex !important;
+          }
+        }
+      }
+    }
+    ::ng-deep .filter-block {
+      .icon {
+        width: 25px;
+        height: 15px;
+        display: inline-block;
+  
+        // &.filter {
+        //   background: url("../../assets/images/icon-filter.svg") 5px 2px no-repeat;
+        // }
+      }
+    }    
+
+    ::ng-deep .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+      display: block; 
+      font-size: 13px;
+      width: 0.5em;
+      top: 10px;
+  }
+  ::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex{
+         border-radius: 0px; 
+      padding: 0px; 
+      background-color: transparent;
+  }
+  ::ng-deep.mat-select {
+    display: inline-block;
+    width: 105%;
+    outline: none;
+}
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #182752 !important;
+}
+
+::ng-deep .mat-tab-group.taskCreation.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #182752 !important;
+}
+::ng-deep .tab-wrapper.cg .mat-tab-group.taskCreation .mat-tab-label-active {
+  background: #182752 !important;
+  color: #FFFFFF !important;
+  padding: 10px 22px;
+  opacity: 1;
+}
+
+::ng-deep.tab-wrapper.cg .mat-tab-group.taskCreation .mat-tab-label-active{
+  background: #182752 !important;
+    color: #FFFFFF !important;
+    padding: 10px 22px;
+    opacity: 1;
+}
+::ng-deep.tab-wrapper.cg .mat-tab-group.taskCreation .mat-tab-label-container {
+  border-bottom: 2px solid #182752 !important;
+}
+::ng-deep.mat-raised-button.mat-primary{
+  background-color: #3C445C;
+    border-radius: 0px;
+    padding: 0px 22px;
+    line-height: 32px;
+}
+::ng-deep.mat-raised-button.mat-accent{
+  background-color: #ffffff;
+  color: black;
+  border-radius: 0px;
+
+}
+
+.editKAssets{
+  background: url('../../assets/images/edit-Icon.png') left no-repeat;
+  width: 25px;
+  cursor: pointer;
+  float: right;
+}
+.deleteKAssets{
+  background: url('../../assets/images/delete-Icon.png') left no-repeat;
+  width: 25px;
+  cursor: pointer;
+  float: right;
+}
+.featuredDateBlock{
+  float: left;
+  width: 50%;
+  font-size: 13px;
+}
+.expiryDateBlock{
+  float: right;
+  width: 50%;
+  text-align: right;
+  font-size: 13px;
+}
+.searchbox {
+  display: block;
+  float: left;
+  margin-top: 10px;
+  width: 100%;
+  border-bottom: 1px solid #c2c2c2;
+  span {
+    float: left;
+    margin-bottom: -10px;
+  }
+  input[type="text"] {
+    padding: 5px;
+    outline: none;
+    color: #16222E;
+    font-size: 14px;
+  }
+}
+::ng-deep.matSearchClass{
+  width: 100% !important;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+}
+::ng-deep.mat-form-field-prefix{
+  white-space: nowrap;
+  flex: none;
+  position: relative;
+  top: 7px;
+}
+//CSS For Featured
+.featured-box{
+  background-color: #FFBB00;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  position: absolute !important;
+  z-index: 100 !important;
+  top: 6%;
+  right: 9%;
+  padding: 3px 3px 3px 5px;
+  span{
+    background: url('../../assets/images/white-star.svg') left no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+}
+.Unfeatured-box{
+  background-color: #FFF;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  position: absolute !important;
+  z-index: 100 !important;
+  top: 6%;
+  right: 9%;
+  padding: 3px 3px 3px 5px;
+  span{
+    background: url('../../assets/images/gray-star.svg') left no-repeat;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+  }
+
+}
+.matspinner {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  z-index: 5;
+  top: 30%;
+  left: 0;
+
+  mat-spinner {
+    margin: auto;
+  }
+}

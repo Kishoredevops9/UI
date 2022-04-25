@@ -1,0 +1,57 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import "../../../../scss/base/_global.scss";
+
+
+mat-cell {
+  background-color: #F5F5F5;
+  border: 1px solid white !important;
+}
+
+mat-header-cell {
+  opacity: 1;
+  text-align: left;
+  font-family: 'BarlowSemiCondensed-Medium';
+  letter-spacing: 1.25px;
+  color: #3E3E3E !important;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+  padding-left: 0% !important;
+}
+
+.header-field {
+  font-family: 'BarlowSemiCondensed-Medium';
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  margin: 20px 0;
+  font-size: large;
+}
+
+.page-layout {
+  width: 97% !important;
+  margin-left: 0px;
+}
+
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4) {
+  flex: 0 0 73px;
+  padding-left: 0.5%;
+}
+
+.button {
+  height: fit-content;
+  float: right;
+}
+
+.mat-header-row {
+  min-height: 0px;
+}
+
+.mat-row {
+  align-items: stretch;
+}

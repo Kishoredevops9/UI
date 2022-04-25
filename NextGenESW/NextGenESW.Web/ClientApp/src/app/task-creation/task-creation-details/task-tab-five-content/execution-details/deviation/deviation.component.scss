@@ -1,0 +1,364 @@
+@import "../../../../../../scss/helpers/mixins";
+@import "../../../../../../scss/helpers/mat-slide-toggle";
+
+.deviation {
+  .deviation_container {
+    padding-left: 10px;
+  }
+
+  .text-area {
+    width: 100%;
+  }
+
+  .deviation-number {
+    padding-left: 30px;
+
+    @include font-face-Inter-Medium(14px, 24px);
+  }
+
+  .risk_width {
+    width: 100%;
+    display: flex;
+    padding-bottom: 2%;
+    align-items: center;
+
+    .input_text_style {
+      padding-left: 10px;
+      background: #fff;
+    }
+  }
+
+  .risk-1 {
+    width: 36%;
+
+    input {
+      width: 40%;
+    }
+  }
+
+  .risk-2 {
+    width: 17%;
+    display: inline-flex;
+  }
+
+  .risk-3 {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    column-gap: 20px;
+    width: 47%;
+
+    ::ng-deep {
+      .docType-Status {
+        position: relative;
+        top: 22px;
+      }
+    }
+
+  }
+
+  .red {
+    color: #333;
+    @include font-face-BarlowSemiCondensed-SemiBold(15px, 30px);
+    background: #FF6666;
+    display: inline-block;
+    padding: 0px 5px;
+    height: 30px;
+
+  }
+
+  .yellow {
+    color: #333;
+    @include font-face-BarlowSemiCondensed-SemiBold(15px, 30px);
+    background: #FFCC66;
+    display: inline-block;
+    padding: 0px 5px;
+    height: 30px;
+
+  }
+
+  .green {
+    color: #333;
+    @include font-face-BarlowSemiCondensed-SemiBold(15px, 30px);
+    background: #66CC00;
+    display: inline-block;
+    padding: 0px 5px;
+    height: 30px;
+  }
+
+  .upload {
+    margin: 15px;
+  }
+
+  .toggle {
+    ::ng-deep mat-slide-toggle {
+      margin: 0px 3px;
+      vertical-align: middle;
+
+      .mat-slide-toggle-label {
+        .mat-slide-toggle-bar {
+          position: relative;
+          width: 36px;
+          height: 17px;
+          background-color: #f5f5f5;
+          border: 1px solid grey;
+
+          .mat-slide-toggle-thumb-container {
+            top: 0px;
+
+            .mat-slide-toggle-thumb {
+              height: 14px;
+              width: 14px;
+              background-color: #02a21b;
+              margin-top: 0px;
+            }
+          }
+        }
+      }
+    }
+
+    .toggle_button {
+      padding-left: 5px;
+    }
+  }
+
+  .deviation_head {
+    @include font-face-Inter-Regular(16px, 24px);
+  }
+
+  .criteria {
+    @include font-face-Inter-Regular(14px, 24px);
+
+    .risk-level-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &.reason {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+
+      .upload {
+        margin: 10px;
+      }
+    }
+  }
+
+  .text-area {
+    @include font-face-Inter-Regular(15px, 25px);
+    padding: 10px;
+    background-color: #fff;
+  }
+
+  mat-radio-button {
+    @include font-face-Inter-Regular(15px, 21px);
+    padding-right: 20px;
+  }
+
+  .criteria_upadate {
+    padding: 10px 0px;
+  }
+
+  .upload-conatiner {
+    padding: 0px 40px 0 0;
+    border: 2px dashed #dfdfdf;
+    margin-left: 16px;
+    margin-bottom: 4px;
+    @include font-face-BarlowSemiCondensed-Medium(14px, auto);
+    display: flex;
+    align-items: center;
+
+  }
+
+  .chip {
+    margin-right: 10px;
+    background: #f5f5f5;
+    color: #2d40e7;
+    @include font-face-BarlowSemiCondensed-Medium(14px, 25px);
+    letter-spacing: 0.58px;
+    padding: 0px 30px 0 10px;
+
+    &.more {
+      background: none;
+      cursor: pointer;
+      padding: 0px;
+    }
+  }
+
+  .more{
+    margin-left: 20px;
+  }
+  .up-height {
+    height: 48px;
+    max-width: 510px;
+    width: 100%;
+  }
+
+  .criteria_right_alignment {
+    padding-right: 20px;
+  }
+
+  .inner_content {
+    @include font-face-Inter-Regular(13px, 24px);
+  }
+
+  .example-margin {
+    margin: 0 10px;
+    @include font-face-BarlowSemiCondensed-Medium(14px, 16px);
+    letter-spacing: 0.58px;
+    float: right;
+
+    ::ng-deep .mat-checkbox-inner-container {
+      top: 0px !important;
+    }
+  }
+
+  .system-risk {
+    float: right;
+    margin-top: 12px;
+    margin-right: 5px;
+  }
+
+  .radio {
+    ::ng-deep .mat-radio-container {
+      width: 16px;
+      height: 16px;
+    }
+
+    ::ng-deep .mat-radio-outer-circle {
+      width: 16px;
+      height: 16px;
+      border-color: white;
+    }
+
+    &.mat-radio-checked {
+      ::ng-deep .mat-radio-outer-circle {
+        border-color: #0089ff;
+      }
+
+      ::ng-deep .mat-radio-inner-circle {
+        width: 16px;
+        height: 16px;
+        background-color: #0089ff;
+      }
+    }
+  }
+
+  .system-risk-wrapper {
+    float: right;
+
+    .info-icon {
+      position: relative;
+      top: 16px;
+
+      .icon {
+        background-size: 13px 14px;
+        background-position: 0 5px;
+      }
+
+      .help {
+        display: none;
+
+        &::after {
+          content: " ";
+          position: absolute;
+          right: 10px;
+          top: -10px;
+          border-top: none;
+          border-right: 10px solid transparent;
+          border-left: 10px solid transparent;
+          border-bottom: 10px solid white;
+        }
+      }
+
+      &:hover .help {
+        display: block;
+        right: 0px;
+        background: #fff;
+        width: 218px;
+        @include font-face-BarlowSemiCondensed-Regular(12px, 18px);
+        letter-spacing: 0.5px;
+        padding: 5px;
+        z-index: 999;
+        position: absolute;
+        top: 28px;
+        box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.5);
+      }
+    }
+  }
+
+  ::ng-deep {
+    .progressbar {
+      position: relative;
+      top: -25px;
+    }
+  }
+
+  .history-logs {
+    @include font-face-Barlow-Regular(14px, 18px);
+    letter-spacing: 0.71px;
+    color: #004eff;
+    cursor: pointer;
+  }
+
+  .action-btn {
+    @include font-face-Inter-Medium(14px, 18px);
+    color: #3e3e3e;
+    border: 1px solid #000;
+    padding: 0px 5px 5px;
+
+    &.recall {
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        background: url("../../../../../../assets/icons/recall_icon.svg") no-repeat;
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+        position: relative;
+        top: 5px;
+        display: inline-block;
+      }
+    }
+
+    &.revise {
+      cursor: pointer;
+
+      &::before {
+        @extend .recall;
+        background: url("../../../../../../assets/icons/revise-icon.svg") no-repeat;
+      }
+    }
+  }  
+}
+.popup-messages{
+  display: flex;
+  margin-bottom: 10px;
+  mat-icon{
+    color: #30A62A;
+  }
+  .popup-messages-text{
+    padding-left: 5px;
+  }
+}
+
+.popup-messages{
+  display: flex;
+  margin-bottom: 10px;
+  mat-icon{
+    color: #30A62A;
+  }
+  .popup-messages-text{
+    padding-left: 5px;
+  }
+}
+.popup-edit_icon, .popup-delete_icon {
+  margin: 5px;
+  cursor: pointer;
+}
+:host {
+  @include slideToggle(green, gray, #fff, 33px, 21px);
+}

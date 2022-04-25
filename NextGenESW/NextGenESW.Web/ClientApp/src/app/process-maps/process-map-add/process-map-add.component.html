@@ -1,0 +1,198 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="">
+  <div class="full-width" [class.obsolete-document-bg]="globalData?.assetStatus === ASSET_STATUSES.OBSOLETE">
+    <div [class]="documentCreateStatus ? 'document-header top-band create-doc': 'document-header top-band'">
+      <div class="header-wrapper">
+        <hr class="line-divider SF">
+
+        <!-- <div class="top-band-wrapper">
+          <span class="document-type SF" *ngIf="contentType">{{ contentType }}</span>
+          <span id="docTitle" class="doc-title name">{{mapTitle}}</span>
+        </div> -->
+
+        <div [className]="previewMode ? 'top-band-wrapper' : 'top-band-wrapper no-open-doc'">
+          <span class="document-type SF" *ngIf="contentType">{{ contentType }}</span>
+          <span id="docTitle" class="doc-title name" *ngIf="globalData && globalData.title">{{ globalData.title }}
+            <span class="jc-title" *ngIf="globalData && globalData.contentId">{{globalData.contentId}}</span>
+            <span class="jc-title" *ngIf="globalData && globalData.version">/</span>
+            <span class="classifier-title" *ngIf="globalData && globalData.version">V {{globalData.version}}</span>
+            <span class="jc-title" *ngIf="UsClassification">/</span>
+            <span class="jc-title" *ngIf="UsClassification">
+              <span>{{UsJurisdiction}}</span>&nbsp;
+              <span *ngIf="UsJurisdiction != NSR">{{UsClassification}}</span>
+            </span>
+          </span>
+          <span class="preview" *ngIf="previewMode">PREVIEW</span>
+          <span *ngIf="showMenuActions == true">
+            <app-top-menu-actions [editMode]="!previewMode" [globalContent]="globalData" (handlePreviewMode)="handleOnPreviewClick($event)"
+              (handleApprovalAction)="handleApprovalAction($event)" (handleRequestAction)="handleRequestAction($event)"
+              [isFormDirty]="isFormDirty" [contentType]="contentType" [requestApprovalOption]="requestApprovalOption">
+            </app-top-menu-actions>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <app-progressbar *ngIf="documentStatus" [docStatus]="documentStatus" [progressBar]='progressBar'
+    [docType]="contentType"></app-progressbar> -->
+    <app-progressbar *ngIf="prograssBarStatus" [progressBar]='progressBar'
+    [docType]="contentType" [docStatus]="prograssBarStatus"></app-progressbar>
+    <div class="clear"></div>
+
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="wrapper tab-wrapper SF">
+        <mat-tab-group (selectedTabChange)="onTabChanged($event)"
+          class="tabGroupMaps ">
+          <mat-tab label="Properties" *ngIf="!hasPublished">
+          </mat-tab>
+          <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="!hasPublished">
+          </mat-tab>
+          <mat-tab label="Step Flow" [disabled]="hasProperty" >
+          </mat-tab>
+          <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="hasPublished">
+          </mat-tab>
+          <mat-tab label="Nature of Change" [disabled]="hasProperty">
+          </mat-tab>
+          <mat-tab label="K-Pack" [disabled]="hasProperty" >
+          </mat-tab>
+          <mat-tab label="Properties" *ngIf="hasPublished">
+          </mat-tab>
+        </mat-tab-group>
+        <ng-container *ngIf="showMenuActions == true">
+          <app-sub-menu-actions [contentCollaboration]="contentCollaboration" [contentType]="contentType"
+                                [globalContent]="globalData" (messageToEmit)="handleOnSaveAsClick($event)"
+                                (revisionMessageToEmit)="handleOnRevisionClick($event)" [isFormDirty]="isFormDirty"  (recallMessageToEmit)="handleOnRecallClick($event)">
+          </app-sub-menu-actions>
+        </ng-container>
+      </div>
+      <div class="tab-detail-content">
+        <ng-container [ngSwitch]="currentTabList[tabGroup?.selectedIndex]?.textLabel">
+          <ng-container *ngSwitchCase="'Properties'">
+            <ng-container *ngIf="!hasPublished">
+              <app-properties (nextTab)="nextTab($event)" (classifierDropDownList)="classifierDropDownList($event)"
+                              [contentType]="contentType" [globalData]="globalData" [updatedContentOwner]="updatedContentOwner" (updateRequestAproval)="updateRequestAproval($event)">
+              </app-properties>
+              <div class="rightBtnProp" *ngIf="!hasProperty" >
+                <button tabindex="-1" class="mat-button last propBtnCls" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("Purpose")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="hasPublished">
+              <app-properties (nextTab)="nextTab($event)" (classifierDropDownList)="classifierDropDownList($event)"
+                              [contentType]="contentType" [preview]="previewMode" [globalData]="globalData" [updatedContentOwner]="updatedContentOwner">
+              </app-properties>
+              <div class="rightBtnProp">
+                <button tabindex="-1" class="mat-button btnLeftSide" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("K-Pack")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Lessons Learned'">
+            <ng-container *ngIf="!hasPublished">
+              <app-lesson-learned [contentType]="contentType" [globalData]="globalData"
+                                  (updateLastModifiedDate)="updateLastModifiedDate($event)" (updateLessonLearned)="updateLessonLearned($event)"></app-lesson-learned>
+            </ng-container>
+            <ng-container *ngIf="hasPublished">
+              <app-lesson-learned [contentType]="contentType" [globalData]="globalData"></app-lesson-learned>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Purpose'">
+            <ng-container *ngIf="!hasPublished">
+              <app-map-purpose (nextTab)="nextTab($event)" [globalData]="globalData"
+                               (updatePurposeField)="updatePurposeField($event)"></app-map-purpose>
+              <div class="mgnt50">
+                <button tabindex="-1" class="mat-button btnLeftSide" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("Properties")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+                <button tabindex="-1" class="mat-button last btnRightSide" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("Step Flow")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="hasPublished">
+              <app-map-purpose (nextTab)="nextTab($event)" [globalData]="globalData"
+                               (updatePurposeField)="updatePurposeField($event)"></app-map-purpose>
+              <div class="mgnt50">
+                <button tabindex="-1" class="mat-button btnLeftSide" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("Step Flow")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+                <button tabindex="-1" class="mat-button last btnRightSide" mat-raised-button color="primary"
+                        (click)='moveToSelectedTab("Nature of Change")'>
+                  <mat-icon>keyboard_backspace</mat-icon>
+                </button>
+              </div>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Step Flow'">
+            <app-step-flow
+              [previewMode]="previewMode"
+              [globalData]="globalData">
+            </app-step-flow>
+            <div class="mgnt50">
+              <button tabindex="-1" class="mat-button"  *ngIf="!hasPublished" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Purpose")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+              <button tabindex="-1" class="mat-button last" *ngIf="!hasPublished"  mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Nature of Change")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+
+              <button tabindex="-1" class="mat-button last" *ngIf="hasPublished"  mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Purpose")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'Nature of Change'">
+            <app-noc [globalData]="globalData"></app-noc>
+            <div class="mgnt50">
+              <button tabindex="-1" class="mat-button btnLeftSide"  *ngIf="!hasPublished" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Step Flow")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+              <button tabindex="-1" class="mat-button btnLeftSide"  *ngIf="hasPublished" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Purpose")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+              <button tabindex="-1" class="mat-button last btnRightSide" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("K-Pack")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+            </div>
+          </ng-container>
+          <ng-container *ngSwitchCase="'K-Pack'">
+            <app-steps-kpack [previewMode]="previewMode" [globalData]="globalData"></app-steps-kpack>
+            <div class="mgnt50">
+              <button tabindex="-1" class="mat-button btnLeftSide" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Nature of Change")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+
+              <button tabindex="-1" class="mat-button last btnRightSide" *ngIf="hasPublished" mat-raised-button color="primary"
+                      (click)='moveToSelectedTab("Properties")'>
+                <mat-icon>keyboard_backspace</mat-icon>
+              </button>
+
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+
+<ng-template #requestApprovalTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

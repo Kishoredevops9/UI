@@ -1,0 +1,17 @@
+<div *ngIf="loading" id="cover-spin"></div>
+
+<span class="content_alignment">
+
+  <span class="flt-right" [ngClass]="publishMode ? 'compliance-published' : ''">
+    <img src="./assets/images/Export_Compliance_Icon.svg" class="image_alignment" />
+    <button class="button_style" (click)="onExportComplianceClick(warningTemplate)">
+      Export Compliance
+    </button>
+  </span>
+
+</span>
+
+<ng-template #warningTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

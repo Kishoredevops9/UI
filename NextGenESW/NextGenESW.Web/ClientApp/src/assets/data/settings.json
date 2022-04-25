@@ -1,0 +1,15 @@
+{
+  "apiUrl": "https://pwcontentmanagement.azurewebsites.net/api",
+  "processMapAPI": "https://eksprocessmap.azurewebsites.net/api/",
+  "clientId": "ed3dec4d-433e-432a-987b-98e77ed397df",
+  "authority": "https://login.microsoftonline.com/9cc95832-d296-4847-9b4e-1171d1aeec91",
+  "authSuccessUrlRedirectDev": "http://localhost:4200/",
+  "authSuccessUrlRedirectProd": "https://eswnextgen.azurewebsites.net/",
+  "siteAdminAPI": "https://eksadmin.azurewebsites.net/api/",
+  "taskAPI": "https://ekstasks.azurewebsites.net/api/",
+  "siteSecurityAPI": "https://ekssecurity.azurewebsites.net/api/",
+  "EKSInternalSearchAPI": "https://pwcontentmanagement.azurewebsites.net/api/Search/SearchContentAsync",
+  "EKSInternalSearchAPI2": "https://pwcontentmanagement.azurewebsites.net/api/Search/SearchContentAsync2",
+  "dashboardContentFlag": true,
+  "eksGroup": "EKS_Content_Owner_"
+}

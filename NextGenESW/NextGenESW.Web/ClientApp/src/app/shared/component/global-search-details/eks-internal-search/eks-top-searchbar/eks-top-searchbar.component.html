@@ -1,0 +1,199 @@
+<div style="float: left;">
+  <div class="eks_page_top">
+    <div class="menu centerMenu">
+      <span class="ekstopleft">
+        <mat-form-field class="angularformcss no-line" floatLabel="never">
+          <input id="globalSearch" type="text" matInput [placeholder]="placeholder" (focus)="removePlaceHolder()"
+            (blur)="setPlaceHolder()" [(ngModel)]="searchTerm" (keydown)="keyDownFunction($event)" />
+        </mat-form-field>
+      </span>
+      <div style="margin-left: 78px;" class="swithBox content-type-slide-wrapper">
+        <mat-label ngClass="labelBeforeSlide">Content</mat-label>
+        <mat-slide-toggle class="content-type-slide" [disabled]="!!disableTaskSearchAndTaskCreation" (change)="searchTypeChange()" [(ngModel)]="searchType">Task</mat-slide-toggle>
+     </div>
+
+
+      <span class="srch_cursor" (click)="onArrowClick()" tooltip="Search" data-tooltip="Search" placement="bottom">
+
+        <mat-icon class="srch_icon_cls">search</mat-icon>
+      </span>
+<span *ngIf="!searchType">
+ 
+      <span class="eks_adv_pos">
+        <a [className]="showSearch ? 'adv_btn active' : 'adv_btn'" (click)="advanceSearch()">Advanced Search <i
+            [className]="showSearch ? 'arrow up' : 'arrow down'"></i></a>
+        <div *ngIf="showSearch" class="advance-search">
+          <form [formGroup]="advanceSearchForm">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="label-heading">Discipline
+                  <a href="javascript:;" tooltip="" data-tooltip="8019" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </label>
+                <mat-form-field>
+                  <mat-label>Select Discipline</mat-label>
+                  <input matInput type="text" readonly [value]="selectedDisciplineValue">
+                  <a mat-button matSuffix mat-icon-button
+                    (click)="showAdvanceSearchDiscipline=(showAdvanceSearchDiscipline)?false:true;showDropDown=false">
+                    <div id="" #toggleButton>
+                      <mat-icon>
+                        {{ ( showAdvanceSearchDiscipline ) ? 'expand_less' : 'expand_more' }}
+                      </mat-icon>
+                    </div>
+                  </a>
+                </mat-form-field>
+                <mat-card class="dropbox" [hidden]="!showAdvanceSearchDiscipline" [config]="{backdrop: 'static'}">
+                  <discipline [flag]="true" [disciplineEvents]="eventsSearchDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                  </discipline>
+                </mat-card>
+              </div>
+              <div class="form-group">
+                <label class="label-heading">Discipline Code
+                  <a href="javascript:;" tooltip="" data-tooltip="8012" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </label>
+                <mat-form-field>
+                  <mat-select formControlName="disciplineCode">
+                    <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList | orderByAlphabet:'code'"
+                      [value]="disciplineCode.code">
+                      {{ disciplineCode.code }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="form-group">
+                <label class="label-heading">Content Owner
+
+                  <a href="javascript:;" tooltip="" data-tooltip="8046" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+
+                </label>
+                <mat-form-field>
+                  <input matInput class="inputMaterial" (ngModelChange)="filterCoauthor($event)" type="text"
+                    [matAutocomplete]="Coauthor" formControlName="contentOwner" name="displayCoAuthor" minlength="8" />
+                  <br />
+                  <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor">
+                    <mat-option *ngFor="let item of filteredCoauthor" [value]="item.email">
+                      <span>{{ item.displayName }}</span>&nbsp;(<span class="email">{{ item.email }}</span>)
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="form-row">
+      
+              <div class="form-group">
+                <label class="label-heading">Version Number
+                  <a href="javascript:;" tooltip="" data-tooltip="8049" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+
+                </label>
+                <mat-form-field>
+                  <input matInput formControlName="version" type="number" min="0" onkeypress="  event.keyCode === 8 || event.charCode >= 48 && event.charCode <= 57" >
+                </mat-form-field>
+              </div>
+           
+              <div class="form-group">
+                <label class="label-heading">Set of Keywords
+                  <a href="javascript:;" tooltip="" data-tooltip="8021" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </label>
+                <mat-form-field>
+                  <input matInput formControlName="keyword">
+                </mat-form-field>
+              </div>
+              <div class="obsolete-status-toggle">
+                <label class="label-heading">Obsolete</label>
+                <mat-slide-toggle formControlName="obsolete">
+                     <span>Yes</span>
+                </mat-slide-toggle>
+              </div>
+            </div>
+
+            <!-- <div class="form-row">
+              <div class="form-group">
+                <label class="label-heading">TPM Date
+                  <a href="javascript:;" tooltip="" data-tooltip="8051" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </label>
+                <div class="form-group" style="padding-left: 0;">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="tpmDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="form-group status">
+                <label class="label-heading">Content Status
+                  <a href="javascript:;" tooltip="" data-tooltip="8052" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </label>
+                <div class="form-group">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="eksInternal" id="gridCheck1">
+                    <label class="form-check-label" for="gridCheck1">
+                      Show only EKS Internal
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" formControlName="eksExternal" id="gridCheck2">
+                    <label class="form-check-label" for="gridCheck2">
+                      Show only EKS External
+
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
+            <button (click)="resetFilters()" class="search-btn" mat-button mat-raised-button
+              color="primary">Reset</button>
+<!-- (click)="onSubmitAdvSearchForm()"  -->
+            <button
+
+            (click)="onArrowClick(); showSearch = false"
+            class="search-btn" mat-button mat-raised-button
+              color="primary">Search</button>
+          </form>
+
+        </div>
+      </span>
+    </span>
+
+    <span *ngIf="searchType">
+
+        <span class="collection_dropdown">
+          <mat-form-field appearance="fill">
+            <mat-label>Restricting Programs</mat-label>
+              <mat-select [disabled]="!toppingList.length" multiple placeholder="" [(ngModel)]="rprog"  (selectionChange)="onChange($event)"   >
+                  <mat-option *ngFor="let topping of toppingList; let i =index" [value]="topping">
+                      {{topping}}
+                  </mat-option>
+              </mat-select>
+
+
+
+
+          </mat-form-field>
+        </span>
+
+
+
+    </span>
+      <div style="clear: both;"></div>
+
+    </div>
+  </div>
+
+</div>

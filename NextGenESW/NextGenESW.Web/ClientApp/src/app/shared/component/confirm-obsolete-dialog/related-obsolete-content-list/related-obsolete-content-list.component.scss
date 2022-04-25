@@ -1,0 +1,203 @@
+@import 'src/scss/helpers/variables';
+@import 'src/scss/helpers/mixins';
+@import 'src/scss/helpers/breakpoints';
+@import 'src/scss/helpers/placeholders';
+
+
+mat-table {
+  .no-data-notify {
+    width: 100%;
+  }
+}
+
+.mat-header-cell {
+  color: #fff !important;
+}
+
+mat-header-row {
+  margin-bottom: 10px;
+  background: #3c445c 0% 0% no-repeat padding-box;
+}
+
+mat-header-row, mat-row {
+  min-height: 40px !important;
+}
+
+mat-header-row:hover {
+  color: #fff;
+  background: #3c445c 0% 0% no-repeat padding-box !important;
+}
+
+mat-cell,
+.matCell-href {
+  text-align: left !important;
+  font: normal normal medium 16px/19px Barlow;
+  font-family: 'Barlow-Medium' !important;
+  letter-spacing: 0px !important;
+  color: #000000 !important;
+  opacity: 1;
+  font-size: 13px !important;
+}
+
+.matCell-href {
+  color: #354BBB !important;
+}
+
+
+.mat-row {
+  &:nth-child(even) {
+    background-color: $table-primary-bg;
+  }
+
+  &:nth-child(odd) {
+    background-color: $white-color;
+  }
+
+  .type {
+    color: $white-color;
+    /* width: 27px;
+    height: 27px; */
+    padding: 1px 5px !important;
+    @include font-face-BarlowSemiCondensed-Regular(15px, 1.6rem);
+    text-align: center;
+    letter-spacing: 0.63px;
+    display: block;
+
+    &.wi {
+      background: $type-basic-bg;
+    }
+
+    &.cd {
+      background: $type-primary-bg;
+    }
+
+    &.ap {
+      background: $type-secondary-bg;
+    }
+
+    &.cg {
+      background: $type-third-bg;
+      color: $black-color;
+    }
+
+    &.gb {
+      background: $type-third-bg;
+    }
+  }
+}
+
+
+.mat-column-documentType {
+  flex: 0 0 15% !important;
+  width: 15% !important;
+}
+
+.mat-column-contentId {
+  flex: 0 0 16% !important;
+  width: 16% !important;
+}
+
+.mat-column-pwStatus {
+  flex: 0 0 13% !important;
+  width: 13% !important;
+}
+
+.mat-column-jc {
+  flex: 0 0 8% !important;
+  width: 8% !important;
+}
+
+.sf,
+.SF,
+.step flow,
+.Step Flow,
+.step,
+.Step {
+  border-radius: 35px !important;
+  background-color: $content-type-sf !important;
+}
+
+.s,
+.p,
+.sp,
+.SP {
+  border-radius: 35px !important;
+  background-color: $content-type-sp !important;
+  color: $white-color !important;
+}
+
+.Map,
+.map {
+  background-color: #DF4B09 !important;
+}
+
+.M,
+.m,
+.processmaps,
+.map {
+  background-color: #DF4B09 !important;
+  min-width: 27px !important;
+}
+
+.GB,
+.gb {
+  background-color: $content-type-gb !important;
+}
+
+.DS,
+.ds {
+  background-color: $content-type-ds !important;
+}
+
+
+.WI,
+.wi {
+  background-color: $content-type-wi !important;
+}
+
+.AP,
+.ap {
+  background-color: $content-type-ap !important;
+}
+
+
+.wi,
+.gb,
+.cg,
+.ap,
+.map,
+.ds,
+.toc,
+.processmaps,
+.rc,
+.kp,
+.m,
+.sf {
+  border-radius: 35px !important;
+}
+
+.tc,
+.toc {
+  background-color: $content-type-toc !important;
+}
+
+.gb {
+  background: $content-type-gb !important;
+}
+
+.ds {
+  background: $content-type-ds !important;
+}
+
+.cg, .CG {
+  color: black !important;
+  background-color: $content-type-cg !important;
+}
+
+.rc {
+  background-color: $content-type-rc !important;
+}
+
+.kp {
+  background-color: $content-type-kp !important;
+}

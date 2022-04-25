@@ -1,0 +1,145 @@
+
+<div class="outline_box"></div>
+<div class="global-inner-content">
+  <span class="inner-dropdown">
+    <div class="row-style">
+      <!-- <div class="actions">
+    <p>
+      <mat-icon class="edit">edit</mat-icon>
+    </p>
+    <label>Revise</label>
+  </div> -->
+      <span style="margin-right: 5%">
+        <div class="actions" [matMenuTriggerFor]="beforeMenu">
+          <div style="text-align: center">
+            <img style="padding-bottom: 4px" src="../../../../../assets/images/where_use.svg" width="16px" />
+          </div>
+          <div>
+            <label>{{ selectedLabel }}</label>
+            <img style="padding-left: 8px; display: inline-block !important"
+              src="../../../../../assets/images/downArrow5.svg" width="20px" />
+          </div>
+        </div>
+        <mat-menu #beforeMenu="matMenu" class="contentMatMenu" xPosition="before">
+          <button mat-menu-item (click)="handleOnMatMenuClick('Content')">
+            <b>Content</b>
+          </button>
+          <button mat-menu-item style="padding-left: 16px" (click)="handleOnMatMenuClick('Level Up')">
+            Level Up
+          </button>
+          <button mat-menu-item style="padding-left: 16px" (click)="handleOnMatMenuClick('Level Down')">
+            Level Down
+          </button>
+          <button mat-menu-item style="padding-left: 16px" (click)="handleOnMatMenuClick('Both')">
+            Both
+          </button>
+          <button mat-menu-item (click)="handleOnMatMenuClick('Task')">
+            <b>Task</b>
+          </button>
+        </mat-menu>
+      </span>
+      <span style="margin-right: 1%">
+        <div class="actions">
+          <div class="actions" (click)="openModal(shareurlbox)">
+            <p>
+              <mat-icon class="edit">share</mat-icon>
+            </p>
+            <label>Share</label>
+          </div>
+        </div>
+      </span>
+      <!-- <div class="actions">
+    <p>
+      <mat-icon class="edit">add_circle</mat-icon>
+    </p>
+    <label>Add to task</label>
+  </div>
+  <div class="actions">
+    <p>
+      <mat-icon style="font-size: 19px">bookmark_border</mat-icon>
+    </p>
+    <label>Bookmark</label>
+  </div> -->
+    </div>
+    <div class="box-field">
+      <div style="display: grid">
+        <span class="{{ contentTypeInfo.assettypecode }}"> </span>
+        <!-- <span style="margin-left: 3%; margin-top: 2%;"><strong>Title:</strong>&nbsp;{{ contentTypeInfo.title }}
+          <br>
+          <span *ngIf="contentTypeInfo.version"><strong>Version:</strong>&nbsp;{{ contentTypeInfo.version }}</span>
+        </span> -->
+        <span style="margin-left: 3%">
+          <strong>Purpose:</strong>
+          <app-html-viewer class="preview" [content]="contentTypeInfo.purpose"></app-html-viewer>
+        </span>
+      </div>
+    </div>
+  </span>
+  <span class="global-inner-table-dialog" *ngIf="showDialog">
+    <div style="display: grid">
+      <span style="margin: 2% 0%;">
+        <span class="global-inner-headings"><label><b>Where Used </b></label> <sub> {{starSign}} </sub> <label
+            class="count">{{ totalCount }}</label></span>
+        <span class="selected-label">
+          <label style="margin-right: 8px;"><b>Selected:</b></label>
+          <label style="background-color: #0000002B; padding: 0 3px;"><b>{{
+              selectedLabel
+              }}</b></label>
+        </span>
+      </span>
+      <span>
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <span class="{{ element.assetType }}">{{
+                element.contentType
+                }}</span>
+              <div style="display: grid;padding-left: 10px;">
+                <span style="word-break: 'break-word';text-transform: uppercase;">{{
+                  element.title
+                  }}</span>
+                <span><a target="_blank" style="color: #0076ff;cursor: pointer;"
+                    (click)="handleOnContentIDClick(element)">{{element.sourceContentId ||
+                    element.referencedContentId}}</a></span>
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef>Date </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              {{ element.assetLastModified }}
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
+          </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns; let index = index">
+          </mat-row>
+        </mat-table>
+      </span>
+    </div>
+  </span>
+</div>
+<ng-template #shareurlbox>
+  <div class="modal" tabindex="-1" role="dialog" style="display: block !important">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="shareurlModel">
+          <div><h5 class="modal-title">Share URL</h5></div>
+          <div><mat-icon class="close" (click)="handleOnCloseButtonClick()">close</mat-icon></div>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <input type="email" class="form-control shareurltext" id="inputEmail4" value="{{ componenttypeurl }}"
+                  #userinput />
+                <a href="#" (click)="copyInputMessage(userinput)"><i class="glyphicon glyphicon-copy"></i> Copy URL</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

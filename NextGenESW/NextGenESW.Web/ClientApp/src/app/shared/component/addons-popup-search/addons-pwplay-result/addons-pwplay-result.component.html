@@ -1,0 +1,30 @@
+<div class="h-100 w-100 p-1">
+  <app-mat-table *ngIf="pwPlayGridOptions"
+                 [gridHeight]="'550px'"
+                 [gridOptions]="pwPlayGridOptions"
+                 [rowData]="(pwPlayGridData$ | async) || []"
+                 [pageSize]="10"
+                 [partialDatasource]="true"
+                 [pageLength]="(pwPlaySearchResult$ | async).totalResult"
+                 (onPageChanged)="onPageChanged($event)">
+  </app-mat-table>
+</div>
+
+<ng-template #videoCellRenderer
+             let-rowData="rowData">
+  <iframe allowfullscreen=""
+          frameborder="0"
+          height="100"
+          width="100%"
+          [src]="rowData.playbackUrl | safe: 'resourceUrl'"></iframe>
+  <img *ngIf="!rowData.playbackUrl"
+       height="150"
+       width="200"
+       src="{{ rowData.thumbnailUrl }}" />
+</ng-template>
+
+<ng-template #descriptionRenderer
+             let-rowData="rowData">
+  <div *ngIf="rowData.description"
+       [innerHTML]="rowData.description | safe : 'html'"></div>
+</ng-template>

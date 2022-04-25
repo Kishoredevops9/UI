@@ -1,0 +1,264 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+
+.EKS_btns_ap {
+  color: black;
+
+  span {
+    color: #fff;
+    background-color: $content-type-ap;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.EKS_btns_wi {
+  color: black;
+
+  span {
+    color: #fff;
+    background-color: $content-type-wi;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.EKS_btns_cg {
+  color: black;
+
+  span {
+    color: black;
+    background-color: $content-type-cg;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.EKS_btns_gb {
+  color: black;
+
+  span {
+    color: #fff;
+    background-color: $content-type-gb;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.EKS_btns_rc {
+  color: black;
+
+  span {
+    color: black;
+    background-color: $content-type-rc;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.EKS_btns_kp {
+  color: #fff;
+
+  span {
+    color: #fff;
+    background-color: $content-type-kp;
+    padding: 12px;
+  }
+
+  label {
+    padding: 12px;
+  }
+}
+
+.toc-eks {
+  color: #202a44;
+  font-size: 15px;
+  font-family: "BarlowSemiCondensed-Medium";
+}
+
+.draged-list-wi {
+  @include draged-list-content($content-type-wi);
+  padding: 5px 4px 2px 4px;
+}
+
+.draged-list-ap {
+  @include draged-list-content($content-type-ap);
+  padding: 5px 4px 2px 4px;
+}
+
+.draged-list-cg {
+  @include draged-list-content($content-type-cg);
+  padding: 5px 4px 2px 4px;
+}
+
+.draged-list-rc {
+  @include draged-list-content($content-type-rc);
+  color: #ffffff;
+  padding: 5px 4px 2px 4px;
+}
+
+.draged-list-gb {
+  @include draged-list-content($content-type-gb);
+  color: #ffffff;
+  padding: 5px 4px 2px 4px;
+}
+
+.draged-list-kp {
+  font-size: 18px;
+  color: white;
+  background: $content-type-kp;
+  padding: 6px;
+  margin-right: 10px;
+}
+
+::ng-deep .draged-list-toc {
+  @include draged-list-content($content-type-toc);
+  color: #ffffff;
+  padding: 5px 4px 2px 4px;
+}
+
+.EKS_sign_ap {
+  color: #fff;
+  background-color: $content-type-ap;
+}
+
+.EKS_sign_wi {
+  color: #fff;
+  background-color: $content-type-wi;
+}
+
+.EKS_sign_cg {
+  color: black;
+  background-color: $content-type-cg;
+}
+
+.EKS_sign_gb {
+  color: #fff;
+  background-color: $content-type-gb;
+}
+
+.EKS_sign_kp {
+  color: #fff;
+  background-color: $content-type-kp;
+}
+
+.eks-buttons {
+  border-right: 1px solid gray;
+}
+
+.divider {
+  border-right: 1px solid gray;
+  margin-top: -10px;
+}
+
+::ng-deep .content {
+  width: 100%;
+}
+
+.full-width {
+  width: 99%;
+}
+
+.header-row {
+  margin-top: 2%;
+}
+
+.mat-radio-outer-circle {
+  border-radius: 0 !important;
+}
+
+.content-selected {
+  margin-top: 4%;
+
+  .search-label {
+    padding-top: 1%;
+  }
+}
+
+.bottom-line-wi {
+  border-bottom: 3px solid $content-type-wi;
+}
+
+.bottom-line-ap {
+  border-bottom: 3px solid $content-type-ap;
+}
+
+.bottom-line-cg {
+  border-bottom: 3px solid $content-type-cg;
+}
+
+.bottom-line-gb {
+  border-bottom: 3px solid $content-type-gb;
+}
+
+.bottom-line-rc {
+  border-bottom: 3px solid $content-type-rc;
+}
+
+.bottom-line-kp {
+  border-bottom: 3px solid $content-type-kp;
+}
+
+.disabled-pointer {
+  pointer-events: none;
+}
+
+.actions {
+  float: right;
+  margin-right: 1%;
+
+  .expand {
+    cursor: pointer;
+  }
+}
+ 
+.search-header {
+  width: 25%;
+}
+
+.mat-expansion-panel-header.mat-expanded {
+  height: 30px !important;
+}
+
+.content-search {
+  display: inline-flex;
+}
+
+.content-label {
+  width: 100%;
+}
+
+.search-label {
+  padding: 0 75px;
+}
+
+.custom {
+  float: right;
+}
+
+.input-text {
+  padding-left: 10px;
+}
+
+.toc-border {
+  width: 100%;
+  padding-top: 43px;
+  border-bottom: 2px dashed $content-type-toc;
+}

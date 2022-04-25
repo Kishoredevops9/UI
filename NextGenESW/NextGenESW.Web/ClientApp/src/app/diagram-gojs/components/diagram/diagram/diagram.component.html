@@ -1,0 +1,42 @@
+<div class="app-diagram">
+  <ng-container
+   *ngIf="!loading; else: loader"
+  >
+    <gojs-diagram
+      divClassName="app-diagram__diagram"
+      [nodeDataArray]="nodeDataArray"
+      [linkDataArray]="linkDataArray"
+      [initDiagram]="initDiagram"
+      [skipsDiagramUpdate]="skipsDiagramUpdate"
+    ></gojs-diagram>
+    <app-palette
+      *ngIf="!configuration.viewOnly"
+      [paletteItems]="paletteItems">
+    </app-palette>
+    <app-zoom
+      [diagramApi]="api"
+    ></app-zoom>
+    <app-context-menu
+      [paletteItems]="paletteItems"
+      [linksVisibility]="linksVisibility"
+      [diagramApi]="api"
+    ></app-context-menu>
+    <app-see-through
+      [mapId]="mapId"
+      [diagramApi]="api"
+    ></app-see-through>
+  </ng-container>
+</div>
+
+<ng-template #loader>
+  Loading map ...
+</ng-template>
+
+<ng-template #header>
+  <app-diagram-header
+    [id]="mapId"
+    [linksVisibility]="linksVisibility"
+    (linksVisibilityChange)="linksVisibility=$event"
+    [diagramApi]="api"
+  ></app-diagram-header>
+</ng-template>

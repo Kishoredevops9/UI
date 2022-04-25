@@ -1,0 +1,39 @@
+<div class="task-review-wrapper">
+  <div class="review-tabs">
+    <div class="workflow-wrapper">
+      <mat-tab-group class="workflow" mat-align-tabs="start" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab label="Activity"></mat-tab>
+        <mat-tab label="Deviations"> </mat-tab>
+      </mat-tab-group>
+
+      <div class="approval-status-wrapper">
+        <span>My Pending Approval </span>
+        <mat-slide-toggle [(ngModel)]="isChecked" class="toggle"></mat-slide-toggle>
+        <span> All Pending Approvals</span>
+      </div>
+    </div>
+
+
+    <div class="review-action">
+      <button mat-button [matMenuTriggerFor]="menu"><i class='icon'>...</i>
+        Action</button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="handleOnApproveSelected()">Approve Selected</button>
+        <button mat-menu-item (click)="handleOnSendBackdeviation()">Send Back Selected</button>
+      </mat-menu>
+    </div>
+
+    <div class="review-section">
+      <div class="review-details">
+        <div *ngIf="loading" id="cover-spin"></div>
+        <app-activity-approval-workflow *ngIf="activitySelected" [selected]="selectedActivity"
+          [selectedActivityName]="selectedActivityName" [reviewData]="reviewData" [isChecked]='isChecked'
+          (actvities)="selectedActivtyData($event)" [criteriaResult]="criteriaResult">
+        </app-activity-approval-workflow>
+        <app-deviation-approval-workflow *ngIf="deviationSelected" [isChecked]='isChecked'
+          (deviations)="selectedDeviationData($event)" [deviationReviewData]="deviationReviewData">
+        </app-deviation-approval-workflow>
+      </div>
+    </div>
+  </div>
+</div>

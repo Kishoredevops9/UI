@@ -1,0 +1,389 @@
+<div class="display-block deviation" *ngIf="!isChecked;else all_pending_approval_content">
+  <div *ngFor="let item of deviationReviewData">
+    <div class="tasks" *ngFor="let activitiesData of item.activityDtoList">
+      <div class="header" *ngIf="userEmail === activitiesData.submittedDeviationDtoList[0].CurrentApproverEmail">
+        <div class="header_top">
+          <div class="review-author">
+            <mat-checkbox *ngIf="userEmail === activitiesData.submittedDeviationDtoList[0].CurrentApproverEmail"
+              class="style-checked" (change)="onChange(activitiesData, $event.checked, item)"></mat-checkbox>
+
+            <div class="header">
+              <div class="wrapper" *ngIf="item.stepFlowTitle?.length>0">
+                <div class="sf type">SF</div>
+                <div class="title">{{item.stepFlowTitle}}</div>
+              </div>
+              <div class="wrapper" *ngIf="item.stepTitle?.length>0">
+                <div class="sp type">SP</div>
+                <div class="title">{{item.stepTitle}}</div>
+              </div>
+              <div class="wrapper" *ngIf="item.disciplineTitle?.length>0">
+                <div class="d type">D</div>
+                <div class="title">{{item.disciplineTitle}}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="header_bottom">
+          <div class="wrapper">
+            <div class="a type" *ngIf="activitiesData.type=='A'">{{activitiesData.type}}</div>
+            <div class="title" *ngIf="activitiesData.title?.length>0">{{activitiesData.title}}</div>
+            <div class="doc-details">
+              <span class="doc-number" *ngIf="activitiesData.contentId?.length>0">{{activitiesData.contentId}} /</span>
+              <span class="jc-number" *ngIf="activitiesData.usJurisdiction?.length>0">{{activitiesData.usJurisdiction}}
+                {{activitiesData.usClassification}}</span>
+            </div>
+          </div>
+          <app-progressbar [progressBar]='progressBar'
+            [docStatus]='activitiesData.submittedDeviationDtoList[0].deviationStatusCode' [docType]="docType">
+          </app-progressbar>
+          <div class="reviewCountData">
+            <a href="javascript:;" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'all')">
+              <mat-icon> attach_file</mat-icon> {{activitiesData.submittedDeviationDtoList[0].taskExecutionUploads.length}}
+            </a>
+          </div>
+        </div>
+
+      </div>
+      <div class="deviation-table"
+        *ngIf="userEmail === activitiesData.submittedDeviationDtoList[0].CurrentApproverEmail">
+        <div class="content-block">
+
+          <div class="col">
+            <div class="wrapper">
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].submittedOn?.length > 0">
+                <span class="designation">Submitted</span>
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].submittedOn | date}}</span>
+              </div>
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].InitiatedByName?.length > 0">
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].InitiatedByName}}</span>
+                <span class="designation">Submitter Engineer</span>
+              </div>
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].CurrentApproverName?.length > 0">
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].CurrentApproverName}}</span>
+                <span class="designation">Approving Manager</span>
+              </div>
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].DisciplineChiefName?.length > 0">
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].DisciplineChiefName}}</span>
+                <span class="designation">Discipline Chief</span>
+              </div>
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].CIPTLeadName?.length > 0">
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].CIPTLeadName}}</span>
+                <span class="designation">CIPT Leader</span>
+              </div>
+              <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].ProgramChiefName?.length > 0">
+                <span class="name">{{activitiesData.submittedDeviationDtoList[0].ProgramChiefName}}</span>
+                <span class="designation">Program Chief</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col details">
+            <!-- <div class="box-wrapper">
+            <span>Details</span>
+            <span>
+              <mat-icon>arrow_downward</mat-icon>
+            </span>
+          </div> -->
+            <div class="item-details">
+              <div class=" box">
+                <label>Criteria</label>
+                <div class="content-wrapper">
+                  {{ removeHTMLTags(activitiesData.submittedDeviationDtoList[0].assetStatement) }}
+                </div>
+              </div>
+
+              <div class="box">
+                <label>Rationale</label>
+                <div class="content-wrapper">
+                  {{ removeHTMLTags(activitiesData.submittedDeviationDtoList[0].assetRationale) }}
+                </div>
+              </div>
+              <div class="cg-status">
+                <label>Should the criteria be updated?</label>
+                <div class="content-wrapper">
+                  <div class="status" *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">Yes</div>
+                  <div class="status" *ngIf="!activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">No</div>
+                  <div class="suggestion" *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd"><a href="javascript:;" (click)="toggleContent()">View Suggestions</a></div>
+                </div>
+              </div>
+            </div>
+
+
+            <div *ngIf="linkComponents" class="link-components">
+              <div class="deviation-form-results">
+                <div class="wrapper">
+                  <div class="input">
+                    <div class="heading">Explain what was different.</div>
+                    <!-- <div class="attachment"><a href="javascript:;">
+                        <mat-icon> attach_file</mat-icon> 01
+                      </a></div> -->
+                  </div>
+                  <div class="output">
+                    {{activitiesData.submittedDeviationDtoList[0].difference}}
+                  </div>
+                </div>
+                <div class="wrapper">
+                  <div class="input">
+                    <div class="heading">reason that it’s acceptable.</div>
+                    <div class="attachment">
+                      <a href="javascript:;" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'DJUST')">
+                        <mat-icon> attach_file</mat-icon> {{ moreDataReason(activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, activitiesData.submittedDeviationDtoList[0].taskComponentId, 'DJUST')
+                      }}
+                      </a>
+
+                    </div>
+                  </div>
+                  <div class="output">
+                    {{activitiesData.submittedDeviationDtoList[0].reason}}
+                  </div>
+                </div>
+                <div class="wrapper">
+                  <div class="input">
+                    <div class="heading">Should the criteria be updated?</div>
+                    <div class="attachment">
+                      <span *ngIf="!activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">No</span>
+                      <mat-slide-toggle class="toggle" [disabled]="disableCriteria" ></mat-slide-toggle>
+                      <span *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd"> Yes</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="wrapper">
+                  <div class="input">
+                    <div class="heading">Risk Mitigation Proposal.</div>
+                    <div class="attachment"><span class="small">(required for Yellow and Red risk per </span>
+                      <a href="javascript:;" class="small">PW1.5.1.1.L3</a>) <a href="javascript:;" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'RSKMP')">
+                        <mat-icon> attach_file</mat-icon> {{ moreDataReason(activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, activitiesData.submittedDeviationDtoList[0].taskComponentId, 'RSKMP')
+                      }}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="output">
+                    {{activitiesData.submittedDeviationDtoList[0].riskMitigationPlan}}
+                  </div>
+                </div>
+                <div class="wrapper">
+                  <div class="input">
+                    <div class="heading">Program Risk ID.</div>
+                    <!-- <div class="attachment">
+                      <a href="javascript:;">
+                        <mat-icon> attach_file</mat-icon> 01
+                      </a>
+                    </div> -->
+                    <div class="output">
+                      {{activitiesData.submittedDeviationDtoList[0].programRiskId}}
+                    </div>
+                  </div>
+                  <!-- <div class="output">
+                    {{activitiesData.submittedDeviationDtoList[0].programRiskId}}
+                  </div> -->
+                </div>
+
+              </div>
+            </div>
+            <div class="action-buttons">
+              <a (click)="toggleContent()">{{content}}
+                <i [ngClass]="linkComponents ? 'arrow up' : 'arrow down'"></i></a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #all_pending_approval_content>
+  <div class="display-block deviation">
+    <div *ngFor="let item of deviationReviewData">
+      <div class="tasks" *ngFor="let activitiesData of item.activityDtoList">
+        <div class="header">
+          <div class="header_top">
+            <div
+              [class]="userEmail === activitiesData.submittedDeviationDtoList[0].CurrentApproverEmail ? 'review-author': 'review-author no-checkbox'">
+              <mat-checkbox *ngIf="userEmail === activitiesData.submittedDeviationDtoList[0].CurrentApproverEmail"
+                class="style-checked" (change)="onChange(activitiesData, $event.checked, item)"></mat-checkbox>
+
+              <div class="header">
+                <div class="wrapper" *ngIf="item.stepFlowTitle?.length>0">
+                  <div class="sf type">SF</div>
+                  <div class="title">{{item.stepFlowTitle}}</div>
+                </div>
+                <div class="wrapper" *ngIf="item.stepTitle?.length>0">
+                  <div class="sp type">SP</div>
+                  <div class="title">{{item.stepTitle}}</div>
+                </div>
+                <div class="wrapper" *ngIf="item.disciplineTitle?.length>0">
+                  <div class="d type">D</div>
+                  <div class="title">{{item.disciplineTitle}}</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="header_bottom">
+            <div class="wrapper">
+              <div class="a type" *ngIf="activitiesData.type=='A'">{{activitiesData.type}}</div>
+              <div class="title" *ngIf="activitiesData.title?.length>0">{{activitiesData.title}}</div>
+              <div class="doc-details">
+                <span class="doc-number" *ngIf="activitiesData.contentId?.length>0">{{activitiesData.contentId}}
+                  /</span>
+                <span class="jc-number"
+                  *ngIf="activitiesData.usJurisdiction?.length>0">{{activitiesData.usJurisdiction}}
+                  {{activitiesData.usClassification}}</span>
+              </div>
+            </div>
+            <app-progressbar [progressBar]='progressBar'></app-progressbar>
+            <div class="reviewCountData">
+              <a href="javascript:;" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'all')">
+                <mat-icon> attach_file</mat-icon> {{activitiesData.submittedDeviationDtoList[0].taskExecutionUploads.length}}
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="deviation-table">
+          <div class="content-block">
+
+            <div class="col">
+              <div class="wrapper">
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].submittedOn?.length > 0">
+                  <span class="designation">Submitted</span>
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].submittedOn | date}}</span>
+                </div>
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].InitiatedByName?.length > 0">
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].InitiatedByName}}</span>
+                  <span class="designation">Submitter Engineer</span>
+                </div>
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].CurrentApproverName?.length > 0">
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].CurrentApproverName}}</span>
+                  <span class="designation">Approving Manager</span>
+                </div>
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].DisciplineChiefName?.length > 0">
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].DisciplineChiefName}}</span>
+                  <span class="designation">Discipline Chief</span>
+                </div>
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].CIPTLeadName?.length > 0">
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].CIPTLeadName}}</span>
+                  <span class="designation">CIPT Leader</span>
+                </div>
+                <div class="author" *ngIf="activitiesData.submittedDeviationDtoList[0].ProgramChiefName?.length > 0">
+                  <span class="name">{{activitiesData.submittedDeviationDtoList[0].ProgramChiefName}}</span>
+                  <span class="designation">Program Chief</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col details">
+              <!-- <div class="box-wrapper">
+              <span>Details</span>
+              <span>
+                <mat-icon>arrow_downward</mat-icon>
+              </span>
+            </div> -->
+              <div class="item-details">
+                <div class=" box">
+                  <label>Criteria</label>
+                  <div class="content-wrapper">
+                    {{ removeHTMLTags(activitiesData.submittedDeviationDtoList[0].assetStatement) }}
+                  </div>
+                </div>
+
+                <div class="box">
+                  <label>Rationale</label>
+                  <div class="content-wrapper">
+                    {{ removeHTMLTags(activitiesData.submittedDeviationDtoList[0].assetRationale) }}
+                  </div>
+                </div>
+                <div class="content-wrapper">
+                  <div class="status" *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">Yes</div>
+                  <div class="status" *ngIf="!activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">No</div>
+                  <div class="suggestion" *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd"><a href="javascript:;" (click)="toggleContent()">View Suggestions</a></div>
+                </div>
+              </div>
+
+
+              <div *ngIf="linkComponents" class="link-components">
+                <div class="deviation-form-results">
+                  <div class="wrapper">
+                    <div class="input">
+                      <div class="heading">Explain what was different.</div>
+                      <!-- <div class="attachment"><a href="javascript:;">
+                          <mat-icon> attach_file</mat-icon> 01
+                        </a></div> -->
+                    </div>
+                    <div class="output">
+                      {{activitiesData.submittedDeviationDtoList[0].difference}}
+                    </div>
+                  </div>
+                  <div class="wrapper">
+                    <div class="input">
+                      <div class="heading">reason that it’s acceptable.</div>
+                      <div class="attachment"><a href="javascript:;" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'DJUST')">
+                          <mat-icon> attach_file</mat-icon> {{ moreDataReason(activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, activitiesData.submittedDeviationDtoList[0].taskComponentId, 'DJUST')
+                        }}
+                        </a></div>
+                    </div>
+                    <div class="output">
+                      {{activitiesData.submittedDeviationDtoList[0].reason}}
+                    </div>
+                  </div>
+                  <div class="wrapper">
+                    <div class="input">
+                      <div class="heading">Should the criteria be updated?</div>
+                      <div class="attachment">
+                        <span *ngIf="!activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd">No</span>
+                        <mat-slide-toggle class="toggle" [disabled]="disableCriteria"></mat-slide-toggle>
+                        <span *ngIf="activitiesData.submittedDeviationDtoList[0].criteriaUpdateInd"> Yes</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wrapper">
+                    <div class="input">
+                      <div class="heading">Risk Mitigation Proposal.</div>
+                      <div class="attachment"><span class="small">(required for Yellow and Red risk per </span>
+                        <a href="javascript:;" class="small" (click)="viewAllDocuments(activitiesData.submittedDeviationDtoList[0].taskComponentId, activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, 'RSKMP')">PW1.5.1.1.L3</a>) <a href="javascript:;">
+                          <mat-icon> attach_file</mat-icon> {{ moreDataReason(activitiesData.submittedDeviationDtoList[0].taskExecutionUploads, activitiesData.submittedDeviationDtoList[0].taskComponentId, 'RSKMP')
+                        }}
+                        </a>
+                      </div>
+                    </div>
+                    <div class="output">
+                      {{activitiesData.submittedDeviationDtoList[0].riskMitigationPlan}}
+                    </div>
+                  </div>
+                  <div class="wrapper">
+                    <div class="input">
+                      <div class="heading">Program Risk ID.</div>
+                      <div class="output">
+                        {{activitiesData.submittedDeviationDtoList[0].programRiskId}}
+                      </div>
+                      <!-- <div class="attachment">
+                        <a href="javascript:;">
+                          <mat-icon> attach_file</mat-icon> 01
+                        </a>
+                      </div> -->
+                    </div>
+                    <!-- <div class="output">
+                      {{activitiesData.submittedDeviationDtoList[0].programRiskId}}
+                    </div> -->
+                  </div>
+
+                </div>
+              </div>
+              <div class="action-buttons">
+                <a (click)="toggleContent()">{{content}}
+                  <i [ngClass]="linkComponents ? 'arrow up' : 'arrow down'"></i></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ng-template>

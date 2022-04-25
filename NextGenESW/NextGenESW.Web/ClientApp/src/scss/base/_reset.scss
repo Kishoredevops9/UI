@@ -1,0 +1,30 @@
+/* Reset CSS */
+* {
+  border: 0;
+  vertical-align: baseline;
+  font-size: 100%;
+  box-sizing: border-box;
+}
+
+ul,
+ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+textarea,textarea.mat-input-element {
+  resize: none !important;
+}

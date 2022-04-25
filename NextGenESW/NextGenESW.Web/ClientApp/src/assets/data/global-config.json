@@ -1,0 +1,136 @@
+{
+  "GlobalRequirementConfig": [
+      {
+          "screenId": 1,
+          "screenName": "Activity Details",
+          "screenEntity": "Activity",
+          "urlPath": "/activity-page",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 2,
+          "screenName": "Work Instruction",
+          "screenEntity": "WI",
+          "urlPath": "/create-document",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 3,
+          "screenName": "Criteria Group",
+          "screenEntity": "Criteria Group",
+          "urlPath": "/criteria-group",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 4,
+          "screenName": "Guide Book",
+          "screenEntity": "Guide Book",
+          "urlPath": "/guide-book",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 5,
+          "screenName": "Design Standards",
+          "screenEntity": "Design Standards",
+          "urlPath": "/design-standards",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 6,
+          "screenName": "Table of Content",
+          "screenEntity": "Table of Content",
+          "urlPath": "/toc",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 7,
+          "screenName": "K Pack",
+          "screenEntity": "K Pack",
+          "urlPath": "/k-pack",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      },
+      {
+          "screenId": 8,
+          "screenName": "Content Type",
+          "screenEntity": "Content Type",
+          "urlPath": "/view-document",
+          "globalPanalItems": [
+              {
+                  "isCommentsEnabled": true
+              }
+          ],
+          "childEntities": []
+      }, 
+      {
+        "screenId": 9,
+        "screenName": "Related Content Details",
+        "screenEntity": "Related Content Details",
+        "urlPath": "/related-content",
+        "globalPanalItems": [
+            {
+                "isCommentsEnabled": true
+            }
+        ],
+        "childEntities": []
+      },
+      {
+        "screenId": 10,
+        "screenName": "Step Flow",
+        "screenEntity": "Step Flow",
+        "urlPath": "/process-maps/create-progressmap",
+        "globalPanalItems": [
+            {
+                "isCommentsEnabled": true
+            }
+        ],
+        "childEntities": []
+      },
+      {
+        "screenId": 11,
+        "screenName": "PublicStep",
+        "screenEntity": "PublicStep",
+        "urlPath": "/process-maps/SP",
+        "globalPanalItems": [
+            {
+                "isCommentsEnabled": true
+            }
+        ],
+        "childEntities": []
+      }
+  ]
+}

@@ -1,0 +1,47 @@
+<ul>
+  <li
+    *ngFor="let item of navData"
+    [ngClass]="{ hasChild: item && item.children && item.children.length > 0 }"
+  >
+  <div *ngIf="item.isActive">
+  <span *ngIf="(item.children.length>0 || item.parentDisciplineId==null)" (click)="expand(item)" class="expcol">
+      <b *ngIf="item.children.length>0">
+      <mat-icon *ngIf="item.child"> expand_more </mat-icon>
+      <mat-icon *ngIf="!item.child"> chevron_right </mat-icon>
+    </b>
+    <b *ngIf="item.children.length==0">
+      <mat-icon  > chevron_right </mat-icon>
+  
+
+    </b>
+    <span   [innerHtml]="item.title | highlight: searchText"   > </span>
+  
+    </span>
+
+ 
+
+
+
+
+    <!-- <span *ngIf="item.children.length==0">    {{ item.title }} </span> -->
+
+
+    
+    <app-disciplines-items
+      *ngIf="item.children  && item.child && item.isActive"
+      [navData]="item.children"
+      [searchText]="searchText" 
+    >
+    </app-disciplines-items>
+
+    <!-- item.parentDisciplineId==null -->
+    <ul *ngIf="!item.children.length && item.parentDisciplineId!=null &&  ( item.child  || item.children.length==0)">
+      <li>
+        <a [href]="item.disciplineUrl" target="_blank">
+          <span   [innerHtml]="item.title | highlight: searchText"   > </span>        
+        </a>
+      </li>
+    </ul>
+  </div>
+  </li>
+</ul>

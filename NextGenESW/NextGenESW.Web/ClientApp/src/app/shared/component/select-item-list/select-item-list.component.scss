@@ -1,0 +1,41 @@
+.mat-form-field {
+  margin-right: 4px;
+}
+
+app-select-item-list {
+  mat-tree {
+    .mat-checkbox .mat-checkbox-inner-container {
+      top: 0px !important;
+    }
+
+    .mat-checkbox label {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0px;
+    }
+
+    .node-label-wrapper {
+      display: inline-block;
+      width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .mat-tree-node {
+      min-height: 30px !important;
+    }
+
+    .indent-button.mat-icon-button {
+      height: 24px;
+      width: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .toggle-button.mat-icon-button {
+      margin: -8px;
+      margin-bottom: -5px;
+    }
+  }
+}

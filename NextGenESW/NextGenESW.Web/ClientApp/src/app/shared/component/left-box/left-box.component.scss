@@ -1,0 +1,40 @@
+
+@import "../../../../scss/helpers/mixins";
+
+
+.mat-tree-node {
+  @include font-face-Inter-Regular(14px, 20px);
+  min-height: 35px;
+}
+
+.mat-tree-node {
+  align-items : baseline !important;
+
+}
+.mat-tree-node label {
+  margin-bottom: 0;
+}
+
+.mat-icon-button {
+  height: 20px !important;
+  width: 20px;
+  line-height: 20px !important;
+
+}
+
+  .mat-icon {
+    width: 16px;
+    height: 16px;
+    border: solid 1px #dadada;
+    font-size: 11px;
+    line-height: 15px;
+    margin-right: 5px;
+  }
+
+  .select-all-container {
+    mat-checkbox {
+      margin-right: 5px;
+    }
+  }
+
+

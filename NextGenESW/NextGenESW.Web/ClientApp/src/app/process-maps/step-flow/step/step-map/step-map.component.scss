@@ -1,0 +1,15 @@
+.app-step-map {
+  width: 100%;
+  height: calc(100vh - 400px);
+
+  &__bigger {
+    height: calc(100vh - 300px);
+  }
+
+  &__no-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

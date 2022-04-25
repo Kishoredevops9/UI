@@ -1,0 +1,30 @@
+<div class="manualsParent" fxLayout="column" >
+
+    <div class="manualHeader">Manuals</div>
+
+    <div class="searchBar" fxLayout="row" fxLayoutAlign="space-around center" >
+        <mat-form-field appearance="legacy" class="searchField">
+            <input matInput class="searchInput" placeholder="Filter Manuals" [(ngModel)]="searchBox" [formControl]="inputFieldValue" (keyup)="onKeyUp($event)">
+            <div matPrefix class="searchIcon" width="13px" height="13px"></div>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="noData">
+        <div class="noResults">No Results Found</div>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="parentDivContainer">
+        <div class="conatinerElemDiv" id="containerId">
+            <div *ngFor="let item of manuals; let i = index" class="forDiv">
+                <div class="floatBoxes">
+                    <a target="_blank" href="{{item.manualUrl}}">
+                        <span   class="childs"  [innerHtml]="item.title | highlight: searchBox"   > </span>
+
+
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

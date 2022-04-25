@@ -1,0 +1,273 @@
+<div class="table-wrapper">
+  
+  <ngx-ui-loader     fgsSize="75"  [loaderId]="'task-list-loader'">   </ngx-ui-loader>
+
+  <div ngxUiLoaderBlurred blur="2"  [loaderId]="'task-list-loader'">
+    
+    <div class="heading-band">
+      <div class="mat-title">Your Tasks <span *ngIf="fullView">( {{totalRecords}} )</span> </div>
+      
+      <div class="slide-toggle" *ngIf="fullView" >
+        All<mat-slide-toggle class="toggle"></mat-slide-toggle>Pending
+      </div>
+      <div class="bar-icon" 
+      tooltip=""
+      data-tooltip="8006" 
+      placement =  "bottom"  [hidden]="!fullView" (click)="filterpopTask()"></div>
+      
+      <div class="fullview-icon" (click)="widgetFullView()" *ngIf="fullView" >
+        <span class="expand" [ngClass]="fullView ? 'active' : ''"></span>
+      </div>
+      
+    </div>
+
+    <!-- Filter Code Starts here -->
+    <div *ngIf="filterPopShow && fullView" fxLayout="row" class="aaaaa" fxLayoutAlign="center center" class="filterDiv">
+      <mat-card class="filter-card" *ngIf="filterPopShow" >
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title>Filter</mat-card-title>
+          <span (click)="closeFilterPop()" class="material-icons clsFilter">close</span>
+        </mat-card-header>
+  
+          <mat-card-content>
+            <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+              <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="filterForm">
+                <mat-form-field class="filter-block">
+                  <mat-label>Id</mat-label>
+                  <mat-select formControlName="idFilter" >
+                    <mat-option (click)="clearFilter()" value="">
+                      Select Id
+                    </mat-option>
+                    <input formControlName="idSearchTerm" class="inside-select-filter-box" placeholder="Task Id" autocomplete="off" (keyup)="onChangeIdSearchTermFilter($event.target.value)" />
+                    <mat-option *ngFor="let taskId of fUniqueTaskIds" [value]="taskId">
+                      {{ taskId }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <mat-form-field class="filter-block">
+                  <mat-label>Name</mat-label>
+                  <mat-select formControlName="nameFilter" >
+                    <mat-option (click)="clearFilter()" value="">
+                      Select Name
+                    </mat-option>
+                    <input formControlName="nameSearchTerm" class="inside-select-filter-box" placeholder="Name" autocomplete="off" (keyup)="onChangeNameSearchTermFilter($event.target.value)" />
+                    <mat-option *ngFor="let name of fUniqueNames" [value]="name">
+                      {{ name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <mat-form-field class="filter-block">
+                  <mat-label>PRGM</mat-label>
+                  <mat-select formControlName="prgmFilter" >
+                    <mat-option (click)="clearFilter()" value="">
+                      Select PRGM
+                    </mat-option>
+                    <mat-option *ngFor="let prgm of uniquePrgm" [value]="prgm">
+                      {{ prgm }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="filter-block">
+                  <mat-label>Engine Section</mat-label>
+                  <mat-select formControlName="engSecFilter" >
+                    <mat-option (click)="clearFilter()" value="">
+                      Select Engine Section
+                    </mat-option>
+                    <mat-option *ngFor="let engSec of uniqueEngSec" [value]="engSec">
+                      {{ engSec }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                
+                <mat-form-field class="filter-block">
+                  <mat-label>IPT</mat-label>
+                  <mat-select formControlName="iptFilter" >
+                    <mat-option (click)="clearFilter()" value="">
+                      Select IPT
+                    </mat-option>
+                    <mat-option *ngFor="let ipt of uniqueIpt" [value]="ipt">
+                      {{ ipt }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <button mat-raised-button (click)="applyFilter()" color="primary" >Apply Filter</button>
+                <button mat-raised-button (click)="resetFilterPop()" color="accent" >Reset Filter</button>
+  
+  
+              </div>
+            </div>
+          </mat-card-content>
+  
+      </mat-card>
+    </div>
+    <!-- Filter Code Ends here -->
+
+    <mat-table [dataSource]="dataSource" class="data-table" matSort>
+      <!-- REA Column -->
+      <ng-container matColumnDef="taskReaid">
+        <mat-header-cell *matHeaderCellDef mat-sort-header >
+          <div class="headingName">Task REAID</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="reaId">
+          <a matTooltip="{{ element.taskReaid }}" class="reaid_href" (click)="taskNavigate(element)">{{ element.taskReaid }}  (  {{ (element.taskStatusId) ?'Open' : 'Closed'}} )     </a>
+        </mat-cell>
+      </ng-container>
+      
+      <!-- <ng-container matColumnDef="taskStatusId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header >
+          <div class="headingName">Status</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="reaId">
+          <a matTooltip="{{ element.taskStatusId }}" class="reaid_href" >  dd {{element.taskStatusId}}</a>
+        </mat-cell>
+      </ng-container> -->
+      
+      <!-- Name Column -->
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' " >
+          <div class="headingName">Task Title</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="titlePart" matTooltip="{{ element.title }}">
+            {{ element.title }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- PRGM Column -->
+      <ng-container matColumnDef="engineModelTagId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' " >
+        <div class="headingName" tooltip=""
+        data-tooltip="8002" 
+         placement =  "bottom"  >Engine Model Group</div>  
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="engModelTags" 
+          matTooltip="{{ element.engineModelTagName }}"
+          >
+            {{ element.engineModelTagName }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Sec Column -->
+      <ng-container matColumnDef="engineSectionDescription">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' " >
+          <div class="headingName">Engine Section</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+          <div class="engSecDesc" matTooltip="{{ element.engineSectionDescription }}">
+            {{ element.engineSectionDescription }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Sec Column -->
+      <!-- <ng-container matColumnDef="ipt">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' " >
+          <div class="headingName">IPT</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="iptPart" matTooltip="{{ element.ipt }}">
+            {{ element.ipt }}
+          </div>
+        </mat-cell>
+      </ng-container> -->
+
+      <!-- Completed Column -->
+      <ng-container matColumnDef="completed">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' " >
+          <div class="headingName">Approved</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="progress-bars task-progress-bars">
+          <div>{{element.activityApprovedCount }} / {{element.activityCount}}</div>
+          <br/>
+          <div>
+            <mat-progress-bar
+            class="bar"
+            mode="determinate"
+            value="{{ element.activityPercentage }}"
+          >
+          </mat-progress-bar>
+          </div>
+          
+          <!-- <div *ngIf="element.completed >= 70" class="alert-icon">!</div> -->
+        </mat-cell>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="threeDots">
+          <button *ngIf="element.isAbleToRemove" mat-icon-button [matMenuTriggerFor]="beforeMenu" class="dotBtn" placement="bottom">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #beforeMenu="matMenu" xPosition="before" class="contentMatMenu contentAbleToRemoveMenu">
+            <button mat-menu-item (click)="removeTaskList(element)">
+              <span>Remove</span>
+            </button>
+            
+
+          </mat-menu>
+
+        </mat-cell>
+      </ng-container>
+
+      <!-- 
+      <ng-container matColumnDef="dropdowns">
+        <mat-header-cell *matHeaderCellDef>.</mat-header-cell>
+        <mat-cell *matCellDef="let element" style="padding: 0px 0px 0px 14px !important;">
+          <button mat-icon-button [matMenuTriggerFor]="menu" class="dotBtn">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Ask to Collaborate</span>
+            </button>
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Ask for Comments</span>
+            </button>
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Ask for Review</span>
+            </button>
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Ask for Approval</span>
+            </button>
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Submit to Classification</span>
+            </button>
+            <button mat-menu-item>
+              <span style="font-size: 12px;">Extract Preview</span>
+            </button>
+          </mat-menu>
+        </mat-cell>
+      </ng-container>
+      -->
+      
+      <!-- Header and Row Declarations -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+    </mat-table>
+    
+    <div [hidden] = '!fullView'>
+      <mat-paginator 
+              [length]="totalRecords"
+              [pageSize]="pageRowCounts[0]"
+              [pageSizeOptions]='pageRowCounts'
+              showFirstLastButtons >
+      </mat-paginator>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="viewContainer">
+      <div class="viewMore" (click)="widgetFullView()" >
+        <span *ngIf="!fullView">View More</span>
+        <span *ngIf="fullView">Back to Dashboard</span>
+      </div>
+    </div>
+  </div>  
+</div>

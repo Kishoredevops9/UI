@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <div class="containerLeft">
+    <form [formGroup]="tagCustomizeSearchForm" id="editActivity">
+      <div class="searchHeader">
+        <!-- <div class="searchButton">
+          <input type="button" (click)="onSearchSubmit()" value="Search" />
+        </div>
+        <div class="searchbox">
+          <input matInput formControlName="searchText" type="text" placeholder="Search Text"
+            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'" />
+        </div> -->
+      </div>
+      <div class="treebox">
+        <app-left-box (tagdata)="tagDataEvent($event)" [delevents]="eventsSubject.asObservable()" [treedata]="treedata">
+        </app-left-box>
+      </div>
+    </form>
+  </div>
+  <div class="containerRight">
+    <div class="btn-right">
+
+
+ <ul>
+  <li>  <span>Show Highlighted Only?</span>   NO  <mat-slide-toggle [(ngModel)]="showOption.high"  (change)="radioBox($event,'high')" > </mat-slide-toggle>  YES </li>
+  <li>   <span>Show Only Selected? </span>    NO  <mat-slide-toggle [(ngModel)]="showOption.un" (change)="radioBox($event,'un')"></mat-slide-toggle>  YES </li>
+ </ul>
+
+
+
+
+
+
+
+    </div>
+    <div class="applyFilters selected-games-wrap">
+      <div class="applybox">Applied Filters:</div>
+      <div class="chipbox">
+
+
+
+
+
+        <mat-chip-list>
+          <mat-chip *ngFor="let chip of chipValues" [selectable]="selectable">
+            {{ chip.name }}
+            <mat-icon matChipRemove (click)="removeChipValues(chip)">cancel</mat-icon>
+          </mat-chip>
+          <mat-chip *ngFor="let chip of chipData" [selectable]="selectable">
+            {{ chip.name }}
+            <mat-icon matChipRemove (click)="removeChipData(chip)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+
+
+    </div>
+
+    <div class="workbox">
+      <customize-task-map-tree [phase]="chipValues"  [showinput]="showOption" [tag]="chipData" ></customize-task-map-tree>
+    </div>
+
+  </div>
+</div>

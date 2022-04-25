@@ -1,0 +1,61 @@
+<div class="upload-popup">
+  <div class="headTxt">Upload ETFF</div>
+  <div class="uploadBox">
+    <div class="infoText hide">
+      Maximum file Size allowed for Upload: 1,000 MB
+    </div>
+
+    <div class="uploadArea" [formGroup]="fileUploadForm" fxLayout="column" fxLayoutAlign="space-around center">
+      <div class="dropTxt">Drop files here to start uploading</div>
+      <span *ngIf="isShowSpinner">
+        <mat-spinner></mat-spinner>
+      </span>
+      <div class="dropTxt">or</div>
+      <button mat-button mat-raised-button color="primary" for="fileDropRef1">
+        Select File
+      </button>
+
+      <input type="file" #fileDropRef1 id="fileDropRef1" multiple (change)="fileHandlers($event.target.files, $event)"
+        formControlName="fileUpload" />
+    </div>
+    <div *ngIf="selectedFileName" class="progress-bar">
+      <div class="file-icon">
+        <mat-icon> insert_drive_file</mat-icon>
+      </div>
+      <div class="file_name">
+        <span class="name">
+          {{ selectedFileName }}
+        </span>
+        <span class="percentage"></span>
+      </div>
+      <mat-progress-bar mode="determinate" [value]="value"></mat-progress-bar>
+      <span class="showUploadProgress">{{value}} %</span>
+    </div>
+    <div class="displayBox hide">
+      <div class="fileNameDisplay" *ngFor="let elements of fileUploadDetails">
+        <div class="mdl-grid full-width">
+          <div class="
+              mdl-cell
+              mdl-cell--12-col
+              mdl-cell--12-col-tablet
+              mdl-cell--12-col-phone
+            ">
+            <span class="elementName sortable" (click)="openDoc(elements.fileName, elements.fileUrl)"><u>{{
+                elements.fileName }}</u></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="actions">
+        <button mat-button mat-raised-button color="primary" [disabled]='!fileUploadForm.valid'
+          (click)="uploadETFFHandler()">
+          Upload
+        </button>
+        <button mat-button mat-raised-button color="primary" (click)="closeModal('No')">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

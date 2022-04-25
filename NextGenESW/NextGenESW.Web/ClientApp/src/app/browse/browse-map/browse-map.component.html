@@ -1,0 +1,22 @@
+<ul> 
+ <li  *ngFor="let item of navData"  [ngClass]="{hasChild: item.children.length>0 }">
+  <div *ngIf="item.isActive">
+    <span     (click) ="(item.child)?item.child=false:item.child=true" class="expcol" >  
+      <mat-icon *ngIf="item.child">  expand_more  </mat-icon> 
+      <mat-icon *ngIf="!item.child">  chevron_right  </mat-icon>
+      <span [innerHtml]="item.title | highlight: searchText"> </span>  
+    </span>
+    <app-browse-map   *ngIf="item.children && item.child" [navData]="item.children" [searchText]="searchText" ></app-browse-map> 
+    <ul *ngIf="!item.children.length && item.child"  style="display: none;"> 
+        <li *ngIf="item.isActive">          
+          <div class="imgbox" style="display: none;">            
+          <a href="/process-maps/edit/743"  target="_blank" >
+          <img src="/assets/images/map.png"/>
+          </a>  
+        </div>
+          </li>  
+    </ul>
+  </div>
+
+ </li>
+</ul>

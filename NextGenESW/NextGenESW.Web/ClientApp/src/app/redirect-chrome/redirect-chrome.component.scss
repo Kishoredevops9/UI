@@ -1,0 +1,66 @@
+@import '../../scss/helpers/variables';
+@import '../../scss/helpers/mixins';
+@import '../../scss/helpers/breakpoints';
+@import '../../scss/helpers/placeholders';
+
+.feedbackParent {
+  padding: 20px;
+
+  .feedbackHeader {
+    padding: 0px 0px 20px 0px;
+    text-align: left;
+    letter-spacing: 1.25px;
+    color: $popup-heading-light-black;
+    text-transform: uppercase;
+    opacity: 1;
+    @include font-face-Barlow-Medium(24px, 28px);
+  }
+
+  .feedbackFormClass {
+    .form {
+      width: 100%;
+
+      .formLabel {
+        width: 30%;
+        padding: 15px 0px 0px 0px;
+      }
+
+      .example-form {
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .example-full-width {
+        width: 100%;
+      }
+
+      .textAreaBox {
+        height: 180px;
+      }
+
+      .textBoxs {
+        opacity: 0.8;
+      }
+
+      .actionButtons {
+        padding: 15px;
+      }
+
+      .disclaimerText {
+        text-align: left;
+        font: italic normal normal 14px/27px Roboto;
+        letter-spacing: 0px;
+        color: $disclaimer-text-grey-color;
+        opacity: 1;
+        font-size: 14px;
+        padding: 5px 0px 20px 0px;
+      }
+
+      .hiddenButton {
+        opacity: 0;
+        width: 30px;
+      }
+    }
+  }
+}

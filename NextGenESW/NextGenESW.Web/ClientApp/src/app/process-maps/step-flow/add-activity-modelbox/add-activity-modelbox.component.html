@@ -1,0 +1,629 @@
+<div class="add-activities">
+  <article>
+    <div class="mat-dialoag-header" style="display: flex;">
+      <h2 mat-dialog-title>Add Activity</h2>
+      <span class="material-icons" mat-dialog-close>
+        close
+      </span>
+    </div>
+      <mat-card>
+        <form [formGroup]="activityForm" id="editActivity">
+          <div class="flexItemBox" style="width: 100%;">
+            <div class="label"> Type </div>
+            <div class="blockBox">
+              <mat-form-field>
+                <mat-select  formControlName="activityTypeId"  [disabled]="true" (selectionChange)="hideShowMilestoneDropDown($event.value)">
+                  <mat-option *ngFor="let activityType of activityAdd" [value]="activityType.id">{{
+                    activityType.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <ng-container
+            *ngIf="(selectedFormName === 0 ||selectedFormName === 1 || selectedFormName === 2 || selectedFormName === 4 || selectedFormName === 6 || selectedFormName === 7 || selectedFormName === 8) else formTwoBlock">
+            <mat-form-field style="display: none;">
+              <mat-label>Activity Link to Swimlane</mat-label>
+              <mat-select formControlName="swimLaneId">
+                <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="flexItemBox">
+              <div class="label"> Name<sup>*</sup> </div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <mat-label>Name</mat-label>
+                  <input matInput formControlName="name" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="flexItemBox">
+              <div class="label">Phase</div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <mat-label>Phase</mat-label>
+                 <mat-select formControlName="phaseId">
+                    <mat-option *ngFor="let phase of phases" [value]="phase.id">{{ phase.name }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="flexItemBox">
+              <div class="label">Color </div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                  <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                  <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="flexItemBox">
+              <div class="label"> Border Color </div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                  <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                  <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="flexItemBox">
+              <div class="label"> Border Width </div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <input matInput type="number" readonly [value]="'1'" min="1" max="5"
+                    formControlName="borderWidth" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="flexItemBox">
+              <div class="label"> Border Style </div>
+              <div class="blockBox">
+                <mat-form-field>
+                  <mat-select formControlName="borderStyle">
+                      <mat-option   [value]="'dotted'">dotted  </mat-option>
+                      <mat-option   [value]="'dashed'">dashed  </mat-option>
+                      <mat-option   [value]="'solid'">solid  </mat-option>
+                      <mat-option   [value]="'double'">double  </mat-option>
+                      <mat-option   [value]="'groove'">groove  </mat-option>
+                      <mat-option   [value]="'ridge'">ridge  </mat-option>
+                      <mat-option   [value]="'inset'">inset  </mat-option>
+                      <mat-option   [value]="'outset'">outset </mat-option>
+                      <mat-option   [value]="'none'">none  </mat-option>
+                      <mat-option   [value]="'hidden'">hidden  </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #formTwoBlock>
+            <ng-container *ngIf="selectedFormName=== 3; else formTreeBlock">
+              <div class="flexItemBox">
+                <div class="label"> Sub Map Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Sub Map Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Content ID </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput readonly formControlName="description" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Sub Map Name </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Sub Map Name</mat-label>
+                    <input matInput formControlName="name" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Sub Map link </div>
+                <div class="blockBox">
+                  <div class="searchSelect">
+                    <mat-form-field style="width: 72%;">
+                      <mat-label>Sub Map link</mat-label>
+                      <input matInput formControlName="description" />
+                    </mat-form-field>
+                    <button mat-icon-button matSuffix (click)='dialogBoxMap()'>
+                      <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon> &nbsp;<span>Select</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Color </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Border Color </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Border Style </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #formTreeBlock>
+            <ng-container *ngIf="selectedFormName=== 5; else formkPackBlock">
+              <div class="flexItemBox" style="display: none">
+                <div class="label"> Activity Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Activity Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Activity page</div>
+                <div class="blockBox">
+                  <div class="searchSelect">
+                    <mat-form-field style="width: 72%;">
+                      <input readonly matInput formControlName="description" />
+                    </mat-form-field>
+                    <button mat-icon-button matSuffix (click)='openSearchDialog()'>
+                      <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon> &nbsp;<span>Select</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Content ID </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput readonly formControlName="description"   />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Title </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="name" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Phase</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                   <mat-select formControlName="phaseId">
+                      <mat-option *ngFor="let phase of phases"  [value]="phase.id">{{phase.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly [value]="'1'" matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Style</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+
+          <ng-template #formkPackBlock>
+            <ng-container *ngIf="selectedFormName === 9; else formEmptyBlock">
+              <div class="flexItemBox" style="display: none">
+                <div class="label"> Activity Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Activity Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">K-pack Link</div>
+                <div class="blockBox">
+                  <div class="searchSelect">
+                    <mat-form-field style="width: 72%;">
+                      <mat-label>K-pack Link</mat-label>
+                      <input matInput formControlName="description" />
+                    </mat-form-field>
+                    <button mat-icon-button matSuffix (click)='openTaskKPacks(kPackProcessMap)'>
+                      <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon> &nbsp;<span>Select</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Content ID </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="description" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Title </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="name" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Phase</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                   <mat-select formControlName="phaseId">
+                      <mat-option *ngFor="let phase of phases" [value]="phase.id">{{ phase.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="flexItemBox">
+                <div class="label">Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly [value]="'1'" matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Style</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #formEmptyBlock>
+            <ng-container *ngIf="selectedFormName === 10; else formStartBlock">
+              <div class="flexItemBox" style="display: none">
+                <div class="label"> Activity Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Activity Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Title </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="name" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly [value]="'1'" matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Style</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #formStartBlock>
+            <ng-container *ngIf="selectedFormName === 11; else formEndBlock">
+              <div class="flexItemBox" style="display: none">
+                <div class="label"> Activity Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Activity Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Title </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="name" value="Start" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly [value]="'1'" matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Style</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <ng-template #formEndBlock>
+            <ng-container *ngIf="selectedFormName === 12; else formTwoBlock">
+              <div class="flexItemBox" style="display: none">
+                <div class="label"> Activity Link to Swimlane </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-label>Activity Link to Swimlane</mat-label>
+                    <mat-select formControlName="swimLaneId">
+                      <mat-option *ngFor="let group of model.swimLanes" [value]="group.id">{{ group.name }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label"> Title </div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput formControlName="name" value="End" required />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker3 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Color</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                    <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                    <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Width</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <input min="1" max="5" readonly [value]="'1'" matInput type="number"
+                      formControlName="borderWidth" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="flexItemBox">
+                <div class="label">Border Style</div>
+                <div class="blockBox">
+                  <mat-form-field>
+                    <mat-select formControlName="borderStyle">
+                        <mat-option   [value]="'dotted'">dotted  </mat-option>
+                        <mat-option   [value]="'dashed'">dashed  </mat-option>
+                        <mat-option   [value]="'solid'">solid  </mat-option>
+                        <mat-option   [value]="'double'">double  </mat-option>
+                        <mat-option   [value]="'groove'">groove  </mat-option>
+                        <mat-option   [value]="'ridge'">ridge  </mat-option>
+                        <mat-option   [value]="'inset'">inset  </mat-option>
+                        <mat-option   [value]="'outset'">outset </mat-option>
+                        <mat-option   [value]="'none'">none  </mat-option>
+                        <mat-option   [value]="'hidden'">hidden  </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+          <div  class="buttonbox">
+            <button mat-raised-button  class="mat-button"  color="primary" (click)="onAddActivity()" [disabled]="!activityForm.valid">
+              {{ addEditBTN == false ? 'Save' : 'Update' }}
+            </button>
+            <button mat-raised-button  class="mat-button"  color="primary"  (click)="onClose()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </mat-card>
+  </article>
+  </div>

@@ -1,0 +1,185 @@
+// Helper
+@import "../../../scss/helpers/mixins";
+@import "../../../scss/helpers/variables";
+@import "../../../scss/helpers/breakpoints";
+@import "../../../scss/helpers/placeholders";
+
+.announceParent {
+  .cleard {
+    clear: both;
+  }
+
+  .fleft {
+    float: left;
+  }
+
+  .fright {
+    float: right;
+  }
+
+  .cursor {
+    cursor: pointer;
+  }
+
+  .manualHeader {
+    text-align: left;
+    @include font-face-Barlow-Medium(28px, 45px);
+    color: $black-color;
+  }
+
+  .bar-icon {
+    background: url("../../../assets/images/icon-filter.svg") no-repeat;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  .addBtn {
+    background-color: $blue-darken-color;
+    border: 1px solid $blue-darken-color;
+    color: $white-color;
+  }
+
+  .announcefilterDiv {
+    position: relative;
+    z-index: 101;
+
+    .filter-card {
+      position: absolute;
+      top: 2px;
+      left: 0px;
+      width: 100%;
+      border-radius: 0px !important;
+
+      .mat-form-field {
+        width: 183px;
+        margin: 0 10px;
+      }
+
+      .applyBtn {
+        background-color: $blue-darken-color;
+        border: 1px solid $blue-darken-color;
+        color: $white-color;
+        margin-right: 10px;
+        width: 180px;
+      }
+
+      .closeBtn {
+        background-color: $white-color;
+        border: 1px solid $blue-darken-color;
+        width: 180px;
+      }
+    }
+  }
+
+  .announceTable {
+    width: 100%;
+
+    &.active {
+      overflow: auto;
+    }
+
+    table {
+      overflow: auto;
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 10px;
+      display: table;
+      border-collapse: collapse;
+      margin: 0px;
+      @extend %table-style;
+      box-shadow: none !important;
+      position: relative;
+      z-index: 1;
+
+      tr {
+        &.mat-header-row {
+          height: 37px !important;
+        }
+
+        th {
+          background: $blue-darken-color;
+          opacity: 1;
+
+          &.mat-row {
+            position: relative;
+          }
+
+          &.mat-header-cell {
+            text-align: left;
+            @include font-face-Barlow-Medium(16px, 27px);
+            color: $white-color;
+          }
+        }
+
+        td {
+          &.mat-cell {
+            @include font-face-Barlow-Medium(14px, 27px);
+          }
+
+          .cursor {
+            cursor: pointer;
+          }
+
+          .link-icon {
+            background: url("../../../assets/images/link-Icon.png") left no-repeat;
+            display: inherit;
+          }
+
+          .edit-icon {
+            background: url("../../../assets/images/edit-Icon.png") left no-repeat;
+          }
+
+          .cancel-icon {
+            background: url("../../../assets/images/cancel-Icon.png") left no-repeat;
+            display: inherit;
+            width: 22px;
+            height: 22px;
+          }
+
+          .delete-icon {
+            background: url("../../../assets/images/delete-Icon.png") left no-repeat;
+          }
+
+          .preview-icon {
+            background: url("../../../assets/images/preview-Icon.png") left no-repeat;
+            display: inherit;
+          }
+
+          .save-icon {
+            background: url("../../../assets/images/save-Icon.png") left no-repeat;
+            display: inherit;
+            width: 16px;
+            height: 16px;
+            margin-top: 2px;
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .matspinner {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    z-index: 101;
+    top: 30%;
+    left: 0;
+
+    mat-spinner {
+      margin: auto;
+    }
+  }
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: $white-color !important;
+}
+
+::ng-deep .mat-sort-header-stem {
+  color: $white-color !important;
+}

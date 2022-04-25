@@ -1,0 +1,196 @@
+@import '../../../../../scss/helpers/variables';
+
+// NOTE: This code was extracted from src\app\process-maps\step-flow\step\step-tree\step-tree.component.scss
+
+.diagram-activity-content {
+  width: 400px;
+  max-height: 400px;
+  overflow-y: auto;
+  font-size: 12px;
+  padding: 10px 0;
+
+  &__no-content {
+    text-align: center;
+  }
+
+  ul {
+    margin-left: 10px;
+    li {
+      width: 100%;
+      float: left;
+      .licopy {
+        margin-bottom: 5px;
+        float: left;
+        width: 99%;
+      }
+    }
+  }
+
+  .g {
+    border-bottom: 2px solid green;
+    width: 100%;
+    float: left;
+    aside {
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px;
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px 10px 5px 10px;
+      border-radius: 5px 0px 0px 0px;
+    }
+    span.title {
+      display: inline-block;
+      padding: 5px;
+    }
+    span.contentIds {
+      color: #ff7f00;
+      padding-left: 5px;
+    }
+  }
+
+  .D {
+    @extend .g;
+    border-bottom: 2px solid $task-type-d;
+    aside {
+      background: $task-type-d;
+    }
+  }
+
+  .A {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+
+  .C {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+
+  .SF {
+    @extend .g;
+    border-bottom: 2px solid $content-type-sf;
+    aside {
+      background: $content-type-sf;
+    }
+  }
+
+  .SP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-sp;
+    aside {
+      background: $content-type-sp;
+    }
+  }
+
+  .WI {
+    @extend .g;
+    border-bottom: 2px solid $content-type-wi;
+    aside {
+      background: $content-type-wi;
+    }
+  }
+
+  .GB {
+    @extend .g;
+    border-bottom: 2px solid $content-type-gb;
+    aside {
+      background: $content-type-gb;
+    }
+  }
+
+  .DS {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ds;
+    aside {
+      background: $content-type-ds;
+    }
+  }
+  .M {
+    @extend .g;
+    border-bottom: 2px solid $content-type-m;
+    aside {
+      background: $content-type-m;
+    }
+  }
+
+  .AP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+
+  .KP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-kp;
+    aside {
+      background: $content-type-kp;
+    }
+  }
+
+  .CG {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+      color: #000000;
+    }
+  }
+  .TC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+
+  .RD {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .TOC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+
+  .RC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+
+  .mat-card {
+    position: absolute !important;
+    width: 140%;
+    z-index: 100;
+    background-color: #fff !important;
+    top: 45px;
+    max-height: 300px;
+    min-height: 150px;
+    overflow: auto;
+    padding: 0px !important;
+  }
+
+  aside.rectBoxAside {
+    min-width: 23px;
+    text-align: center;
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Communities",
+    "description": "Practitioners who share knowledge across PW engineering.",
+    "externalLink": "http://pwww.eh.pweh.com/eng/public/EKM/people.html"
+  },
+  {
+    "id": 2,
+    "title": "Toolbox",
+    "description": "Tools to implement knowledge Management.",
+    "externalLink": "http://pwww.eh.pweh.com/eng/public/EKM/kmtoolkit.html"
+  },
+  {
+    "id": 3,
+    "title": "ETU",
+    "description": "Explore courses at every career level.",
+    "externalLink": "https://prod61-iws.pw.utc.com/pwetu/actionLogin.do"
+  }  
+]

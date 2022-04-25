@@ -1,0 +1,347 @@
+@import '../../../../../scss/helpers/variables';
+
+.stepFlowBg{
+  background: #FBFBFB 0% 0% no-repeat padding-box;
+}
+.cursor {
+  cursor: pointer;
+}
+
+
+.buildtasksearchbox {
+    border-bottom: 2px solid rgba(222, 222, 222, 0.87);
+  
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .releaseImg{
+    margin-right: 10px;
+    cursor: pointer;
+    margin-top: -8px;
+    img.underImg {
+      width: 20px !important;
+    }
+    .titlehead{
+      letter-spacing: 0.58px;
+      color: #3E3E3E;
+      opacity: 1;
+      font-size: 14px;
+      line-height: 18px;
+      font-family: "BarlowSemiCondensed-Medium";
+    }
+  }
+  
+  .bodyPanel {
+    width: 100%;
+    padding: 20px;
+    display: inline-block;
+  
+    h2 {
+      display: inline-block;
+      margin: 0px;
+    }
+    .addBtn { float: right; }
+    ul {
+      margin-left: 10px;
+      margin-top: 10px;
+      li {
+        margin: 10px;
+        margin-left: 0px;
+        margin-bottom: 5px;
+        width: 100%;
+        float: left;
+        position: relative;
+        mat-checkbox { float: left;
+          width: 30px;
+          margin-top: 8px; }
+  
+          
+      }
+    
+      .toolbar {
+        position: absolute;
+        right: 0px;
+  
+        a { mat-icon {   font-size: 16px!important; color:gray  } }
+    
+        .mat-menu-trigger{
+          display: inline !important;
+        }
+
+        mat-icon {
+          cursor: pointer;
+        }
+    
+        span {
+          padding: 5px;
+          img {
+            width: 10px;
+          }
+        }
+        img {
+          width: 10px;
+        }
+        span.expcol {
+          border: 1px solid green;
+        }
+      }
+    }
+  }
+  
+  .g {
+      border-bottom: 2px solid green;
+      width: 100%;
+      float: left;
+      aside {
+        float: left;
+        background: green;
+        color: white;
+        padding: 5px;
+        float: left;
+        background: green;
+        color: white;
+        padding: 5px 10px 5px 10px;
+        border-radius: 5px 0px 0px 0px;
+      }
+      span.title {
+        display: inline-block;
+        padding: 5px;
+        &.active{
+          font-weight: 600;
+        }
+      }
+      
+      span.contentId{
+      color: #FF7F00;
+      padding-left: 10px;
+        a.OriginContentId{
+          color: #FF7F00;
+          cursor: pointer;          
+        }
+        a.OriginContentId:hover{
+          color: #FF7F00;
+          text-decoration: none
+        }
+      }
+    }
+    
+    .D {
+      @extend .g;
+      border-bottom: 2px solid $task-type-d;
+      aside {
+        background: $task-type-d;
+      }
+    }
+    .S {
+      @extend .g;
+      border-bottom: 2px solid    $content-type-ds;
+      aside {
+        background:   $content-type-ds
+      }
+    }
+    
+    .A {
+      @extend .g;
+      border-bottom: 2px solid $content-type-ap;
+      aside {
+        background: $content-type-ap;
+      }
+    }
+    
+    .C {
+      @extend .g;
+      border-bottom: 2px solid $content-type-cg;
+      aside {
+        background: $content-type-cg;
+        color: black;
+      }
+    }
+    
+    .SF {
+      @extend .g;
+      border-bottom: 2px solid $content-type-sf;
+      aside {
+        background: $content-type-sf;
+      }
+    }
+    
+    .SP {
+      @extend .g;
+      border-bottom: 2px solid $content-type-sp;
+      aside {
+        background: $content-type-sp;
+      }
+    }
+    .WI, .wi, .i, .I {
+      @extend .g;
+      border-bottom: 2px solid $content-type-wi;
+      aside {
+        background: $content-type-wi;
+      }
+    }
+    
+    .GB , .G{
+      @extend .g;
+      border-bottom: 2px solid $content-type-gb;
+      aside {
+        background: $content-type-gb;
+      }
+    }
+    
+    .DS {
+      @extend .g;
+      border-bottom: 2px solid $content-type-ds;
+      aside {
+        background: $content-type-ds;
+      }
+    }
+    .M {
+      @extend .g;
+      border-bottom: 2px solid $content-type-m;
+      aside {
+        background: $content-type-m;
+      }
+    }
+    
+    .AP {
+      @extend .g;
+      border-bottom: 2px solid $content-type-ap;
+      aside {
+        background: $content-type-ap;
+      }
+    }
+    
+    .KP,.K {
+      @extend .g;
+      border-bottom: 2px solid $content-type-kp;
+      aside {
+        background: $content-type-kp;
+      }
+    }
+    
+    .CG {
+      @extend .g;
+      border-bottom: 2px solid $content-type-cg;
+      aside {
+        background: $content-type-cg;
+        color: black;
+      }
+    }
+    .TC, .T {
+      @extend .g;
+      border-bottom: 2px solid $content-type-toc;
+      aside {
+        background: $content-type-toc;
+      }
+    }
+    
+    .RD  , .R{
+      @extend .g;
+      border-bottom: 2px solid $content-type-rc;
+      aside {
+        background: $content-type-rc;
+      }
+    }
+    .TOC {
+      @extend .g;
+      border-bottom: 2px solid $content-type-toc;
+      aside {
+        background: $content-type-toc;
+      }
+    }
+    
+    .RC {
+      @extend .g;
+      border-bottom: 2px solid $content-type-rc;
+      aside {
+        background: $content-type-rc;
+      }
+    }
+    .mat-card {
+      position: absolute !important;
+      width: 140%;
+      z-index: 100;
+      background-color: #fff !important;
+      top: 45px;
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    footer { 
+      text-align: center;
+      padding-bottom: 15px;
+      padding-top: 15px;   
+      border-bottom:  2px solid rgba(222, 222, 222, 0.87);
+      width: 100%;
+      display: block;
+      margin-bottom: 20px;
+      float: left;
+      .mat-button {  margin-left: 10px }
+    }
+
+
+
+    .custom-dialog-container .mat-dialog-container {
+min-width: 300px;
+max-width: 400px;
+padding: 10px;
+  }
+
+  .dbox{ max-width: 400px;
+    padding: 20px 10px;   
+  div[mat-dialog-actions]{  
+  
+  padding: 10px; text-align: center; 
+
+  .mat-button { background: #3E485E;  color: white; }
+
+}
+
+
+
+
+  }
+
+
+  aside.taskSideBox{
+    min-width: 43px;
+    text-align: center;
+  }
+  
+  .taskbuildClass{
+    position: absolute;
+    top: 0px;
+    background: grey;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    margin: 0 auto;
+    left: 0px;
+    z-index: 1;
+    .spinnerbox { width: 60px;
+        margin: 0px auto;
+        height: 0px;  }
+  }
+
+  .border_active{
+    border-bottom: 2px solid #00B9FF !important;
+  }
+
+  ::ng-deep .mat-menu-panel {
+  //  min-height: 48px !important;
+    min-height: auto;
+  }
+  ::ng-deep .mat-menu-panel.menuStep {
+    min-width: 200px !important;
+  }
+  ::ng-deep .mat-menu-panel.menuDiscipline {
+    min-width: 90px !important;
+  }
+  ::ng-deep .mat-menu-panel.menuActivity {
+    min-width: 75px !important;
+  }
+  ::ng-deep .mat-menu-panel.menuAddons {
+    min-width: 75px !important;
+  }
+  

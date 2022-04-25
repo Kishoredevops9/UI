@@ -1,0 +1,130 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class=" ">
+  <div class="mdl-grid full-width">
+    <div class="tab-wrapper">
+      <div class="formStyle">
+        <hr class="divider">
+        <div class="title fontStyle">
+          <span class="header-theam container_text_color" *ngIf="type">{{ type }}</span>
+          <span id="docTitle">{{ titleData }}</span>
+
+          <span>
+            <app-progressbar *ngIf="!documentCreateStatus" [progressBar]='activityStatus'
+              [counterEnable]="counterEnable" [selectedActivityIndex]='selectedActivityIndex'
+              [lastIndexOfActivity]="lastIndexOfActivityDocNum" [firstIndexOfActivity]="firstIndexOfActivityDocNum">
+            </app-progressbar>
+            <span class="activity-status">
+              <label>Activity Status:&nbsp;<strong>({{ taskActivityCount }})</strong></label>
+            </span>
+          </span>
+
+
+
+
+         </div>
+         <div class="anounsment" style="visibility: hidden;" *ngIf=" property  &&  property.announcement ">
+          <b>Announcement: </b>{{ property.announcementHeader }}
+          <b class="rightAlign"> {{ property.announcementDateTime | date: 'dd/MM/yyyy hh:mm a' }}   </b>
+         </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+      <div class="material-group tab-wrapper cg container_text_color">
+        <div class="rightbox" *ngIf="listFlowViewStatus" style="right: 30px;
+        top: -3px;">
+          <span>List </span>
+          <mat-slide-toggle [(ngModel)]="isChecked" class="toggle"></mat-slide-toggle>
+          <span> Flow</span>
+          <span [ngClass]="{ 'disabled' :!CreatingTaskAuthorized || !isChecked}">
+            <img
+            src="../../../assets/images/Dots_menu_Icon.svg"
+            class="diagram-export-menu__trigger"
+            [matMenuTriggerFor]="exportMenu" />
+          </span>
+
+          <mat-menu #exportMenu="matMenu" class="diagram-export-menu"  >
+            <ng-container *ngIf="isChecked">
+              <button mat-menu-item class="diagram-export-menu__item" (click)="onDiagramPDFExportClick()">
+                <span>Export As PDF</span>
+              </button>
+              <button mat-menu-item class="diagram-export-menu__item" (click)="onDiagramSVGExportClick()">
+                <span>Export As SVG</span>
+              </button>
+              <button mat-menu-item class="diagram-export-menu__item" (click)="onDiagramPNGExportClick()">
+                <span>Export As PNG</span>
+              </button>
+            </ng-container>
+          </mat-menu>
+        </div>
+
+
+        <div class="rightbox" style="visibility: hidden" >
+
+          <img
+            src="../../../assets/images/Dots_menu_Icon.svg"
+            class="diagram-export-menu__trigger"
+            [matMenuTriggerFor]="closeTask"
+
+          />
+                      <!-- [ngClass]="{ 'disabled' :!CreatingTaskAuthorized || !isChecked}" -->
+          <mat-menu #closeTask="matMenu" class="diagram-export-menu"  >
+
+              <button *ngIf="property && property.taskStatusId" mat-menu-item class="diagram-export-menu__item" (click)="closeTaskConfirm()">
+                <span>Close Task</span>
+              </button>
+              <button *ngIf="property && !property.taskStatusId" mat-menu-item class="diagram-export-menu__item" (click)="reopenTask()">
+                <span>Reopen Task</span>
+              </button>
+          </mat-menu>
+        </div>
+
+        <mat-tab-group (selectedTabChange)="onTabChanged($event)"
+          class="criteria-Details-g taskCreation">
+          <mat-tab label="Properties" >
+            <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div>
+            <app-task-tab-one-content (titleOutput)="titleOutput($event)"
+             (propertyOutput)="propertyData($event)"
+              (taskCreatedOutput)="taskCreatedOutput($event)" (nextTab)="nextTab($event)" [contentType]="contentType"
+              (getGlobalData)="getGlobalData($event)" (newItemEvent)="addItem($event)" [contentType1]="id">
+            </app-task-tab-one-content>
+          </mat-tab>
+          <mat-tab label="Knowledge Review" [disabled]="!hasTaskCreated">
+            <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div>
+            <app-task-tab-two-content [contentType1]="id"></app-task-tab-two-content>
+          </mat-tab>
+          <mat-tab label="Build Task" [disabled]="!hasTaskCreated">
+            <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div>
+            <div class="maskGray" *ngIf="!CreatingTaskAuthorized"  >     </div>
+            <app-task-tab-three-content (buildTaskCreatedOutput)="buildTaskCreatedOutput($event)">
+            </app-task-tab-three-content>
+          </mat-tab>
+          <mat-tab label="Customize Task" [disabled]="!hasBuildCreated">
+            <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div>
+            <div class="maskGray" *ngIf="!CreatingTaskAuthorized"  >     </div>
+            <app-task-tab-four-content></app-task-tab-four-content>
+          </mat-tab>
+          <mat-tab label="Execution" [disabled]="!hasBuildCreated ">
+            <!-- <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div> -->
+            <div class="maskGray" *ngIf="!ExecutingTaskAuthorized"  >     </div>
+            <app-task-tab-five-content (openListView)="openListView()" [globalData]="globalData" [isChecked]="isChecked"
+              [titleData]='titleData' [contentType1]="id" [closeStatus]="property && !property.taskStatusId" >
+            </app-task-tab-five-content>
+          </mat-tab>
+          <mat-tab label="Review" [disabled]="!hasBuildCreated">
+            <div class="maskGray" *ngIf="property && !property.taskStatusId"  >     </div>
+            <app-task-tab-seven-content [titleData]='titleData'></app-task-tab-seven-content>
+          </mat-tab>
+          <mat-tab label="Status" [disabled]="!hasBuildCreated">
+
+            <app-task-tab-six-content></app-task-tab-six-content>
+          </mat-tab>
+          <mat-tab label=""></mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

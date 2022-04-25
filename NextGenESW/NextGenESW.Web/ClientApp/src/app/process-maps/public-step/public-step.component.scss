@@ -1,0 +1,48 @@
+.ok-button {
+    float: right;
+    min-width: 64px !important;
+}
+
+.warning-msg {
+    font-family: 'BarlowSemiCondensed-Medium';
+    font-size: large;
+}
+
+::ng-deep .custom-dialog-container .mat-dialog-container {
+    padding: 24px !important;
+}
+.last {
+    float: right;
+    transform: rotate(180deg);
+    margin-right: 20px;
+}
+.mgnt50{
+    margin-top: 50px;
+    position: relative;
+    width:100%;
+    float: left;
+    height: 100px;
+    
+}
+.rightBtnProp{
+    position:relative;
+    width: 93%;
+    float: left;
+    margin:40px 5px;
+}
+.propBtnCls{
+    position:absolute;
+    bottom:0px;
+    right:0px;
+}
+.btnLeftSide{
+    position: absolute;
+    bottom:0px;
+    left:0px;
+}
+.btnRightSide{
+    position: absolute;
+    bottom:0px;
+    right:0px;
+}
+

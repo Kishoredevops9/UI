@@ -1,0 +1,140 @@
+.lobby-wrapper {
+  //  background-image: url("../../../assets/images/flight-hero.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0% 0% 0% 3%;
+  height: 100%;
+  background-position: center;
+  width: 100%;
+}
+.Left-foot {
+  float: left;
+  width: 35%;
+  background-color: #d9d9d9;
+  position: absolute;
+  padding: 28px 0;
+  display: flex;
+  box-sizing: border-box;
+  bottom: 0;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.pw-footer {
+  display: block;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
+  right: 0px;
+  overflow: hidden;
+}
+
+.pw-footer .top-link {
+  width: 70%;
+  background-color: #d9d9d9;
+  position: relative;
+  //padding: 1%;
+  display: flex;
+  box-sizing: border-box;
+  float: right;
+  //bottom: -28px;
+  transform-origin: bottom left;
+  transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+}
+.pw-footer .top-link .block1 {
+  width: 103px;
+  padding: 5px;
+  display: block;
+  transform: skew(23deg); /* UNSKEW */
+}
+.pw-footer .top-link .block2 {
+  width: 103px;
+  padding: 5px;
+  display: block;
+  margin-left: 10px;
+}
+.pw-footer .top-link .block3 {
+  width: 103px;
+  padding: 5px;
+  display: block;
+  margin-left: 10px;
+}
+:host ::ng-deep .mat-h3,
+.mat-subheading-2,
+.mat-typography h3 {
+  margin: 0 0 0 0 !important;
+}
+.pw-footer .copywrite {
+  padding-left: 15%;
+  width: 100%;
+  bottom: -20px;
+  color: #002a6e;
+  position: relative;
+  font-size: 12px;
+}
+
+p,
+h1 {
+  font-family: Lato;
+}
+.md-caption {
+  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.foot-nav-ul {
+  width: 100%;
+  padding: 25px 0 0 25px;
+  overflow: hidden;
+}
+.foot-nav-ul h3 {
+  font-weight: 600;
+  line-height: 22px;
+  color: #222840;
+  margin-bottom: 0;
+  /* height: 50px; */
+  padding: 0px 10px;
+}
+.foot-nav-item {
+  float: left;
+  width: 19%;
+  text-align: center;
+  // margin-right: 15px;
+  height: 145px;
+  border-right: 2px solid #222840;
+
+  transform: skewX(20deg);
+  -ms-transform: skewX(20deg);
+  -webkit-transform: skewX(20deg);
+}
+.foot-nav-item a {
+  float: left;
+  display: block;
+  padding: 10px;
+  font-size: 17px;
+  color: #000000;
+}
+.mat-drawer-content {
+  overflow: hidden;
+}
+.foot-nav-item-lastright a {
+  float: left;
+  display: block;
+  padding-left: 0;
+  font-size: 14px;
+  color: #000000;
+}
+.border-none {
+  border: 0;
+}
+
+ul.foot-nav-ul li:last-child {
+  border-right: 0px;
+}
+ul.foot-nav-ul li:first-child {
+  padding-left: 10px;
+}

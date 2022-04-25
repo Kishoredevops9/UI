@@ -1,0 +1,59 @@
+<div class="execution">
+
+   
+  <div *ngIf="!showContent" class="content">
+    <div class="top-filter">
+
+      <form [formGroup]="disciplineForm">
+        <div class="heading-label">Show:</div>
+
+        <mat-checkbox *ngFor="let taskCollection of taskExecutionCollection" class="example-margin style-checked"
+          (change)="currentSelected($event.checked,taskCollection.keyword)">{{taskCollection.code}}
+        </mat-checkbox>
+
+        <mat-checkbox (change)="currentSelectedDiscipline($event.checked, 0)" class="example-margin style-checked">
+        </mat-checkbox>
+
+        <mat-select [disabled]="!defaultDiscipline" class="discipline" formControlName="disciplineAll">
+          <mat-option *ngFor="let discipline of disciplineListData"
+            (click)="currentSelectedDiscipline($event, discipline.rowNo)" [value]="discipline.rowNo">
+            {{ discipline.name }}
+          </mat-option>
+        </mat-select>
+
+      </form>
+
+      <span class="top_menu_action">
+        <button [disabled]="closeStatus" [ngClass]="{disabledNoOfCasesDiv: isActiveNOofCasesNo}" mat-button mat-raised-button color="primary" class="button_style" (click)="openDeviationModal(true)">
+          <mat-icon>check_circle_outline</mat-icon> Get Deviation Approval
+        </button>
+        <span class="vertical_line"></span>
+        <button [disabled]="closeStatus"  [ngClass]="{disabledNoOfCasesDiv: isActiveNOofCasesNo}" mat-button mat-raised-button color="primary" class="button_style" (click)="openDeviationModal(false)">
+          <mat-icon>check_circle_outline</mat-icon> Get Approval
+        </button>
+        <span class="unselect_action">
+          <label class="unselected_style">
+            Show Unselected?
+          </label>
+          <label>No</label>
+          <mat-slide-toggle [(ngModel)]="toggle" class="toggle"></mat-slide-toggle>
+          <label>Yes</label>
+        </span>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="showContent">
+    
+    <app-task-execution-map
+      (openListView)="openListView.emit()"
+      [taskExecutionData]="taskExecutionData"
+    ></app-task-execution-map>
+  </div>
+  <div *ngIf="!showContent">
+   
+    <div *ngIf="loading" class="taskFive-1" id="cover-spin"></div>
+    <app-execution-list [item]="parentItem" [connectedDropListsIds]="connectedDropListsIds"
+      [criteriaAndBPData]="criteriaAndBPData" [closeStatuschk]="closeStatus" [filterTask]='filterTask' [showUnselected]="toggle">
+    </app-execution-list>
+  </div>
+</div>

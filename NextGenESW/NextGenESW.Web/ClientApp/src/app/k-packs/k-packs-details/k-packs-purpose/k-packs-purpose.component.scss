@@ -1,0 +1,799 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+// @import '../../../../scss/helpers/variables';
+// @import '../../../../scss/helpers/mixins';
+// @import '../../../../scss/helpers/breakpoints';
+// @import '../../../../scss/helpers/placeholders';
+
+.header {
+    margin-top: 100px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.html-header {
+    margin: 15px 0 5px;
+}
+
+.html {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.5rem;
+    background-color: #f1f1f1;
+    min-height: 20px;
+    max-height: 10rem;
+    overflow: auto;
+}
+
+.EKS_btns_ap {
+    color: black;
+
+    span {
+        color: #fff;
+        background-color: $content-type-ap;
+        padding: 12px;
+    }
+
+    label {
+        padding: 12px;
+    }
+}
+
+.EKS_btns_wi {
+    color: black;
+
+    span {
+        color: #fff;
+        background-color: $content-type-wi;
+        padding: 12px;
+    }
+
+    label {
+        padding: 12px;
+    }
+}
+
+.EKS_btns_cg {
+    color: black;
+
+    span {
+        color: black;
+        background-color: $content-type-cg;
+        padding: 12px;
+    }
+
+    label {
+        padding: 12px;
+    }
+}
+
+.EKS_btns_gb {
+    color: black;
+
+    span {
+        color: #fff;
+        background-color: $content-type-gb;
+        padding: 12px;
+    }
+
+    label {
+        padding: 12px;
+    }
+}
+
+.EKS_btns_rc {
+    color: black;
+
+    span {
+        color: black;
+        background-color: $content-type-rc;
+        padding: 12px;
+    }
+
+    label {
+        padding: 12px;
+    }
+}
+
+.draged-list-wi {
+    @include draged-list-content($content-type-wi);
+}
+
+.draged-list-ap {
+    @include draged-list-content($content-type-ap);
+}
+
+.draged-list-cg {
+    @include draged-list-content($content-type-cg);
+}
+
+.draged-list-toc {
+    @include draged-list-content($content-type-toc);
+}
+
+.draged-list-kp {
+    @include draged-list-content($content-type-kp);
+}
+
+.draged-list-rc {
+    @include draged-list-content($content-type-rc);
+    color: white;
+}
+
+
+.draged-list-m {
+    @include draged-list-content($content-type-m);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+.draged-list-sf {
+    @include draged-list-content($content-type-sf);
+    color: white;
+}
+
+// .all-type.draged-list-m[_ngcontent-jbw-c391] {   draged-list-sf
+//     font-family: "BarlowSemiCondensed-Regular", sans-serif;
+//     font-weight: 400;
+//     font-size: 18px;
+//     line-height: 31px;
+//     background: #df4b09;
+//     text-align: center;
+//     margin-right: 10px;
+//     letter-spacing: 1.21px;
+
+
+
+.EKS_sign_ap {
+    color: #fff;
+    background-color: $content-type-ap;
+}
+
+.EKS_sign_wi {
+    color: #fff;
+    background-color: $content-type-wi;
+}
+
+.EKS_sign_cg {
+    color: black;
+    background-color: $content-type-cg;
+}
+
+.EKS_sign_gb {
+    color: #fff;
+    background-color: $content-type-gb;
+}
+
+.eks-buttons {
+    border-right: 1px solid gray;
+}
+
+.bottom-line-wi {
+    border-bottom: 3px solid $content-type-wi;
+}
+
+.bottom-line-ap {
+    border-bottom: 3px solid $content-type-ap;
+}
+
+.bottom-line-cg {
+    border-bottom: 3px solid $content-type-cg;
+}
+
+.bottom-line-gb {
+    border-bottom: 3px solid $content-type-gb;
+}
+
+.bottom-line-rc {
+    border-bottom: 3px solid $content-type-rc;
+}
+
+.disabled-pointer {
+    pointer-events: none;
+}
+
+.actions {
+    float: right;
+    margin-right: 5%;
+
+    .expand {
+        cursor: pointer;
+    }
+}
+
+.content {
+    background-color: #ffffff;
+    height: 32vh;
+}
+
+::ng-deep .mat-expansion-panel-body {
+    margin-bottom: 24px;
+}
+
+::ng-deep .mat-menu-panel.contentMatMenu {
+    width: 160px;
+    padding: 0px !important;
+    background: #f7f7f7 0% 0% no-repeat padding-box;
+    box-shadow: 0px 2px 2px #00000014;
+    opacity: 1;
+    margin-bottom: 30%;
+
+    .mat-menu-item {
+        border: 1px solid #ededed;
+        height: 30px;
+        font-size: 12px;
+        color: #000000;
+        line-height: 30px;
+        padding: 0px 10px;
+    }
+
+    .mat-menu-content {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+}
+
+.full-width {
+    width: 100%;
+}
+
+.layout-containers {
+    margin: 10%;
+
+    .space {
+        margin-left: 5px;
+    }
+}
+
+.kPack-container {
+    display: inline;
+
+    .layout-label {
+        float: left;
+        margin-top: 4%;
+    }
+
+    .Layout {
+        float: left;
+        padding: 0.8%;
+        height: 33px;
+        width: 3%;
+        margin: 3% 1%;
+        cursor: pointer;
+        display: -webkit-inline-box;
+        box-shadow: 0px 3px 6px #002a6e39;
+
+        #parent_div_1,
+        #parent_div_2,
+        #parent_div_3 {
+            width: 29%;
+            height: 100%;
+            border: 1px solid gray;
+            margin-right: 2px;
+            float: left;
+        }
+
+        .child_div_1 {
+            float: left;
+            margin-right: 5px;
+        }
+
+        #parent_div_4 {
+            width: 100%;
+            border: 1px solid gray;
+            height: 100%;
+        }
+
+        #parent_div_5,
+        #parent_div_6 {
+            width: 45%;
+            border: 1px solid gray;
+            height: 100%;
+            display: inherit;
+        }
+
+        #parent_div_7 {
+            width: 100%;
+            border: 1px solid gray;
+            height: 50%;
+        }
+
+        #parent_div_8 {
+            margin-top: 5px;
+            width: 100%;
+            border: 1px solid gray;
+            height: 50%;
+        }
+    }
+}
+
+.kPack-container div {
+    border: none;
+}
+
+.kPack-container div.active,
+.kPack-container div.active,
+.kPack-container div.active,
+.kPack-container div.active {
+    border: 1px solid red;
+}
+
+.editor-layout2 {
+    width: 50%;
+    margin: 10px;
+}
+
+:host ::ng-deep angular-editor {
+
+    .angular-editor-button[title="Undo"],
+    .angular-editor-button[title="Redo"],
+    .angular-editor-button[title="Text Color"],
+    .angular-editor-button[title="Background Color"] {
+        display: none !important;
+    }
+
+    padding: 0px !important;
+    outline: none !important;
+    border: none !important;
+    min-height: max-content !important;
+    height: max-content !important;
+    resize: none !important;
+}
+
+mat-table {
+    mat-row {
+        float: left;
+        width: 100%;
+    }
+
+    mat-cell {
+        margin-top: 24px;
+        margin-bottom: 24px;
+        align-items: normal;
+        padding-bottom: 24px;
+    }
+
+    .layout1,
+    #KP1 {
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .layout2,
+    #KP2 {
+        width: 50%;
+        padding-right: 30px !important;
+        vertical-align: top;
+        box-sizing: border-box;
+    }
+
+    .layout3,
+    #KP3 {
+        width: 33.33%;
+        padding-right: 30px !important;
+        vertical-align: top;
+        box-sizing: border-box;
+    }
+
+    .layout4 {
+        width: 100%;
+        height: 50%;
+    }
+}
+
+.title {
+    border: 2px solid #d3d3d3;
+    width: 90%;
+    padding-left: 1%;
+    padding-top: 0.5%;
+    margin: 3% 0 1% 0%;
+    height: 40px;
+}
+
+.description {
+    width: 90%;
+    padding-left: 0;
+    padding-top: 0;
+    min-height: 90px;
+
+    textarea {
+        height: 100%;
+        min-height: 90px;
+    }
+}
+
+.select-layout {
+    margin: 0 3% 0 0;
+}
+
+.menu-items {
+    align-content: initial;
+    vertical-align: top;
+}
+
+.mat-cell {
+    padding-left: 0px !important;
+}
+
+.mat-header-row {
+    min-height: 0px;
+}
+
+.dot_menu {
+    // padding-bottom: 19em;
+    padding-bottom: 30%;
+}
+
+::ng-deep .preview .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    height: fit-content;
+
+    mat-cell {
+        padding: 19em !important;
+    }
+
+    background-color: white !important;
+    padding: 0px !important;
+    resize: none !important;
+}
+
+.menu-list {
+    padding-bottom: 19em;
+}
+
+::ng-deep a {
+    color: unset !important;
+  }
+
+::ng-deep .draged-list-wi {
+    @include draged-list-content($content-type-wi);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-ap {
+    @include draged-list-content($content-type-ap);
+    color: white;
+    border: 1px solid $content-type-brd;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-cg {
+    @include draged-list-content($content-type-cg);
+    color: #404040;
+    //border: 1px solid $content-type-brd;
+    border: 1px solid #00A9E0;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-ds {
+    @include draged-list-content($content-type-ds);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-gb {
+    @include draged-list-content($content-type-gb);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-rc {
+    @include draged-list-content($content-type-rc);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+
+::ng-deep .draged-list-m {
+    @include draged-list-content($content-type-m);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-sf {
+    @include draged-list-content($content-type-sf);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-toc {
+    @include draged-list-content($content-type-toc);
+    color: white;
+    width: 40px;
+    height: 41px;
+    display: inline-block;
+}
+
+::ng-deep .draged-list-kp {
+    @include draged-list-content($content-type-kp);
+    color: white;
+    width: 30px;
+    height: 31px;
+    display: inline-block;
+}
+
+::ng-deep .angular-editor {
+    img {
+        max-width: 100%;
+    }
+}
+
+::ng-deep .ct-icons {
+    width: 8%;
+    cursor: pointer;
+    //text-decoration: underline;
+}
+
+.add-eks,
+.add-eks-layout2,
+.add-eks-layout3-2,
+.add-eks-layout3-3 {
+    float: left;
+    padding: 7px 10px;
+}
+
+.add-video {
+    left: 138px;
+    float: left;
+    position: absolute;
+    padding: 7px 10px;
+}
+
+.layout-wrapper-1 {
+    width: 100%;
+
+    .editor {
+        display: block;
+    }
+}
+
+::ng-deep label.editor-label {
+    img {
+        max-width: 100%;
+    }
+    ul{
+        li{
+            list-style: disc;
+            margin: 0 15px;
+        }
+    }
+    ol{
+        li{
+            list-style: decimal;
+            margin: 0 15px;
+        }
+    }
+}
+
+.matIcon {
+    cursor: pointer;
+    padding: 50%;
+    font-size: 18px;
+}
+
+.btnstyle {
+    margin-top: 3%;
+    padding: 7px 3px;
+    //border-radius: 6px;
+}
+
+.editable {
+    height: auto;
+    min-height: 350px;
+    width: 100%;
+}
+
+.editor {
+  margin: 12px 0px;
+  display: flex !important;
+  align-items: center;
+  .position-relative {
+    width: 33%;
+    flex-grow: 1;
+    padding: 0;
+  }
+  .swap-section {
+    text-align: center !important;
+    padding: 0 !important;
+    width: 45px;
+  }
+}
+
+.editor-width {
+    min-width: -webkit-fill-available;
+}
+
+.editor-width-2 {
+    min-width: -webkit-fill-available;
+}
+
+.editor-2 {
+    width: 100%;
+    min-height: 13rem;
+}
+
+//K-pack Styling fixes
+
+
+.position-relative {
+    padding-right: 25px;
+    box-sizing: border-box;
+
+    .layout2,
+    .layout3,
+    .layout4 {
+        width: 100%;
+        padding-right: 0 !important;
+    }
+
+    &:last-child {
+        padding-right: 0;
+    }
+}
+
+.mdl-cell {
+    clear: both;
+}
+
+.actions-button {
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px dashed $content-type-kp;
+    margin: 0 0 20px;
+
+    span {
+        
+        color: $content-type-kp;
+        .mat-icon{
+            cursor: pointer;
+        }
+        &:last-child {
+            padding-left: 10px;
+            color: $black-color;
+        }
+    }
+}
+
+
+.layout-wrapper-1,
+.layout-wrapper-2,
+.layout-wrapper-3 {
+    .editor {
+        display: grid;
+    }
+}
+
+.layout-wrapper-2 {
+    .editor {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+.layout-wrapper-3 {
+    .editor {
+        grid-template-columns: 33% 33% 33%;
+    }
+}
+
+#parent_div_6 {
+    margin-left: 2px;
+}
+
+.tooltip1 {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip1 .tooltiptext {
+    left: 10px;
+    top: 21px;
+    visibility: hidden;
+    width: 70px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .tooltip1:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .tooltip2 {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tooltip2 .tooltiptext2 {
+    left: 25px;
+    top: 10px;
+    visibility: hidden;
+    width: 72px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+  }
+
+  .tooltip2:hover .tooltiptext2 {
+    visibility: visible;
+  }
+
+.purps-mrgn{margin-top: 15px; display: block;}
+//   .all-type {
+//     color: $white-color;
+//     width: 30px;
+//     height: 31px;
+//     display: inline-block;
+
+//     &.draged-list-wi {
+//       @include draged-list-content($content-type-wi);
+//     }
+
+//     &.draged-list-ap {
+//       @include draged-list-content($content-type-ap);
+//     }
+
+//     &.draged-list-cg {
+//       @include draged-list-content($content-type-cg);
+//       color: #404040;
+//       border: 1px solid $content-type-brd;
+//     }
+
+//     &.draged-list-gb {
+//       @include draged-list-content($content-type-gb);
+//     }
+
+//     &.draged-list-rc {
+//       @include draged-list-content($content-type-rc);
+//       //color: #404040;
+//     }
+
+//     &.draged-list-kp {
+//       @include draged-list-content($content-type-kp);
+//     }
+
+//     &.draged-list-toc {
+//       @include draged-list-content($content-type-toc);
+//     }
+
+//     &.draged-list-ds {
+//       @include draged-list-content($content-type-ds);
+//     }
+
+//     &.draged-list-m {
+//       @include draged-list-content($content-type-m);
+//     }
+
+//     &.draged-list-sf {
+//       @include draged-list-content($content-type-sf);
+//     }
+//   }

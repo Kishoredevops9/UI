@@ -1,0 +1,338 @@
+@import '../../scss/helpers/variables';
+@import '../../scss/helpers/mixins';
+@import '../../scss/helpers/breakpoints';
+@import '../../scss/helpers/placeholders';
+
+
+/*
+.user-profile {
+  grid-area: user-profile;
+  font-size: 12px;
+  line-height: normal;
+  text-align: center;
+  font-family: "BarlowSemiCondensed-Medium", sans-serif;
+  display: grid;
+  grid-template-areas: "curcleDiv user-name user-img";
+  margin-top: -11px;
+  margin-right: 10px;
+  
+  .icon {
+
+    &.user-img {
+      width: 19px;
+      height: 20px;
+      grid-area: user-img;
+      cursor: pointer;
+      position: relative;
+      top: 0px;
+
+      @include breakpoint(tablet) {
+        width: 30px;
+        height: 30px;
+      }
+
+      img {
+        width: 100%;
+        @include border-radius(25px);
+      }
+
+      @include breakpoint(tablet) {
+        width: 35px;
+        height: 35px;
+        background-size: 30px 30px !important;
+      }
+
+      @include breakpoint(mobileonly) {
+        width: 35px;
+        height: 35px;
+        background-size: 25px 25px !important;
+      }
+    }
+  }
+
+  .user-name {
+    grid-area: user-name;
+    color: $nav-primary-bg;
+    font-size: 12px;
+    text-align: right;
+    margin-top: 0px;
+    cursor: pointer;
+
+    @include breakpoint(tablet) {
+      font-size: 0.8rem;
+    }
+
+    @include breakpoint(mobileonly) {
+      font-size: 1rem;
+    }
+  }
+
+  &:hover {
+    background: none;
+  }
+
+  @include breakpoint(mobileonly) {
+    grid-template-areas: "curcleDiv user-name user-img";
+  }
+
+}
+
+*/
+
+.topMenu {
+  background-color: #ffffff !important;
+  width: 250px !important;
+}
+
+.brandName {
+  background-color: #00a9e2 !important;
+  color: #ffffff !important;
+  font-family: "Barlow-Medium" !important;
+}
+
+.brandName:hover {
+  background-color: #00a9e2 !important;
+  color: #ffffff !important;
+  font-family: "Barlow-Medium" !important;
+}
+
+.mat-menu-content {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+}
+
+.userImg {
+  width: 40px !important;
+  border-radius: 40px !important;
+}
+
+.loggedOut {
+  text-align: right !important;
+  cursor: pointer !important;
+}
+
+.userProfiles {
+  background-color: #222222 !important;
+  color: #ffffff !important;
+  height: 88px !important;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;
+  padding-left: 20px !important;
+  //line-height: 40px !important;
+  pointer-events: none !important;
+}
+
+.userProfiles {
+  div.icon {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    line-height: 14px !important;
+    pointer-events: none !important;
+  }
+
+  div.profileName {
+    display: inline-block !important;
+    line-height: 18px !important;
+    vertical-align: middle !important;
+    padding-left: 10px;
+    font-family: "Barlow-Medium" !important;
+    pointer-events: none !important;
+  }
+}
+
+.mat-menu-panel.topMenu {
+  padding: 0px !important;
+  background-color: #ffffff !important;
+  width: 250px !important;
+  z-index: 10000 !important;
+}
+
+.settingProfiles {
+  height: 72px !important;
+}
+
+.icon-settings {
+  display: inline-block !important;
+  vertical-align: middle !important;
+  line-height: 14px !important;
+}
+
+.settings-text {
+  display: inline-block !important;
+  line-height: 18px !important;
+  vertical-align: middle !important;
+  padding-left: 10px;
+  font-family: "Barlow-Medium" !important;
+  width: 180px !important;
+  text-overflow: unset !important;
+}
+
+.sub-titles {
+  font-size: 10px !important;
+}
+
+.link-text{
+  text-decoration: underline;
+}
+
+.mat-menu-trigger {
+  display: block !important;
+}
+
+.curcle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: orange;
+  color: white;
+  //background-size: 17.8px 16.8px;
+  position: relative;
+  display: block;
+  line-height: 35px;
+  font-size: 15px !important;
+  //vertical-align: middle !important;
+}
+
+.imgClass {
+  width: 40px !important;
+}
+
+.curcleDiv {
+  margin-right: 15px;
+  //margin-top: -22px;
+  display: inline-block !important;
+  vertical-align: middle !important;
+  border: 1px solid #ededed;
+  border-radius: 50%;
+}
+
+.textLine {
+  width: 160px !important;
+}
+
+.curclePop {
+  display: inline-block !important;
+}
+
+.initialClass {
+  display: inline-block !important;
+}
+
+.curclePop {
+  //border-radius: 50%;
+  background-color: orange;
+  color: white;
+  background-size: 17.8px 16.8px;
+  position: relative;
+  display: block;
+  line-height: 40px !important;
+  //vertical-align: middle !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 40px !important;
+  text-align: center;
+}
+
+.userProfiles:hover {
+  cursor: default;
+  pointer-events: none !important;
+}
+
+.brandName:hover {
+  cursor: default;
+}
+
+.brandName {
+  cursor: default;
+}
+
+.userProfiles {
+  //cursor: default;
+  pointer-events: none !important;
+}
+
+.brandText {
+  padding-right: 76px;
+  cursor: default;
+  pointer-events: none !important;
+}
+
+.iconSet {
+  width: 24px !important;
+  height: 24px !important;
+  //border: 1px solid red;
+  background-size: 24px !important;
+}
+
+.icon {
+  &.user-img {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: relative;
+    top: 0px;
+
+    @include breakpoint(tablet) {
+      width: 30px;
+      height: 30px;
+    }
+
+    img {
+      width: 100%;
+      @include border-radius(40px);
+    }
+
+    @include breakpoint(tablet) {
+      width: 35px;
+      height: 35px;
+      background-size: 30px 30px !important;
+    }
+
+    @include breakpoint(mobileonly) {
+      width: 35px;
+      height: 35px;
+      background-size: 25px 25px !important;
+    }
+  }
+}
+
+.userName {
+  color: $nav-primary-bg;
+  font-size: 15px !important;
+  text-align: right;
+  margin-top: -1px;
+  cursor: pointer;
+  display: inline-block !important;
+  padding-right: 15px !important;
+  vertical-align: middle !important;
+
+  @include breakpoint(tablet) {
+    font-size: 0.8rem;
+  }
+
+  @include breakpoint(mobileonly) {
+    font-size: 1rem;
+  }
+
+  .arrow {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    margin-left: 5px;
+  }
+}
+
+.userProfile {
+  font-size: 12px;
+  line-height: normal;
+  text-align: center;
+  font-family: "BarlowSemiCondensed-Medium", sans-serif;
+  //margin-right: 10px;
+  //border: 1px solid red;
+  min-width: 180px !important;
+  position: relative;
+  margin-top: -15px;
+}

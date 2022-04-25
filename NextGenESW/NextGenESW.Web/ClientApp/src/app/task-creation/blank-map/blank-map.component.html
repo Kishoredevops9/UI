@@ -1,0 +1,49 @@
+<div class="add-activities">
+    <div class="mat-dialoag-header">
+        <h1 mat-dialog-head>Add new blank map</h1>
+        <span class="material-icons" mat-dialog-close>
+            close
+        </span>
+    </div>
+    <mat-dialog-content>
+        <mat-card>
+            <div class="flexItemBox">
+                <div class="label">Title for STEP Flow</div>
+                <mat-form-field>
+                    <mat-label>Title for STEP Flow</mat-label>
+                    <input matInput placeholder="Title for Map" [(ngModel)]="processMapName" required />
+                </mat-form-field>
+            </div>
+
+            <div class="flexItemBox">
+                <div class="label">No of Swim Lanes*</div>
+                <mat-form-field>
+                    <mat-select placeholder="1" (selectionChange)="onSelect($event)">
+                        <mat-option *ngFor="let swimlene of swimaleList" [value]="swimlene.value">{{swimlene.value}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+                <div class="flexItemBox" *ngFor="let nmodel of swimaleListBox">
+                    <div class="label">Title for Swim Lane</div>
+                    <mat-form-field>
+                        <mat-label>Title for Swim Lane</mat-label>
+                        <input matInput placeholder="Title for Swim Lane" [(ngModel)]="nmodel.value"
+                            [ngModelOptions]="{standalone: true}" required />
+                    </mat-form-field>
+                    <span></span>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="button_style" (click)="onAddBlankMap()" mat-flat-button color="primary">
+                    Save
+                </button>
+                <button class="button_style" (click)="onClose()" mat-flat-button color="warn">
+                    Cancel
+                </button>
+            </div>
+        </mat-card>
+    </mat-dialog-content>
+</div>

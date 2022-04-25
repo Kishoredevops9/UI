@@ -1,0 +1,44 @@
+aside {
+  width: 350px;
+ 
+  article {
+    margin: 20px;
+    h2 {
+      text-align: left;
+      letter-spacing: 1.25px;
+      color: #3e3e3e;
+      text-transform: uppercase;
+      padding: 0px;
+    }
+ 
+    .formbox {
+
+      div { clear: both; display: block; }
+      label {
+        float: left;
+        width: 90px;
+        padding: 5px;
+        font-size: 12px;
+      }
+      mat-form-field {
+        width: 215px;
+        float: left;
+        margin-top: -15px;
+      }
+    }
+  }
+
+  div.buttonbox {
+    width: 100%;
+    border-top: 1px solid #CFD1D7;
+    text-align: center;
+    padding: 10px;
+    clear: both;
+    .mat-button:first-child { margin-right: 10px;}
+  }
+}
+
+
+.spinnerbox { width: 20px;
+  margin: 0px auto;
+  height: 0px;  }

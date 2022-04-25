@@ -1,0 +1,123 @@
+<div class="page-layout" *ngIf="globalData">
+  <div *ngIf="loading" id="cover-spin"></div>
+  <div class="header-field">Lessons Learned</div>
+  <div *ngIf="showAlert" class="alert alert-danger" role="alert">{{alertMsg}}
+    <mat-icon id="error-close-button" (click)="onClose()">close</mat-icon>
+  </div>
+  <div>
+    <mat-table #table [dataSource]="lessonLearnedProperties">
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef>
+          Link to Lessons Learned
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && isEditableMode); else PREVIEW_MODE">
+            <app-texteditor [placeholder]="element.linkNumber" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                            [allowMedia]="false"
+                            id="editor"
+                            (editorData)="element.linkNumber = $event"></app-texteditor>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+              <div [innerHTML]="element.linkNumber | safe : 'html'"></div>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+
+          <ng-container *ngIf="(element.isEdit && isEditableMode); else PREVIEW_MODE">
+
+            <app-texteditor [placeholder]="element.description" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                            [allowMedia]="false"
+                            id="angularEditor1"
+                            (editorData)="element.description = $event"></app-texteditor>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <div [innerHTML]="element.description | safe : 'html'"></div>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container *ngIf="isEditableMode" matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && isEditableMode); else PREVIEW_MODE">
+            <span>
+              <mat-icon
+                (click)="delete(element)"
+                style="
+                  color: red;
+                  align-items: center;
+                  cursor: pointer;
+                  padding: 50%;
+                "
+                >delete</mat-icon
+              >
+            </span>
+            <span>
+              <mat-icon
+                (click)="saveLessonLearned(element)"
+                style="cursor: pointer; padding: 50%"
+                >save</mat-icon
+              >
+            </span>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <span>
+                <mat-icon
+                  (click)="delete(element)"
+                  style="
+                    color: red;
+                    align-items: center;
+                    cursor: pointer;
+                    padding: 50%;
+                  "
+                  >delete</mat-icon
+                >
+              </span>
+              <span>
+                <mat-icon
+                  (click)="edit(element)"
+                  style="cursor: pointer; padding: 50%"
+                  >edit</mat-icon
+                >
+              </span>
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+    </mat-table>
+  </div>
+  <div *ngIf="isEditableMode" class="button">
+    <span>+</span>
+    <button
+      style="
+        background-color: white;
+        cursor: pointer;
+        font-family: 'Inter-regular';
+        font-size: small;
+      "
+      (click)="add()"
+    >
+      Add Row
+    </button>
+  </div>
+  <br />
+  <div style="margin-left: 100%;" *ngIf="isCGDoc == true">
+    <span class="arrow-icon">
+      <img
+        (click)="onArrowClick(requestApprovalTemplate)"
+        src="./assets/images/EastArrow.svg"
+        width="50px"
+        height="50px"
+      />
+    </span>
+  </div>
+</div>
+<ng-template #requestApprovalTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

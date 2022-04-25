@@ -1,0 +1,140 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import '../../../../scss/base/_global.scss';
+
+.arrow-icon {
+  margin-top: 2%;
+  float: right;
+  cursor: pointer;
+}
+
+.delete-icon {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 25px;
+}
+
+.delete-text {
+  margin-left: -10px;
+  cursor: pointer;
+}
+.fleft {
+  float: left;
+}
+.button {
+  height: fit-content;
+  float: right;
+}
+
+.text-field {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.header-field {
+  // font: normal normal normal 16px/20px BarlowSemiCondensed-Medium;
+  // letter-spacing: 1px;
+  // color: #000000;
+  margin: 20px 0;
+}
+
+.page-layout {
+  width: 97% !important;
+  margin-left: 0px;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+  flex: 0 0 150px;
+  padding-left: 0.5%;
+}
+
+.mat-cell:nth-child(2),
+.mat-header-cell:nth-child(2) {
+  flex: 0 0 210px;
+  padding-left: 0.5%;
+}
+
+.mat-header-cell {
+  font-size: 0.85rem;
+  font: normal normal normal 13px/21px Inter-regular;
+  font-family: 'Inter-Medium' !important;
+  padding-left: 0%;
+}
+
+mat-row {
+  border: 1px solid white !important;
+  align-items: stretch;
+  background-color: #f5f5f5;
+  font: normal normal normal 13px/21px Inter-regular;
+  letter-spacing: 0.67px;
+}
+
+mat-cell {
+  border: 1px solid white !important;
+  padding-left: 1%;
+  align-items: flex-start !important;
+  padding-top: 1%;
+}
+
+.mat-header-row {
+  min-height: 0px;
+}
+
+.mat-cell:nth-child(4),
+.mat-header-cell:nth-child(4) {
+  flex: 0 0 100px;
+}
+
+::ng-deep .noc_preview .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  mat-cell {
+    padding: 0px !important;
+  }
+
+  background-color: #f5f5f5 !important;
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+  margin-left: 1%;
+
+  ol {
+    margin-left: 23px !important;
+  }
+
+  ul {
+    margin-left: 23px !important;
+  }
+}
+
+#angularEditor {
+  width: 100%;
+}
+
+:host ::ng-deep angular-editor {
+  .ae-font.ae-expanded .ae-picker-options {
+   top: auto !important;
+}
+
+}
+
+:host ::ng-deep angular-editor {
+
+  .angular-editor-button[title="Undo"],
+  .angular-editor-button[title="Redo"],
+  .angular-editor-button[title="Text Color"],
+  .angular-editor-button[title="Background Color"] {
+      display: none !important;
+  }
+
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+}

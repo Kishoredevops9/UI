@@ -1,0 +1,15 @@
+<form [formGroup]="contentCreateForm">
+  <mat-form-field>
+    <mat-label>Create a ...</mat-label>
+    <mat-select class="content-type-list" formControlName="content-type">
+      <mat-option
+        *ngFor="let item of list"
+        value="{{ item }}"
+        id="{{ item.id }}"
+        (click)="onSelect(item)"
+      >
+        {{ item.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

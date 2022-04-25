@@ -1,0 +1,43 @@
+@import '../../../theme/_colors';
+@import '../../../theme/_fonts';
+@import '../../../theme/_shadows';
+@import '../../../theme/_zIndexes';
+
+.app-diagram-context-menu {
+  $menu: &;
+  position: absolute;
+  z-index: $zindex-over-content;
+
+  &__menu.mat-menu-panel {
+    position: relative;
+    border: 1px solid $gray-dark;
+    background: $gray-light;
+    border-radius: 4px;
+    min-height: 32px;
+    @include box-shadow;
+    padding: 0;
+
+    .mat-menu-content:not(:empty) {
+      padding: 0;
+    }
+
+    &:not(#{$menu}__menu--no-icons):after {
+      width: 1px;
+      height: 100%;
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 32px;
+      background: $gray;
+    }
+  }
+
+  &__menu-item.mat-menu-item {
+    font-family: $font-family;
+    position: relative;
+    line-height: inherit;
+    height: inherit;
+    padding: 6px 8px;
+    margin: 0;
+  }
+}

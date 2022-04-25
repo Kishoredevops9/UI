@@ -1,0 +1,58 @@
+<span class="table-wrapper mdl-cell mdl-cell--8-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+  <mat-table #table [dataSource]="eksAdvSearchData">   
+       
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <mat-checkbox class="example-margin" (change)="onChange($event, element)">
+        </mat-checkbox>&nbsp;&nbsp;&nbsp;      
+        <label style="padding-left: 2%;overflow: auto;">{{element.title}}</label>
+    </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="contentid">
+      <mat-header-cell *matHeaderCellDef> Content Id </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+      <span style="color: #0076ff">{{ element.contentid }}</span>
+    </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="componenttype">
+      <mat-header-cell *matHeaderCellDef> Component Type </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <span class="{{ element.componenttype }}">{{element.componenttype}}</span>       
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="version">
+      <mat-header-cell *matHeaderCellDef>Version </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index"><b>{{ element.version }}</b></mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="lastUpdate">
+      <mat-header-cell *matHeaderCellDef>Last Update </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">{{ element.lastupdate }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="jc">
+      <mat-header-cell *matHeaderCellDef>J&C</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index"><b>{{ element.jc }}</b> </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="outsourcable">
+      <mat-header-cell *matHeaderCellDef>Outsourcable</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <div *ngIf="element.outsourceable && element.outsourceable == true; else CLEAR_ICON">
+          <mat-icon style="color: #37a000; font-size: 20px">done</mat-icon>
+        </div>
+        <ng-template #CLEAR_ICON>
+          <mat-icon style="color: red; font-size: 20px">clear</mat-icon>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row id="header-style" *matHeaderRowDef="displayedColumns; sticky: true">
+    </mat-header-row>
+    
+  </mat-table>
+</span>

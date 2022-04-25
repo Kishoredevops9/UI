@@ -1,0 +1,209 @@
+<div class="container">
+  <div class="process-map-wrap">
+    <div class="process-map-menu">
+      <div class="manage-data">
+        <div class="heading-band">
+          <hr class="divider">
+          <div class="title">
+            <span class="procesHead">M</span>
+            <span class="titleSpan"><span style="font-weight: 600;">partfamily process name -</span> {{ model ? model.title : '' }} - {{ model ? model.contentId : '' }}</span>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="center center" class="iconsDiv">
+            <!-- <div class="savAsbrd" (click)="onAddConnection()" fxLayout="row" fxLayoutAlign="center center">
+              <span class="saveAsText">Add Connector</span>
+            </div> -->
+            <!-- <div class="savAsbrd" (click)="onExportXls()" fxLayout="row" fxLayoutAlign="center center">
+              <span class="saveAsText">Export XLS</span>
+            </div> -->
+            <!-- <div class="savAsbrd" (click)="onAddPhase()" fxLayout="row" fxLayoutAlign="center center">
+              <span class="saveAsText">Add Phase</span>
+            </div> -->
+            <!-- <div class="savAsbrd" (click)="goToCreateProgressmap()" fxLayout="row"
+              fxLayoutAlign="center center">
+              <span class="saveAsText">Save As</span>
+            </div> -->
+            <div class="propertiesIconClass" (click)="goToProperties()" fxLayout="row" fxLayoutAlign="center center">
+              <img src="../../../assets/images/iconfinder_tools.svg" width="20" />
+              <span class="propertiesText">Properties</span>
+            </div>
+            <div class="links" fxLayout="row" fxLayoutAlign="center center" *ngIf="isStatusDraft">
+              <img src="../../../assets/images/checkInoutNewIcon.svg" width="20" />
+              <a class="checkOutText" *ngIf="!IsCheckOut" (click)="addContentCollaboration()">Check&nbsp;Out</a>
+              <a class="checkInText" *ngIf="IsCheckOut" (click)="addContentCollaboration('checkin')">Check&nbsp;In</a>
+            </div>
+            <div class="approveClass" fxLayout="row" fxLayoutAlign="center center" (click)="openRequestModal(requestApprovalTemplate)" *ngIf="isStatusDraft">
+              <img src="../../../assets/images/approvalIcon.svg" width="21" />
+              <span class="approveText">Request&nbsp;for&nbsp;Approval</span>
+            </div>
+            <div class="approveClass" fxLayout="row" fxLayoutAlign="center center" (click)="openModal(mytemplate)" *ngIf="isStatusApproveOrReject">
+              <img src="../../../assets/images/approvalIcon.svg" width="21" />
+              <span class="approveText">Approve&nbsp;or&nbsp;Sendback</span>
+            </div>
+            <div class="coAuthorClass" (click)="onCollaborate()" fxLayout="row" fxLayoutAlign="center center" *ngIf="isStatusDraft">
+              <img src="../../../assets/images/coAuthorIcon.svg" width="20" />
+              <span class="coAuthourText">Invite&nbsp;to&nbsp;Co&#8209;Author</span>
+            </div>
+            <div class="toggleDiv" fxLayout="row" fxLayoutAlign="end center">
+              Tree&nbsp;
+              <mat-slide-toggle
+                class="sliderTrees"
+                [(ngModel)]="showTreeMapView"
+              >
+                Map
+              </mat-slide-toggle>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="process-map-container">
+      <div *ngIf="showTreeMapView" class="process-map" [hidden]="!showTreeMapView">
+        <app-diagram
+          class="process-map-diagram"
+          [processMap]="processMap"
+          [configuration]="diagramConfiguration">
+        </app-diagram>
+      </div>
+
+      <div *ngIf="!showTreeMapView" class="tree-view" [ngClass]="{'active': showTreeMapView}">
+        <app-process-map-tree class="process-map-tree m30" (onSelectionChanged)="onSelectionChanged($event)"
+          [selectedActivityId]="selectedActivityId" (activityId)="setMilestoneId($event)"
+          (shapeData)="setShapeData($event)"></app-process-map-tree>
+
+
+        <app-activity-details [data]="activityDetailID" class="process-map-milestone-tree m40">
+        </app-activity-details>
+
+
+        <app-shape-properties [data]="selectedShapeData" class="process-map-milestone-tree m30">
+        </app-shape-properties>
+      </div>
+    </div>
+</div>
+
+<!--
+<ng-template #myMapApproveTemplate>
+  <div>
+    <h2 class="modal-title">APPROVE/SEND BACK</h2>
+    <div class="dropdown">
+      <mat-form-field>
+        <mat-select [(value)]="selected" (selectionChange)="handleOnMatSelect(selected)" required>
+          <mat-option value="Send">SELECT</mat-option>
+          <mat-option value="Approve">APPROVE</mat-option>
+          <mat-option value="Send Back">SEND BACK</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="checkbox">
+        <p style="margin-bottom: 25px" *ngIf="selected == 'Approve'">
+          You are approving an editorial revision. No changes to technical content
+          are allowed. The J&C will be inherited from the prior revision. The
+          content will be published automatically, upon your approval.
+        </p>
+        <mat-checkbox *ngIf="selected == 'Approve'" (change)="handleOnCheckBoxChange($event)" [checked]="checked">I
+          acknowledge</mat-checkbox>
+        <textarea class="text-area" matInput placeholder="{{placeholder}}" *ngIf="selected == 'Send Back'"
+          [(ngModel)]="comment"></textarea>
+      </div>
+      <div>
+        <span style="margin-right:2%;margin-left: 53%;">
+          <button class="cancel-button" mat-raised-button color="primary" (click)="onCloseButtonClick()">
+            <div>Cancel</div>
+          </button>
+        </span>
+        <button class="send-button" mat-raised-button color="primary" [disabled]="optionDisable"
+          (click)=handleOnRequestApproval(selected,myMapApproveTemplate)>
+          {{selected}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+-->
+
+
+<!-- Ask for Approval / Request for Approval - Part-->
+<ng-template #requestApprovalTemplate>
+  <div class="modalAskForApprove">
+    <h2 class="modal-title">REQUEST APPROVAL</h2>
+    <div>
+      <div class="request" >
+        <mat-form-field >
+          <input matInput (ngModelChange)="filterCoauthor($event)" type="text"
+            [matAutocomplete]="Coauthor"  name="Coauthor" [(ngModel)]="selectedcontentOwner"/>
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <br />
+          <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor">
+            <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+              <span>{{ item.displayName }}</span>
+              &nbsp;(<span class="email">{{ item.userPrincipalName }}</span>)
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <textarea
+          class="request-text-area"
+          matInput
+          placeholder="{{placeholder}}"
+          [(ngModel)]="requestComment"
+        ></textarea>
+      </div>
+      <div class="warning-dialg">
+        <p class="warning-heading"><b>WARNING</b></p>
+        <p class="warning-content"><b>Please make sure that you do not enter any Tech Data in the Comment column.</b></p>
+      </div>
+      <div >
+        <span style="margin-right:2%;margin-left: 53%;">
+          <button class="cancel-button" mat-raised-button color="primary" (click)="onCloseButtonClick()">
+            <div>Cancel</div>
+          </button>
+        </span>
+        <button class="send-button" mat-raised-button color="primary" [disabled]="disableSubmit" (click)=onRequestApproval()>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Approve or Sendback Part -->
+<ng-template #mytemplate>
+  <div class="modalApproveSendback">
+    <h2 class="modal-title">APPROVE/SEND BACK</h2>
+    <div class="dropdown">
+      <mat-form-field>
+        <mat-select [(value)]="selected" (selectionChange)="handleOnMatSelect(selected)" required>
+          <mat-option value="Send">SELECT</mat-option>
+          <mat-option value="Approve">APPROVE</mat-option>
+          <mat-option value="Send Back">SEND BACK</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="checkbox">
+        <p style="margin-bottom: 25px" *ngIf="selected == 'Approve'">
+          You are approving an editorial revision. No changes to technical content
+          are allowed. The J&C will be inherited from the prior revision. The
+          content will be published automatically, upon your approval.
+        </p>
+        <mat-checkbox *ngIf="selected == 'Approve'" (change)="handleOnCheckBoxChange($event)" [checked]="checked">I
+          acknowledge</mat-checkbox>
+        <textarea class="text-area" matInput placeholder="{{placeholder}}" *ngIf="selected == 'Send Back'"
+          [ngModel]="sendBackComment" (ngModelChange)="handleCommentChange($event)"></textarea>
+      </div>
+      <div>
+        <span style="margin-right:2%;margin-left: 53%;">
+          <button class="cancel-button" mat-raised-button color="primary" (click)="onCloseButtonClick()">
+            <div>Cancel</div>
+          </button>
+        </span>
+        <button class="send-button" mat-raised-button color="primary" [disabled]="optionDisable"
+          (click)=handleOnRequestApproval(selected,mytemplate)>
+          {{selected}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

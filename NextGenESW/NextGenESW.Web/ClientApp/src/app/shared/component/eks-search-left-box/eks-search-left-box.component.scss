@@ -1,0 +1,52 @@
+
+
+
+
+.mat-tree-node {
+  min-height: 10px !important;
+  font-size: 14px ;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+  color: #222;
+  margin-top: 5px;
+}
+
+.mat-tree-node label {
+  margin-bottom: 0;
+}
+
+.mat-icon-button {
+  height: 20px !important;
+  width: 20px;
+  line-height: 20px !important;
+  margin-top: -5px;
+}
+
+  .mat-icon {
+    width: 16px;
+    height: 16px;
+    border: solid 1px #dadada;
+    font-size: 11px;
+    line-height: 15px !important;
+    margin-right: 5px;
+  }
+
+  .mat-checkbox-layout {
+    margin-bottom: 3px !important;
+  }
+
+  .eks-left-section{
+    position: relative;
+    margin-top: 10px !important;
+    .mat-checkbox{
+      position: absolute;
+      top: 0px;
+      left: 20px;
+    }
+  }
+  .eks-left-section-node{
+    margin-left: 0px;
+  }
+ 
+  
+  

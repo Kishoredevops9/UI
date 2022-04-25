@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>ADD DISCIPLINE</h1>
+  <div class="formBox">  
+       <ul>
+        <li> 
+            <label>Discipline</label>  
+
+            <div class="example-form-field top_margin_new">
+              <mat-label *ngIf="selctdata.length > 0">
+                <div class="txtOverflows">{{selctdata}}</div>
+              </mat-label>
+              <mat-label *ngIf="!selctdata.length"> Select Discipline</mat-label>
+              <a class="iconwidth" mat-button matSuffix mat-icon-button
+                (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true">
+                <mat-icon>
+                  {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </a>
+              <mat-card class="dropbox" [hidden]="!showDisciplineDropDown">
+                <app-discipine-tree [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                  (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                </app-discipine-tree>
+              </mat-card>
+            </div>
+
+     
+          
+                  </li>
+                 </ul>
+
+  </div>
+  <div class="action-btnd">
+ 
+    <button mat-raised-button color="primary" class="mat-button" [disabled]="disciplineBtn" (click)="submitForm()">Save</button>
+    <button mat-raised-button color="primary" class="mat-button" (click)="cancelAction()">Close</button>
+
+ 
+  </div>
+  <div  *ngIf="loading" class="disciplineClass">
+    <div class="spinnerbox">
+      <mat-spinner  diameter="60"></mat-spinner>
+    </div>
+  </div>
+ 

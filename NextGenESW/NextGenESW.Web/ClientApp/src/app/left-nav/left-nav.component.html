@@ -1,0 +1,297 @@
+<div class="textLink" *ngIf="showHide">
+  <mat-list-item title="Toggle">
+    <div class="item borderNone">
+      <button mat-icon-button>
+        <div class="normalIcon"><mat-icon (click)="toggle()" mat-list-icon><img src="./assets/icons/frontarrow.svg" /></mat-icon></div>
+        <div class="expandIcon" (click)="toggle()"><img src="./assets/icons/backarrow.svg" />&nbsp;&nbsp;&nbsp;Menu</div>
+      </button>
+    </div>
+  </mat-list-item>
+  <mat-list-item title="Dashboard">
+    <div class="item">
+      <a (click)="navigateTo('/dashboard')">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/stopwatch-3.svg" width="20" /></mat-icon>
+        </button></a>
+      <a (click)="navigateTo('/dashboard')">Dashboard</a>
+    </div>
+  </mat-list-item>
+  <mat-list-item title="Create">
+    <div class="item hasChild">
+      <a href="javascript:;">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/ic_create_24px.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="javascript:;">Create</a>
+      <ul>
+        <li *ngIf="!AuthTaskUsercheck || disableTaskSearchAndTaskCreation">
+          <button  [disabled]="true" mat-menu-item>Task</button>
+          <!-- <ul>
+            <li>
+              <a (click)="navigateTo('/task/create-task')">
+                <button mat-menu-item class="mapMenu">
+                  Create New Task
+                </button>
+              </a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/hello-world')">
+                <button mat-menu-item class="mapMenu">
+                  Create from Existing Task
+                </button>
+              </a>
+            </li>
+          </ul> -->
+        </li>
+
+        <li *ngIf="AuthTaskUsercheck && !disableTaskSearchAndTaskCreation">
+          <a (click)="navigateTo('/task/create-task')"><button  mat-menu-item>Task</button></a>
+        </li>
+
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/create-document')"><button mat-menu-item>Work Instruction</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/activity-page')"><button mat-menu-item>Activities</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/criteria-group')"><button mat-menu-item>Criteria Group</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/design-standards')"><button mat-menu-item>Design Standards</button></a>
+        </li>
+        <li *ngIf="leftPanelData && !disableStepAndStepFlowCreation">
+          <a (click)="navigateTo('/process-maps/SP')"><button mat-menu-item>STEP</button></a>
+        </li>
+        <li *ngIf="leftPanelData && !disableStepAndStepFlowCreation">
+          <a (click)="navigateTo('/process-maps/create-progressmap')"><button mat-menu-item>STEP Flow</button></a>
+          <!-- <ul>
+            <li>
+              <a (click)="navigateTo('/process-maps/create-progressmap')"><button mat-menu-item class="mapMenu">
+                  Create New Step Flow
+                </button></a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/process-maps/create-from-existingMap')"
+                ><button mat-menu-item class="mapMenu">
+                  Create from Existing Map
+                </button></a
+              >
+            </li>
+          </ul> -->
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/guide-book')"><button mat-menu-item>Guide Books</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/related-content')"><button mat-menu-item>Related Content</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/k-pack')"><button mat-menu-item>Knowledge Package</button></a>
+        </li>
+        <li *ngIf="leftPanelData">
+          <a (click)="navigateTo('/toc')"><button mat-menu-item>Table of Content</button>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </mat-list-item>
+  <mat-list-item title="Browse">
+    <div class="item hasChild">
+      <a href="javascript:;">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/Group 4750.svg" width="25" /></mat-icon>
+        </button>
+      </a>
+      <a href="javascript:;">Browse</a>
+      <ul>
+        <li>
+          <a (click)="navigateTo('/browse/map')"><button mat-menu-item>STEP Flows</button></a>
+        </li>
+        <li>
+          <a (click)="navigateTo('/browse/manuals')"><button mat-menu-item>Manuals</button>
+          </a>
+        </li>
+        <li>
+          <a (click)="navigateTo('/disciplines')"><button mat-menu-item>Disciplines</button>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </mat-list-item>
+  <!-- <mat-list-item>
+    <div class="item">
+      <a href="javascript:;" (click)="navigateTo('/disciplines')">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/Group 4373.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="javascript:;" (click)="navigateTo('/disciplines')">Disciplines</a>
+    </div>
+  </mat-list-item> -->
+  <mat-list-item title="PW Play">
+    <div class="item">
+      <a href="https://pwplay.eh.pweh.com" target="_blank">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/Group-6021.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="https://pwplay.eh.pweh.com" target="_blank">PW Play</a>
+    </div>
+  </mat-list-item>
+  <mat-list-item title="Experts">
+    <!-- <div class="disabled item"> -->
+    <div class="item">
+      <a href="https://ascend.mce.aws.prattwhitney.com/" target="_blank">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/Group 1767.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="https://ascend.mce.aws.prattwhitney.com/" target="_blank">Experts</a>
+    </div>
+  </mat-list-item>
+  <mat-list-item title="Lessons Learned">
+    <div class="item">
+      <a href="http://search.pw.utc.com/ess/jsp/iface/main.jsp?realmid=116#1_0" target="_blank">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/Group_1771.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="http://search.pw.utc.com/ess/jsp/iface/main.jsp?realmid=116#1_0" target="_blank">Lessons Learned</a>
+    </div>
+  </mat-list-item>
+  <mat-list-item *ngIf="leftPanelAdminData" title="Admin">
+    <div class="item hasChild">
+      <a href="javascript:;">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/adminIcon.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="javascript:;">Admin</a>
+      <ul>
+        <li>
+          <a href="javascript:;" (click)="navigateTo('/admin/master-search')">
+            <button mat-menu-item>Master Search</button>
+          </a>
+        </li>
+        <li class="hasChild">
+          <a href="javascript:;">
+            <button mat-menu-item>Help Management</button>
+          </a>
+
+          <ul>
+            <li>
+              <a (click)="navigateTo('/admin/open-feedback')">
+                <button mat-menu-item class="mapMenu">
+                  Open Feedback
+                </button>
+              </a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/admin/feedback-management')">
+                <button mat-menu-item class="mapMenu">
+                  Feedback Management
+                </button>
+              </a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/admin/help-userguides-management')">
+                <button mat-menu-item class="mapMenu">
+                  Help & User Guide Management
+                </button>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="hasChild">
+          <a><button mat-menu-item>Reports</button></a>
+          <ul>
+            <li>
+              <a><button mat-menu-item (click)="contentManagement()" title="Content Management Dashboard">Content Management Dashboard</button></a>
+            </li>
+            <li>
+              <a><button mat-menu-item (click)="contentEksMetrics()" title="EKS Metrics and Users Dashboard">EKS Metrics and Users Dashboard</button></a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="javascript:;">
+            <button mat-menu-item>Master Data</button>
+          </a>
+        </li>
+        <li>
+          <a (click)="navigateTo('/admin/content')">
+            <button mat-menu-item>Content Maintenance</button>
+          </a>
+        </li>
+        <li>
+          <a (click)="navigateTo('/admin/error-handling')">
+            <button mat-menu-item>Error Handling</button>
+          </a>
+        </li>
+      </ul>
+      <!-- <ul>
+        <li class="hasChild" >
+          <a href="javascript:;"  (click)="navigateTo('/admin/content')"    ><button mat-menu-item>Content Maintainance</button></a>
+
+          <ul>
+            <li>
+              <a (click)="navigateTo('/admin/disciplines')" >
+                <button mat-menu-item>Disciplines</button>
+              </a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/admin/manuals')" >
+                <button mat-menu-item >Manuals</button>
+              </a>
+            </li>
+            <li>
+              <a (click)="navigateTo('/admin/maps')" >
+                <button mat-menu-item>Maps</button>
+              </a>
+            </li>
+          </ul>
+
+        </li>
+      </ul> -->
+    </div>
+  </mat-list-item>
+
+  <mat-list-item *ngIf="!disableUnCompletedFeatures" class="reports" title="Bi Reports">
+    <!-- <div class="disabled item"></div> -->
+    <div class="item">
+      <a href="javascript:;">
+        <button mat-icon-button>
+          <mat-icon mat-list-icon><img src="./assets/images/bi.svg" width="20" /></mat-icon>
+        </button></a>
+      <a href="javascript:;">Bi Reports</a>
+      <ul>
+        <li>
+          <a><button mat-menu-item>Content reports</button></a>
+          <ul>
+            <li>
+              <a><button mat-menu-item (click)="contentAttr()">Content Attributes</button></a>
+            </li>
+            <li>
+              <a><button mat-menu-item (click)="contentSummary()">Content Summary</button></a>
+            </li>
+          </ul>
+        </li>
+        <li class="noChild">
+          <a><button mat-menu-item (click)="programDeviations()">Program Deviations</button></a>
+        </li>
+        <li class="noChild">
+          <a><button mat-menu-item (click)="allTaskReportsStatus()">All Task Status Report</button></a>
+        </li>
+        <!-- <li>
+          <a><button mat-menu-item>Task Reports</button></a>
+          <ul>
+            <li>
+              <a><button mat-menu-item (click)="programDeviations()">Program Deviations</button></a>
+            </li>
+            <li>
+              <a><button mat-menu-item> Criterion Deviations</button></a>
+            </li>
+          </ul>
+        </li> -->
+      </ul>
+
+    </div>
+  </mat-list-item>
+</div>

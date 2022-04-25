@@ -1,0 +1,132 @@
+ 
+<div class="bodyBox"> 
+
+  <div class="leftbox">
+      
+    <div class="leftBoxHeading">Disciplines    </div>
+
+    <ng-template #tmplNode let-node="node">
+        <div class="node-item" [attr.data-id]="node.id" [attr.id]="'node-'+node.id"  >
+      
+          <div class="node-title" *ngIf="node.isActive" (click)="node.isExpanded=!node.isExpanded" fxLayout="row" fxLayoutAlign="start center">
+            <div class="node-active" (click)="nodeSelect(node)" [ngClass]="{active: selectlistActive(node)}">
+              
+              <mat-icon class="mat-icon-rtl-mirror triangleIcons" >
+                  {{ node.children &&  node.children.length ? (node.isExpanded?'arrow_drop_down':'arrow_right') : ''}} 
+              </mat-icon>
+
+
+
+              <div class="itemText" (contextmenu)="onContextMenu($event, node)" (click)="elementClick(node)">
+                &nbsp;&nbsp; {{node.title}} 
+              </div>
+            </div>  
+          </div>
+
+          <div *ngIf="node.isExpanded &&  node.children && node.children.length" class="node-children"
+              cdkDropList [cdkDropListData]="node.children"
+              [id]="node.id" [cdkDropListConnectedTo]="dropTargetIds"
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListSortingDisabled]="true">
+      
+            <div *ngFor="let child of node.children" cdkDrag [cdkDragData]="child.id" 
+                (cdkDragMoved)="dragMoved($event)">
+              <ng-container *ngTemplateOutlet="tmplNode,context:{node:child}"></ng-container>  
+            </div>
+      
+          </div>
+      
+        </div>
+
+    
+
+    
+    </ng-template>
+
+    <div cdkDropList [cdkDropListData]="nodes"
+        [id]="'main'" [cdkDropListConnectedTo]="dropTargetIds"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListSortingDisabled]="true">
+        
+      <div *ngFor="let node of nodes" cdkDrag [cdkDragData]="node.id"      
+        (cdkDragMoved)="dragMoved($event)">
+
+        <ng-container *ngTemplateOutlet="tmplNode,context:{node:node}"></ng-container>
+
+      </div>
+
+      <!-- <div *ngFor="let node of disciplinesData" cdkDrag [cdkDragData]="node.id"      
+        (cdkDragMoved)="dragMoved($event)">
+
+        <ng-container *ngTemplateOutlet="tmplNode,context:{node:node}"></ng-container>
+
+      </div> -->
+    </div>
+    <div style="visibility: hidden; position: fixed"
+        [style.left]="contextMenuPosition.x"
+        [style.top]="contextMenuPosition.y"
+        [matMenuTriggerFor]="contextMenu">
+    </div>
+    <mat-menu #contextMenu="matMenu" class="conextMatMenu">
+      <ng-template matMenuContent let-item="item">
+        <button mat-menu-item class="menuBtn" fxLayout="row" fxLayoutAlign="start center" title="Add New Item" (click)="addNewDisciplinesItem(item,'Add New Item')">
+          <mat-icon class="materialIcons">add</mat-icon>
+          <span class="menuText">Add New Item</span>
+        </button>
+        <button mat-menu-item class="menuBtn" fxLayout="row" fxLayoutAlign="start center" title="Add New SubItem" (click)="addNewDisciplinesItem(item,'Add New SubItem')">
+          <mat-icon class="materialIcons">add</mat-icon>
+          <span class="menuText">Add New SubItem</span>
+        </button>
+        <button mat-menu-item class="menuBtn" fxLayout="row" fxLayoutAlign="start center" (click)="deleteDisciplinesItems(item)">
+          <mat-icon class="materialIcons">delete_outline</mat-icon>
+          <span class="menuText">Delete</span>
+        </button>
+      </ng-template>
+    </mat-menu>
+
+    <!-- <hr />
+    <p><strong>current drag drop action:</strong></p>
+    <pre>{{dropActionTodo|json}}</pre>
+    <hr />
+    <p><strong>tree data</strong></p>
+    <pre>{{nodes|json}}</pre> -->
+    
+  </div>
+
+  <div class="rightbox" [formGroup]="updateContentForm" > 
+
+    <div class="propText">Properties</div>
+    
+    <div class="formLabel">Title</div> 
+    <mat-form-field class="example-full-width textBoxs" >
+        <input matInput value="" formControlName="contentTitle">
+    </mat-form-field>
+    
+    <div class="formLabel">Link</div> 
+    <mat-form-field class="example-full-width textBoxs" >
+        <input matInput value="" formControlName="contentURL">
+        <!-- <div matSuffix class="searchIcon" width="13px" height="13px"></div> -->
+    </mat-form-field>
+    
+    <div class="formLabel">Modified on</div> 
+    <mat-form-field class="example-full-width textBoxs modifiedField" >
+        <input matInput value="" readonly formControlName="contentModifiedOn" class="modifiedField">
+    </mat-form-field>
+    
+    <div class="formLabel">Modified By</div> 
+    <mat-form-field class="example-full-width textBoxs modifiedField" >
+        <input matInput value="" readonly formControlName="contentModifiedBy" class="modifiedField">
+    </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-evenly center" class="btnGroups">
+      <button mat-button mat-raised-button color="primary" (click)="onConetntSave()">Save</button>
+      <button mat-button mat-raised-button color="primary" (click)="onReset()">Reset</button>
+    </div>
+   
+  </div>
+
+  <span class="matspinner" *ngIf="isShowSpinner">
+    <mat-spinner></mat-spinner>
+  </span>
+  
+</div>

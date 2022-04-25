@@ -1,0 +1,77 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+
+
+.profile-info {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+
+  .form-group {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    &.user-types {
+      grid-column-start: 3;
+      grid-column-end: 3;
+      grid-row-start: 2;
+      grid-row-end: 4;
+
+      .labelFields {
+        padding: 0 0 25px;
+      }
+    }
+  }
+}
+
+.btn-wrapper {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+
+  .clsBtn {
+    @include font-face-BarlowSemiCondensed-SemiBold(16px, 26px);
+    position: relative;
+    letter-spacing: 0.67px;
+    color: #3E3E3E;
+    opacity: 0.5;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    i {
+      padding-right: 5px;
+      font-size: 18px;
+    }
+  }
+}
+
+
+.headText {
+  text-align: left;
+  @include font-face-BarlowSemiCondensed-SemiBold(20px, 60px);
+  letter-spacing: 0.83px;
+  color: #3E3E3E;
+  opacity: 0.9;
+  padding: 0 15px 20px;
+}
+
+
+
+::ng-deep .mat-form-field.padFields {
+  .mat-form-field-wrapper {
+    .mat-form-field-underline {
+      background-color: rgba(0, 0, 0, .42) !important;
+      pointer-events: none;
+      transform: scale3d(1, 1.0001, 1);
+      bottom: 1.25em;
+      height: 1px;
+      background-color: rgba(0, 0, 0, 0.42) !important;
+      background-image: none !important;
+    }
+  }
+}

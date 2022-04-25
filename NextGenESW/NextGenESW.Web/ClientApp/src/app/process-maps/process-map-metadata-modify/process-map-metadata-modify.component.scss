@@ -1,0 +1,97 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.manage-metaData {
+  @extend %mat-dialog;
+
+  .mat-dialoag-header {
+    @extend %mat-dialog-header;
+  }
+
+  .mat-dialog-content {
+    display: grid;
+    grid-template-areas: "form content-wrapper";
+    grid-template-columns: 35% 63%;
+    grid-gap: 20px;
+
+    form {
+      grid-area: form;
+
+      .mat-form-field {
+        margin: 0 0 10px;
+        display: block;
+      }
+
+      @include breakpoint(mobileonly) {
+        width: 100%;
+      }
+    }
+
+    .content-wrapper {
+      grid-area: content-wrapper;
+      border: 1px solid $gray-lighten-color;
+
+      .mat-header-cell {
+        border-bottom: 1px solid $gray-lighten-color;
+        @include font-face-BarlowSemiCondensed-SemiBold(1rem, normal);
+        color: $text-basic-color;
+        text-transform: uppercase;
+      }
+
+      .mat-cell {
+        border-bottom: 1px solid $gray-lighten-color;
+
+        .mat-icon {
+          font-size: 1.25rem;
+          cursor: pointer;
+        }
+      }
+    }
+
+    @include breakpoint(mobileonly) {
+      grid-template-areas: "form"
+        "content-wrapper";
+      grid-template-columns: 100%;
+    }
+
+  }
+
+  .add-btn {
+    cursor: pointer;
+  }
+
+  ul {
+    border: 1px solid $gray-lighten-color;
+
+    li {
+      display: grid;
+      grid-template-areas: "group-name edit delete";
+      grid-template-columns: 92% auto auto;
+      border-bottom: 1px solid $gray-lighten-2-color;
+      padding: 5px 10px;
+      align-items: center;
+
+      .group-name {
+        grid-area: group-name;
+        @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+      }
+
+      .mat-icon {
+        cursor: pointer;
+        font-size: 1.25rem;
+
+        &.edit {
+          grid-area: edit;
+          color: $blue-lighten-color;
+        }
+
+        &.delete {
+          grid-area: delete;
+          color: $alert-basic-bg;
+        }
+      }
+    }
+  }
+}

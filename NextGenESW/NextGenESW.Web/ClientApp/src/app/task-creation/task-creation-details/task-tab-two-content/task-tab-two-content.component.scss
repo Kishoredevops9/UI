@@ -1,0 +1,225 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import '../../../../scss/base/_global.scss';
+
+.arrow-icon {
+  margin-top: 2%;
+  float: right;
+  cursor: pointer;
+}
+
+.delete-icon {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 25px;
+}
+
+.delete-text {
+  margin-left: -10px;
+  cursor: pointer;
+}
+
+.button {
+  height: fit-content;
+  float: right;
+}
+
+.text-field {
+  width: 50px;
+  margin-right: 10px;
+}
+
+.header-field {
+  font-family: 'BarlowSemiCondensed-Medium';
+  font-size: 1rem;
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  margin: 20px 0;
+}
+
+.page-layout {
+  width: 97% !important;
+  margin-left: 0px;
+}
+
+.mat-header-cell {
+  font: normal normal normal 13px/28px Inter-regular;
+  color: black;
+  padding-left: 0%;
+}
+
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+  flex: 0 0 110px;
+}
+
+mat-row {
+  border: 1px solid white !important;
+  align-items: stretch;
+  background-color: #f5f5f5;
+  font: normal normal normal 13px/24px Inter-regular;
+  letter-spacing: 0.67px;
+}
+
+mat-cell {
+  border: 1px solid white !important;
+  padding-left: 1% !important;
+}
+
+.mat-header-row {
+  min-height: 0px;
+}
+
+.mat-cell:nth-child(3),
+.mat-header-cell:nth-child(3) {
+  flex: 0 0 10%;
+}
+
+::ng-deep .preview .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  mat-cell {
+    padding: 0px !important;
+  }
+
+  background-color: #f5f5f5 !important;
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+}
+
+/* Structure */
+// table {
+//   width: 100%;
+// }
+
+// .mat-form-field {
+//   font-size: 14px;
+//   width: 50%;
+// }
+
+// .mat-column-position {
+//   max-width: 100px;
+// }
+
+// .mat-column-name {
+//   max-width: 100px;
+// }
+
+body {
+  font-family: verdana;
+}
+
+.filter-input {
+  margin-top: 20px;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin-bottom: 0px;
+  padding-right: 30px;
+}
+
+.clear-selection {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+  position: absolute;
+}
+
+.game-list {
+  margin-top: 35px;
+}
+
+fgame-text li.game-item {
+  list-style: none;
+  font-size: 20px;
+  padding: 3px 0px;
+}
+
+li.game-item input {
+  height: 15px;
+  width: 20px;
+}
+
+.game-text {
+  font-size: 15px;
+  vertical-align: top;
+}
+
+.selected-game {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 12px;
+  background: #B9CFEA;
+  margin-bottom: 10px;
+  padding: 2px 11px 4px 11px;
+  border-radius: 8px;
+}
+
+.delete-game {
+  font-size: 13px;
+  padding: 3px 6px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.delete-game:hover {
+  background: #99ABC1;
+  padding: 3px 6px;
+  border-radius: 15px;
+}
+
+.filter-wrap {
+  position: relative;
+
+}
+
+.filter-clear {
+  position: absolute;
+  margin-left: -24px;
+  margin-top: 11px;
+  cursor: pointer;
+}
+
+/*mat form filter table css start here*/
+.example-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.example-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
+}
+
+.disabledNoOfCasesDiv{ pointer-events: none; opacity: 2.0;}
+.maskGray   { 
+  background: #ccc;
+  opacity: 0.2;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10000;
+  top: 0px;
+ 
+}
+
+/*mat form filter table css end here*/

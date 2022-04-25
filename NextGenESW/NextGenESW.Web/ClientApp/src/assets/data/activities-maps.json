@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Activity 1",
+    "description": "Test 1"
+  },
+  {
+    "id": 2,
+    "name": "Activity 2",
+    "description": "Test 2"
+  },
+  {
+    "id": 3,
+    "name": "Activity 3",
+    "description": "Test 3"
+  }
+]

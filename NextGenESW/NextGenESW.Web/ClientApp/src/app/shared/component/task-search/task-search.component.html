@@ -1,0 +1,109 @@
+<div class="taskSearchWrap">
+
+    <div class="leftBox">
+
+        <div class="filter_box collection_box">
+            <h4>Filter Selected By:</h4>
+            <mat-form-field class="example-full-width" >
+              <mat-label>Search Filter</mat-label>
+              <mat-icon matPrefix>search</mat-icon>
+            <form>
+              <input matInput [(ngModel)]="searchData" autocomplete="on" name="searchData"  (change)="filterSearch($event)" (keyup)="filterSearch($event)" placeholder="Ex.  Concept Initiation"  >
+
+            </form>
+          </mat-form-field>
+            <div class="treebox">
+           
+          <eks-search-app-left-box [expendOpt]="edpendData"   (tagdata)="tagData($event)"
+                [treedata]="filterData"  >
+              </eks-search-app-left-box>
+            </div>
+          </div>
+    </div>
+    <div class="rightBox">
+
+    <h3 class="topSearch-result"> Task Search Results ( {{ length}} ) </h3>
+
+
+    <div style="float:right">
+      All
+      <mat-slide-toggle  (change)="openToggle($event)"  [(ngModel)]="isOpen"></mat-slide-toggle>
+      Open
+    </div>
+
+    <table class="topSearch-table" mat-table [dataSource]="dataSource"  >
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="taskreaid">
+        <th mat-header-cell *matHeaderCellDef>  Task REA-ID </th>
+        <td mat-cell *matCellDef="let element">
+
+          <a href="#" target="_blank" [routerLink] = "['/task/edit-task/', element.taskid ]">
+            {{element.taskreaid}}
+          </a>
+
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="enginemodelgroup">
+        <th mat-header-cell *matHeaderCellDef> Engine Model Group  </th>
+        <td mat-cell *matCellDef="let element"> {{element.enginemodelgroup}} </td>
+      </ng-container>
+       <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">  {{element.taskstatus}} </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="enginesection">
+        <th mat-header-cell *matHeaderCellDef> Engine Section  </th>
+        <td mat-cell *matCellDef="let element"> {{element.enginesection}} </td>
+      </ng-container>
+      
+     
+      <ng-container matColumnDef="taskid">
+        <th mat-header-cell *matHeaderCellDef> Bookmark  </th>
+        <td mat-cell *matCellDef="let element">
+          <a href="javascript:;" (click)="addToBookMark(element.taskid)">
+            <img src="/assets/icons/bookmark-png.png" class="bookmark" title='Add to "YOUR TASK"' />
+            <!-- <mat-icon>bookmark_border</mat-icon>   -->
+          </a>  </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+<div>
+
+  <mat-paginator class="task-searchpage" [length]="length"
+  [pageSize]="pageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="getServerData(  $event ) "
+  aria-label="Select page">
+</mat-paginator>
+
+<div *ngIf="pageEvent">
+<h5>Page Change Event Properties</h5>
+<div>List length: {{pageEvent.length}}</div>
+<div>Page size: {{pageEvent.pageSize}}</div>
+<div>Page index: {{pageEvent.pageIndex}}</div>
+</div>
+
+</div>
+
+
+
+    </div>
+
+</div>

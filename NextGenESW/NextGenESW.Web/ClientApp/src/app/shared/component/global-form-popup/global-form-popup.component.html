@@ -1,0 +1,106 @@
+<div class="addItemParent" *ngIf="addEditPopup">
+    <div fxLayout="column" fxLayoutAlign="space-around start">
+        <div class="addItemHeader">{{header}}</div>
+        
+        <div class="formClass" novalidate>
+            
+                <div *ngFor="let column of formControlData">
+                    <div [ngSwitch]="column.type">
+                        <form [formGroup]="addItemForm"  class="form">
+                            <div *ngSwitchCase="'text'">
+                                <label class="formLabel">{{column.label}}</label> 
+                                <mat-form-field class="example-full-width textBoxs" >
+                                <input type="{{column.type}}" matInput value="" formControlName="{{column.formControlName}}">
+                                </mat-form-field>
+                            </div>
+                            <div *ngSwitchCase="'url'">
+                                <label class="formLabel">{{column.label}}</label> 
+                                <mat-form-field class="example-full-width textBoxs" >
+                                <input type="url" matInput value="" formControlName="{{column.formControlName}}">
+                                </mat-form-field>
+                            </div>
+                            <div *ngSwitchCase="'dropdown'">
+                                <label class="formLabel">{{column.label}}</label>
+                                <mat-form-field class="example-full-width textBoxs" >                                    
+                                    <mat-select formControlName="{{column.formControlName}}">
+                                        <mat-option *ngFor="let item of column.value" [value] ="item.id">{{item.name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div *ngSwitchCase="'textarea'">
+                                <label class="formLabel">{{column.label}}</label>
+                                <mat-form-field class="example-full-width textBoxs" >
+                                    <textarea matInput formControlName="{{column.formControlName}}"></textarea>
+                                </mat-form-field>                                
+                            </div>
+                            <div *ngSwitchCase="'date'">
+                                <label class="formLabel">{{column.label}}</label>
+                                <mat-form-field class="example-full-width textBoxs">
+                                    <mat-label>{{column.label}}</mat-label>
+                                    <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate" formControlName="{{column.formControlName}}">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                  </mat-form-field>                               
+                            </div>
+                            <div *ngSwitchCase="'button'" class="buttonClass">
+                                <div *ngFor="let button of column.buttons">
+                                    <button mat-flat-button  *ngIf="button.action === 'Submit'" [disabled]="!addItemForm.valid" (click)="submitAction(button.label)" [ngClass]="button.className">{{button.label}}</button>
+                                    <button mat-flat-button  *ngIf="button.action === 'Cancel'" (click)="cancelAction(button.label)" [ngClass]="button.className">{{button.label}}</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+        </div>      
+    </div>
+</div>
+
+<div fxLayout="column" class="commonPopup" *ngIf="deletePopup">
+    <div class="headerTxt">Delete?</div>
+    <div class="txtClass" fxLayout="row" fxLayoutAlign="start center">
+        Are you sure you want to delete?
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+        <button mat-flat-button color="primary" (click)="onClickYes()">Confirm</button>
+        <button mat-flat-button color="primary" (click)="onClickNo()">Cancel</button>
+    </div>
+</div>
+
+<div fxLayout="column" class="commonPopup" *ngIf="errorPopup">
+    <div class="headerTxt">{{header}}</div>
+    <div class="txtClass" fxLayout="row" fxLayoutAlign="start center">
+        {{errorMessage}}
+    </div>
+    <div style="text-align:center">
+        <button mat-flat-button color="primary" (click)="onClickNo()">Close</button>
+    </div>
+</div>
+
+<div fxLayout="column" class="commonPopup" *ngIf="viewPopup">
+    <div class="headerTxt">{{header}}</div>
+    <div class="userStatusHeader">
+        <!-- <span class="active userStatus"></span> -->
+        {{profileList.firstName}} {{profileList.lastName}} <span class="userId">({{profileList.clockId}})</span></div>
+    <div class="userInnerTxt" fxLayout="row" fxLayoutAlign="start center">
+        <div class="rowbgTxt">First name:</div>
+        <div class="rowbgTxt">{{profileList.firstName}}</div>
+        <div class="rowbgTxt">Business Unit:</div>
+        <div class="rowbgTxt">{{profileList.businessUnitName}}</div>
+        <div class="rowbgTxt">Export Controlled:</div>
+        <div class="rowbgTxt">{{profileList.exportControl}}</div>
+        <div class="rowbgTxt">Last Name:</div>
+        <div class="rowbgTxt">{{profileList.lastName}}</div>
+        <div class="rowbgTxt">Email:</div>
+        <div class="rowbgTxt">{{profileList.email}}</div>
+        <div class="rowbgTxt">Department:</div>
+        <div class="rowbgTxt">{{profileList.departmentName}}</div>
+        <div class="rowbgTxt">Display:</div>
+        <div class="rowbgTxt">{{profileList.displayName}}</div>
+        <div class="rowbgTxt">Country:</div>
+        <div class="rowbgTxt">{{profileList.nationality}}</div>
+    </div>
+    <div style="text-align:center">
+        <button mat-flat-button color="primary" (click)="onClickNo()">Close</button>
+    </div>
+</div>

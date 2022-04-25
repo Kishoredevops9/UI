@@ -1,0 +1,78 @@
+<div class="viewProfileContainer">
+
+    <div class="headText">User Profile Detail</div>
+    <div class="btn-wrapper">
+        <span (click)="closeDialog()" class="clsBtn">
+            <i class="material-icons" mat-dialog-close>close</i> CLOSE
+        </span>
+    </div>
+
+    <div class="container mdl-grid tab-margin profileContainer">
+
+        <div class="profile-info">
+            <div class="form-group">
+                <mat-label class="labelFields">Clock ID</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields"  value="{{clockId}}" disabled />
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label class="labelFields">First Name</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{givenName}}" disabled />
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label class="labelFields">Last Name</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{surname}}" disabled />
+                </mat-form-field>
+            </div>
+
+
+            <div class="form-group">
+                <mat-label class="labelFields">Phone</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{telephoneNumber}}" disabled />
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label class="labelFields">Email</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{docMail}}" disabled />
+                </mat-form-field>
+            </div>
+            <div class="form-group user-types">
+                <mat-label class="labelFields">User Types</mat-label>
+                <section class="inputFields" disabled *ngFor="let item of userTypes">
+                    <mat-checkbox [checked]="item.isChecked" class=" selectFields" color="primary" disabled>
+                        {{item.name}}
+                    </mat-checkbox>
+                </section>
+            </div>
+            <div class="form-group">
+                <mat-label class="labelFields">Business Unit</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{majorBusinessUnitName}}" disabled />
+                </mat-form-field>
+            </div>
+
+            <div class="form-group">
+                <mat-label class="labelFields">Major Department</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields"  value="{{majorDepartmentName}}" disabled />
+                </mat-form-field>
+            </div>
+            <div class="form-group">
+                <mat-label class="labelFields">Department</mat-label>
+                <mat-form-field class="padFields">
+                    <input matInput class="inputFields" value="{{departmentName}}" disabled />
+                </mat-form-field>
+            </div>
+
+        </div>
+    </div>
+
+</div>

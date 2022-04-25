@@ -1,0 +1,67 @@
+.userGuidesParent{
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    //z-index: 100000;
+    padding: 20px;
+}
+
+.header1{
+    border-bottom: 2px solid rgb(211, 209, 209);
+    margin-bottom: 40px;
+    font-size: 22px;
+    padding: 0px 0px 10px 20px;
+    font-weight: bold;
+}
+
+.parents{
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    font-size: 18px;
+    border-bottom: 2px solid rgb(211, 209, 209);
+    font-weight: bold;
+}
+
+.childs{
+    padding-left: 10px;
+    font-size: 14px;
+    vertical-align: baseline;
+}
+
+.childsDiv{
+    padding: 5px;
+    vertical-align: baseline;
+}
+
+.bookIcon{
+    background: url("../../assets/images/guide.svg") center center no-repeat;
+  
+    background-size: 18px 12px;
+    width: 18px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    display: inline-block;
+}
+
+.pw-logo{
+    width: 218px;
+    padding-bottom: 30px;
+
+}
+
+.threeColumnContainer{
+    padding-left: 20px;
+}
+
+.example-full-width { 
+     margin: 50px auto;
+    float: none;
+    width: 400px;
+    display: block; 
+    mat-icon { font-size: 125%; margin-bottom: -10px;  float: left; }
+ }

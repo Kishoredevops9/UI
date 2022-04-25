@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "title": "Preli Talks GoFly on WTIC",
+    "posted": "March 12, 2020",
+    "type": "Engineering",
+    "status": "Show",
+    "createdDateTime": "09/09/2021",
+    "createdUser": "Muthukumar",
+    "description" : "description",
+    "lastUpdateDateTime": "09/09/2021",
+    "lastUpdateUser": "Muthukumar",
+    "effectiveFrom": "09/09/2021",
+    "effectiveTo": "09/09/2021",
+    "announcementUrl": "Link1"
+  },
+  {
+    "id": 2,
+    "title": "Preli Talks GoFly on WTIC",
+    "posted": "March 12, 2020",
+    "type": "Engineering",
+    "status": "Show",
+    "createdDateTime": "09/09/2021",
+    "createdUser": "Muthukumar",
+    "description" : "description",
+    "lastUpdateDateTime": "09/09/2021",
+    "lastUpdateUser": "Muthukumar",
+    "effectiveFrom": "09/09/2021",
+    "effectiveTo": "09/09/2021",
+    "announcementUrl": "Link1"
+  }
+
+]

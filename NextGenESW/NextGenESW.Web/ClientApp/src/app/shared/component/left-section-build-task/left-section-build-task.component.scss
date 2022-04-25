@@ -1,0 +1,705 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+
+// .tab-margin {
+//     margin-top: 5%;
+// }
+
+// .properties {
+//   margin-top: 2%;
+
+// }
+
+// form {
+//   width: 100%;
+//   padding-bottom: 50px;
+
+//   .message{
+//     color: red;
+//   }
+//   .mat-display-1 {
+//     margin: 0 0 10px;
+//     @include font-face-BarlowSemiCondensed-SemiBold(1.5rem, normal);
+//   }
+
+//   .mat-form-field,
+//   .mat-radio-group,
+//   .mat-raised-button {
+//     width: 100%;
+//     margin: 0 0 15px;
+//     display: block;
+//   }
+
+//   .mat-radio-group {
+//     .mat-radio-button {
+//       margin-right: 10px;
+//     }
+//   }
+
+//   }
+//   .toggle{
+//     float: left;
+//     ::ng-deep .mat-slide-toggle-thumb{
+//         background-color: #ffffff !important;
+//         height: 17px;
+//         width: 17px;
+//         margin-top: 3px;
+//     }
+//     ::ng-deep .mat-slide-toggle-thumb-container{
+//       top : -1px;
+//     }
+//     ::ng-deep .mat-slide-toggle-bar{
+//       background-color: gray;
+//         height: 21px;
+//     }
+//     ::ng-deep .mat-slide-toggle.mat-checked{
+//       .mat-slide-toggle-bar {
+
+//         background-color: green !important;
+//       }
+//     }
+//   }
+
+//   .submit-btn {
+//     margin-right: 8%;
+
+//   }
+// }
+
+// .global-sidenav {
+//   display: flex;
+//   justify-content: center;
+//   width: 60px;
+//   background: #25b7f7;
+//   color: #ffffff;
+//   float: right;
+// }
+
+// .toggleSpan {
+//   margin-left: 5px;
+//   margin-bottom: 5px;
+// }
+
+// .Keyword-area {
+//   padding-right: 30px;
+// }
+
+// .chips {
+//   padding-top: 20px;
+// }
+
+// .discipline-tree {
+//   max-width: fit-content;
+//   max-height: 300px;
+//   overflow: auto;
+// }
+
+// .nodePath {
+//   cursor: pointer;
+//   margin-top: 2%;
+//   width: 90%;
+//   height: 30px;
+//   button {
+//     width: 100%;
+//   }
+// }
+
+// .box-width {
+//   border-radius: 1px;
+//   background: #fff;
+//   box-sizing: border-box;
+//   background-color: #ebebeb;
+//   height: 1.7rem;
+//   padding: 4px;
+//   display: flex;
+//   margin-bottom: 0.1%;
+//   margin-right: 2px !important;
+// }
+// .box-space {
+//   margin-left: 2% !important
+// }
+// .header-space {
+//   margin-top: 2%;
+//   margin-bottom: -1%;
+// }
+
+//  .global-sidenav-expanded  {
+//   display: flex;
+//   justify-content: center;
+//   width: 480px;
+//   background: #ffffff;
+//   color: #000000;
+//   top: 192px;
+//   height: 68%;
+// }
+
+//////////////*****************************//////////////@at-root
+body {
+  font-family: verdana;
+}
+
+.filter-input {
+  margin-top: 20px;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin-bottom: 0px;
+  padding-right: 30px;
+}
+
+.clear-selection {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+  position: absolute;
+}
+
+.game-list {
+  margin-top: 35px;
+}
+
+fgame-text li.game-item {
+  list-style: none;
+  font-size: 20px;
+  padding: 3px 0px;
+}
+
+li.game-item input {
+  height: 15px;
+  width: 10px;
+}
+
+.game-text {
+  font-size: 15px;
+  vertical-align: top;
+}
+
+.selected-game {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 12px;
+  background: #b9cfea;
+  margin-bottom: 10px;
+  padding: 2px 11px 4px 11px;
+  border-radius: 8px;
+}
+
+.delete-game {
+  font-size: 13px;
+  padding: 3px 6px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.delete-game:hover {
+  background: #99abc1;
+  padding: 3px 6px;
+  border-radius: 15px;
+}
+
+.filter-wrap {
+  position: relative;
+}
+
+.filter-clear {
+  position: absolute;
+  margin-left: -24px;
+  margin-top: 11px;
+  cursor: pointer;
+}
+
+//////////////////////***********************//////////////////
+
+
+.wrapper {
+  border-bottom: 1px solid #948f8f;
+
+  .containerLeft {
+    width: 250px;
+    float: left;
+    min-height: calc(100vh - 200px);
+
+    border-right: 1px solid rgba(222, 222, 222, 0.87);
+  }
+
+
+
+  .containerRight {
+    width: calc(100% - 325px);
+    float: left;
+    margin-left: 20px;
+
+    h2 {
+      font-size: 15px;
+      margin-top: 10px;
+      border-bottom: 1px solid #948f8f;
+    }
+
+    .applyFilters {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      clear: both;
+    }
+
+    .rowgroup {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+.applyFilters {
+  float: left;
+  width: 100%;
+  display: block;
+
+  .applybox {
+    float: left;
+    display: block;
+    padding: 6px;
+  }
+
+  .chipbox {
+    float: left;
+    font-size: 11px;
+    max-width: 700px;
+  }
+}
+
+.workbox {
+  float: left;
+  width: 100%;
+
+  .workboxitem {
+    margin-top: 30px;
+  }
+
+  header {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding-bottom: 1px;
+    margin-bottom: 20px;
+
+    b {
+      width: 30px;
+      text-align: center;
+      float: left;
+      color: white;
+      padding-top: 1px;
+    }
+
+    aside {
+      background: white;
+      width: calc(100% - 30px);
+      float: left;
+
+      span {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .image_alignment {
+    margin-bottom: -0.2%;
+    width: 1.7%;
+    float: right;
+
+  }
+
+  .image_alignment.addBtn {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+
+
+
+
+  .content_alignment {
+    font-family: 'Barlow-Medium';
+    float: right;
+    margin-right: -6%;
+    width: 50%;
+  }
+
+  .button_style {
+    float: right;
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .vertical_line {
+    border-left: 1px solid black;
+    height: 70%;
+    margin: 0% 0.5%;
+  }
+
+
+  /* Create four equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 33%;
+    padding: 10px;
+    height: 30px;
+    /* Should be removed. Only for demonstration */
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+}
+
+
+
+.hide {
+  display: none;
+}
+
+.aligned-with-icon {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 5px;
+  /* optional */
+}
+
+// create by priya
+::ng-deep .mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: 0px 0px 0px 0px !important;
+}
+
+::ng-deep .itemTab {
+  display: flex;
+  width: 100%;
+  float: left;
+  border-bottom: 2px solid #df4b09;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  font-size: 16px;
+
+  .cap {
+    padding: 3px 8px 4px 8px;
+    background: #df4b09;
+    color: white;
+    float: left;
+    border-radius: 5px 0px 0px 0px;
+    margin: 0 10px 0 0;
+  }
+
+  .blankMap {
+    padding: 5px 0 0 0 !important;
+  }
+
+  .title {
+    float: left;
+    margin-left: 10px;
+    letter-spacing: 0.5px !important;
+    color: #3e3e3e;
+    text-transform: capitalize;
+    opacity: 1;
+    padding: 3px;
+    font-size: 16px !important;
+  }
+
+  .actionbox-head {
+    position: absolute;
+    right: 65px;
+    padding-top: 5px;
+
+    ul {
+      li {
+        float: left;
+        margin-left: 10px;
+
+        a {
+          color: rgb(73, 73, 73) !important;
+          text-decoration: none;
+        }
+
+        span {
+          font-size: 16px !important;
+        }
+      }
+
+      li.expcol {
+        span {
+          font-size: 24px !important;
+          margin-top: -3px;
+          color: rgb(73, 73, 73) !important;
+        }
+      }
+    }
+  }
+
+  .actionbox {
+    height: 20px;
+    position: absolute;
+    right: 24px;
+    top: 15px;
+
+    ul {
+      li {
+        float: left;
+        margin-left: 10px;
+
+        a {
+          color: rgb(73, 73, 73) !important;
+          text-decoration: none;
+        }
+
+        span {
+          font-size: 16px !important;
+        }
+      }
+
+      li.expcol {
+        span {
+          font-size: 24px;
+          margin-top: -3px;
+          color: rgb(73, 73, 73) !important;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .itemTab-head {
+  display: flex;
+  width: 100%;
+  float: left;
+  border-bottom: 2px solid #df4b09;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  font-size: 16px i !important;
+
+  .capOne {
+    padding: 3px 8px 4px 8px;
+    float: left;
+    border-radius: 5px 0px 0px 0px;
+    margin: 0 10px 0 0;
+  }
+
+  .blankMap {
+    padding: 5px 0 0 0 !important;
+  }
+
+  .titleHead {
+    float: left;
+    letter-spacing: 0.5px;
+    color: #3e3e3e;
+    text-transform: capitalize;
+    opacity: 1;
+    padding: 3px;
+    font-size: 16px;
+  }
+
+  .title {
+    float: left;
+    margin-left: 10px;
+    letter-spacing: 0.5px !important;
+    color: #3e3e3e;
+    text-transform: capitalize;
+    opacity: 1;
+    padding: 3px;
+    font-size: 16px !important;
+  }
+
+  .actionbox-head {
+    position: absolute;
+    right: 55px;
+    padding-top: 5px;
+
+    ul {
+      li {
+        float: left;
+        margin-left: 5px;
+
+        a {
+          color: rgb(73, 73, 73) !important;
+          text-decoration: none;
+        }
+
+        span {
+          font-size: 16px !important;
+        }
+      }
+
+      li.expcol {
+        span {
+          font-size: 24px !important;
+          margin-top: -3px;
+          color: rgb(73, 73, 73) !important;
+        }
+      }
+    }
+  }
+
+  .actionbox {
+    height: 20px;
+    position: absolute;
+    right: 24px;
+    top: 15px;
+
+    ul {
+      li {
+        float: left;
+        margin-left: 10px;
+
+        a {
+          color: rgb(73, 73, 73) !important;
+          text-decoration: none;
+        }
+
+        span {
+          font-size: 16px !important;
+        }
+      }
+
+      li.expcol {
+        span {
+          font-size: 24px;
+          margin-top: -3px;
+          color: rgb(73, 73, 73) !important;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-accordion:first-child {
+  .itemTab-head {
+    .capOne {
+      padding: 3px 8px 4px 8px;
+      background: #12a812 !important;
+      color: white;
+      float: left;
+      border-radius: 5px 0px 0px 0px;
+      margin: 0 10px 0 0;
+    }
+  }
+}
+
+::ng-deep .mat-accordion:nth-child(2) {
+  .itemTab-head {
+    .capOne {
+      padding: 3px 8px 4px 8px;
+      background: #52e2fc !important;
+      color: rgb(43, 43, 43);
+      float: left;
+      border-radius: 5px 0px 0px 0px;
+      margin: 0 10px 0 0;
+    }
+  }
+
+}
+
+::ng-deep .searchButton {
+  display: block;
+  text-align: left;
+  float: rigth;
+  width: 60%;
+
+  input[type=button] {
+    float: left;
+    padding: 5px 20px !important;
+    color: white;
+    font-size: 14px !important;
+    background: #3C445C !important;
+    display: block;
+    border-radius: 0;
+    font-family: 'BarlowSemiCondensed-Medium' !important;
+  }
+
+}
+
+
+::ng-deep .mat-expansion-panel-header {
+  padding: 0 0 0 24px !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 0 0 24px !important;
+}
+
+::ng-deep .mat-expansion-indicator {
+  transform: rotate(180deg);
+  position: absolute;
+  right: 6px;
+  top: 13px;
+}
+
+.filter-row {
+  display: flex;
+  margin: 10px 0 0 0;
+
+  .addFpading {
+    margin: 0 5px !important;
+    border-radius: 10px;
+    padding: 3px 0px;
+  }
+
+  .addFpadingRound {
+    margin: 0 5px !important;
+    border-radius: 10px;
+    padding: 3px 10px;
+  }
+}
+
+::ng-deep .accordianPanel {
+  width: auto;
+  margin-top: 20px;
+  margin-right: 0px !important;
+
+  .mapbox {
+    padding: 0px 0px 20px 20px;
+    float: left;
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-expansion-panel-header.mat-expanded {
+  height: 45px !important;
+}
+
+::ng-deep .mat-expansion-panel-spacing {
+  margin: 0px 0 !important;
+}
+
+::ng-deep .wrapper .containerLeft {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+}
+
+::ng-deep .containerLeft .mat-tree-node {
+  font-size: 14px !important;
+  min-height: 16px !important;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+}
+
+::ng-deep .containerLeft .mat-icon-button {
+  height: 22px !important;
+  width: 24px !important;
+  line-height: 20px !important;
+  /* padding: 0 8px 0 0px; */
+}
+
+.spinnerbox { width: 60px;
+  position: absolute;
+  top:30px; left: 50%;
+  margin: 0px auto;
+  height: 0px;  }
+
+  .submit-btn { 
+    font-size: 10px; float: left; margin-top: 10px; 
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+
+  &.right {  float: right; margin-right: 3px; }
+  }

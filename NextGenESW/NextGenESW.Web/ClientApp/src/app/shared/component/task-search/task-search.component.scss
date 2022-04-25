@@ -1,0 +1,61 @@
+@import '/src/scss/helpers/mat-slide-toggle';
+
+.taskSearchWrap {
+
+    display: flex;
+    padding-left: 20px;
+    .leftBox {
+        margin-right: 20px;
+        margin-left: 0;
+        color: black;
+        width: 100%;
+        max-width: 300px;
+
+}
+.rightBox{margin: 0 20px;
+    width: 100%;}
+
+
+}
+
+table {
+    width: 100%;
+  }
+.bookmark{
+    width: 15px;
+    margin-left: 20px;
+}
+.topSearch-result{
+    font-weight: 600;
+    margin-bottom: 10px;
+    float: left;
+}
+.topSearch-table{
+    tr.mat-header-row{
+        height: 50px;
+        background: #F8F8F8;
+    }
+    th.mat-header-cell{
+        vertical-align: middle;
+        vertical-align: middle;
+        color: #000000;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    td.mat-cell{
+        vertical-align: middle;
+    }
+}
+
+.task-searchpage{
+    margin-bottom: 30px;
+}
+
+:host {
+  @include slideToggle(green, gray, #fff, 33px, 21px);
+
+  mat-slide-toggle {
+    position: relative;
+    top: 5px;
+  }
+}

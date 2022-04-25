@@ -1,0 +1,17 @@
+   [
+    {
+      "status": "Draft" 
+    },
+    {
+      "status": "Submitted for Approval"
+    },
+    {
+      "status": "Approved, Waiting for JC"
+    },
+    {
+      "status": "J/C Approval"
+    },
+    {
+      "status": "Published"
+    }
+  ]

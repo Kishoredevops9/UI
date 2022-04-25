@@ -1,0 +1,54 @@
+<div class="feedbackParent">
+  <div class="feedbackHeader">HELP Feedback</div>
+
+    
+  <div class="feedbackFormClass" novalidate>
+    <form [formGroup]="feedbackForm" class="form">
+
+      <div fxLayout="row" class="">
+        <label class="formLabel">Name:</label> 
+        <mat-form-field class="example-full-width textBoxs" >
+            <input matInput value="{{currentUserName}}" readonly formControlName="userName">
+        </mat-form-field>
+      </div>
+      
+      <div fxLayout="row" class="">
+        <label class="formLabel">Email Address:</label> 
+        <mat-form-field class="example-full-width textBoxs" >
+            <input matInput value="{{currentUserMail}}" readonly formControlName="userEmail">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="">
+          <label class="formLabel">Title:</label> 
+          <mat-form-field class="example-full-width textBoxs" >
+              <input matInput value="{{elementValues.title}}" readonly formControlName="title">
+          </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+          <label class="formLabel">Feedback:</label> 
+          <mat-form-field class="example-full-width textAreas" appearance="outline">
+            <textarea class="textAreaBox" matInput placeholder="Please enter your feedback" formControlName="feedbackComment"></textarea>
+            <mat-error *ngIf="!feedbackForm.controls['feedbackComment'].valid && feedbackForm.controls['feedbackComment'].touched">
+              {{ feedbackAlert }}
+            </mat-error>
+          </mat-form-field>
+      </div>
+
+      <div class="disclaimerText">
+        You might be contacted for further information.
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" class="actionButtons">
+          <button mat-raised-button color="primary" [disabled]="!feedbackForm.valid" (click)="onFeedbackSubmit()" class="submit-btn">Submit</button>
+          <button class="hiddenButton"></button>
+          <button mat-raised-button color="primary" (click)="closeFeedback()" class="submit-btn">Cancel</button>
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>

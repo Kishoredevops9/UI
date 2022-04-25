@@ -1,0 +1,46 @@
+<div class="exception" [formGroup]="form">
+  <span class="deviation_head">
+    <b>Exception Information </b>
+    <!-- {{deviationCompId}} -->
+  </span>
+  <div class="deviation_container">
+    <div class="criteria_upadate">If no, Explain what is different *</div>
+    <textarea
+      [readonly]="editResultsStatus"
+      rows="4" cols="29" class="text-area" placeholder="Explain what is different" formControlName="difference"
+      (focusout)="saveExceptionForm('true')"></textarea>
+    <Br>
+
+    <div class="criteria_upadate">Reason that its acceptable *</div>
+
+    <textarea
+      [readonly]="editResultsStatus"
+      rows="4" cols="29" class="text-area" placeholder="Explain reason that its acceptable" formControlName="reason"
+      (focusout)="saveExceptionForm('true')"></textarea>
+    <Br>
+
+    Should best practices be updated?
+    <div class="toggle criteria">
+      <div>No
+        <mat-slide-toggle
+          [disabled]="editResultsStatus"
+          formControlName="needUpdateInd" (change)="saveExceptionForm('true')"> </mat-slide-toggle>
+        <span class="
+        toggleSpan
+        text-field-data
+        radio-button-alignment
+        toggle_button
+      "></span>Yes
+      </div>
+    </div>
+    <br>
+    <div *ngIf="(form.value.needUpdateInd == false)">Comment below: *</div>
+    <div *ngIf="(form.value.needUpdateInd == true)">Comment below:</div>
+    <textarea
+      [readonly]="editResultsStatus"
+      rows="4" cols="29" class="text-area" placeholder="Enter Risk Mitigation Plan" formControlName="updateComment"
+      (focusout)="saveExceptionForm('true')"></textarea>
+    <Br>
+  </div>
+
+</div>

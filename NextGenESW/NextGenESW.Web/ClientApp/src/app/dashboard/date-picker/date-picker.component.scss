@@ -1,0 +1,72 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+@import "../../../scss/base/_global.scss";
+
+//Date Range Picker
+.date-picker-container form {
+  display: grid;
+  border: 1px solid $select-basic-color;
+  @include border-radius(23px);
+  padding: 0 50px;
+  grid-template-areas: "startDate endDate";
+  // grid-template-columns: 50% 50%;
+  grid-template-columns: 60% 60%;
+  max-width: 390px;
+
+  .startDate {
+    grid-area: startDate;
+    margin-right: 5px;
+  }
+
+  .endDate {
+    grid-area: endDate;
+  }
+
+  @include breakpoint(tablet) {
+    max-width: 320px;
+    padding: 0 30px;
+  }
+}
+
+//Custom Styling for Date Picker
+::ng-deep .date-picker-container {
+  .mat-form-field-flex {
+    width: 70%;
+    font-size: 16px;
+    color: $black-color;
+
+    .mat-form-field-label-wrapper {
+      color: $select-basic-color;
+      display: none;
+    }
+  }
+
+  .mat-form-field-appearance-legacy {
+    padding: 10px 0px;
+
+    .mat-form-field-wrapper {
+      padding: 0;
+    }
+
+    .mat-form-field-infix {
+      border-top: 0px;
+    }
+  }
+
+  .mat-form-field-underline {
+    display: none;
+  }
+
+  //custom styling
+  .mat-form-field-appearance-legacy .mat-form-field-prefix .mat-datepicker-toggle-default-icon .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+    width: 20px;
+    height: 20px;
+    fill: $text-link-color;
+  }
+
+  .error {
+    color: $alert-basic-bg;
+  }
+}

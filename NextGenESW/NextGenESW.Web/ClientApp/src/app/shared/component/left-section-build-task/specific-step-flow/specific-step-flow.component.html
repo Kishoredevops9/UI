@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>NEW STEP FLOW</h1>
+  <div class="formBox">
+       <ul>
+        <li>
+  <label> Title* </label>
+  <mat-form-field>
+    <input matInput [(ngModel)]="formObj.title" placeholder="Please enter a name for the New Step Flow" (change)="specificStepchange()">
+</mat-form-field>
+        </li>
+        <li>
+            <label>Export Group*</label>
+            <mat-form-field>
+            <mat-select [(ngModel)]="formObj.exportAuthorityId" placeholder="Please select an Export Group"  (selectionChange)="specificStepchange()">
+              <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+                  </li>
+                 </ul>
+  </div>
+  <div class="action-btn">
+    <button mat-raised-button color="primary" class="mat-button" [disabled]="specificstepnewBtn"  (click)="submitForm()" >Save</button>
+    <button mat-raised-button color="primary" class="mat-button" mat-dialog-close>Close</button>
+  </div>
+  <div  *ngIf="loading" class="stepSpecificClass">
+    <div class="spinnerbox">
+      <mat-spinner  diameter="60"></mat-spinner>
+    </div>
+  </div>

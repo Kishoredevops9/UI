@@ -1,0 +1,54 @@
+<mat-table [dataSource]="taskList?.length ? taskList : emptyData" class="data-table">
+  <ng-container matColumnDef="taskReaid">
+    <mat-header-cell *matHeaderCellDef >
+      <div class="headingName">Task REAID</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element" class="reaId">
+      <a matTooltip="{{ element.taskReaid }}" class="reaid_href" (click)="taskNavigate(element)">{{ element.taskReaid }}     </a>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingName">Task Title</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="titlePart" matTooltip="{{ element.title }}">
+        {{ element.title }}
+      </div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="engineModelTagId">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingName" tooltip=""
+           data-tooltip="8002"
+           placement =  "bottom"  >Engine Model Group</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="engModelTags"
+           matTooltip="{{ element.engineModelTagName }}"
+      >
+        {{ element.engineModelTagName }}
+      </div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="engineSectionDescription">
+    <mat-header-cell *matHeaderCellDef>
+      <div class="headingName">Engine Section</div>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="engSecDesc" matTooltip="{{ element.engineSectionDescription }}">
+        {{ element.engineSectionDescription }}
+      </div>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="empty-row">
+    <mat-cell *matCellDef="let element">
+      <div class="text-center no-data-notify">No Tasks</div>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedContentColumns">
+  </mat-header-row>
+  <mat-row
+    *matRowDef="let row; columns: taskList?.length ? displayedContentColumns : ['empty-row'];"
+  ></mat-row>
+</mat-table>

@@ -1,0 +1,772 @@
+@import 'mat-slide-toggle';
+
+//Tables
+%table-style {
+  @include border-radius(20px);
+  -webkit-box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.6);
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.6);
+  background: transparent;
+
+  //Table Main Header
+  %table-heading-band {
+    display: grid;
+    grid-template-areas: "mat-title slide-toggle bar-icon fullview-icon";
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: 48% auto auto auto;
+    border-bottom: 1px solid #ccc;
+
+    .mat-title {
+      grid-area: mat-title;
+      padding: 12px 0px 12px 20px;
+      color: $blue-lighten-color;
+      @include font-face-BarlowSemiCondensed-SemiBold(1.25rem, 0.9rem);
+      text-transform: uppercase;
+      letter-spacing: 0.83px;
+
+      @include breakpoint(laptop) {
+        font-size: 0.8rem;
+      }
+
+      @include breakpoint(tablet) {
+        font-size: 0.8rem;
+      }
+    }
+
+    .slide-toggle {
+      grid-area: slide-toggle;
+      font-size: 1rem;
+      color: $gray-darken-color;
+
+      .mat-slide-toggle {
+        margin: 0 5px;
+      }
+
+      @include breakpoint(tablet) {
+        font-size: 0.8rem;
+      }
+    }
+
+    .bar-icon {
+      grid-area: bar-icon;
+      background-position: center center !important;
+    }
+
+    .fullview-icon {
+      grid-area: fullview-icon;
+
+      .expand {
+        background-position: center center !important;
+        background-size: 20px 20px !important;
+      }
+    }
+
+    @include slideToggle(green, gray, #fff, 33px, 21px);
+
+
+    ::ng-deep .mat-sort-header-arrow {
+      color: $white-color !important;
+    }
+
+    ::ng-deep .mat-sort-header-stem {
+      color: $white-color !important;
+    }
+
+    @include breakpoint(tablet) {
+      grid-template-columns: 35% auto auto auto;
+    }
+  }
+
+  //Mat Table Styling and Customisation
+
+  .mat-table {
+    @include border-radius(20px);
+    border-collapse: collapse;
+
+    .mat-row,
+    .mat-header-row {
+      .mat-cell,
+      .mat-header-cell {
+        border: none;
+        padding: 15px 10px !important;
+
+        a {
+          color: $text-link-color;
+          @include font-face-Inter-Medium(1rem, 1.13rem);
+          text-decoration: none;
+          cursor: pointer;
+
+          @include breakpoint(laptop) {
+            font-size: 0.8rem;
+          }
+
+          @include breakpoint(tablet) {
+            font-size: 0.8rem;
+          }
+
+          @include breakpoint(mobileonly) {
+            font-size: 0.7rem;
+          }
+        }
+
+        @include breakpoint(mobileonly) {
+          font-size: 0.85rem;
+        }
+      }
+
+      .mat-header-cell {
+        color: $black-color;
+        text-transform: uppercase;
+        @include font-face-BarlowSemiCondensed-Regular(1.125rem, "normal");
+        letter-spacing: 0.75px;
+        padding: 0px 0 13px 14px !important;
+
+        @include breakpoint(laptop) {
+          font-size: 1rem;
+        }
+
+        @include breakpoint(tablet) {
+          font-size: 0.8rem;
+          letter-spacing: 0.5px;
+        }
+
+        @include breakpoint(mobileonly) {
+          font-size: 0.7rem;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      .mat-cell {
+        @include font-face-Inter-Regular(1rem, 1.13rem);
+        color: $black-color;
+        padding: 13px 0 13px 18px !important;
+
+        @include breakpoint(laptop) {
+          padding: 13px 0 13px 13px !important;
+          font-size: 0.8rem;
+        }
+
+        @include breakpoint(tablet) {
+          font-size: 0.7rem;
+        }
+
+        @include breakpoint(mobileonly) {
+          font-size: 0.6rem;
+        }
+      }
+
+      &:hover {
+        background: $gray-lighten-2-color;
+      }
+    }
+
+    .mat-row {
+      &:last-child {
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+      }
+
+      &:nth-child(even) {
+        background-color: $table-primary-bg;
+      }
+
+      &:nth-child(odd) {
+        background-color: $white-color;
+      }
+
+      .type {
+        color: $white-color;
+        /* width: 27px;
+        height: 27px; */
+        padding: 1px 5px !important;
+        @include font-face-BarlowSemiCondensed-Regular(15px, 1.6rem);
+        text-align: center;
+        letter-spacing: 0.63px;
+        display: block;
+
+        &.wi {
+          background: $type-basic-bg;
+        }
+
+        &.cd {
+          background: $type-primary-bg;
+        }
+
+        &.ap {
+          background: $type-secondary-bg;
+        }
+        &.cg {
+          background: $type-third-bg;
+          color: $black-color;
+        }
+        &.gb {
+          background: $type-third-bg;
+        }
+      }
+    }
+
+    // Custom Mat Progress Bar
+    ::ng-deep .mat-progress-bar {
+      @include border-radius(9px);
+      height: 8px;
+
+      .mat-progress-bar.mat-progress-bar-buffer {
+        background: #adadad;
+      }
+
+      .mat-progress-bar-fill {
+        &::after {
+          background: $progressBar-primary-bg;
+        }
+      }
+    }
+
+    // Custom Select Box Label
+    ::ng-deep .mat-form-field-type-mat-select .mat-form-field-label,
+    .mat-select-value {
+      color: $black-color;
+      font-size: 16px !important;
+      font-family: "BarlowSemiCondensed-Regular", sans-serif;
+
+      @include breakpoint(tablet) {
+        font-size: 0.8rem;
+      }
+
+      @include breakpoint(mobileonly) {
+        font-size: 0.7rem;
+      }
+    }
+
+    //Table Column Filter
+    ::ng-deep .filter-block {
+      .mat-form-field-wrapper {
+        .mat-form-field-infix {
+          padding: 0 0 18px;
+          margin: 0;
+          border-bottom: 1px solid #ccc;
+          border-top: none;
+        }
+      }
+    }
+
+    //Custom Select Box
+    ::ng-deep .filter-block .mat-form-field-wrapper {
+      padding: 0;
+
+      .mat-form-field-underline {
+        display: none;
+      }
+
+      .mat-select-arrow-wrapper {
+        visibility: hidden;
+      }
+    }
+  }
+}
+
+//Customize the Column Width
+%customColumn {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  padding: 8px 8px 8px 12px !important;
+  box-sizing: border-box;
+}
+
+%content-sub-header {
+  position: fixed;
+  //background: #ffdde2;
+  height: 170px;
+  width: 100%;
+  z-index: 999;
+
+  %top-band {
+    display: grid;
+    grid-template-areas: "title create-document-nav";
+    justify-content: space-between;
+    padding-top: 10px;
+
+    .title {
+      grid-area: title;
+      display: grid;
+      grid-template-areas: "type name";
+      align-items: center;
+
+      @include breakpoint(laptop) {
+        @include font-face-BarlowSemiCondensed-Medium(1.25rem, 0.88rem);
+      }
+
+      @include breakpoint(mobileonly) {
+        @include font-face-BarlowSemiCondensed-Medium(1rem, 0.6rem);
+      }
+
+      .type {
+        color: $white-color;
+        width: 35px;
+        height: 35px;
+        @include font-face-BarlowSemiCondensed-Regular(24px, 35px);
+        text-align: center;
+        letter-spacing: 0.63px;
+        display: inline-block;
+        margin-right: 13px;
+        grid-area: type;
+
+        &.wi {
+          background: $type-basic-bg;
+        }
+
+        &.cd {
+          background: $type-primary-bg;
+        }
+
+        &.ap {
+          background: $type-secondary-bg;
+        }
+
+        &.cg {
+          background: $type-third-bg;
+        }
+        &.gb {
+          background: $type-third-bg;
+        }
+
+        @include breakpoint(laptop) {
+          @include font-face-BarlowSemiCondensed-Regular(20px, normal);
+          width: 28px;
+          height: 28px;
+        }
+
+        @include breakpoint(tablet) {
+          @include font-face-BarlowSemiCondensed-Regular(20px, normal);
+          width: 28px;
+          height: 28px;
+        }
+
+        @include breakpoint(mobileonly) {
+          width: 30px;
+          height: 30px;
+          @include font-face-BarlowSemiCondensed-Regular(16px, 30px);
+        }
+      }
+
+      .name {
+        grid-area: name;
+        @include font-face-BarlowSemiCondensed-SemiBold(1.38rem, 1.5rem);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #3e3e3e;
+        letter-spacing: 1px;
+
+        @include breakpoint(laptop) {
+          @include font-face-BarlowSemiCondensed-SemiBold(1.2rem, 1rem);
+        }
+
+        @include breakpoint(tablet) {
+          @include font-face-BarlowSemiCondensed-Medium(1rem, 0.8rem);
+        }
+
+        @include breakpoint(mobileonly) {
+          @include font-face-BarlowSemiCondensed-Medium(0.85rem, 0.8rem);
+        }
+      }
+    }
+
+    .create-document-nav {
+      grid-area: create-document-nav;
+
+      a {
+        padding: 0 25px 0 0px;
+        cursor: pointer;
+        @include font-face-BarlowSemiCondensed-Medium(1.125rem, 1.28rem);
+        color: #3e3e3e;
+        letter-spacing: 0.75px;
+
+        .count {
+          @include font-face-BarlowSemiCondensed-Medium(1.125rem, 1.28rem);
+          letter-spacing: 0.75px;
+          color: $text-link-color;
+          padding-right: 5px;
+        }
+
+        .icon {
+          display: inline-block;
+          margin-right: 10px;
+
+          &.collaborate {
+            width: 23.5px;
+            height: 23.5px;
+            background: url("/assets/images/icon-collaborate.svg") left 2px no-repeat;
+            background-size: 23.5px 23.5px;
+
+            @include breakpoint(laptop) {
+              width: 18px;
+              height: 18px;
+              background-size: 18px 18px;
+            }
+          }
+
+          &.experts {
+            width: 30px;
+            height: 22px;
+            background: url("/assets/images/icon-experts.svg") left 2px no-repeat;
+            background-size: 30px 22px;
+
+            @include breakpoint(laptop) {
+              width: 22px;
+              height: 15px;
+              background-size: 22px 15px;
+            }
+          }
+
+          &.approved {
+            width: 24px;
+            height: 27px;
+            background: url("/assets/images/icon-success.svg") left 2px no-repeat;
+            background-size: 24px 27px;
+
+            @include breakpoint(laptop) {
+              width: 20px;
+              height: 24px;
+              background-size: 20px 24px;
+            }
+          }
+
+          &.like {
+            width: 19px;
+            height: 22px;
+            background: url("/assets/images/icon-thumb_up.svg") left 2px no-repeat;
+            background-size: 19px 22px;
+
+            @include breakpoint(laptop) {
+              width: 15px;
+              height: 18px;
+              background-size: 15px 18px;
+            }
+          }
+        }
+
+        @include breakpoint(laptop) {
+          @include font-face-BarlowSemiCondensed-Medium(0.8rem, 0.88rem);
+          padding-right: 15px;
+        }
+
+        @include breakpoint(tablet) {
+          @include font-face-BarlowSemiCondensed-Medium(0.6rem, 0.88rem);
+          padding-right: 10px;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      }
+
+      .menu {
+        @include breakpoint(mobileonly) {
+          display: none;
+        }
+
+        &.mobile {
+          display: none;
+
+          .mat-botton {
+            @include breakpoint(mobileonly) {
+              color: #3e3e3e;
+            }
+          }
+
+          @include breakpoint(mobileonly) {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+
+  // .document-no {
+  //   padding-left: 58px;
+
+  //   .icon {
+  //     width: 30px;
+  //     height: 30px;
+  //     display: inline-block;
+  //     margin-right: 11px;
+
+  //     &.usa {
+  //       background: url('src/assets/images/icon-usa.png') no-repeat;
+  //       position: relative;
+  //       top: 6px;
+  //     }
+  //   }
+
+  .document-toolbar {
+    position: absolute;
+    right: 0;
+    top: 122px;
+    z-index: 1;
+
+    a {
+      min-width: auto;
+      margin: 0px;
+      padding: 0;
+
+      .icon {
+        display: inline-block;
+        margin-right: 11px;
+        grid-area: icon;
+
+        &.view {
+          width: 33.8px;
+          height: 27px;
+          background: url("/assets/images/icon-view.svg") left 2px no-repeat;
+          background-size: 34px 27px;
+          margin-right: 30px;
+
+          @include breakpoint(laptop) {
+            width: 25px;
+            height: 21px;
+            background-size: 25px 20px;
+          }
+
+          @include breakpoint(tablet) {
+            width: 21px;
+            height: 18px;
+            background-size: 21px 17px;
+          }
+
+          @include breakpoint(mobileonly) {
+            width: 24px;
+            height: 20px;
+            background-size: 24px 20px;
+            margin-right: 20px;
+          }
+        }
+
+        &.refresh {
+          width: 20px;
+          height: 24px;
+          background: url("/assets/images/icon-refresh.svg") left 2px no-repeat;
+          background-size: 20px 24px;
+          margin-right: 30px;
+
+          @include breakpoint(laptop) {
+            width: 15px;
+            height: 21px;
+            background-size: 15px 21px;
+          }
+
+          @include breakpoint(tablet) {
+            width: 14px;
+            height: 18px;
+            background-size: 14px 17px;
+          }
+
+          @include breakpoint(mobileonly) {
+            width: 14px;
+            height: 18px;
+            background-size: 14px 18px;
+          }
+        }
+
+        &.download {
+          width: 19px;
+          height: 24px;
+          background: url("/assets/images/icon-download.svg") left 2px no-repeat;
+          background-size: 19px 24px;
+
+          @include breakpoint(laptop) {
+            width: 15px;
+            height: 20px;
+            background-size: 15px 20px;
+          }
+
+          @include breakpoint(tablet) {
+            width: 13px;
+            height: 17px;
+            background-size: 13px 17px;
+          }
+
+          @include breakpoint(mobileonly) {
+            width: 14px;
+            height: 18px;
+            background-size: 14px 18px;
+          }
+        }
+      }
+    }
+
+    @include breakpoint(tablet) {
+      top: 125px;
+    }
+  }
+
+  &.wi {
+    background: #ffdde2;
+  }
+
+  &.cd {
+    background: #c7c7fc;
+  }
+
+  @include breakpoint(laptop) {
+    height: 162px;
+  }
+}
+
+%document-no {
+  padding-left: 58px;
+
+  .icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 11px;
+
+    &.usa {
+      //  background: url('src/assets/images/icon-usa.png') no-repeat;
+      position: relative;
+      top: 6px;
+    }
+  }
+
+  .name {
+    @include font-face-BarlowSemiCondensed-Medium(1.375rem, 0.95rem);
+    color: $text-link-color;
+    letter-spacing: 0.92px;
+
+    @include breakpoint(laptop) {
+      // @include font-face-BarlowSemiCondensed-Medium(1.2rem, 0.88rem);
+      @include font-face-BarlowSemiCondensed-Medium(0.8rem, 0.88rem);
+    }
+
+    @include breakpoint(tablet) {
+      @include font-face-BarlowSemiCondensed-Medium(1rem, 0.88rem);
+    }
+
+    @include breakpoint(mobileonly) {
+      @include font-face-BarlowSemiCondensed-Medium(1rem, 0.68rem);
+    }
+  }
+
+  @include breakpoint(laptop) {
+    padding-left: 50px;
+  }
+}
+
+%tabbing {
+  position: relative;
+  top: 0;
+  width: 100%;
+
+  .mat-tab-header {
+    top: 235px;
+    max-width: 70%;
+    position: fixed;
+    z-index: 1000;
+    border: none;
+
+    @include breakpoint(laptop) {
+      top: 202px;
+    }
+
+    @include breakpoint(tablet) {
+      top: 192px;
+    }
+
+    @include breakpoint(mobileonly) {
+      top: 186px;
+    }
+  }
+
+  .mat-tab-body {
+    max-height: 1400px;
+    height: 100%;
+    @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+
+    iframe {
+      height: 600px !important;
+      width: 100%;
+      max-width: 1920px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .mat-tab-label {
+    opacity: 1;
+    min-width: 1px;
+    height: 30px;
+    margin-right: 45px;
+    padding: 0px 15px;
+
+    .mat-tab-label-content {
+      @include font-face-BarlowSemiCondensed-Medium(1.25rem, 0.9rem);
+      letter-spacing: 0.92px;
+      text-align: center;
+      color: #3e3e3e;
+
+      @include breakpoint(laptop) {
+        @include font-face-BarlowSemiCondensed-Medium(1rem, 0.88rem);
+      }
+
+      @include breakpoint(tablet) {
+        @include font-face-BarlowSemiCondensed-Medium(0.8rem, 0.68rem);
+      }
+
+      @include breakpoint(mobileonly) {
+        @include font-face-BarlowSemiCondensed-Medium(0.8rem, 0.68rem);
+      }
+    }
+  }
+
+  .mat-tab-group {
+    color: #3e3e3e;
+
+    .mat-tab-label-active {
+      background: $white-color;
+      color: $nav-primary-bg;
+      border: none;
+      opacity: 1;
+    }
+  }
+
+  .mat-tab-group.mat-primary {
+    .mat-ink-bar {
+      background: none;
+    }
+  }
+}
+
+//Mat Dialog Box
+%mat-dialog {
+  %mat-dialog-header {
+    display: grid;
+    grid-template-areas: "h1 material-icons";
+    grid-template-columns: 98% auto;
+    align-items: center;
+    padding: 5px 10px;
+    background: #ededed;
+    margin: 0 0 20px;
+
+    h1 {
+      grid-area: h1;
+      @include font-face-BarlowSemiCondensed-SemiBold(1.2rem, normal);
+      letter-spacing: 0.68px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .material-icons {
+      grid-area: material-icons;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    @include breakpoint(mobileonly) {
+      grid-template-columns: 90% auto;
+    }
+  }
+}

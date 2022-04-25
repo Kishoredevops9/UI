@@ -1,0 +1,749 @@
+{
+	"Tasks": [
+		{
+			"TaskId": 376,
+			"TaskREAId": "Task Sample June22",
+			"Title": "Task Sample June22",
+			"IPT": "Task Sample June22",
+			"Tags": [
+				{
+					"Tag1": "Parts, Engine",
+					"Tag2": "HPC - High Pressure Compressor",
+					"Tag3": "Rotors"
+				}
+			],
+			"Phases": [
+				{
+					"Phase": "Concept Initiation"
+				},
+				{
+					"Phase": "Concept Initiation"
+				}
+			],
+			"StepFlows": [
+				{
+					"TaskMapId": 24,
+					"IncludedInd": true,
+					"ContentId": "MD-F-013651",
+					"Title": "B R check",
+					"ConfidentialityLevel": "L1",
+					"SequenceNumber": 1,
+					"Steps": [
+						{
+							"KnowledgeAssetId": 1577,
+							"StepActivityBlockId": 300,
+							"IncludedInd": true,
+							"ContentId": "FC-P-013896",
+							"Title": "Step1",
+							"AssetStatusId": 1,
+							"LocationX": 0,
+							"LocationY": 0,
+							"Tags": [
+								{
+									"Tag1": "Parts, Engine",
+									"Tag2": "HPC - High Pressure Compressor",
+									"Tag3": "Rotors"
+								}
+							],
+							"Phases": [
+								{
+									"Phase": "Detailed Design"
+								}
+							],
+							"Disciplines": [
+								{
+									"SwimLaneId": 178,
+									"Discipline1": "Controls & Diagnostics",
+									"Discipline2": "APU Electronic Hardware",
+									"IncludedInd": true,
+									"SequenceNumber": 0,
+									"ProtectedInd": true,
+									"RequiredInd": true,
+									"Activities": [
+										{
+											"KnowledgeAssetId": 1188,
+											"StepActivityBlockId": 300,
+											"IncludedInd": true,
+											"ContentId": "PO-A-013372",
+											"Title": "Advanced Technology Engine Design",
+											"AssetStatusId": 1,
+											"ProgramName": "F119",
+											"ConfidentialityLevel": "L2",
+											"USClassification": "VIII",
+											"USJurisdiction": "ITAR",
+											"ExportAuthorityCode": "US",
+											"LocationX": 0,
+											"LocationY": 0,
+											"Tags": [
+												{
+													"Tag1": "Parts, Engine",
+													"Tag2": "HPC - High Pressure Compressor",
+													"Tag3": "Rotors"
+												},
+												{
+													"Tag1": "Engine Models",
+													"Tag2": "JT8D(STD SERIES)",
+													"Tag3": "JT8D-17ABG2"
+												},
+												{
+													"Tag1": "Engine Models",
+													"Tag2": "PW4000(94\"FAN SERIES)",
+													"Tag3": "PW4156A-3"
+												},
+												{
+													"Tag1": "Engine Models",
+													"Tag2": "PW800",
+													"Tag3": "PW814"
+												},
+												{
+													"Tag1": "Engine Models",
+													"Tag2": "SPEY555-15",
+													"Tag3": "SPEY555-15"
+												}
+											],
+											"Phases": [
+												{
+													"Phase": "Preliminary Design"
+												},
+												{
+													"Phase": "Detailed Design"
+												},
+												{
+													"Phase": "Delivery & Support"
+												},
+												{
+													"Phase": "Verification & Validation"
+												},
+												{
+													"Phase": "Verification & Validation"
+												}
+											],
+											"ContainerItems": [
+												{
+													"KnowledgeAssetId": 1595,
+													"ContainerItemId": 604,
+													"IncludedInd": true,
+													"ContentId": "FC-C-013923",
+													"Title": "new_criteria",
+													"AssetStatusId": 1,
+													"Index": 1,
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"AssetStatements": [
+														{
+															"AssetStatementId": 4,
+															"IncludedInd": true,
+															"AssetStatementTypeCode": "B",
+															"SequenceNumber": 1,
+															"Statement": "criteria",
+															"Rationale": "",
+															"Link": ""
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1174,
+													"ContainerItemId": 614,
+													"IncludedInd": true,
+													"ContentId": "PR-C-013330",
+													"Title": "Industrial Planning for Development",
+													"AssetStatusId": 1,
+													"Index": 2,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1175,
+													"ContainerItemId": 617,
+													"IncludedInd": true,
+													"ContentId": "XC-C-013331",
+													"Title": "Compliance for Export",
+													"AssetStatusId": 1,
+													"Index": 3,
+													"ProgramName": "F135",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1178,
+													"ContainerItemId": 606,
+													"IncludedInd": true,
+													"ContentId": "MD-S-013340",
+													"Title": "Technology & Engine Design Section",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 605,
+													"Index": 1,
+													"ProgramName": "F135",
+													"ConfidentialityLevel": "L2",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Rotors"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "F119(OTHER)",
+															"Tag3": "F119-PW-100A"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "JT8D(STD SERIES)",
+															"Tag3": "JT8D-15ABG2"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "JT8D(STD SERIES)",
+															"Tag3": "JT8D-17ABG2"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "SPEY555-15",
+															"Tag3": "SPEY555-15"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "PW800",
+															"Tag3": "PW814"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Concept Optimization"
+														},
+														{
+															"Phase": "Preliminary Design"
+														},
+														{
+															"Phase": "Detailed Design"
+														},
+														{
+															"Phase": "Delivery & Support"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Concept Initiation"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1177,
+													"ContainerItemId": 611,
+													"IncludedInd": true,
+													"ContentId": "MD-S-013335",
+													"Title": "APU Combustor Design ",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 605,
+													"Index": 2,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Module"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "Miliatry TEC - Turbine Exhaust Case",
+															"Tag3": "Structural Frame"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "CFM56-7(SERIES)",
+															"Tag3": "CFM56-7B24"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Concept Optimization"
+														},
+														{
+															"Phase": "Preliminary Design"
+														},
+														{
+															"Phase": "Detailed Design"
+														},
+														{
+															"Phase": "Delivery & Support"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Concept Initiation"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1179,
+													"ContainerItemId": 607,
+													"IncludedInd": true,
+													"ContentId": "AFA-G-013344",
+													"Title": "Failure Analysis Step Flow Guideline",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 606,
+													"Index": 1,
+													"ProgramName": "F135",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "GE90(SERIES)",
+															"Tag3": "GE90-76B"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Rotors"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Concept Optimization"
+														},
+														{
+															"Phase": "Preliminary Design"
+														},
+														{
+															"Phase": "Detailed Design"
+														},
+														{
+															"Phase": "Delivery & Support"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Concept Initiation"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1182,
+													"ContainerItemId": 608,
+													"IncludedInd": true,
+													"ContentId": "ES-T-013346",
+													"Title": "Fluid Exhaust System",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 606,
+													"Index": 2,
+													"ProgramName": "F135",
+													"ConfidentialityLevel": "L2",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "DIFF - Diffuser",
+															"Tag3": "Fairing"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "LPT - Low Pressure Turbine",
+															"Tag3": "Full ring Air Seals & Supports"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "CF34-3(SERIES)",
+															"Tag3": "CF34-3A"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "Fan Exhaust Ducts and Rings",
+															"Tag3": "Augmentor Ducts"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "BRG - Bearing-Main",
+															"Tag3": "Seals - Mainshaft"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "TEC - Turbine Exhaust Case",
+															"Tag3": "Tierods"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "LPT - Low Pressure Turbine",
+															"Tag3": "Rotors"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "LPT - Low Pressure Turbine",
+															"Tag3": "Cases"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Concept Optimization"
+														},
+														{
+															"Phase": "Preliminary Design"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1176,
+													"ContainerItemId": 610,
+													"IncludedInd": true,
+													"ContentId": "SK-C-013334",
+													"Title": "Mechanical Test Group",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 606,
+													"Index": 3,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1183,
+													"ContainerItemId": 613,
+													"IncludedInd": true,
+													"ContentId": "PR-T-013348",
+													"Title": "Pilot Industrial Planning ",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 612,
+													"Index": 1,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Rotors"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "CFM56-7(SERIES)",
+															"Tag3": "CFM56-7B22"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "JT8D(STD SERIES)",
+															"Tag3": "JT8D-15ABG3"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "PW4000(94\"FAN SERIES)",
+															"Tag3": "PW4158-3"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "PW800",
+															"Tag3": "PW812"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Concept Optimization"
+														},
+														{
+															"Phase": "Detailed Design"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1159,
+													"ContainerItemId": 616,
+													"IncludedInd": true,
+													"ContentId": "ME-C-013264",
+													"Title": "Engine Manufacturing Branch",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 615,
+													"Index": 1,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1166,
+													"ContainerItemId": 609,
+													"IncludedInd": true,
+													"ContentId": "PO-S-013263",
+													"Title": "Preliminary Engine Design",
+													"AssetStatusId": 1,
+													"ParentIndex": 2,
+													"ParentContainerItemId": 608,
+													"Index": 1,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Rotors"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "F117(SERIES)",
+															"Tag3": "F117-PW-100"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "F135(SERIES)",
+															"Tag3": "F135-PW-100(CTOL/CV)"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "F119(OTHER)",
+															"Tag3": "F119-PW-100A"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "JT8D(STD SERIES)",
+															"Tag3": "JT8D-15ABG2"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "JT8D(STD SERIES)",
+															"Tag3": "JT8D-17ABG2"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "PW4000(94\"FAN SERIES)",
+															"Tag3": "PW4156A-3"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Detailed Design"
+														},
+														{
+															"Phase": "Delivery & Support"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1181,
+													"ContainerItemId": 612,
+													"IncludedInd": true,
+													"ContentId": "ZH-G-013342",
+													"Title": "Thermal Analysis Process",
+													"AssetStatusId": 1,
+													"ParentIndex": 2,
+													"ParentContainerItemId": 611,
+													"Index": 1,
+													"ProgramName": "F135",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Phases": [
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Verification & Validation"
+														},
+														{
+															"Phase": "Concept Initiation"
+														}
+													]
+												},
+												{
+													"KnowledgeAssetId": 1180,
+													"ContainerItemId": 615,
+													"IncludedInd": true,
+													"ContentId": "MD-G-013343",
+													"Title": "Preliminary Engine Design Guide Lines",
+													"AssetStatusId": 1,
+													"ParentIndex": 2,
+													"ParentContainerItemId": 614,
+													"Index": 1,
+													"ProgramName": "Saphire",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "LPT - Low Pressure Turbine",
+															"Tag3": "Blade"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "TEC - Turbine Exhaust Case",
+															"Tag3": "Module"
+														},
+														{
+															"Tag1": "MPE",
+															"Tag2": "Materials Development",
+															"Tag3": "NDE Tools and Methods"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "ADVANCED DUCTED PROP",
+															"Tag3": "ADVANCED DUCTED PROP"
+														},
+														{
+															"Tag1": "Engine Models",
+															"Tag2": "CF34-3(SERIES)",
+															"Tag3": "CF34-3B1"
+														},
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "NOZ - Augmentor Nozzle/Ejector",
+															"Tag3": "Struts"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Detailed Design"
+														},
+														{
+															"Phase": "Delivery & Support"
+														}
+													]
+												}
+											]
+										},
+										{
+											"KnowledgeAssetId": 1184,
+											"StepActivityBlockId": 300,
+											"IncludedInd": true,
+											"ContentId": "PM-A-013350",
+											"Title": "Compression container",
+											"AssetStatusId": 1,
+											"ConfidentialityLevel": "L1",
+											"USClassification": "VIII",
+											"USJurisdiction": "ITAR",
+											"ExportAuthorityCode": "US",
+											"LocationX": 0,
+											"LocationY": 0,
+											"Phases": [
+												{
+													"Phase": "Verification & Validation"
+												}
+											],
+											"ContainerItems": [
+												{
+													"KnowledgeAssetId": 1174,
+													"ContainerItemId": 530,
+													"IncludedInd": true,
+													"ContentId": "PR-C-013330",
+													"Title": "Industrial Planning for Development",
+													"AssetStatusId": 1,
+													"Index": 1,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 807,
+													"ContainerItemId": 531,
+													"IncludedInd": true,
+													"ContentId": "CNT-C-012729",
+													"Title": "Clevland",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 530,
+													"Index": 1,
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1159,
+													"ContainerItemId": 532,
+													"IncludedInd": true,
+													"ContentId": "ME-C-013264",
+													"Title": "Engine Manufacturing Branch",
+													"AssetStatusId": 1,
+													"ParentIndex": 1,
+													"ParentContainerItemId": 530,
+													"Index": 2,
+													"ProgramName": "F119",
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US"
+												},
+												{
+													"KnowledgeAssetId": 1069,
+													"ContainerItemId": 533,
+													"IncludedInd": true,
+													"ContentId": "DU-R-012871",
+													"Title": "RC AAID Test",
+													"AssetStatusId": 1,
+													"ParentIndex": 2,
+													"ParentContainerItemId": 532,
+													"Index": 1,
+													"ConfidentialityLevel": "L1",
+													"USClassification": "VIII",
+													"USJurisdiction": "ITAR",
+													"ExportAuthorityCode": "US",
+													"Tags": [
+														{
+															"Tag1": "Parts, Engine",
+															"Tag2": "HPC - High Pressure Compressor",
+															"Tag3": "Rotors"
+														}
+													],
+													"Phases": [
+														{
+															"Phase": "Detailed Design"
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

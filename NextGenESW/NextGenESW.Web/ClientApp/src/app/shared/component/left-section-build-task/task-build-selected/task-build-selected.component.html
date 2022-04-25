@@ -1,0 +1,208 @@
+ 
+<!-- 
+
+  <div style="float:right;">
+  <button mat-raised-button color="primary" class="mat-button addBtn" (click)="addDisciplineSF()">Add Discipline</button>
+  &nbsp;  &nbsp;
+  <button mat-raised-button color="primary" class="mat-button addBtn" (click)="addActivitySF()">Add Activity</button>
+  &nbsp;  &nbsp; 
+  </div>
+  <br/>
+  
+-->
+
+<aside class="bodyPanel stepFlowBg" >
+  <h2>    Selected STEP Flow:  </h2>
+  <ul>
+    <li *ngFor="let item of selectedMaps">
+      <div class="licopy" [ngClass]="{'active' : checkIdes(getIdes(item)) , 'active2' : checkD(item)}">
+
+     
+
+
+        <div class="SF" [ngClass]="{'border_active' : !item.ReadyInd}">
+          <aside class="sideBoxBg">SF</aside>
+          <span class="title" [ngClass]="{'active' : !item.ReadyInd}"> {{ item.Title }} </span>
+          <span class="contentId" *ngIf="item.OriginContentId" > 
+            <a target="_blank" class="maticon OriginContentId" (click)="openSF(item, type)"
+            [matTooltip]="TooltipDict.OriginalContentId">
+              [{{ item.OriginContentId }}]
+            </a>
+          </span>
+        </div>
+        <div class="toolbar">
+          <!-- <section class="shigh">
+            <a class="maticon" *ngIf="fullscreen" >
+              <mat-icon [size]="10"  [color]="black" (click)="addNewStepnewJson(item)">add</mat-icon>
+            </a>
+           
+          </section> -->
+          <span *ngIf="!item.ReadyInd" class="stepOpc releaseImg" (click)="releaseSF(item)">
+            <img src="/assets/icons/under-construction.svg" title="Under Construction" class="underImg"  >
+            <span class="titlehead">Under Construction</span>
+          </span>
+          
+          
+          <a class="maticon" *ngIf="fullscreen" [matMenuTriggerFor]="menuStep">
+            <mat-icon [size]="10"  [color]="black">add</mat-icon>
+          </a>
+          <mat-menu #menuStep="matMenu" class="menuStep">
+            <button mat-menu-item (click)="addNewStepnewJson(item)">
+              <span>Add Task Specific STEP </span>
+            </button>                  
+          </mat-menu>          
+          <!-- <a class="maticon" target="_blank" (click)="deleteSFNEWJSON(item)">
+            <mat-icon [size]="10"  [color]="black">delete</mat-icon>
+          </a> -->
+          
+          <img style="float: right;margin-top: 6px;" src="/assets/icons/tup.svg" class="stepOpc"
+            (click)="activeBlock[item.TaskComponentId] =  false; expendAll = false"
+            *ngIf="activeBlock[item.TaskComponentId]">
+          <img style="float: right;margin-top: 6px;" src="/assets/icons/tdown.svg" class="stepOpc"
+            (click)="activeBlock[item.TaskComponentId] = true; expendAll = false"
+            *ngIf="!activeBlock[item.TaskComponentId]">
+
+           
+
+        </div>
+      </div>
+
+      <div
+        *ngIf="activeBlock[item.TaskComponentId]">
+        <ul>
+          <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Steps , type : 'SP' }">
+          </ng-container>
+        </ul>
+        <ng-template #recursiveListTmpl let-list="list" let-type="type">
+    <li *ngFor="let item of list;  let i=index">
+
+      <div class="licopy "
+        [ngClass]="{'active' : checkIdes(getIdes(item)) , 'last' :  type=='C' ,  'active2' : checkD(item)}"
+        >
+        <div [ngClass]="{'active' : item.selectedData }">
+
+      
+
+
+
+
+
+          <div [ngClass]="[ (type=='C') ? item.AssetTypeCode : type, (!item.ReadyInd) ? 'border_active' : '' ]">
+
+            <aside class="sideBoxBg" *ngIf="type=='C'">
+
+
+              {{ stObj[item.AssetTypeCode]}}
+
+
+            </aside>
+            
+            <aside class="sideBoxBg" *ngIf="type!='C'"> {{ stObj[type]}} </aside>
+            <span class="title" [ngClass]="{'active' : !item.ReadyInd}" *ngIf="type!='D'"> {{ item.Title || 'N/A' }} </span>  
+            <span class="contentId cursor"   *ngIf="(type =='C')  && (item.OriginContentId || item.ContentId)" (click)="handleOnContentIDClick(item)">  {{ item.OriginContentId || item.ContentId }}  </span>           
+            <span class="contentId cursor"   *ngIf="(type=='A')  && item.actProtectedInd" (click)="handleOnContentIDClick(item)">  {{ item.ContentId }}  </span>           
+            <span class="contentId cursor"  *ngIf="type!='A' && item.OriginContentId" (click)="openSF(item, type)"
+                  [matTooltip]="TooltipDict.OriginalContentId"
+            > [{{ item.OriginContentId }} ]</span>
+
+            <span class="title" [ngClass]="{'active' : !item.ReadyInd}" *ngIf="type=='D'">
+
+              {{ item.Discipline1 }}
+
+              <span *ngIf="item.Discipline2"> > {{ item.Discipline2 }} </span>
+              <span *ngIf="item.Discipline3"> > {{ item.Discipline3 }} </span>
+              <span *ngIf="item.Discipline4"> > {{ item.Discipline4 }} </span> 
+            </span>  
+          </div>
+ 
+          <div class="toolbar" *ngIf=" type=='D' || type=='SF'  || type=='SP'   || type=='A'  ">  
+            <span> 
+              <span>
+                <span *ngIf="!item.ReadyInd" class="stepOpc releaseImg" (click)="releaseSF(item)">
+                  <img src="/assets/icons/under-construction.svg" title="Under Construction" class="underImg"  >
+                  <span class="titlehead">Under Construction</span>
+                </span>
+                <a class="maticon" *ngIf="type=='D' && fullscreen" [matMenuTriggerFor]="menuActivity">
+                  <mat-icon [size]="10"  [color]="black" >add</mat-icon>
+                </a> 
+                <mat-menu #menuActivity="matMenu" class="menuActivity">
+                  <button mat-menu-item (click)="addActivitySF(item)">
+                    <span>Task Specific Activity</span>
+                  </button>                  
+                </mat-menu>
+                <a class="maticon" *ngIf="type=='SP' && fullscreen" [matMenuTriggerFor]="menuDiscipline">
+                  <mat-icon [size]="10"  [color]="black">add</mat-icon>
+                </a> 
+                <mat-menu #menuDiscipline="matMenu" class="menuDiscipline">
+                  <button mat-menu-item (click)="addDisciplineSF(item)">
+                    <span>Discipline</span>
+                  </button>                  
+                </mat-menu>
+                <a class="maticon" *ngIf="type=='A' && fullscreen &&  !item.actProtectedInd" [matMenuTriggerFor]="menuAddons">
+                  <mat-icon [size]="10"  [color]="black">add</mat-icon>
+                </a> 
+             
+                <mat-menu #menuAddons="matMenu" class="menuAddons">
+                  <button mat-menu-item (click)="addAddOns(item)">
+                    <span>EKS AddOns</span>
+                  </button>                  
+                </mat-menu>
+                <img style="float: right;margin-top: 6px;" src="/assets/icons/tup.svg" class="stepOpc"
+                  (click)="activeBlock[item.TaskComponentId] =  false; expendAll = false"
+                  *ngIf="activeBlock[item.TaskComponentId]">
+                <img style="float: right;margin-top: 6px;" src="/assets/icons/tdown.svg" class="stepOpc"
+                  (click)="activeBlock[item.TaskComponentId] = true; expendAll = false"
+                  *ngIf="!activeBlock[item.TaskComponentId]"> 
+              </span> 
+            </span>  
+          </div> 
+        </div> 
+      </div> 
+      <ul
+        *ngIf="item.Disciplines  && item.Disciplines.length > 0 && ( activeBlock[item.TaskComponentId]  )">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Disciplines , type : 'D' }">
+        </ng-container>
+      </ul> 
+      <ul
+        *ngIf="item.Activities && item.Activities.length > 0 && (activeBlock[item.TaskComponentId]    )">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Activities , type : 'A' }">
+        </ng-container>
+      </ul>
+
+      <ul
+        *ngIf="item.ContainerItems && item.ContainerItems.length > 0 && ( activeBlock[item.TaskComponentId] )">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.ContainerItems  , type : 'C' }">
+        </ng-container>
+      </ul>  
+    </li>
+    </ng-template>
+   </div>
+    </li>
+  </ul>
+ 
+</aside>
+
+<footer *ngIf="selectedMapss && selectedMapss.length && !fullscreen" >
+   <button mat-raised-button (click)="fullScreen()" color="primary" class="mat-button" >
+    Continue Selection
+  </button>
+ 
+</footer>
+
+<footer *ngIf="selectedMapss && selectedMapss.length && fullscreen" >
+  <button mat-raised-button (click)="exitfullScreen()" color="primary" class="mat-button" >
+  Back to Selection
+ </button>
+
+ <button mat-raised-button  (click)="moveToScreen()"  color="primary" class="mat-button" >
+   Customize Selection
+ </button>
+
+
+</footer>
+
+<div  *ngIf="loading" class="taskbuildClass">
+  <div class="spinnerbox">
+    <mat-spinner  diameter="60"></mat-spinner>
+  </div>
+</div>

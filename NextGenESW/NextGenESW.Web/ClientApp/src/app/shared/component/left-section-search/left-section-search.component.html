@@ -1,0 +1,109 @@
+<div class="wrapper">
+
+  <div class="containerLeft">
+    <form [formGroup]="tagSearchForm"
+          id="editActivity">
+      <div class="searchHeader">
+        <div class="searchButton">
+          <input type="button"
+                 (click)="onSearchSubmit()"
+                 value="Search" />
+        </div>
+        <div class="searchbox">
+          <input matInput
+                 formControlName="searchText"
+                 type="text"
+                 placeholder="Search Text"
+                 onfocus="this.placeholder = ''"
+                 onblur="this.placeholder = 'Search Text'" />
+        </div>
+      </div>
+
+      <div class="collection_box">
+        <h4>All EKS Collection </h4>
+        <div class="full-width md1-grid mdl-cell mdl-cell--12-col">
+          <ul>
+            <li *ngFor="let eksCollection of allEKSCollection">
+              <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+                <label class="{{ eksCollection.class }}">
+                  <mat-checkbox class="example-margin"
+                                formControlName="eksCollection"
+                                [(value)]="collection"
+                                (change)="onChangeEKSCollection($event, eksCollection)">
+                  </mat-checkbox>&nbsp;
+                  <span class="all_type {{ eksCollection.keyword }}">{{ eksCollection.code }}</span>
+                  <button> {{ eksCollection.name }} </button>
+                </label>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="treebox">
+        <h4>Filter Selected By:</h4>
+        <app-left-box (tagdata)="tagData($event)"
+                      [checkednode]="TaskItems$ | async"
+                      [delevents]="eventsSubject.asObservable()"
+                      [treedata]="treedata">
+        </app-left-box>
+      </div>
+    </form>
+  </div>
+
+  <div class="containerRight">
+
+    <div class="applyFilters selected-games-wrap">
+      <div class="applybox">Applied Filters:</div>
+      <div class="chipbox">
+        <mat-chip-list>
+          <mat-chip *ngFor="let chip of  TaskItems$ | async"
+                    [selectable]="selectable">
+            {{ chip.name }}
+            <mat-icon matChipRemove
+                      (click)="removeData(chip)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+
+    <div class="workbox">
+      <ng-container *ngFor="let item of foundContentTypeItems">
+        <div class="workboxitem"
+             *ngIf="item.results?.length">
+          <header [ngStyle]="{ 'background-color': AssetContentTypeColor[item.longCode] }">
+            <b>{{ item.longCode }}</b>
+            <aside>
+              <span>{{ item.label }}</span>
+            </aside>
+          </header>
+          <div class="bodybox">
+            <div class="row">
+              <div class="column"
+                   *ngFor="let resultItem of item.results">
+                <svg style="width:24px;height:24px"
+                     viewBox="0 0 24 24">
+                  <path fill="currentColor"
+                        d="M12,8A4,4 0 0,0 8,12A4,4 0 0,0 12,16A4,4 0 0,0 16,12A4,4 0 0,0 12,8Z" />
+                </svg>
+                <!-- <mat-checkbox> -->
+                <a (click)="navigationLink(resultItem._source.assettypecode, resultItem._source.contentnumber, resultItem._source.contentid)"
+                   class="matCell-href">
+                  {{ resultItem._source.title }} {{ resultItem._source.contentid }}
+                </a>
+                <!-- </mat-checkbox> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <div class="spinnerbox"
+       *ngIf="loading">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+
+</div>

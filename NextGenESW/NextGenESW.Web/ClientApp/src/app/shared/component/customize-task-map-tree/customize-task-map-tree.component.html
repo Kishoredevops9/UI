@@ -1,0 +1,278 @@
+<aside class="bodyPanel" *ngIf="selectedMaps && selectedMaps.length">
+
+  <ngx-ui-loader [loaderId]="'highlight'"></ngx-ui-loader>
+
+
+  <h2> EKS Main STEP Flow: </h2>
+
+
+
+
+
+  <div style="position:relative"
+    class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new sfDropdownClass">
+    <div class="dleft">
+      <mat-label>Select Discipline</mat-label>
+      <a mat-button matSuffix mat-icon-button (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true">
+        <div id="btnId" #toggleButton>
+          <mat-icon>
+            {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+          </mat-icon>
+        </div>
+      </a>
+      <div #menu>
+        <mat-card class="dropbox" [hidden]="!showDisciplineDropDown">
+          <!-- <discipline [multiflag]="true" [disciplineEvents]="eventsDiscipline.asObservable()" (setDisciplineData)="setDisciplineData($event)"  [treedata]="discipline">
+                    </discipline> -->
+
+          <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+
+            <mat-tree-node *matTreeNodeDef="let node;let i = index" matTreeNodeToggle>
+              <mat-checkbox lass="task-discipline-item-margin" (change)="addDisciplineList($event,node,treetype);"
+                tabindex="-1" [(ngModel)]="selectedBox[node.rowNo]" Checked="false">{{node.name}}</mat-checkbox>
+            </mat-tree-node>
+            <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+              <li>
+                <div class="mat-tree-node">
+                  <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"
+                    class="taskArrowSideOpen">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  {{node.name}}
+                </div>
+                <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                  <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+              </li>
+            </mat-nested-tree-node>
+          </mat-tree>
+
+        </mat-card>
+      </div>
+    </div>
+    <!-- <div  class="mdl-grid full-width dright">
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                  <div class="topChipBox" *ngIf="disciplineList.length > 0">
+                    <div class="chipbox">
+                      <mat-chip-list>
+                        <mat-chip *ngFor="let chip of disciplineList" [selectable]="selectable">
+                          {{ chip.name }}
+                          <mat-icon matChipRemove (click)="removeDisciplineList(chip,treetype)">cancel</mat-icon>
+                        </mat-chip>
+                      </mat-chip-list>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+    <div class="dclear">&nbsp;</div>
+  </div>
+
+
+  <ul>
+    <li *ngFor="let item of selectedMaps">
+      <div class="licopy" [ngClass]="{'active' : checkIdes(getIdes(item)) , 'active2' : checkD(item)}"
+        *ngIf="checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item))">
+
+        <mat-checkbox *ngIf="!item.PartiallyIncludedInd" [disabled]="chkD" [(ngModel)]="item.IncludedInd"
+          (change)="updateData(item,$event)"></mat-checkbox>
+        <mat-checkbox *ngIf="item.PartiallyIncludedInd" [indeterminate]="item.PartiallyIncludedInd" [disabled]="chkD"
+          (change)="updateData(item,$event)"></mat-checkbox>
+
+
+        <div class="SF">
+          <aside class="sideBoxBg">SF</aside>
+          <span class="title"> {{ item.Title }} </span>
+          <span class="contentId" *ngIf="item.OriginContentId"
+              [matTooltip]="TooltipDict.OriginalContentId">
+            <a target="_blank" class="maticon OriginContentId" (click)="openSF(item, type)">
+              [ {{ item.OriginContentId }} ] 
+            </a></span>
+        </div>
+        <div class="toolbar">
+          <section class="shigh">
+
+            <mat-checkbox (change)="SelectHighlighted(item,$event,'SF')" [(ngModel)]="highlist[item.TaskComponentId]">
+              Select Highlighted </mat-checkbox>
+          </section>
+
+
+
+          <img style="float: right;margin-top: 6px;" src="/assets/icons/tup.svg" class="stepOpc"
+            (click)="activeBlock[item.TaskComponentId] =  false; expendAll = false"
+            *ngIf="activeBlock[item.TaskComponentId]">
+          <img style="float: right;margin-top: 6px;" src="/assets/icons/tdown.svg" class="stepOpc"
+            (click)="activeBlock[item.TaskComponentId] = true; expendAll = false"
+            *ngIf="!activeBlock[item.TaskComponentId]">
+        </div>
+      </div>
+
+      <div
+        *ngIf="activeBlock[item.TaskComponentId] ||expendAll || !checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item))">
+        <ul>
+          <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Steps , type : 'SP' }">
+          </ng-container>
+        </ul>
+        <ng-template #recursiveListTmpl let-list="list" let-type="type">
+    <li *ngFor="let item of list;  let i=index">
+
+      <div class="licopy "
+        [ngClass]="{'active' : checkIdes(getIdes(item)) , 'last' :  type=='C' ,  'active2' : checkD(item)}"
+        *ngIf="checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item))">
+        <div [ngClass]="{'active' : item.selectedData }">
+
+          <mat-checkbox *ngIf="!item.PartiallyIncludedInd" [disabled]="chkD" [(ngModel)]="item.IncludedInd"
+            (change)="updateData(item,$event)"></mat-checkbox>
+
+          <mat-checkbox *ngIf="item.PartiallyIncludedInd" [indeterminate]="item.PartiallyIncludedInd" [disabled]="chkD"
+            (change)="updateData(item,$event)"></mat-checkbox>
+
+
+
+
+
+          <div [ngClass]=" (type=='C') ?   item.AssetTypeCode : type">
+
+            <aside class="sideBoxBg" *ngIf="type=='C'">
+
+
+              {{ stObj[item.AssetTypeCode]}}
+
+
+            </aside>
+
+            <aside class="sideBoxBg" *ngIf="type!='C'">
+              {{ stObj[type]}}
+            </aside>
+
+
+
+            <span class="title" *ngIf="type!='D'"> {{ item.Title || 'N/A' }} </span>
+            <span class="contentId pointer" *ngIf="type=='SP' && item.OriginContentId" (click)="openSF(item, type)"
+              [matTooltip]="TooltipDict.OriginalContentId"
+            > [ {{item.OriginContentId}} ] </span>
+            <span class="contentId pointer" *ngIf="type=='A' && item.ProtectedInd !== false " (click)="handleOnContentIDClick(item)"> [ {{item.ContentId}} ]</span>
+            <span class="contentId pointer" *ngIf="type=='C' "  (click)="handleOnContentIDClick(item)"> [ {{item.ContentId}} ] </span>
+
+
+            <span class="title" *ngIf="type=='D'">
+
+              {{ item.Discipline1 }}
+
+              <span *ngIf="item.Discipline2"> > {{ item.Discipline2 }} </span>
+              <span *ngIf="item.Discipline3"> > {{ item.Discipline3 }} </span>
+              <span *ngIf="item.Discipline4"> > {{ item.Discipline4 }} </span>
+
+
+
+            </span>
+
+
+
+
+
+
+
+
+          </div>
+
+          <div class="toolbar" *ngIf=" type=='D' || type=='SF'  || type=='SP'   || type=='A'  ">
+
+
+
+
+
+
+
+
+
+            <span>
+
+              <section class="shigh">
+
+                <mat-checkbox (change)="SelectHighlighted(item,$event,type)"
+                  [(ngModel)]="highlist[item.TaskComponentId]"> Select Highlighted </mat-checkbox>
+              </section>
+
+              <span>
+
+                <img style="float: right;margin-top: 6px;" src="/assets/icons/tup.svg" class="stepOpc"
+                  (click)="activeBlock[item.TaskComponentId] =  false; expendAll = false"
+                  *ngIf="activeBlock[item.TaskComponentId]">
+                <img style="float: right;margin-top: 6px;" src="/assets/icons/tdown.svg" class="stepOpc"
+                  (click)="activeBlock[item.TaskComponentId] = true; expendAll = false"
+                  *ngIf="!activeBlock[item.TaskComponentId]">
+
+              </span>
+
+            </span>
+
+
+          </div>
+
+          <div *ngIf="item.AssetStatements && checkDataFilter(item.AssetStatements)">
+            <div class="col-Criteria">
+
+              <div class="col nobg"> Criteria </div>
+              <div class="col nobg"> Rationale </div>
+
+
+            </div>
+            <div class="col-Criteria" *ngFor="let initem of item.AssetStatements">
+              <mat-checkbox  *ngIf="initem.AssetStatementTypeCode=='C'"  [disabled]="chkD" (change)="updateData(initem,$event)" 
+              [(ngModel)]="initem.IncludedInd"
+              > </mat-checkbox>
+              <div class="col" *ngIf="initem.AssetStatementTypeCode=='C'"  [innerHTML]="initem.Statement">  </div>
+              <div class="col" *ngIf="initem.AssetStatementTypeCode=='C'" [innerHTML]="initem.Rationale">  </div>
+
+
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+
+      <ul
+        *ngIf="item.Disciplines  && item.Disciplines.length > 0 && ( activeBlock[item.TaskComponentId] ||  expendAll || !checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item)))">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Disciplines , type : 'D' }">
+        </ng-container>
+      </ul>
+
+      <ul
+        *ngIf="item.Activities && item.Activities.length > 0 && (activeBlock[item.TaskComponentId] || expendAll || !checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item)))">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Activities , type : 'A' }">
+        </ng-container>
+      </ul>
+
+      <ul
+        *ngIf="item.ContainerItems && item.ContainerItems.length > 0 && ( activeBlock[item.TaskComponentId] || expendAll || !checkShowOption(checkIdes(getIdes(item)),item.IncludedInd,checkD(item)))">
+        <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.ContainerItems  , type : 'C' }">
+        </ng-container>
+      </ul>
+
+
+
+
+    </li>
+    </ng-template>
+
+
+    </div>
+
+
+
+
+
+    </li>
+  </ul>
+
+  <div class="spinnerbox" *ngIf="loading">
+    <mat-spinner  diameter="60"></mat-spinner>
+  </div>
+</aside>

@@ -1,0 +1,12 @@
+::ng-deep .mat-dialog-container {
+    .modal-dialog {
+        box-shadow: none !important;
+        margin: 0;
+    }
+}
+.add-header-full-width {
+    mat-form-field {
+      width: 60%;
+      margin: 0px 15px;
+    }
+  }

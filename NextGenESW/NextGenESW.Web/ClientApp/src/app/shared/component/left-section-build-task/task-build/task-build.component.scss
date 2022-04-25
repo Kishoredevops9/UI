@@ -1,0 +1,236 @@
+@import '../../../../../scss/helpers/variables';
+
+
+.buildtasksearchbox {
+  border-bottom: 2px solid rgba(222, 222, 222, 0.87);
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+
+
+.bodyPanel {
+
+  display: block;
+  margin-top: 20px;
+
+  h2 {
+    font-size: 14px;
+    color: #000000;
+    display: inline-block;
+  }
+  .addBtn { float: right; margin-left: 10px; }
+
+  .filter-block {  width: 100%; }
+  ul {
+    margin-left: 10px;
+    margin-top: 10px;
+    li {
+      margin: 10px;
+      margin-left: 0px;
+      margin-bottom: 5px;
+      width: 100%;
+      float: left;
+      position: relative;
+      mat-checkbox { float: left;
+        width: 30px;
+        margin-top: 8px; }
+
+        mat-radio-button { 
+
+          float: left;
+          width: 30px;
+          margin-top: 8px; 
+
+        }
+
+        
+    }
+  
+    .toolbar {
+      position: absolute;
+      right: 0px;
+
+      a { mat-icon {   font-size: 16px!important; color:gray  } }
+  
+      mat-icon {
+        cursor: pointer;
+      }
+  
+      span {
+        padding: 5px;
+        img {
+          width: 10px;
+        }
+      }
+      span.expcol {
+        border: 1px solid green;
+      }
+    }
+  }
+}
+
+.g {
+    border-bottom: 2px solid green;
+    width:  calc(100% - 30px);
+    float: left;
+    aside {
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px;
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px 10px 5px 10px;
+      border-radius: 5px 0px 0px 0px;
+    }
+    span.title {
+      display: inline-block;
+      padding: 5px;
+    }
+    span.contentId{
+    color: #FF7F00;
+    padding-left: 10px;
+
+    }
+  }
+  
+  .D {
+    @extend .g;
+    border-bottom: 2px solid $task-type-d;
+    aside {
+      background: $task-type-d;
+    }
+  }
+  
+  .A {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .C {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+  
+  .SF {
+    @extend .g;
+    border-bottom: 2px solid $content-type-sf;
+    aside {
+      background: $content-type-sf;
+    }
+  }
+  
+  .WI {
+    @extend .g;
+    border-bottom: 2px solid $content-type-wi;
+    aside {
+      background: $content-type-wi;
+    }
+  }
+  
+  .GB {
+    @extend .g;
+    border-bottom: 2px solid $content-type-gb;
+    aside {
+      background: $content-type-gb;
+    }
+  }
+  
+  .DS {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ds;
+    aside {
+      background: $content-type-ds;
+    }
+  }
+  .M {
+    @extend .g;
+    border-bottom: 2px solid $content-type-m;
+    aside {
+      background: $content-type-m;
+    }
+  }
+  
+  .AP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .KP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-kp;
+    aside {
+      background: $content-type-kp;
+    }
+  }
+  
+  .CG {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+  .TC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RD {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .TOC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .mat-card {
+    position: absolute !important;
+    width: 140%;
+    z-index: 100;
+    background-color: #fff !important;
+    top: 45px;
+    max-height: 300px;
+    overflow: auto;
+  }
+  .pagination-left{
+    float: left;margin-top: 15px;margin-left: 20%;
+  }
+  .pagination-right{
+    float: left;margin-top: 10px;
+  }
+
+
+  aside.sideBoxTask{
+    min-width: 43px;
+    text-align: center;
+  }

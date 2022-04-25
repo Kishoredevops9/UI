@@ -1,0 +1,230 @@
+
+
+<div class="page-layout task-execution">
+  <div *ngIf="loading" class="exelist-2" id="cover-spin"></div>
+  <div class="header-field" [id]="parentItemId">
+    <mat-accordion>
+      <mat-expansion-panel (opened)=" setOpened(item)" (closed)="setOpened(item)" [disabled]="arrowClicked"
+        (click)="handleOnArrowClick('header')" [expanded]="item.panelOpenState || item.content.expanded">
+        <mat-expansion-panel-header *ngIf="item.name !== 'T' && item.content.ReadyInd; else defaultTemplate"
+                                    [class.obsolete-document-bg]="item.content.AssetStatusName === 'Obsolete'"
+          [ngClass]="(showUnselected && !item.content.IncludedInd) ? 'hide': (item.content.assetTypeCode === 'I') ? 'hr ' + (item.content.assetTypeCode | lowercase) : 'hr ' + (item.name | lowercase)">
+          <mat-panel-title [ngClass]="
+              item.name == 'A'
+                ? 'mat-panel-wrapper activity-title-panel'
+                : 'mat-panel-wrapper'
+            ">
+            <div *ngIf="item.content.assetTypeCode === 'I'" class="type {{ item.content.assetTypeCode | lowercase }}">{{getID(item.content.assetTypeCode)}}</div>
+            <div *ngIf="item.content.assetTypeCode !== 'I'" class="type {{ item.name | lowercase }}">{{getID(item.name)}}</div>
+            <div [ngClass]="
+                !showUnselected && !item.content.IncludedInd ? 'title disabled' : 'title'
+              " *ngIf="item.name !== 'D'">
+              {{ item.content.title }}
+            </div>
+            <div [ngClass]="
+                !showUnselected && !item.content.IncludedInd ? 'title disabled' : 'title'
+              " *ngIf="item.name === 'D'">
+              <span *ngIf="item.content.discipline1">{{ item.content.discipline1 }}</span>
+              <span *ngIf="item.content.discipline2"> > {{ item.content.discipline2 }} </span>
+              <span *ngIf="item.content.discipline3"> > {{ item.content.discipline3 }}</span>
+            </div>
+            <div [ngClass]="
+            !showUnselected && !item.content.IncludedInd
+              ? 'doc-number disabled'
+              : 'doc-number'
+          " *ngIf="(item.name === 'SF' || item.name === 'SP' || item.name === 'D') && item.content.OriginContentId">
+          <span class="pointer" (click)="openSF(item, item.name)">[{{ item.content.OriginContentId }}]</span>
+            </div >
+            <div [ngClass]="
+            !showUnselected && !item.content.IncludedInd
+              ? 'doc-number disabled'
+              : 'doc-number'
+          " *ngIf="(item.name === 'A' && item.content.actProtectedInd)">
+              <span class="pointer" (click)="handleOnContentIDClick(item)">{{ item.content.contentId }}</span>
+            </div >
+            <div [ngClass]="
+            !showUnselected && !item.content.IncludedInd
+              ? 'doc-number disabled'
+              : 'doc-number'
+          " *ngIf="item.name != 'SF' && item.name != 'SP' && item.name != 'D' && item.name != 'A'">
+          <span class="pointer" (click)="handleOnContentIDClick(item)"> {{ item.content.contentId }} </span>
+            </div>
+            <span [class.obsolete-document-label-tag]="item.content.AssetStatusName === 'Obsolete'"></span>
+            <span class="upload-conatiner" *ngIf="item.name == 'SP'"
+              [ngClass]="!showUnselected && !item.content.IncludedInd ? 'disabled' : ''">
+              <button mat-button mat-raised-button color="primary" [disabled]="closeStatuschk"  mat-button [matMenuTriggerFor]="menu"
+                overlapTrigger="false">
+                Upload</button>&nbsp;
+
+              <span *ngIf="fileUploadData == null">No file uploaded</span>
+              <span *ngFor="let file of selectedContentStepDev; let i = index">
+                <span class="chip" *ngIf="(item.content.taskComponentId == file.taskComponentId && (i < 2 || i==1))">
+                  <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }}</span>
+                  <!-- <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }} <img src="./assets/icons/edit_icon.svg" class="popup-edit_icon" (click)="popupEditPopup(file,file.uploadDestinationCode)" /> <img src="./assets/icons/close_icon.svg" class="popup-delete_icon"  (click)="popupDeletePopup(file)" /></span> -->
+                </span>
+              </span>
+
+              <!-- <span >
+                <ul>
+                  <li *ngFor="let file of selectedContentStepDev; let i = index">
+                   <span *ngIf="(item.content.taskComponentId == file.taskComponentId)"> {{ file.documentTitle }}</span></li>
+                </ul>
+              </span> -->
+
+              <span *ngIf="viewMore" class="chip more" (click)="viewAllDocuments(item.content.taskComponentId)">View
+                More ({{
+                moreData(item.content.taskComponentId, selectedFileData)
+                }})</span>
+            </span>
+            <mat-menu #menu="matMenu" overlapTrigger="false">
+              <ul class="file-options">
+                <li (click)="uploadFile($event, item)">To ETFF</li>
+                <li class="ddm-item" (click)="launchDDMTrigger(); $event.stopPropagation()">
+                  To DDM
+                </li>
+                <li class="ddm-item" (click)="launchWebLinkTrigger(); $event.stopPropagation()">
+                  Other
+                </li>
+              </ul>
+              <div class="dropdown-ddm" *ngIf="launchDDM" (click)="$event.stopPropagation()">
+                <a href="{{ ddmEndPoint }}" mat-button mat-raised-button color="primary" target="_blank">Launch DDM</a>
+                <form class="ddm-form" [formGroup]="ddmform">
+                  <div *ngIf="isLoading" class="exelist-D-2-1" id="cover-spin"></div>
+                  <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+                  <div class="form-fields">
+                    <label>File Name:</label>
+                    <input formControlName="fileName" type="text" name="fileName" required />
+                  </div>
+
+                  <div class="form-fields">
+                    <label>ID</label>
+                    <input type="text" formControlName="id" name="id" required />
+                  </div>
+
+                  <div class="action-buttons">
+                    <button mat-button mat-raised-button color="primary" [disabled]="!ddmform.valid"
+                      (click)="uploadAttach(item, 'DDM', 'SUPLD')">
+                      Save
+                    </button>
+                    <button mat-button mat-raised-button color="primary" (click)="closeDropdown()">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="dropdown-ddm" *ngIf="launchWebLink" (click)="$event.stopPropagation()">
+                <!-- <a href="{{ ddmEndPoint }}" mat-button mat-raised-button color="primary" target="_blank">Web Link</a> -->
+                <form class="ddm-form" [formGroup]="ddmform">
+                  <div *ngIf="isLoading" class="exelist-D-2-2" id="cover-spin"></div>
+                  <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+                  <div class="form-fields">
+                    <label>File name/ID:</label>
+                    <input formControlName="fileName" type="text" name="fileName" required />
+                  </div>
+
+                  <div class="form-fields">
+                    <label>Location:</label>
+                    <input type="url" formControlName="id" name="id" required />
+                  </div>
+
+                  <div class="action-buttons">
+                    <button mat-button mat-raised-button color="primary" [disabled]="!ddmform.valid"
+                      (click)="uploadAttach(item, 'WLNK', 'SUPLD')">
+                      Save
+                    </button>
+                    <button mat-button mat-raised-button color="primary" (click)="closeWebLink()">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </mat-menu>
+          </mat-panel-title>
+
+          <!-- {{item.docStatus}} -->
+
+          <span *ngIf="item.name == 'D' && item.children.length > 0"
+            [ngClass]="(!showUnselected && !item.content.IncludedInd) || (item.docStatus == 'SUBM') ? 'disabled' : ''">
+            <div [ngClass]="
+                (!showUnselected && !item.content.IncludedInd) || (item.docStatus == 'SUBM') || closeStatuschk
+                  ? 'edit-results disabled'
+                  : 'edit-results'
+              " (click)="saveEntryResults(item.children)">
+              {{ editResults }}
+            </div>
+          </span>
+
+          <span [ngClass]="
+              !showUnselected && !item.content.IncludedInd
+                ? 'overall-progress a disabled'
+                : 'overall-progress a'
+            " *ngIf="item.name == 'A'">
+            <span class="history-logs" (click)="openHistoryLogDialog(item)">View History Logs
+            </span>
+            <app-progressbar [progressBar]="progressBar" [docType]="item.name" [docStatus]="item.docStatus"
+              #progressBarData>
+            </app-progressbar>
+            <span [ngClass]="
+                !showUnselected && !item.content.IncludedInd || (recallReviseStatus && activityRecallReviseTaskComponentId == item.content.taskComponentId)
+                  ? 'action-btn recall disabled'
+                  : 'action-btn recall'
+              " *ngIf="item.docStatus == 'SUBM'"
+              (click)="openRecallReviseDialog('Activity Recall', item.content.taskComponentId)">Recall</span>
+            <span [ngClass]="
+                !showUnselected && !item.content.IncludedInd || (recallReviseStatus && activityRecallReviseTaskComponentId == item.content.taskComponentId)
+                  ? 'action-btn revise disabled'
+                  : 'action-btn revise'
+              " *ngIf="item.docStatus == 'APP'"
+              (click)="openRecallReviseDialog('Activity Revise', item.content.taskComponentId)">Revise
+              <!-- {{activityRecallReviseTaskComponentId}} -->
+            </span>
+          </span>
+
+          <div class="icons" *ngIf="item.children.length > 0">
+            <span>
+              <span class="expand" *ngIf="!item.panelOpenState">
+                <em>
+                  <img src="/assets/icons/doubleDown.svg" class="arrow down" (click)="openAllPanels(item)" />
+                </em>
+              </span>
+              <span class="expand" *ngIf="item.panelOpenState">
+                <em>
+                  <img src="/assets/icons/doubleUp.svg" class="arrow up" (click)="openAllPanels(item)" />
+                </em>
+              </span>
+
+              <span class="expand" *ngIf="!item.content.expanded">
+                <em>
+                  <img src="/assets/icons/tdown.svg" class="arrow up"
+                    (click)="expandChildItemDetails(item, 'arrowDown', $event)" />
+                </em>
+              </span>
+              <span class="expand" *ngIf="item.content.expanded">
+                <em>
+                  <img src="/assets/icons/tup.svg" class="arrow up"
+                    (click)="expandChildItemDetails(item, 'arrowUp', $event)" />
+                </em>
+              </span>
+            </span>
+          </div>
+        </mat-expansion-panel-header>
+        <div [ngClass]="(showUnselected && !item.content.IncludedInd) ? 'hide': 'item-details'"
+          (click)="handleOnFormClick($event, parentItem)">
+          <app-execution-details [contentInfo]="item" [parentItem]="parentItem">
+          </app-execution-details>
+        </div>
+
+        <ng-template matExpansionPanelContent #defaultTemplate>
+          <ul>
+            <li *ngFor="let subItem of item.children"
+              [ngClass]="(showUnselected && !subItem.content.IncludedInd) ? 'hide':''">
+              <app-execution-list [item]="subItem" [expandAllChilds]="expandAllChilds" [parentItem]="item"
+                [connectedDropListsIds]="allDropListsIds" [closeStatuschk]="closeStatuschk" [showUnselected]="showUnselected">
+              </app-execution-list>
+            </li>
+          </ul>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

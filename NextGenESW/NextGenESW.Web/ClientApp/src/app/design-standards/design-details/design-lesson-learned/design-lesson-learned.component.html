@@ -1,0 +1,104 @@
+<div class="container mdl-grid tab-margin">
+  <form [formGroup]="lessonLearnedForm">
+    <div class="mdl-grid full-width">
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <mat-label>Description</mat-label>
+      </div>
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row"
+      >
+        <mat-label>Link to Lessons Learned</mat-label>
+      </div>
+      <div
+        class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <mat-label>Title</mat-label>
+      </div>
+    </div>
+
+    <div class="mdl-grid full-width">
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Description"
+            formControlName="description"
+          />
+        </mat-form-field>
+      </div>
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <mat-form-field>
+          <input
+            matInput
+            placeholder="Link to Lessons Learned"
+            formControlName="linkNumber"
+          />
+        </mat-form-field>
+      </div>
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <mat-form-field>
+          <input matInput placeholder="Title" formControlName="title" />
+        </mat-form-field>
+      </div>
+
+      <div
+        class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"
+      >
+        <button
+          mat-raised-button
+          color="primary"
+          class="submit-btn"
+          (click)="saveLessonLearned()"
+        >
+          Save and Add New
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="mdl-grid full-width">
+    <div class="table-wrapper">
+      <div class="heading-band">
+        <div class="mat-title">Lessons Learned</div>
+      </div>
+      <mat-table [dataSource]="lessonlearned$" class="data-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            ><a href="#" title="{{ element.item }}" class="matCell-href">{{
+              element.description
+            }}</a>
+          </mat-cell>
+        </ng-container>
+
+        <!-- User Column -->
+        <ng-container matColumnDef="linkNumber">
+          <mat-header-cell *matHeaderCellDef>
+            Link to Lessons Learned
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            >{{ element.linkNumber }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.title }} </mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

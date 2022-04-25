@@ -1,0 +1,66 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div *ngIf="!publishMode">
+  <div class="headTxt">Upload</div>
+  <div class="uploadBox">
+    <div class="infoText">Maximum file Size allowed for Upload: 1,000 MB</div>
+
+    <div class="uploadArea" fxLayout="column" fxLayoutAlign="space-around center">
+      <div class="dropTxt">Drop files here to start uploading</div>
+      <span *ngIf="isShowSpinner">
+        <mat-spinner></mat-spinner>
+      </span>
+      <div class="dropTxt">or</div>
+      <button mat-button mat-raised-button color="primary" for="fileDropRef">
+        Select File
+      </button>
+      <input type="file" #fileDropRef id="fileDropRef" (click)="$event.target.value=null" multiple (change)="fileHandlers($event)" />
+    </div>
+    <div class="displayBox">
+      <span *ngIf="isShowSpinnerForDownload">
+        <mat-spinner></mat-spinner>
+      </span>
+      <div class="fileNameDisplay" *ngFor="let elements of fileUploadDetails">
+        <div class="mdl-grid full-width">
+          <div class="btn-parent">
+            <span class="elementName sortable" (click)="openDoc(elements.fileName, elements.fileUrl, elements.relatedContentInformationId)"><u>{{
+                elements.fileName }}</u></span>
+                <button class="delete-btn_" mat-icon-button (click)="deleteFile(elements)">
+                  <mat-icon mat-list-icon><img src="../../../../assets/images/Delete.svg" width="15" /></mat-icon>
+                  </button> 
+            
+            <button class="download-btn_" mat-icon-button (click)="
+              DownloadFile(
+                elements.fileUrl,
+                elements.fileName,
+                elements.fileType
+              )
+            ">
+            <mat-icon mat-list-icon><img src="../../../../assets/images/download-icon.svg" width="20" /></mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="padding-left: 20px;">
+      <button mat-icon-button color="primary" (click)="downloadAllFile()">
+        Download All<mat-icon mat-list-icon style="position: absolute;"><img src="../../../../assets/images/download-icon.svg" width="20" /></mat-icon> 
+      </button>
+    </div>
+  </div>
+</div>
+<div *ngIf="publishMode">
+  <div class="headTxt">File Name</div>
+  <div class="fileNameDisplay" *ngFor="let elements of fileUploadDetails">
+    <div class="mdl-grid full-width">
+      <div class="file_alignment mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <span class="elementName sortable" (click)="openDoc(elements.fileName, elements.fileUrl)"><u>{{
+            elements.fileName }}</u></span>
+      </div>
+      <div class="file_alignment mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <button mat-button mat-raised-button color="primary" (click)="openDoc(elements.fileName, elements.fileUrl)">
+          Open
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

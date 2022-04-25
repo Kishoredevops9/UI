@@ -1,0 +1,49 @@
+<div class="web-addItemParent" *ngIf="addEditPopup" fxLayout="column" fxLayoutAlign="space-around start">
+  <div class="web-addItemHeader">Edit - {{header}}</div>
+  
+  <div class="web-formClass" novalidate>
+      
+      <form class="ddm-form" [formGroup]="ddmform">
+          <div class="web-form-fields">
+            <label>{{formName1}}:</label>
+            <input formControlName="fileName" type="text" name="fileName" required />
+          </div>
+
+          <div class="web-form-fields">
+            <label>{{formName2}}</label>
+            <input type="text" formControlName="id" name="id" required />
+          </div>
+
+          <div class="action-buttons">
+            <button mat-button mat-raised-button color="primary" [disabled]="!ddmform.valid"
+              (click)="uploadAttach()">
+              Save
+            </button>
+            <button mat-button mat-raised-button color="primary" (click)="closeWebLink()">
+              Cancel
+            </button>
+          </div>
+        </form>
+
+  </div>      
+</div>
+<div fxLayout="column" class="web-commonPopup" *ngIf="deletePopup">
+  <div class="web-headerTxt">Delete?</div>
+  <div class="web-txtClass" fxLayout="row" fxLayoutAlign="start center">
+      Are you sure you want to delete? - {{header}}
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-evenly center">
+      <button mat-button mat-raised-button color="primary" (click)="onClickYes()">Confirm</button>
+      <button mat-button mat-raised-button color="primary" (click)="onClickNo()">Cancel</button>
+  </div>
+</div>
+<div fxLayout="column" class="web-commonPopup" *ngIf="reminderPopup">
+<div class="web-headerTxt">Reminder !</div>
+<div class="web-txtClass" fxLayout="row" fxLayoutAlign="start center">
+  Have you reviewed the scope with your Supervisor?
+</div>
+<div fxLayout="row" fxLayoutAlign="space-evenly center">
+    <button mat-button mat-raised-button color="primary" (click)="onClickYes()">Confirm</button>
+    <button mat-button mat-raised-button color="primary" (click)="onClickNo()">Cancel</button>
+</div>
+</div>

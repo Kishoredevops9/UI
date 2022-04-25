@@ -1,0 +1,17 @@
+.approval_container {
+  margin: 10px 0px;
+  .child_content {
+    margin-left: 45px;
+  }
+  .selected_child_content {
+    margin-bottom: 20px;
+  }
+  mat-checkbox {
+    padding-right: 10px;
+    .mat-checkbox-inner-container {
+      height: 13px;
+      width: 13px;
+      margin-right: 10px;
+    }
+  }
+}

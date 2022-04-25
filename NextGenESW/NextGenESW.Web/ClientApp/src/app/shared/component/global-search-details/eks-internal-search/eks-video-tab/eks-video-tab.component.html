@@ -1,0 +1,80 @@
+
+<mat-table #table [dataSource]="pwPlaySearchData">
+    <ng-container matColumnDef="video">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <iframe allowfullscreen="" frameborder="0" height="100" width="100%" [src]="element.playbackUrl | safe: 'resourceUrl'"></iframe>
+        <img *ngIf="!element.playbackUrl" height="150" width="200" src="{{ element.thumbnailUrl }}" />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="videotitle">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <div class="video-title">
+          {{ element.title }}
+        </div>
+        <div class="speech-container">
+          <div class="speech-result" *ngFor="let speechResult of element.speechResult">
+            <div class="speech-cell time">{{speechResult.time}}</div>
+            <div class="speech-cell text">{{speechResult.text}}</div>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <div *ngIf="element.description" [innerHTML]="element.description | safe : 'html'"></div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="publishDate">
+    <mat-header-cell *matHeaderCellDef>Publish Date </mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index">
+      {{ element.whenPublished | date }}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="time">
+      <mat-header-cell *matHeaderCellDef>Time </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ element.duration }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="views">
+      <mat-header-cell *matHeaderCellDef>Views</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ element.viewCount }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="jc">
+      <mat-header-cell *matHeaderCellDef>J/C</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ element.jc }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="outsourceable">
+      <mat-header-cell *matHeaderCellDef>Outsourceable</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <div *ngIf="element.outsourceable && element.outsourceable == true; else CLEAR_ICON">
+          <mat-icon style="color: #37a000; font-size: 20px">done</mat-icon>
+        </div>
+        <ng-template #CLEAR_ICON>
+          <mat-icon style="color: red; font-size: 20px">clear</mat-icon>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row id="header-style" *matHeaderRowDef="pwPlayDisplayedColumns; sticky: true">
+    </mat-header-row>
+    <mat-row *matRowDef="let row; columns: pwPlayDisplayedColumns; let index = index" #searchDetails>
+    </mat-row>
+  </mat-table>
+  <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="pageRowCounters"
+  (page)="onPageGlobalEvent($event)" [length]="globalLength"></mat-paginator>

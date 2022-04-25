@@ -1,0 +1,54 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div>
+  <div class="mdl-grid tab-margin" *ngIf="globalData">
+    <div class="editor-field">
+      <div class="header-field">Intent of Criteria</div>
+      <ng-container *ngIf="!isEditableMode; else intentEditView">
+        <app-html-viewer [content]="intentOfCriteria"></app-html-viewer>
+      </ng-container>
+      <ng-template #intentEditView>
+        <ng-container>
+          <app-texteditor [placeholder]="intentOfCriteria" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                          [allowMedia]="false"
+                          (editorData)="intentOfCriteria = $event; onFocusOut()"></app-texteditor>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="editor-field">
+      <div class="header-field">Basis of Criteria</div>
+      <ng-container *ngIf="!isEditableMode; else basisEditView">
+        <app-html-viewer [content]="basisOfCriteria"></app-html-viewer>
+      </ng-container>
+      <ng-template #basisEditView>
+        <ng-container>
+          <app-texteditor [placeholder]="basisOfCriteria" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                          [allowMedia]="false"
+                          (editorData)="basisOfCriteria = $event; onFocusOut()"></app-texteditor>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="editor-field">
+      <div class="header-field">Validation of Criteria</div>
+      <ng-container *ngIf="!isEditableMode; else validationEditView">
+        <app-html-viewer [content]="validationOfCriteria"></app-html-viewer>
+      </ng-container>
+      <ng-template #validationEditView>
+        <ng-container>
+          <app-texteditor [placeholder]="validationOfCriteria" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                          [allowMedia]="false"
+                          (editorData)="validationOfCriteria = $event; onFocusOut()"></app-texteditor>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+  <div style="margin-right: 28%;">
+    <span class="arrow-icon">
+      <img
+        (click)="onArrowClick()"
+        src="./assets/images/EastArrow.svg"
+        width="50px"
+        height="50px"
+      />
+    </span>
+  </div>
+</div>

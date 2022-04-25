@@ -1,0 +1,38 @@
+<div
+  #container
+  class="app-palette"
+>
+  <div
+    class="app-palette__container"
+    cdkDragBoundary=".app-palette"
+    [cdkDragFreeDragPosition]="dragPosition"
+    cdkDrag
+  >
+    <div
+      class="app-palette__header"
+      cdkDragHandle
+    >
+      Shapes
+      <app-expand-button
+          class="app-palette__expand-arrow"
+          [collapsed]="paletteCollapsed"
+          (click)="onExpandButtonClick()"
+      ></app-expand-button>
+    </div>
+    <div
+      class="app-palette__content"
+      [ngClass]="{
+        'app-palette__content--collapsed': paletteCollapsed
+      }"
+      [ngStyle]="{
+        height: paletteCollapsed ? 0 : height + 'px'
+      }"
+    >
+      <gojs-palette
+        [initPalette]="initPalette"
+        [nodeDataArray]="paletteItems"
+        divClassName="app-palette__palette"
+      ></gojs-palette>
+    </div>
+  </div>
+</div>

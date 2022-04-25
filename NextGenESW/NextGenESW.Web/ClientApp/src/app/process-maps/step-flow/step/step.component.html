@@ -1,0 +1,89 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="">
+  <div class="full-width">
+    <div [class]="documentCreateStatus ? 'document-header top-band create-doc': 'document-header top-band'">
+      <div class="header-wrapper">
+        <hr class="line-divider SP">
+
+        <div [className]="previewMode ? 'top-band-wrapper' : 'top-band-wrapper no-open-doc'">
+          <span class="document-type SP" *ngIf="contentType">{{ contentType }}</span>
+          <span id="docTitle" class="doc-title name">{{mapTitle}}</span>
+
+          <span  style="position: absolute;right:0px" >
+            <app-step-export-compliance [globalContent]="globalData"
+              [isFormDirty]="isFormDirty">
+            </app-step-export-compliance>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="backButtons" (click)="backToStepFlow()"> {{backText}} </div>
+
+    <div class="m20">
+      <div
+        class="
+          mdl-cell
+          mdl-cell--12-col
+          mdl-cell--12-col-tablet
+          mdl-cell--12-col-phone
+        "
+      >
+        <div class="wrapper tab-wrapper">
+
+          <div *ngIf="showMenuActions == true">
+            <div class="sub-nav">
+              <app-sub-menu-actions [contentCollaboration]="contentCollaboration" [contentType]="contentType"
+                [globalContent]="globalData" (messageToEmit)="handleOnSaveAsClick($event)"
+                (revisionMessageToEmit)="handleOnRevisionClick($event)" [isFormDirty]="isFormDirty" (recallMessageToEmit)="handleOnRecallClick($event)"></app-sub-menu-actions>
+
+            </div>
+          </div>
+
+          <mat-tab-group class="tabGroupMaps SP"  (selectedTabChange)="onTabClick($event)">
+            <mat-tab label="STEP">
+
+         <app-step-tree
+           [largerDiagram]="true"
+           [previewMode]="previewMode"
+           [(isChecked)]="isChecked"
+           [globalData]="globalData"z
+           [treetype]="'s'"
+           [item]="addedStep"
+           (dataReload)="reloadData($event)">
+         </app-step-tree>
+            </mat-tab>
+
+            <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="!hasPublished">
+              <ng-template matTabContent>
+                <app-step-purpose [globalData]="globalData" (nextTab)="nextTab($event)"
+                                  (updatePurposeField)="updatePurposeField($event)"
+                                  [docStatusValue]="docStatusValue"></app-step-purpose>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="hasPublished">
+              <ng-template matTabContent>
+                <app-step-purpose [globalData]="globalData" (nextTab)="nextTab($event)"
+                                  (updatePurposeField)="updatePurposeField($event)"></app-step-purpose>
+              </ng-template>
+            </mat-tab>
+
+
+          <mat-tab label="K-Pack">
+            <app-steps-kpack [globalData]="globalData"></app-steps-kpack>
+          </mat-tab>
+
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  <!-- </div> -->
+</div>
+
+
+<ng-template #warningTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

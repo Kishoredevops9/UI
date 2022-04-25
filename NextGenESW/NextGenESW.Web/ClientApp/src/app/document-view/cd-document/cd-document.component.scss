@@ -1,0 +1,17 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.sub-header {
+  @extend %content-sub-header;
+
+  .top-band {
+    @extend %top-band;
+  }
+}
+
+.tab-wrapper {
+  @extend %tabbing;
+  top: 100px;
+}

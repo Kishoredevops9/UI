@@ -1,0 +1,34 @@
+<div class="manualsParent" fxLayout="column">
+  <div class="manualHeader">Disciplines</div>
+  <div class="searchBar" fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="legacy" class="searchField">
+      <input
+        matInput
+        class="searchInput"
+        placeholder="Filter Disciplines"
+        [formControl]="inputFieldValue"
+        (keyup)="onKeyUp($event)"
+      />
+      <div matPrefix class="searchIcon"></div>
+    </mat-form-field>
+  </div>
+  <div class="flexBox">
+
+
+
+    <div *ngIf="!maps.length" class="noResults">{{waittext}}</div>
+
+    <div>
+      <app-disciplines-items [searchText]="searchBoxItem" [navData]="maps | slice: 0:5" [navFullData]="maps">
+      </app-disciplines-items>
+    </div>
+    <div>
+      <app-disciplines-items  [searchText]="searchBoxItem"  [navData]="maps | slice: 5:10">
+      </app-disciplines-items>
+    </div>
+    <div>
+      <app-disciplines-items [searchText]="searchBoxItem"  [navData]="maps | slice: 10:15">
+      </app-disciplines-items>
+    </div>
+  </div>
+</div>

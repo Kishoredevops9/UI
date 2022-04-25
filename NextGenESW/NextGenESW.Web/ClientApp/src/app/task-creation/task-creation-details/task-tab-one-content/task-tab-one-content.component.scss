@@ -1,0 +1,237 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import '../../../../scss/helpers/mat-slide-toggle';
+
+.tab-margin {
+  margin-top: 5%;
+}
+
+.properties {
+  margin-top: 2%;
+
+}
+
+form {
+  width: 100%;
+  padding-bottom: 50px;
+
+  .message {
+    color: red;
+  }
+
+  .mat-display-1 {
+    margin: 0 0 10px;
+    @include font-face-BarlowSemiCondensed-SemiBold(1.5rem, normal);
+  }
+
+  .mat-form-field,
+  .mat-radio-group,
+  .mat-raised-button {
+    width: 100%;
+    margin: 0 0 15px;
+
+  }
+
+
+  .mat-radio-group {
+    .mat-radio-button {
+      margin-right: 10px;
+    }
+  }
+
+  .mat-raised-button {
+    max-width: 220px;
+    width: 100%;
+    margin: 0px auto;
+  }
+
+  @include breakpoint(mobileonly) {
+    padding: 0 1%;
+  }
+
+  .chip-collection {
+    height: 10%;
+    border: 1px solid gray;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    ::ng-deep .mat-form-field-underline {
+      height: 0;
+    }
+
+  }
+
+  .toggle {
+    float: left;
+    @include slideToggle(green, gray, #fff, 33px, 21px);
+
+    mat-slide-toggle {
+      margin: 0 4px;
+      vertical-align: middle;
+    }
+  }
+
+  .submit-btn {
+    margin-right: 8%;
+
+
+  }
+}
+
+.global-sidenav {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  background: #25b7f7;
+  color: #ffffff;
+  float: right;
+}
+
+.toggleSpan {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.Keyword-area {
+  padding-right: 30px;
+}
+
+.chips {
+  padding-top: 20px;
+}
+
+.discipline-tree {
+  max-height: 200px;
+  border: 1px solid black;
+  overflow: auto;
+}
+
+.nodePath {
+  cursor: pointer;
+  margin-top: 2%;
+  width: 100%;
+
+  button {
+    width: 100%;
+  }
+}
+
+.box-width {
+  border-radius: 1px;
+  background: #fff;
+  box-sizing: border-box;
+  background-color: #ebebeb;
+  height: 1.7rem;
+  padding: 4px;
+  display: flex;
+  margin-bottom: 0.1%;
+  margin-right: 2px !important;
+}
+
+.box-space {
+  margin-left: 2% !important
+}
+
+.header-space {
+  margin-top: 2%;
+  margin-bottom: -1%;
+}
+
+.global-sidenav-expanded {
+  display: flex;
+  justify-content: center;
+  width: 480px;
+  background: #ffffff;
+  color: #000000;
+  top: 192px;
+  height: 68%;
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.nodePath {
+  cursor: pointer;
+  margin-top: 2%;
+  width: 100%;
+
+  button {
+    width: 100%;
+  }
+}
+
+.discipline-tree {
+  max-height: 200px;
+  border: 1px solid black;
+  overflow: auto;
+}
+
+.applyFilters {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  clear: both;
+}
+
+
+.applyFilters {
+  float: left;
+  width: 100%;
+  display: block;
+
+  .applybox {
+    float: left;
+    display: block;
+    padding: 6px;
+  }
+
+  .chipbox {
+
+    font-size: 11px;
+    max-width: 700px;
+    display: inline-block;
+  }
+}
+
+.chipbox {
+  display: inline-block;
+}
+
+.topChipBox {
+  padding: 0px 20px 20px 0px;
+}
+
+.textFilter {
+  padding: 5px 10px 10px 0px;
+  display: inline-block;
+}
+
+
+.dropbox {
+
+  position: absolute;
+  height: 250px;
+  background: white;
+  z-index: 1;
+  right: 0px;
+  left: 0px;
+  top: 40px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.disabledNoOfCasesDiv{ pointer-events: none; opacity: 2.0;}
+.maskGray   {
+  background: #ccc;
+  opacity: 0.2;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10000;
+  top: 0px;
+
+}

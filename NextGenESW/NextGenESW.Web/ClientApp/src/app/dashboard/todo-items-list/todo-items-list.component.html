@@ -1,0 +1,209 @@
+<div class="table-wrapper">
+
+  <ngx-ui-loader fgsSize="75" [loaderId]="'todo-loader'"> </ngx-ui-loader>
+
+  <div ngxUiLoaderBlurred blur="2" [loaderId]="'todo-loader'">
+
+    <div class="heading-band">
+      <div class="mat-title">To Do's <span *ngIf="fullView">( {{totalRecords}} )</span> </div>
+      <div class="slide-toggle" *ngIf="fullView">
+        All<mat-slide-toggle class="toggle"></mat-slide-toggle>Pending
+      </div>
+
+      <div class="bar-icon" class="bar-icon" tooltip="" data-tooltip="8006" placement="bottom" [hidden]="!fullView"
+        (click)="filterpop()"></div>
+
+      <div class="fullview-icon" (click)="widgetFullView('back')" *ngIf="fullView">
+        <span class="expand" [ngClass]="fullView ? 'active' : ''"></span>
+      </div>
+    </div>
+
+    <div *ngIf="filterPopShow && fullView" fxLayout="row" class="aaaaa" fxLayoutAlign="center center" class="filterDiv">
+      <mat-card class="filter-card" *ngIf="filterPopShow">
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title>Filter</mat-card-title>
+          <span (click)="closeFilterPop()" class="material-icons clsFilter">close</span>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="filterForm">
+              <mat-form-field class="filter-block">
+                <mat-label>Action</mat-label>
+                <mat-select formControlName="actionFilter">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Action
+                  </mat-option>
+                  <mat-option *ngFor="let actionName of uniqueAction" [value]="actionName">
+                    {{ actionName }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block filter-type">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="typeFilter">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Type
+                  </mat-option>
+                  <mat-option *ngFor="let contentCode of uniqueType" [value]="contentCode">
+                    {{ contentCode }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block">
+                <mat-label>Content Id</mat-label>
+                <mat-select formControlName="contentIdFilter">
+                  <input matInput formControlName="uniqueContentInput" style="border: 1px solid #ccc; padding: 5px; margin: 5px; width: 95%;" placeholder="Content Id" autocomplete="off" (keyup)="applyContentIdFilter($event.target.value)" />
+                  <!-- <mat-option (click)="clearFilter()" value="">
+                    Select Content Id
+                  </mat-option> -->
+                  <mat-option *ngFor="let contentId of uniqueContentFilterId" [value]="contentId">
+                    {{ contentId }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="filter-block">
+                <mat-label>Name</mat-label>
+                <mat-select formControlName="nameFilter">
+                  <input matInput formControlName="uniqueNameInput" style="border: 1px solid #ccc; padding: 5px; margin: 5px; width: 95%;" placeholder="Name" autocomplete="off" (keyup)="applyNameFilter($event.target.value)" />
+                  <!-- <mat-option (click)="clearFilter()" value="">
+                    Select Name
+                  </mat-option> -->
+                  <mat-option *ngFor="let name of uniqueFilterName" [value]="name">
+                    {{ name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block">
+                <mat-label>Request Date</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="requestDateStartFilter" placeholder="Start date">
+                  <input matEndDate formControlName="requestDateEndFilter" placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+              </mat-form-field>
+
+              <button mat-raised-button (click)="applyFilter()" color="primary">Apply Filter</button>
+              <button mat-raised-button (click)="resetFilterPop()" color="accent">Reset Filter</button>
+
+
+            </div>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+    <!-- New Modified Table -->
+    <mat-table [dataSource]="dataSource" class="data-table" matSort>
+      <!-- Action Column -->
+      <ng-container matColumnDef="actionName">
+        <mat-header-cell *matHeaderCellDef class="actionHeader" mat-sort-header
+          [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Action</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="actionRow">
+          <ng-container>
+            <a (click)="onSelect(element)" matTooltip="{{ element.actionName }}" class="action_href">{{ element.actionName
+              }}</a>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="contentCode">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Type</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="typeIcon">
+          <span class="type" [ngClass]="element.contentCode | lowercase">
+            {{ element.contentCode }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Content Id Column -->
+      <ng-container matColumnDef="contentId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Content Id#</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" >
+          <span class="titlePart" matTooltip="{{element.contentId}}">
+            {{ element.contentId }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="version">
+              <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+                <div class="headingTodo">Version</div>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <div class="titlePart" matTooltip="{{ element.version }}">{{ element.version }}</div>
+              </mat-cell>
+            </ng-container>
+
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="titlePart" matTooltip="{{ element.name }}">{{ element.name }}</div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Due Date Column -->
+      <ng-container matColumnDef="dueDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Request Date</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="dueDatePart">{{ element.dueDate | date:"MM/dd/yy" }}</div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Done Column -->
+      <ng-container matColumnDef="done">
+        <mat-header-cell *matHeaderCellDef class="mat-column-done" mat-sort-header
+          [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingTodo">Done</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <mat-checkbox class="disabled_matcheck" (change)="updateCollaborateToDoTast(element, $event)"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Header and Row Declarations -->
+      <mat-header-row *matHeaderRowDef="getDisplayedColumns()"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: getDisplayedColumns()"> </mat-row>
+
+    </mat-table>
+
+    <div [hidden]='!fullView'>
+      <mat-paginator paginationCaching="todoList" [length]="totalRecords" [pageSize]="pageRowCounts[0]" [pageSizeOptions]="pageRowCounts"
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+
+    <mat-card *ngIf="isLoading" class="spiner">
+      <mat-progress-spinner color="primary" mode="indeterminate" diameter="25">
+      </mat-progress-spinner>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="viewContainer">
+      <div class="viewMore">
+        <span *ngIf="!fullView" (click)="widgetFullView('viewMore')">View More</span>
+        <span *ngIf="fullView" (click)="widgetFullView('back')">Back to Dashboard</span>
+      </div>
+    </div>
+  </div>
+</div>

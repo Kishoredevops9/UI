@@ -1,0 +1,32 @@
+<div class="content-block purpose">
+  <form [formGroup]="cgPurposeForm">
+    <div class="header-field">Purpose</div>
+    <mat-label
+      style="
+        font: normal normal normal 13px/28px Inter-regular;
+        letter-spacing: 0.67px;
+      "
+      >Description</mat-label
+    >
+    <div *ngIf="globalData?.assetStatus === ASSET_STATUSES.PUBLISHED || globalData?.assetStatus == ASSET_STATUSES.CURRENT || globalData?.assetStatus == ASSET_STATUSES.OBSOLETE; else EDIT_MODE">
+      <app-html-viewer class="purpose-preview" [content]="activityTabs?.purpose"></app-html-viewer>
+    </div>
+    <ng-template #EDIT_MODE>
+      <span>Note: The Purpose text must not contain any export-controlled technical data.</span>
+      <app-texteditor [placeholder]="activityTabs?.purpose"
+                      id="angularEditor"
+                      formControlName="Purpose"
+                      (editorData)="activityTabs.purpose = $event; updatePurpose()"></app-texteditor>
+    </ng-template>
+    <div>
+      <span class="arrow-icon">
+        <img
+          (click)="onArrowClick()"
+          src="./assets/images/EastArrow.svg"
+          width="50px"
+          height="50px"
+        />
+      </span>
+    </div>
+  </form>
+</div>

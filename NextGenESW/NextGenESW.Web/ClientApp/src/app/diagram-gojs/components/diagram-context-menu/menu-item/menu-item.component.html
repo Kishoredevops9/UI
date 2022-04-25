@@ -1,0 +1,14 @@
+<div class="app-context-menu-item">
+    <mat-icon
+        *ngIf="showIcon"
+        class="app-context-menu-item__icon"
+        [ngClass]="{
+          'app-context-menu-item__icon--large': large
+        }"
+        [svgIcon]="icon"
+    ></mat-icon>
+    <span class="app-context-menu-item__text">
+        {{ text }}
+    </span>
+</div>
+

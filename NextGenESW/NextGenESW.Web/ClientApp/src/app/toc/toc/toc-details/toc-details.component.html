@@ -1,0 +1,70 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="full-width" [class.obsolete-document-bg]="globalData?.assetStatus === ASSET_STATUSES.OBSOLETE">
+  <div [class]="documentCreateStatus ? 'document-header top-band create-doc': 'document-header top-band'">
+    <div class="header-wrapper">
+      <hr class="line-divider TOC">
+      <div [className]="previewMode ? 'top-band-wrapper' : 'top-band-wrapper no-open-doc'">
+        <span class="document-type TOC" *ngIf="type">{{ type }}</span>
+        <span id="docTitle" class="doc-title name" *ngIf="globalData && globalData.title">{{ globalData.title }}
+          <span class="jc-title" *ngIf="globalData && globalData.contentId">{{globalData.contentId}}</span>
+          <span class="jc-title" *ngIf="globalData && globalData.version">/</span>
+          <span class="classifier-title" *ngIf="globalData && globalData.version">V {{globalData.version}}</span>
+          <span class="jc-title" *ngIf="UsClassification">/</span>
+          <span class="jc-title" *ngIf="UsClassification">
+            <span>{{UsJurisdiction}}</span>&nbsp;
+            <span *ngIf="UsJurisdiction != NSR">{{UsClassification}}</span>
+          </span>
+        </span>
+        <span class="preview" *ngIf="previewMode">PREVIEW</span>
+        <span *ngIf="showMenuActions == true">
+          <app-top-menu-actions [editMode]="!previewMode" [globalContent]="globalData" (handlePreviewMode)="handleOnPreviewClick($event)"
+            (handleApprovalAction)="handleApprovalAction($event)" (handleRequestAction)="handleRequestAction($event)" [requestApprovalOption]="requestApprovalOption">
+          </app-top-menu-actions>
+        </span>
+      </div>
+    </div>
+  </div>
+  <app-progressbar *ngIf="documentStatus" [progressBar]='progressBar'
+                   [docType]="contentType" [docStatus]="documentStatus"></app-progressbar>
+  <div class="clear"></div>
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="wrapper tab-wrapper">
+      <div *ngIf="showMenuActions == true && showSubMenuActions == true">
+        <div class="sub-nav">
+          <app-sub-menu-actions [globalContent]="globalData" [id]="id" [contentType]="contentType"
+            (messageToEmit)="handleOnSaveAsClick($event)" (revisionMessageToEmit)="handleOnRevisionClick($event)">
+          </app-sub-menu-actions>
+        </div>
+      </div>
+      <mat-tab-group (selectedTabChange)="onTabClick($event)"
+        class="criteria-Details-g TOC">
+        <mat-tab label="Properties" *ngIf="!hasPublished">
+          <app-properties [contentType]="contentType" [disableForm]="disableForm" [globalData]="globalData"
+            [updatedContentOwner]="updatedContentOwner" (updateContentOwnerValue)="updateContentOwnerValue($event)" (updateRequestAproval)="updateRequestAproval($event)"></app-properties>
+        </mat-tab>
+        <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="!hasPublished">
+          <ng-template matTabContent>
+            <app-toc-purpose [disableForm]="disableForm" [globalData]="globalData"
+                             (updatePurposeField)="updatePurposeField($event)"></app-toc-purpose>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="ToC" [disabled]="hasProperty">
+          <app-toc-toc [disableForm]="disableForm" [globalData]="globalData"></app-toc-toc>
+        </mat-tab>
+        <mat-tab label="Purpose" [disabled]="hasProperty" *ngIf="hasPublished">
+          <ng-template matTabContent>
+            <app-toc-purpose [disableForm]="disableForm" [globalData]="globalData"
+                             (updatePurposeField)="updatePurposeField($event)"></app-toc-purpose>
+          </ng-template>
+        </mat-tab>
+        <mat-tab label="Nature of Change" [disabled]="hasProperty">
+          <app-noc [globalData]="globalData" (updateNocData)="updateNocData($event)"></app-noc>
+        </mat-tab>
+        <mat-tab label="Properties" *ngIf="hasPublished">
+          <app-properties [contentType]="contentType" [preview]="previewMode" [disableForm]="disableForm" [globalData]="globalData"
+            [updatedContentOwner]="updatedContentOwner"></app-properties>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>

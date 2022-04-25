@@ -1,0 +1,110 @@
+
+
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="mdl-grid table_style">
+  <span class="table-width">
+    <div class="{{ bottomLineStyle }}"></div>
+    <div *ngIf="content?.contentType != 'CG'">
+      <div>
+        <button *ngIf="(content?.contentType == 'WI' || content?.contentType == 'GB'  || content?.contentType == 'DS') && (extractedDocTable$ && extractedDocTable$.length > 0)" mat-icon-button [matMenuTriggerFor]="beforeMenu" class="bar-icon"></button>
+        <div>
+          <mat-menu #beforeMenu="matMenu">
+            <div class="{{ borderLineStyle }}">
+              <ng-container *ngFor="let item of extractedDocTable$">
+                <mat-checkbox *ngIf="item" class="mat-menu-item" [checked]="item.checked"
+                  (change)="handleCheckbox($event, item)">
+                </mat-checkbox>
+                <div style="display:inline-block">{{ item.displayTab }}</div>
+                <br>
+              </ng-container>
+            </div>
+          </mat-menu>
+        </div>
+      </div>
+       <div *ngIf="content?.contentType == 'WI' || content?.contentType == 'GB'  || content?.contentType == 'DS'"> <!--Below div is not working because of ngIf condition -->
+        <div id="Purpose" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Procedure" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Definitions" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Inputs & Outputs" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Expected Results & Validation" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Supporting Content" class="content-style {{ borderLineStyle }}"></div>
+        <div id="Nature of Change" class="content-style {{ borderLineStyle }}"></div>
+      </div>
+    </div>
+    <div class="bottom-line-cg" *ngIf="content?.contentType == 'CG' || content?.contentType == 'RC' || content?.contentType == 'KP' || content?.contentType == 'ToC' || content?.contentType == 'TOC'">
+      <div class="content-style inner-content {{ borderLineStyle }}">
+        <b>Purpose</b>
+        <br />
+        <div *ngIf="criteriaPurpose; else DEFAULT_CONTENT" style="background-color: white !important">
+          <div class="previews" id="editor" [innerHTML]="criteriaPurpose | safe : 'html'"></div>
+        </div>
+        <ng-template #DEFAULT_CONTENT>
+          <br/>
+          No Content
+        </ng-template>
+      </div>
+      <div class="inner-content" *ngIf="criteriaData.length > 0">
+        <mat-table #table [dataSource]="criteriaData">
+          <ng-container matColumnDef="no">
+            <mat-header-cell *matHeaderCellDef> No.# </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              {{ i + 1 }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="designCriteria">
+            <mat-header-cell *matHeaderCellDef>
+              Design Criteria
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <ng-container>
+                <div class="previews" id="editor" [innerHTML]="element.designCriteria | safe : 'html'"></div>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="rationale">
+            <mat-header-cell *matHeaderCellDef> Rationale </mat-header-cell>
+            <mat-cell id="inner-content" *matCellDef="let element; let i = index">
+              <ng-container>
+                <div class="previews" id="editor" [innerHTML]="element.rationale | safe : 'html'"></div>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="links">
+            <mat-header-cell *matHeaderCellDef> Links </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <div class="previews" id="editor" [innerHTML]="element.links | safe : 'html'"></div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="bpOrC">
+            <mat-header-cell *matHeaderCellDef> BP or C </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <div *ngIf="element.bpOrC == true">Criterion</div>
+              <div *ngIf="element.bpOrC == false">Best Practice</div>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row id="header-style" *matHeaderRowDef="displayedColumn">
+          </mat-header-row>
+          <mat-row id="row-style" *matRowDef="let row; columns: displayedColumn">
+          </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </span>
+  <span class="guidance-box">
+    <div class="guidance-wrapper">GUIDANCE</div>
+    <div class="{{ bottomLineStyle }}"></div>
+    <div class="editor-wrapper inner-content">
+
+
+
+      <!-- <div *ngIf="docStatus == 2; else EDIT_MODE">
+        <angular-editor [ngClass]="{
+            'purpose-preview': docStatus == 2
+          }" id="editor" [config]="docStatus == 2 ? config1 : config" [ngModel]="contentInfo.content?.guidance">
+        </angular-editor>
+      </div> -->
+     {{docStatus}}
+        <div class="previews" id="editor"  [innerHTML]="content.guidance | safe : 'html'"></div>
+    </div>
+  </span>
+</div>

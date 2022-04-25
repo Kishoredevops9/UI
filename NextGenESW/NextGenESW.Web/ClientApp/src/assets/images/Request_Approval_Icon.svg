@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.229" height="21.257" viewBox="0 0 21.229 21.257">
+  <g id="Group_6146" data-name="Group 6146" transform="translate(-4979.06 795)">
+    <path id="Path_2758" data-name="Path 2758" d="M7.807,957.4a2.2,2.2,0,0,0-2.2,2.2V971.82a.732.732,0,1,0,1.464,0V959.6a.8.8,0,0,1,.732-.733H24.644a.8.8,0,0,1,.732.733v16.859a.8.8,0,0,1-.732.733h-12.2a.733.733,0,1,0,0,1.466h12.2a2.2,2.2,0,0,0,2.2-2.2V959.6a2.2,2.2,0,0,0-2.2-2.2Z" transform="translate(4973.449 -1752.405)" fill="#3e3e3e"/>
+    <path id="Path_2761" data-name="Path 2761" d="M248.714,122.111a.627.627,0,0,0-.891,0l-3.239,3.246-.834-1.254a.631.631,0,1,0-1.049.7l1.261,1.9a.639.639,0,0,0,.523.28.622.622,0,0,0,.445-.186L248.711,123A.629.629,0,0,0,248.714,122.111Z" transform="translate(4736.639 -900.903)" fill="#3e3e3e"/>
+    <ellipse id="Ellipse_41" data-name="Ellipse 41" cx="0.961" cy="0.964" rx="0.961" ry="0.964" transform="translate(4982.108 -792)" fill="#3e3e3e"/>
+    <ellipse id="Ellipse_42" data-name="Ellipse 42" cx="0.961" cy="0.964" rx="0.961" ry="0.964" transform="translate(4982.108 -788.118)" fill="#3e3e3e"/>
+    <ellipse id="Ellipse_43" data-name="Ellipse 43" cx="0.961" cy="0.964" rx="0.961" ry="0.964" transform="translate(4982.108 -784.257)" fill="#3e3e3e"/>
+    <rect id="Rectangle_3512" data-name="Rectangle 3512" width="12" height="1.93" rx="0.965" transform="translate(4986 -792)" fill="#3e3e3e"/>
+    <rect id="Rectangle_3513" data-name="Rectangle 3513" width="11" height="1.93" rx="0.965" transform="translate(4986 -788)" fill="#3e3e3e"/>
+    <rect id="Rectangle_3514" data-name="Rectangle 3514" width="9" height="1.93" rx="0.965" transform="translate(4986 -784)" fill="#3e3e3e"/>
+    <g id="noun_send_1323115" transform="translate(5000 -843)">
+      <g id="Group_5867" data-name="Group 5867" transform="translate(-43.903 29)">
+        <g id="Group_5866" data-name="Group 5866" transform="translate(36 33)">
+          <path id="Path_2762" data-name="Path 2762" d="M36,33l5.9,2.444L36,37.889l2.53-2.444Z" transform="translate(-36 -33)" fill="#3e3e3e" fill-rule="evenodd"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

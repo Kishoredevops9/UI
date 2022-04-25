@@ -1,0 +1,292 @@
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+@import '../../../../../scss/base/global';
+
+.mat-table>.mat-header-row>.mat-header-cell,
+.mat-table>.mat-header-row>.mat-cell,
+.mat-table>.mat-row>.mat-header-cell,
+.mat-table>.mat-row>.mat-cell,
+.popup-grid.mat-table>.mat-header-row>.mat-header-cell,
+.popup-grid.mat-table>.mat-header-row>.mat-cell,
+.popup-grid.mat-table>.mat-row>.mat-header-cell,
+.popup-grid.mat-table>.mat-row>.mat-cell {
+  height: auto;
+  vertical-align: middle;
+  font-size: 13px;
+}
+
+.mat-table {
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.mat-header-cell {
+  text-transform: uppercase;
+  font-weight: bolder;
+}
+
+.mat-header-row {
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: 40px !important;
+  border-bottom: 1px solid $content-type-wi;
+}
+
+.mat-row {
+  display: flex;
+  border: none !important;
+}
+
+.cdk-column-testCode {
+  width: 180px;
+  padding-left: 15px;
+}
+
+.cdk-column-testName {
+  width: 200x;
+}
+
+.refer-icon {
+  cursor: pointer;
+  height: 22px;
+  margin-top: 2px;
+}
+
+.table-wrapper {
+  margin-top: 3.5%;
+  margin-left: 4%;
+  width: 92% !important;
+
+  .data-table {
+    border: 1px solid $content-type-wi;
+    padding: 15px;
+    border-radius: 5px;
+  }
+}
+
+.table-width {
+  width: 65%;
+  margin: 0;
+}
+
+.guidance-box {
+  padding-left: 3%;
+  width: 33% !important;
+
+  .guidance-wrapper {
+    margin-top: -19px;
+  }
+
+  ::ng-deep .editor-wrapper {
+    padding-bottom: 3px;
+    margin-top: 8%;
+
+    .angular-editor-textarea {
+      min-height: 7rem !important;
+    }
+  }
+}
+
+.bar-icon {
+  background: url('../../../../../assets/images/icon-filter.svg') no-repeat;
+  width: 16px;
+  height: 16px;
+  margin: 0.5% 0% 0% 98%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+::ng-deep .preview .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  background-color: #f5f5f5;
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+
+  .angular-editor-toolbar {
+    width: 100% !important;
+  }
+}
+
+
+::ng-deep.angular-editor {
+
+  .angular-editor-toolbar {
+    width: 100% !important;
+  }
+}
+
+.content-style {
+  margin-top: 1%;
+  width: 100% !important;
+}
+
+.inner-content {
+  margin-top: 1%;
+
+  mat-cell {
+    border: 1px solid white !important;
+  }
+
+  mat-row {
+    border: 1px solid white !important;
+    align-items: stretch !important;
+    background-color: #f5f5f5;
+    font: normal normal normal 13px/28px Inter-regular;
+  }
+
+  mat-header-cell {
+    text-transform: none !important;
+  }
+
+  mat-header-row {
+    border-bottom: none !important;
+  }
+
+  mat-cell:nth-child(1),
+  mat-header-cell:nth-child(1) {
+    flex: 0 0 50px;
+    padding-left: 0.5%;
+  }
+
+  mat-cell:nth-child(5),
+  mat-header-cell:nth-child(5) {
+    flex: 0 0 110px;
+  }
+}
+
+.bottom-line-wi {
+  border-bottom: 3px solid $content-type-wi;
+}
+
+.bottom-line-ap {
+  border-bottom: 3px solid $content-type-ap;
+}
+
+.bottom-line-cg {
+  border-bottom: 3px solid $content-type-cg;
+}
+
+.bottom-line-gb {
+  border-bottom: 3px solid $content-type-gb;
+}
+
+.bottom-line-rc {
+  border-bottom: 3px solid $content-type-rc;
+}
+
+.bottom-line-kp {
+  border-bottom: 3px solid $content-type-kp;
+}
+.bottom-line-ds {
+  border-bottom: 3px solid $content-type-ds;
+}
+.bottom-line-sf {
+  border-bottom: 3px solid $content-type-sf;
+}
+.bottom-line-sp {
+  border-bottom: 3px solid $content-type-sp;
+}
+
+
+.border-line-wi {
+  border: 2px solid $content-type-wi;
+}
+
+.border-line-ap {
+  border: 2px solid $content-type-ap;
+}
+
+.border-line-cg {
+  border: 2px solid $content-type-cg;
+  padding: 9px 10px;
+}
+
+.border-line-gb {
+  border: 2px solid $content-type-gb;
+}
+
+.border-line-kp {
+  border: 2px solid $content-type-kp;
+}
+
+.border-line-rc {
+  border: 2px solid $content-type-rc;
+}
+
+.border-line-sf {
+  border: 2px solid $content-type-sf;
+}
+
+.border-line-sp {
+  border: 2px solid $content-type-sp;
+}
+
+::ng-deep .mat-menu-panel {
+  padding: 0% !important;
+  width: max-content !important;
+  overflow: hidden;
+  margin-left: -94%;
+  //margin-top: 57% !important;
+  font: normal normal normal 13px/23px Inter-regular !important;
+  color: black;
+
+  .mat-checkbox {
+    display: inline !important;
+    width: 0px !important;
+    line-height: 0px !important;
+
+    label {
+      display: inline-block !important;
+      width: 0% !important;
+      margin-right: 5%;
+    }
+
+    .mat-checkbox-inner-container {
+      margin-top: -8%;
+      cursor: pointer;
+      height: 12px;
+      width: 12px;
+    }
+
+    .mat-menu-item {
+      font: normal normal normal 13px/23px Inter-regular !important;
+      color: black;
+    }
+  }
+}
+
+.table_style {
+  margin-top: 2px;
+  display: inline-flex;
+  width: 95%;
+  margin: 10px 10px 10px 37px;
+}
+
+::ng-deep .cdk-overlay-container {
+  .cdk-overlay-pane {
+    top: 46.5% !important
+  }
+}
+
+.border-line-toc {
+  border: 2px solid $content-type-toc;
+}
+
+.bottom-line-toc {
+  border-bottom: 3px solid $content-type-toc;
+}
+
+.border-line-m {
+  border: 2px #df4b09;
+}
+
+.bottom-line-m {
+  border-bottom: 3px solid #df4b09;
+}

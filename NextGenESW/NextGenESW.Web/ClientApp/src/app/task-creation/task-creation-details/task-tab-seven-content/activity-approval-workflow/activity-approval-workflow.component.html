@@ -1,0 +1,341 @@
+<div class="display-block activity" *ngIf="!isChecked;else other_content">
+  <div *ngFor="let item of reviewData">
+    <div class="tasks" *ngIf="userEmail === item.approvingManagerEmail">
+      <div class="header">
+        <div class="header_top">
+          <div class="review-author">
+            <mat-checkbox *ngIf="userEmail === item.approvingManagerEmail" class="style-checked"
+              (change)="onChange(item, $event.checked, index)">
+            </mat-checkbox>
+            <div class="{{item.taskComponentId}} header">
+              <div class="wrapper">
+                <div class="sf type">SF</div>
+                <div class="title">{{item.sfTitle}} / {{item.taskComponentId}}</div>
+                <div class="doc-details">
+                  <span class="doc-number">{{item.sfContentId}} /</span>
+                  <span class="jc-number">{{item.sfusJurisdiction}} {{item.sfusClassification}}</span>
+                </div>
+              </div>
+              <div class="wrapper">
+                <div class="sp type">SP</div>
+                <div class="title">{{item.stepTitle}}</div>
+              </div>
+              <div class="wrapper">
+                <div class="d type">D</div>
+                <div class="title">{{item.discipline1}}</div>
+              </div>
+            </div>
+
+            <div class="approver">
+              <div class="wrapper">
+                <label>Submitter Engineer</label>
+                <div class="approver-name" *ngIf="item.submitterEngineerName?.length > 0"
+                  title="{{item.submitterEngineerName}}">{{item.submitterEngineerName |
+                  truncate:[20, '...']}}</div>
+              </div>
+              <div class="wrapper">
+                <label>Approving Manager</label>
+                <div class="approver-name" *ngIf="item.approvingManagerName?.length > 0"
+                  title="{{item.approvingManagerName}}">
+                  {{item.approvingManagerName |
+                  truncate:[20, '...']}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="header_bottom">
+          <div class="wrapper">
+            <div class="a type">A</div>
+            <div class="title">{{item.title}}</div>
+            <div class="doc-details">
+              <span class="doc-number">{{item.contentId}} /</span>
+              <span class="jc-number">{{item.usJurisdiction}} {{item.usClassification}}</span>
+            </div>
+          </div>
+          <app-progressbar [progressBar]='activityStatus' [docStatus]='item.activityStatus' [docType]="docType">
+          </app-progressbar>
+        </div>
+      </div>
+      <div class="content-session">
+        <div class="config-type">
+          <h3>Configuration Type</h3>
+          <div class="wrapper">
+            <div class="block">
+              <div class="label">Criteria</div>
+              <div class="output">{{item.countCs}} <a (click)="navigateUrl('Criteria', item)">View
+                  Details</a>
+              </div>
+            </div>
+            <div class="block total">
+              <div class="label">Total Deviations</div>
+              <div class="output">
+                <a href="#">
+                  <mat-icon> attach_file</mat-icon> {{item.countDeviations}}
+                </a>
+              </div>
+            </div>
+            <div class="block">
+              <div class="label">Best Practices</div>
+              <div class="output">{{item.countBPs}} <a (click)="navigateUrl('Best-Practices',item)">View Details</a>
+              </div>
+            </div>
+            <div class="block total">
+              <div class="label">Total Exceptions</div>
+              <div class="output">{{item.countExceptions}} </div>
+            </div>
+          </div>
+        </div>
+        <div class="approval-pending">
+          <h3>Pending Deviations for Approval</h3>
+          <div class="wrapper">
+            <div class="block">
+              <div class="output">2</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div *ngIf="item.linkComponents" class="link-components">
+        <div class="tasks" *ngFor="let criteria of item.containerItems;">
+          <div class="header cg" id="Criteria">
+            <div class="type {{ criteria.assetTypeCode | lowercase }}">{{getID(criteria.assetTypeCode)}} </div>
+            <div class="title">{{criteria.title}}</div>
+            <div class="doc-details">
+              <span class="doc-number">{{criteria.contentId}} /</span>
+              <span class="jc-number">{{criteria.usJurisdiction}} {{criteria.usClassification}}</span>
+            </div>
+          </div>
+
+          <div class="cg-wrapper">
+            <div class="heading-block" *ngIf="criteria.assetStatements.length > 0">
+              <span>C or BP</span>
+              <span>Criteria / Best Practice</span>
+              <span>Rationale</span>
+              <span>Criteria / Best Practice Met?</span>
+            </div>
+            <div class="content-block" *ngIf="criteria.assetStatements.length == 0">
+              <span>No Criteria Data</span>
+            </div>
+
+            <div class="content-block" *ngFor="let data of criteria.assetStatements">
+              <form [formGroup]="reviewCGForm">
+                <div class="wrapper-block">
+                  <span [innerHTML]="data.assetStatementTypeCode"></span>
+                  <span [innerHTML]="data.statement"> </span>
+                  <span [innerHTML]="data.rationale"> </span>
+                  <span formGroupName="deviation" *ngIf="data.assetStatementTypeCode == 'C'">
+                    <mat-radio-group formControlName="statementEvaluationId">
+                      <mat-radio-button class="radio" value="1" disabled>Yes</mat-radio-button>
+                      <mat-radio-button class="radio" value="2" disabled>No</mat-radio-button>
+                    </mat-radio-group>
+                  </span>
+                  <span formGroupName="exception" *ngIf="data.assetStatementTypeCode == 'B'">
+                    <mat-radio-group formControlName="statementEvaluationId">
+                      <mat-radio-button class="radio" value="1" disabled>Yes</mat-radio-button>
+                      <mat-radio-button class="radio" value="2" disabled>No</mat-radio-button>
+                      <mat-radio-button class="radio" value="3" disabled>NA</mat-radio-button>
+                    </mat-radio-group>
+                  </span>
+                </div>
+                <div formGroupName="exception" class="exception-info" *ngIf="(data.assetStatementTypeCode == 'B' && data.reviewDataCriteriaBPValues.exception.taskComponentId > 0) ">                  
+                  <h3>Exception Information</h3>
+                  <div class="form-group">
+                    <label>Explain what was different.</label>
+                    <textarea formControlName="difference" rows="4" cols="50" disabled></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Reason that it’s acceptable.</label>
+                    <textarea formControlName="reason" rows="4" cols="50" disabled></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Comment below.</label>
+                    <textarea formControlName="updateComment" rows="4" cols="50" disabled></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <a (click)="toggleContent('linkComponents',item)">{{item.content || 'See More'}} <i
+            [ngClass]="item.linkComponents ? 'arrow up' : 'arrow down'"></i></a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<ng-template #other_content>
+  <div class="display-block activity" *ngFor="let item of reviewData">
+    <div class="tasks">
+      <div class="header">
+        <div class="header_top">
+          <div [class]="userEmail == item.approvingManagerEmail ? 'review-author': 'review-author no-checkbox'">
+            <mat-checkbox class="style-checked" (change)="onChange(item, $event.checked)"
+              *ngIf="userEmail == item.approvingManagerEmail"> </mat-checkbox>
+            <div class="{{item.taskComponentId}} header">
+              <div class="wrapper">
+                <div class="sf type">SF</div>
+                <div class="title">{{item.sfTitle}} | {{item.taskComponentId}}</div>
+                <div class="doc-details">
+                  <span class="doc-number">{{item.sfContentId}} /</span>
+                  <span class="jc-number">{{item.sfusJurisdiction}} {{item.sfusClassification}}</span>
+                </div>
+              </div>
+              <div class="wrapper">
+                <div class="sp type">SP</div>
+                <div class="title">{{item.stepTitle}}</div>
+              </div>
+              <div class="wrapper">
+                <div class="d type">D</div>
+                <div class="title">{{item.discipline1}}</div>
+              </div>
+            </div>
+
+            <div class="approver">
+              <div class="wrapper">
+                <label>Submitter Engineer</label>
+                <div class="approver-name" *ngIf="item.submitterEngineerName?.length > 0">{{item.submitterEngineerName |
+                  truncate:[20, '...']}}</div>
+              </div>
+              <div class="wrapper">
+                <label>Approving Manager</label>
+                <div class="approver-name" *ngIf="item.approvingManagerName?.length > 0">{{item.approvingManagerName |
+                  truncate:[20, '...']}}</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="header_bottom">
+          <div class="wrapper">
+            <div class="a type">A</div>
+            <div class="title">{{item.title}}</div>
+            <div class="doc-details">
+              <span class="doc-number">{{item.contentId}} /</span>
+              <span class="jc-number">{{item.usJurisdiction}} {{item.usClassification}}</span>
+            </div>
+          </div>
+          <app-progressbar [progressBar]='activityStatus' [docStatus]='item.activityStatus' [docType]="docType">
+          </app-progressbar>
+        </div>
+      </div>
+      <div class="content-session">
+        <div class="config-type">
+          <h3>Configuration Type</h3>
+          <div class="wrapper">
+            <div class="block">
+              <div class="label">Criteria</div>
+              <div class="output">{{item.countCs}} <a (click)="navigateUrl('Criteria', item);">View Details</a>
+              </div>
+            </div>
+            <div class="block total">
+              <div class="label">Total Deviations</div>
+              <div class="output">
+                <a href="#">
+                  <mat-icon> attach_file</mat-icon> {{item.countDeviations}}
+                </a>
+              </div>
+            </div>
+            <div class="block">
+              <div class="label">Best Practices</div>
+              <div class="output">{{item.countBPs}} <a (click)="navigateUrl('Best-Practices', item)">View
+                  Details</a>
+              </div>
+            </div>
+            <div class="block total">
+              <div class="label">Total Exceptions</div>
+              <div class="output">{{item.countExceptions}} </div>
+            </div>
+          </div>
+        </div>
+        <div class="approval-pending">
+          <h3>Pending Deviations for Approval</h3>
+          <div class="wrapper">
+            <div class="block">
+              <div class="output">2 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div *ngIf="item.linkComponents" class="link-components">
+        <div class="tasks" *ngFor="let criteria of item.containerItems;" id="Criteria">
+          <div class="header cg">
+            <div class="type {{ criteria.assetTypeCode | lowercase }}">{{getID(criteria.assetTypeCode)}} </div>
+            <div class="title">{{criteria.title}}</div>
+            <div class="doc-details">
+              <span class="doc-number">{{criteria.contentId}} /</span>
+              <span class="jc-number">{{criteria.usJurisdiction}} {{criteria.usClassification}}</span>
+            </div>
+          </div>
+
+          <div class="cg-wrapper">
+            <div class="heading-block" *ngIf="criteria.assetStatements.length > 0">
+              <span>C or BP</span>
+              <span>Criteria / Best Practice</span>
+              <span>Rationale</span>
+              <span>Criteria / Best Practice Met?</span>
+            </div>
+            <div class="content-block" *ngIf="criteria.assetStatements.length == 0">
+              <span>No Criteria Data</span>
+            </div>
+
+            <div class="content-block" *ngFor="let data of criteria.assetStatements">
+              <form [formGroup]="reviewCGForm">
+                <div class="wrapper-block">
+                  <span [innerHTML]="data.assetStatementTypeCode"></span>
+                  <span [innerHTML]="data.statement"> </span>
+                  <span [innerHTML]="data.rationale"> </span>
+                  <span formGroupName="deviation" *ngIf="data.assetStatementTypeCode == 'C'">
+                    <mat-radio-group formControlName="statementEvaluationId">
+                      <mat-radio-button class="radio" value="1" disabled>Yes</mat-radio-button>
+                      <mat-radio-button class="radio" value="2" disabled>No</mat-radio-button>
+                    </mat-radio-group>
+                  </span>
+                  <span formGroupName="exception" *ngIf="data.assetStatementTypeCode == 'B'">
+                    <mat-radio-group formControlName="statementEvaluationId">
+                      <mat-radio-button class="radio" value="1" disabled>Yes</mat-radio-button>
+                      <mat-radio-button class="radio" value="2" disabled>No</mat-radio-button>
+                      <mat-radio-button class="radio" value="3" disabled>NA</mat-radio-button>
+                    </mat-radio-group>
+                  </span>
+                </div>
+                <div formGroupName="exception" class="exception-info" *ngIf="(data.assetStatementTypeCode == 'B' && data.reviewDataCriteriaBPValues.exception.taskComponentId > 0) ">                  
+                  <h3>Exception Information</h3>
+                  <div class="form-group">
+                    <label>Explain what was different.</label>
+                    <textarea formControlName="difference" rows="4" cols="50" disabled></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Reason that it’s acceptable.</label>
+                    <textarea formControlName="reason" rows="4" cols="50" disabled></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label>Comment below.</label>
+                    <textarea formControlName="updateComment" rows="4" cols="50" disabled></textarea>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="action-buttons">
+        <a (click)="toggleContent('linkComponents',item)">{{item.content || 'See More'}} <i
+            [ngClass]="item.linkComponents ? 'arrow up' : 'arrow down'"></i></a>
+      </div>
+    </div>
+  </div>
+</ng-template>

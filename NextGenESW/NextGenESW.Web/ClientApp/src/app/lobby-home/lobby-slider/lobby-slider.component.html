@@ -1,0 +1,35 @@
+<div class="slider-wrap" *ngIf="_images && _images.length">
+  <div class="slider-container-wrp">
+    <div
+      [@slider]="selectedIndex"
+      class="slider-container"
+      style="margin: 10px 10px; width: 772px" >
+      <div class="slide" *ngFor="let image of images">
+        <span class="description">
+          <strong> {{ image.title }} </strong>
+          <br />
+          <span>{{ image.description }} </span>
+        </span>
+        <a target="_blank" href="{{ image.assetUrl }}">
+          <span
+            ><img
+              src="data:image/png;base64,{{ image.thumbnailImg }}"
+              width="180"
+              height="150"
+          /></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="slider-clickcontainer">
+     
+    <ul>
+      <li *ngFor="let item of _images; let i = index">
+        <a
+          [ngClass]="{ active: selectedIndex == i }"
+          (click)="changeSlider(i)"
+        ></a>
+      </li>
+    </ul>
+  </div>
+</div>

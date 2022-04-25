@@ -1,0 +1,26 @@
+[
+  {
+    "ContentID": 1,
+    "ProgramControlled": true,
+    "Title": "title data",
+    "Outsourceable": true,
+    "Keyword": "keyword data",
+    "TagsCollection": "ABS",
+    "ContentOwner": "sanddep",
+    "Confidentiality": "delivery ",
+    "CoAuthor": "full event description",
+    "RevisionType": "desired solution"
+  },
+  {
+    "ContentID": 2,
+    "ProgramControlled": false,
+    "Title": "title data two",
+    "Outsourceable": true,
+    "Keyword": "keyword data two",
+    "TagsCollection": "ABS",
+    "ContentOwner": "sanddep two",
+    "Confidentiality": "delivery two",
+    "CoAuthor": "full event description two",
+    "RevisionType": "desired solution two"
+  }   
+]

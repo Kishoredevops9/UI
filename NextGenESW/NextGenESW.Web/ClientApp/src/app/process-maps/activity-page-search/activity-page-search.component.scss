@@ -1,0 +1,221 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.serachContainer-activity{
+    padding: 20px;
+}
+
+.searchHeading {
+    text-align: left;
+    font: normal normal normal 30px/26px Barlow;
+    letter-spacing: 1.25px;
+    color: #3E3E3E;
+    text-transform: uppercase;
+    opacity: 1;
+    font-family: 'Barlow-Regular';
+}
+
+.searchField {
+    width: 280px;
+    padding: 15px 20px 0px 0px;
+
+    text-align: left;
+    font: normal normal normal 15px/18px Roboto;
+    letter-spacing: 0px;
+    color: #16222E;
+    opacity: 1;
+    font-family: 'Roboto-Regular';
+}
+
+.activitySeatchTable {
+    @extend %table-style;
+    box-shadow: none !important;
+}
+
+.dialogActions {
+    padding-top: 15px;
+}
+
+.searchIcon {
+    font-size: 16px !important;
+    width: 16px !important;
+    height: 16px !important;
+    background: url(../../../assets/images/search-icon-pw.svg);
+    margin-right: 10px;
+}
+
+.searchInput {
+    text-align: left;
+    font: normal normal normal 15px/18px Roboto;
+    letter-spacing: 0px;
+    color: #16222E;
+    opacity: 1;
+    font-family: 'Barlow-Regular';
+}
+
+
+mat-header-cell {
+    background: #3C445C 0% 0% no-repeat padding-box;
+    opacity: 1;
+
+    text-align: left;
+    font-size: 14px !important;
+    font-family: 'Barlow-Medium', sans-serif !important;
+    letter-spacing: 0px;
+    color: #ffffff !important;
+    text-transform: capitalize !important;
+    padding-bottom: 0px !important;
+}
+
+mat-table {
+    border-radius: 0px !important;
+    min-height: 326px;
+}
+
+mat-cell {
+    text-align: left !important;
+    font: normal normal medium 16px/19px Barlow;
+    font-family: 'Barlow-Medium' !important;
+    letter-spacing: 0px !important;
+    color: #000000 !important;
+    opacity: 1;
+    font-size: 14px !important;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    text-overflow: ellipsis !important;
+}
+
+
+mat-cell,
+.mat-cell {
+  height: 49px !important;
+}
+
+mat-header-row {
+    margin-bottom: 10px;
+    background: #3C445C 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+::ng-deep .mat-sort-header-arrow {
+    color: #FFFFFF !important;
+}
+
+::ng-deep .mat-sort-header-stem {
+    color: #FFFFFF !important;
+}
+
+.mat-row:last-child {
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+
+.mat-column-selectFields,
+.mat-column-flagField,
+.mat-column-contentid,
+.mat-column-version,
+.mat-column-title,
+.mat-column-effectivefrom,
+.mat-column-jc {
+    @extend %customColumn;
+}
+
+.mat-column-selectFields {
+    flex: 0 0 7% !important;
+    width: 7% !important;
+}
+
+.mat-column-flagField {
+    flex: 0 0 7% !important;
+    width: 7% !important;
+}
+
+.mat-column-contentid {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+}
+
+.mat-column-version {
+    flex: 0 0 12% !important;
+    width: 12% !important;
+}
+
+.mat-column-title {
+    flex: 0 0 32% !important;
+    width: 32% !important;
+}
+
+.mat-column-effectivefrom {
+    flex: 0 0 15% !important;
+    width: 15% !important;
+}
+
+.mat-column-jc {
+    flex: 0 0 12% !important;
+    width: 12% !important;
+}
+
+mat-header-row:hover {
+    background: #3C445C 0% 0% no-repeat padding-box !important;
+    opacity: 1;
+}
+
+
+.activitySeatchTable .mat-table.activitySearchData-table .mat-row .mat-cell,
+.activitySeatchTable .mat-table.activitySearchData-table .mat-header-row .mat-cell {
+    padding: 8px 0px 8px 15px !important;
+}
+
+mat-row,
+mat-footer-row {
+    min-height: 38px;
+}
+
+mat-header-row {
+    min-height: 38px;
+}
+
+.activitySeatchTable .mat-table.activitySearchData-table .mat-row .mat-header-cell,
+.activitySeatchTable .mat-table.activitySearchData-table .mat-header-row .mat-header-cell {
+    padding-bottom: 0px !important;
+}
+
+
+.filter-card {
+    position: relative;
+    width: 100% !important;
+
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 0px 12px #0000007C;
+    border: 1px solid #B2B2B22C;
+}
+
+.material-icons.clsFilter {
+    cursor: pointer;
+    font-size: 20px !important;
+}
+
+.fieldWidths {
+    width: 100%
+}
+
+.filter-block {
+    width: 130px !important;
+}
+
+.filterIcon {
+    background: url("../../../assets/images/icon-filter.svg") no-repeat;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    text-align: right;
+    align-items: left;
+    display: inline;
+}
+
+.filterActivityPage {
+    padding-bottom: 10px;
+}

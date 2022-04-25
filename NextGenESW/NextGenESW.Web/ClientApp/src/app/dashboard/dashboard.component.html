@@ -1,0 +1,34 @@
+<div class="dashbaord-wrapper">
+<h1>Dashboard
+
+  <a href="javascript:;"
+  tooltip="dddddd"
+  data-tooltip="8003"
+  placement =  "right" >
+  <img src="./assets/icons/exclamation-circle.svg" width="20" />
+</a>
+ <i class="fa fa-exclamation-circle" aria-hidden="true"></i> </h1>
+  <div class="ngx-dnd-container {{fullViewContainer}}" ngxDroppable  (drop)="dropped($event)"  [ngClass]="expandBtn ? 'active' : ''" >
+    <div class="ngx-dnd-item" *ngFor="let item of items"  #divElements [ngSwitch]="item"
+    [ngClass]= "{'fullViewTodo': item ==1  &&  fullViewTodo ,
+      'fullViewTask': item ==2  &&  fullViewTask ,
+      'fullViewContent': item ==3  &&  fullViewContent ,
+      'fullViewNews': item ==4  &&  fullViewNews}"
+       ngxDraggable>
+      <app-todo-items-list class="listItem" *ngSwitchCase="1" data-index="1" (fullViewEvent)="getFullViewTodo($event)"
+      [ngClass]="fullViewTodo ? 'active' : ''">
+    </app-todo-items-list>
+    <app-task-items-list class="listItem"  *ngSwitchCase="2"  data-index="2"  (fullViewEvent)="getFullViewTask($event)"
+      [ngClass]="fullViewTask ? 'active' : ''">
+    </app-task-items-list>
+    <app-content-list  class="listItem" *ngSwitchCase="3" data-index="3" (fullViewEvent)="getFullViewContent($event)"
+      [ngClass]="fullViewContent ? 'active' : ''">
+    </app-content-list>
+    <app-news-list  class="listItem" *ngSwitchCase="4" data-index="4"   (fullViewEvent)="getFullViewNews($event)"
+      [ngClass]="fullViewNews ? 'active' : ''">
+    </app-news-list>
+  </div>
+</div>
+</div>
+
+

@@ -1,0 +1,190 @@
+<div class="serachContainer-activity" fxLayout="column" >
+    <div class="searchHeading">
+        Content Activity Page Search
+    </div>
+    <div class="searchBar">
+        
+        <mat-form-field appearance="legacy" class="searchField">
+            <!-- <mat-label>Search By Content Title or Number</mat-label> -->
+            <input matInput class="searchInput" placeholder="Search By Content Title or Number" [formControl]="inputFieldValue" >
+            <mat-icon matPrefix class="searchIcon"></mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="searchContents()">Search</button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="end center">
+        <span class="filterIcon" (click)="filterActivitypop()"></span>
+    </div>
+    
+    <ngx-ui-loader bgsPosition="center-center"></ngx-ui-loader>
+
+    <div *ngIf="filterActivityShow" fxLayout="row" fxLayoutAlign="center center" class="filterActivityPage">
+        <mat-card class="filter-card" *ngIf="filterActivityShow" >
+          <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-card-title>Filter</mat-card-title>
+            <span (click)="closeFilters()" class="material-icons clsFilter">close</span>
+          </mat-card-header>
+    
+            <mat-card-content>
+              <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="filterActivityForm">
+                  <mat-form-field class="filter-block">
+                    <mat-label>Content Id/No</mat-label>
+                    <mat-select formControlName="idFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Content Id/No
+                      </mat-option>
+                      <mat-option *ngFor="let id of uniqueId" [value]="id">
+                        {{ id }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  
+                  <mat-form-field class="filter-block">
+                    <mat-label>Version</mat-label>
+                    <mat-select formControlName="versionFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Version
+                      </mat-option>
+                      <mat-option *ngFor="let version of uniqueVersion" [value]="version">
+                        {{ version }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field class="filter-block">
+                    <mat-label>Content Title</mat-label>
+                    <mat-select formControlName="titleFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select title
+                      </mat-option>
+                      <mat-option *ngFor="let title of uniqueTitle" [value]="title">
+                        {{ title }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field class="filter-block">
+                    <mat-label>Created On</mat-label>
+                    <mat-select formControlName="createdOnFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Created On
+                      </mat-option>
+                      <mat-option *ngFor="let createdOn of uniqueCreatedOnDate" [value]="createdOn">
+                        {{ createdOn | date:'MM/dd/yyyy' }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="filter-block">
+                    <mat-label>U.S J/C</mat-label>
+                    <mat-select formControlName="usJcFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select U.S J/C
+                      </mat-option>
+                      <mat-option *ngFor="let usJc of uniqueUsJc" [value]="usJc">
+                        {{ usJc }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              
+                  <button mat-raised-button (click)="applyActivityFilter()" color="primary" >Apply Filter</button>
+                  <button mat-raised-button (click)="resetFilters()" color="accent" >Reset Filter</button>
+    
+                </div>
+              </div>
+            </mat-card-content>
+    
+        </mat-card>
+    </div>
+
+
+    <div class="activitySeatchTable">
+        <mat-table [dataSource]="dataSourceActivitySearch" class="activitySearchData-table" matSort >
+            
+            <!-- Checkbox Column -->
+            <ng-container matColumnDef="selectFields">
+                <mat-header-cell *matHeaderCellDef > &nbsp; </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-checkbox (change)="updateSelection(element, $event)" 
+                    color="primary"
+                     [(ngModel)]="element.checkbox"  
+                     [disabled]="checkboxDisabled"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Flag Column -->
+            <ng-container matColumnDef="flagField">
+                <mat-header-cell *matHeaderCellDef > &nbsp; </mat-header-cell>
+                <mat-cell *matCellDef="let element" > &nbsp; </mat-cell>
+            </ng-container>
+
+            <!-- Created on Column -->
+            <ng-container matColumnDef="effectivefrom">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Created On</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.effectivefrom  | date:'MM/dd/yyyy' }}</mat-cell>
+            </ng-container>
+
+            <!-- No. Column -->
+            <ng-container matColumnDef="contentid">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Content No</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.contentid}}</mat-cell>
+            </ng-container>
+
+            <!-- Title Column -->
+            <ng-container matColumnDef="title">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Content Title</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+            </ng-container>
+
+            <!-- US JC Column -->
+            <ng-container matColumnDef="jc">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >U.S J/C</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.jc}}</mat-cell>
+            </ng-container>
+            
+            <!-- Version Column -->
+            <ng-container matColumnDef="version">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Version</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.version}}</mat-cell>
+            </ng-container>
+            
+
+            <!-- Created Data & Time Column for Task AP -->
+            <ng-container matColumnDef="createddatetime">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >Created On</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.lastupdatedatetime  | date:'MM/dd/yyyy' }}</mat-cell>
+            </ng-container>
+  
+            <!-- Content ID Column for Task AP -->
+            <!-- <ng-container matColumnDef="contentid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >Content Id</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.contentid}}</mat-cell>
+            </ng-container> -->
+
+            <!-- US J/C Column for Task AP -->
+            <ng-container matColumnDef="usjurisdictionid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >U.S J/C</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.usjurisdictionid}}</mat-cell>
+            </ng-container>
+
+            <!-- Header and Row Declarations -->
+            <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator 
+            [pageSize]="10"
+            [pageSizeOptions]='pageRowCounters'
+            showFirstLastButtons >
+        </mat-paginator>
+
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center" class="dialogActions">
+        <button mat-raised-button color="primary" [mat-dialog-close]="selectedElement" >Submit</button>
+    </div>
+
+</div>

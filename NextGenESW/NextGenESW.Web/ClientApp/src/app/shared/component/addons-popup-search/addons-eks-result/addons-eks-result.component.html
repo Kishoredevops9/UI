@@ -1,0 +1,141 @@
+<div class="row no-gutters p-1 h-100 eks-result-wrapper">
+  <div class="col-auto mr-3 filter-panel">
+    <ng-container [ngTemplateOutlet]="eksFilterPanel"></ng-container>
+  </div>
+  <div class="col">
+    <ng-container [ngTemplateOutlet]="eksResultTable"></ng-container>
+  </div>
+</div>
+
+<ng-template #eksFilterPanel>
+  <div class="row no-gutters p-1 h-100 overflow-auto">
+    <div class="col-12 p-2 collection-wrapper">
+      <div class="h5">EKS Collections</div>
+      <div class="px-1">
+        <app-select-item-list [multiple]="true"
+                              [itemRenderer]="itemCollectionRenderer"
+                              [(ngModel)]="sltCollections"
+                              [items]="eksCollectionSltItems$ | async"
+                              (ngModelChange)="onCollectionsChanged($event)">
+        </app-select-item-list>
+      </div>
+      <!-- <div class="flex-grow-1">
+        <ul>
+          <li *ngFor="let collectionItem of eksCollectionItems"
+              [hidden]="!collectionItem.active">
+            <div class="d-flex align-items-center mb-1 {{ collectionItem.class }}">
+              <input type="checkbox"
+                     (change)="onChangeEKSCollection(collectionItem)"
+                     [(ngModel)]="collectionItem.checked">
+              <span class="all_type {{ collectionItem.keyword }} mr-1">{{ collectionItem.code }}</span>
+              <span class="collection-label"> {{ collectionItem.name }} </span>
+            </div>
+          </li>
+        </ul>
+      </div> -->
+    </div>
+
+    <ng-template #itemCollectionRenderer
+                 let-item="item">
+      <div class="d-flex align-items-center {{ item.data.class }}">
+        <span class="all_type {{ item.data.keyword }} mr-1">{{ item.data.code }}</span>
+        <span class="collection-label"> {{ item.data.name }} </span>
+      </div>
+    </ng-template>
+    <div class="col-12 p-2 phase-tag-wrapper">
+      <div class="h5">Filter Selected By:</div>
+      <app-select-item-list [items]="phaseTageSltItems$ | async"
+                            [multiple]="true"
+                            [withSearchFilter]="true"
+                            [(ngModel)]="sltPhaseTags"
+                            (ngModelChange)="onPhaseTagsChanged($event)">
+      </app-select-item-list>
+      <eks-search-app-left-box [expendOpt]="edpendData"
+                               (tagdata)="tagData($event)"
+                               [treedata]="filterData">
+      </eks-search-app-left-box>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #eksResultTable>
+  <div class="h-100 d-flex flex-column">
+    <div style="flex-grow: 1;">
+      <app-mat-table *ngIf="eksResultGridOptions"
+                     #eksMatTable
+                     [gridOptions]="eksResultGridOptions"
+                     [gridHeight]="'550px'"
+                     [rowData]="(eksResultGridData$ | async) || []"
+                     [pageSize]="10"
+                     [partialDatasource]="true"
+                     [pageLength]="(eksSearchResult$ | async).totalResult || 0"
+                     (onPageChanged)="onPageChanged($event)">
+      </app-mat-table>
+
+      <!-- <mat-table *ngIf="eksAddOnInternalSearchData"
+                 [dataSource]="eksAddOnInternalSearchData"
+                 class="data-table">
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-checkbox class="example-margin"
+                          [checked]="element.isSelected"
+                          [disabled]="element.isSelected"
+                          (change)="onChange($event, element)">
+            </mat-checkbox>&nbsp;&nbsp;&nbsp;
+            <label>{{ element.title }}</label>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="contentid">
+          <mat-header-cell *matHeaderCellDef>Content Id</mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index">
+            <a style="color: #0076ff; cursor: pointer"
+               (click)="handleOnContentIDClick(element)">{{ element.contentid }}</a>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="componenttype">
+          <mat-header-cell *matHeaderCellDef>Content Type
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span class="all_type {{ element.assettypecode }}">{{ element.assettypecode }}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="purpose">
+          <mat-header-cell *matHeaderCellDef>Purpose
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span *ngIf="element.assettypecode !== 'K'">{{ removeHTMLTags(element.purpose) }}</span>
+            <span *ngIf="element.assettypecode === 'K'">{{ formatPurposeData(element.purpose) }}</span>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+      </mat-table> -->
+    </div>
+  </div>
+  <div class="clearfix"></div>
+</ng-template>
+
+<ng-template #contentIdRenderer
+             let-rowData="rowData">
+  <a *ngIf="rowData != undefined"
+     style="color: #0076ff; cursor: pointer"
+     (click)="$event.stopPropagation(); handleOnContentIDClick(rowData)">{{ rowData?.contentid }} </a>
+</ng-template>
+
+<ng-template #assetTypeCodeRenderer
+             let-rowData="rowData">
+  <span class="asset-type-code-cell"
+        [ngClass]="'all_type ' + rowData?.assettypecode">{{ rowData?.assettypecode }} </span>
+</ng-template>
+
+<ng-template #purposeRenderer
+             let-rowData="rowData">
+  <span *ngIf="rowData?.assettypecode !== 'K'">{{ removeHTMLTags(rowData?.purpose) }}</span>
+  <span *ngIf="rowData?.assettypecode === 'K'">{{ formatPurposeData(rowData?.purpose) }}</span>
+</ng-template>

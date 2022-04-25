@@ -1,0 +1,41 @@
+<div class="app-diagram-context-menu"
+     #menuTrigger="matMenuTrigger"
+     [matMenuTriggerFor]="contextMenu"
+     [ngStyle]="{
+        left: model.position.left + 'px',
+        top: model.position.top + 'px'
+    }"
+></div>
+
+<mat-menu
+  class="app-diagram-context-menu__menu"
+  #contextMenu="matMenu"
+>
+  <button
+    class="app-diagram-context-menu__menu-item"
+    [matMenuTriggerFor]="addShape"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:add"
+      text="Add shape"
+    ></app-context-menu-item>
+  </button>
+</mat-menu>
+
+<mat-menu
+  class="app-diagram-context-menu__menu app-diagram-context-menu__menu--no-icons"
+  #addShape="matMenu"
+>
+  <button
+    *ngFor="let shape of shapes"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onAddShapeClick(shape)"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      [showIcon]="false"
+      [text]="shapeNames[shape]"
+    ></app-context-menu-item>
+  </button>
+</mat-menu>

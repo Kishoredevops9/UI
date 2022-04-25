@@ -1,0 +1,116 @@
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/mat-slide-toggle';
+
+.execution {
+  margin-right: 3%;
+
+  .content {
+    display: inline;
+    @include font-face-BarlowSemiCondensed-SemiBold(14px, normal);
+    letter-spacing: 0.58px;
+
+    .top-filter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      form {
+        display: flex;
+        padding-left: 10px;
+        align-items: center;
+
+        .heading-label {
+          padding-right: 10px;
+        }
+
+        .discipline {
+          width: 200px;
+          border-bottom: 1px solid #cfd1d7;
+          @include font-face-Barlow-Medium(12px, normal);
+        }
+
+        .mat-checkbox {
+          position: relative;
+          top: 5px;
+
+          .mat-checkbox-layout {
+            display: flex;
+            align-items: center;
+          }
+
+          ::ng-deep .mat-checkbox-inner-container {
+            top: 0;
+          }
+        }
+
+        .example-margin {
+          margin: 0 10px;
+          @include font-face-BarlowSemiCondensed-Medium(12.5px, 16px);
+          letter-spacing: 0.58px;
+        }
+
+        mat-option {
+          @include font-face-Inter-Regular(14px, 18px);
+        }
+      }
+
+      .top_menu_action {
+        float: right;
+
+        .button_style {
+          background-color: white;
+          cursor: pointer;
+          outline: none;
+          color: #3e3e3e;
+          box-shadow: none;
+          padding: 6px !important;
+
+          mat-icon {
+            font-size: 20px;
+          }
+
+          @include font-face-Inter-Regular(13px, 18px);
+        }
+
+        .vertical_line {
+          border-left: 1px solid #ccc;
+          height: 50%;
+          margin: 0% 7px;
+        }
+
+        .unselect_action {
+          margin-left: 15px;
+
+          label {
+            @include font-face-BarlowSemiCondensed-SemiBold(13px, 18px);
+            letter-spacing: 0.58px;
+          }
+
+          .unselected_style {
+            margin-right: 7px;
+          }
+        }
+
+        @include slideToggle(green, gray, #fff, 33px, 21px);
+
+        ::ng-deep mat-slide-toggle {
+          margin: 0px 4px;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .progressbar {
+    li {
+      &.active {
+        &::before {
+          border: 1px solid #000;
+        }
+      }
+    }
+  }
+
+}
+.disabledNoOfCasesDiv{ pointer-events: none; opacity: 2.0;}
+

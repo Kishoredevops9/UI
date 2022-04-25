@@ -1,0 +1,33 @@
+@import "../../../../scss/helpers/variables";
+@import "../../../../scss/helpers/mixins";
+@import "../../../../scss/helpers/breakpoints";
+@import "../../../../scss/helpers/placeholders";
+@import "../../../../scss/base/_global.scss";
+
+.status-tab {
+  padding: 0 20px;
+
+  .header-field {
+    @include font-face-BarlowSemiCondensed-Medium(22px, 19px);
+    letter-spacing: 1px;
+    padding: 36px 0 26px;
+  }
+  .status-container {
+    border: 1px solid #707070;   
+    
+    .status-container-button{
+      display: flex;
+      padding: 5% 0% 0%;
+      justify-content: center;
+      column-gap: 86px;
+      margin: 0 2% 0 0;
+    }
+  }
+  .mgnbp5{
+    padding-bottom: 5% !important;
+  }
+
+  button {
+    min-width: 300px !important;
+  }
+}

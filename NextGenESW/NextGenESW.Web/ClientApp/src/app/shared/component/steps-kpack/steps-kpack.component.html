@@ -1,0 +1,300 @@
+<ng-container *ngIf="globalData">
+  <div style="position: inherit">
+
+    <ngx-ui-loader [loaderId]="'kpackloader'"></ngx-ui-loader>
+  </div>
+
+  <div class="serachContainer-Kpack"
+       fxLayout="column"
+       *ngIf="!isEditableMode || publishMode || previewMode; else EDIT_MODE">
+    <div class="activitySeatchTable"
+         *ngIf="activeData && activeData.filteredData  && activeData.filteredData.length">
+      <mat-table [dataSource]="activeData"
+                 class="subMapSearchTable"
+                 matSort>
+
+        <!-- Type1 Column -->
+        <ng-container matColumnDef="selectFields">
+          <mat-header-cell *matHeaderCellDef> &nbsp; </mat-header-cell>
+          <mat-cell *matCellDef="let element"></mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Id</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+
+            <a href="javascript:;"
+               (click)="goToKp(element)"> {{element.contentAssetId}} </a>
+
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Title</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="fleft kpack-logo">
+              <span>KP</span>
+            </div>
+            <div class="fleft kpack-title">
+              <div class="kpack-head">{{element.title}}</div>
+              <div class="kpack-desc">{{element.description}}</div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Type</mat-header-cell>
+          <mat-cell *matCellDef="let element"> Knowledge Pack
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="disciplinescode">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Disciplines Code</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.disciplineCode}}</mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+
+  <!-- /////////// EDIT_MODE ////// -->
+  <ng-template class="serachContainer-Kpack"
+               fxLayout="column"
+               #EDIT_MODE>
+    <div class="kpackEKS"
+         style="margin-top: 20px;">
+      EKS Selected <span>( {{ (activeData && activeData.filteredData &&
+        activeData.filteredData.length )? activeData.filteredData.length : ''}} )</span>
+    </div>
+    <div class="activitySeatchTable"
+         style="min-height: 100px;">
+
+      <mat-table *ngIf="activeData && activeData.filteredData  && activeData.filteredData.length"
+                 [dataSource]="activeData"
+                 class="subMapSearchTable"
+                 matSort>
+        <!-- Type1 Column -->
+        <ng-container matColumnDef="selectFields">
+          <mat-header-cell *matHeaderCellDef> &nbsp; </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+
+            <mat-icon class="del"
+                      (click)="deteteKpack(element.kPacksMapId)">delete</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Id</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.contentAssetId}}</mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Title</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="fleft kpack-logo">
+              <span>KP</span>
+            </div>
+            <div class="fleft kpack-title">
+              <div class="kpack-head">{{element.title}}</div>
+              <div class="kpack-desc">{{element.description}}</div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Type</mat-header-cell>
+          <mat-cell *matCellDef="let element"> Knowledge Pack
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="disciplinescode">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Disciplines Code</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.disciplineCode}}</mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+      </mat-table>
+
+    </div>
+
+    <div class="activitySeatchTable">
+      <div class="kpackEKS">EKS Search
+        <span>( {{ (dataSourceActivitySearch && dataSourceActivitySearch.filteredData &&
+          dataSourceActivitySearch.filteredData.length )? dataSourceActivitySearch.filteredData.length : ''}} )</span>
+      </div>
+
+      <div class="searchBar">
+        <mat-form-field appearance="legacy"
+                        class="searchField">
+          <mat-label>Content Id</mat-label>
+          <input matInput
+                 class="searchInput"
+                 placeholder="Search"
+                 [(ngModel)]="searchItem.contentid">
+        </mat-form-field>
+        <mat-form-field appearance="legacy"
+                        class="searchField">
+          <mat-label>Title</mat-label>
+          <input matInput
+                 class="searchInput"
+                 placeholder="Search"
+                 [(ngModel)]="searchItem.title">
+        </mat-form-field>
+        <div class="searchFieldD">
+          <mat-label>Select Discipline</mat-label>
+          <a mat-button
+             matSuffix
+             mat-icon-button
+             (click)="showDisciplineDropDown=!showDisciplineDropDown;showDropDown=false">
+            <div id="btnId"
+                 #toggleButton>
+              <mat-icon>
+                {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+              </mat-icon>
+            </div>
+          </a>
+          <div #menu
+               style="position: relative;">
+            <mat-card class="dropbox"
+                      [hidden]="!showDisciplineDropDown"
+                      [config]="{backdrop: 'static'}">
+              <discipline [flag]="true"
+                          [checkednode]="selectedDisciplines"
+                          (setDisciplineData)="setDisciplineData($event)"
+                          [treedata]="discipline">
+              </discipline>
+            </mat-card>
+          </div>
+        </div>
+        <div class="searchFieldD">
+          <mat-label>Disciplines Code</mat-label>
+          <mat-select [(ngModel)]="searchItem.disciplineCode"
+                      #disciplineCoderef
+                      required>
+            <mat-option style="font-size: 13px;"
+                        *ngFor="let disciplineCode of WIDisciplineCodeList"
+                        [value]="disciplineCode.code">
+              {{ disciplineCode.code }}</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="btnDivSearch">
+          <button mat-raised-button
+                  color="primary"
+                  class="mat-button"
+                  (click)="onApplyFilter()">Search</button>
+          <button mat-raised-button
+                  color="primary"
+                  class="mat-button"
+                  (click)="onResetFilter()">Reset</button>
+        </div>
+
+      </div>
+
+      <mat-table [dataSource]="dataSourceActivitySearch"
+                 class="subMapSearchTable"
+                 matSort>
+
+        <!-- Type1 Column -->
+        <ng-container matColumnDef="selectFields">
+          <mat-header-cell *matHeaderCellDef> &nbsp; </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <mat-checkbox color="primary"
+                          [checked]="isSelectedKPack(element) || isAlreadyUsed(element)"
+                          [disabled]="isAlreadyUsed(element)"
+                          (change)="onSelectedKPacksChanged(element, $event)"></mat-checkbox>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Id</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.contentid}}</mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Content Title</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="fleft kpack-logo">
+              <span>KP</span>
+            </div>
+            <div class="fleft kpack-title">
+              <div class="kpack-head">{{element.title}}</div>
+              <div class="kpack-desc">{{element.description}}</div>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Type</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.contenttypename}}</mat-cell>
+        </ng-container>
+
+        <!-- Name1 Column -->
+        <ng-container matColumnDef="disciplinescode">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>Disciplines Code</mat-header-cell>
+          <mat-cell *matCellDef="let element">{{element.disciplinecode}}</mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+
+      </mat-table>
+      <mat-paginator [length]="kpackResultTotalLength"
+                     [pageSize]="5"
+                     (page)="onPageChanged($event)"></mat-paginator>
+
+    </div>
+    <div class="row no-gutters">
+      <mat-chip-list #chipList
+                     aria-label="Selected K-Packs">
+        <mat-chip *ngFor="let kPack of selectedKPacks"
+                  (removed)="onRemoveSltKPack(kPack)">
+          {{ kPack.title }}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div fxLayout="column"
+         fxLayoutAlign="center center"
+         class="dialogActions">
+      <button *ngIf="selectedKPacks.length"
+              mat-raised-button
+              class="mat-button"
+              color="primary"
+              (click)="addToSelected()">Add</button>
+    </div>
+  </ng-template>
+
+</ng-container>

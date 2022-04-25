@@ -1,0 +1,341 @@
+<div
+  cdkDropList
+  class="item-dropzone parent isEditableMode"
+  *ngIf="isEditableMode"
+  [id]="parentItemId"
+  [cdkDropListData]="parentItem"
+  [cdkDropListConnectedTo]="allDropListsIds"
+  (cdkDropListDropped)="onDragDrop($event)"
+>
+  <mat-accordion multi="true">
+    <mat-expansion-panel 
+      [expanded]="childExpandState"
+      (opened)="panelExpandCollapse(true)"
+      (closed)="panelExpandCollapse(false)"
+      [ngClass]="isEditableModeEnabled()"
+      hideToggle="true"
+    >
+      <!-- <mat-expansion-panel [expanded]="allExpandState" (opened)="panelExpandCollapse(true)"
+            (closed)="panelExpandCollapse(false)" [ngClass]="isExpansionDisabled()"> -->
+
+      <mat-expansion-panel-header *ngIf="item.name">
+        <span class="plus-minus">
+          <ng-container *ngIf="item.children.length > 0; else INCLUDE_SPACE">
+            <mat-icon *ngIf="!showPlus"
+              ><img src="./assets/images/Plus.svg"
+            /></mat-icon>
+            <mat-icon *ngIf="showPlus"
+              ><img src="./assets/images/Minus.svg"
+            /></mat-icon>
+            <!-- <mat-icon mat-list-icon ><img src="./assets/images/Minus.svg" width="20"></mat-icon>
+                    <mat-icon mat-list-icon ><img src="./assets/images/Minus.svg" width="20"></mat-icon> -->
+          </ng-container>
+          <ng-template #INCLUDE_SPACE>
+            <mat-icon> &nbsp;&nbsp;&nbsp; </mat-icon>
+          </ng-template>
+        </span>
+        <div
+          cdkDrag
+          [id]="item.uId"
+          [cdkDragData]="item"
+          [cdkDragDisabled]="dragDisabled"
+          class="index-item item-dropzone"
+          cdkDropList
+          placeholder="Drop here"
+          [id]="item.uId"
+          [cdkDropListConnectedTo]="connectedDropListsIds"
+          [cdkDropListData]="item"
+          (cdkDropListDropped)="onDragDrop($event)"
+        >
+          <div
+            class="
+              mdl-grid
+              mdl-cell
+              mdl-cell--12-col
+              mdl-cell--12-col-tablet
+              mdl-cell--12-col-phone
+              toc-full-width
+            "
+          >
+            <div
+              title="Drag this item with children"
+              class="item-drag-handle"
+              cdkDragHandle
+            >
+              <div
+                class="
+                  mdl-cell
+                  mdl-cell--8-col
+                  mdl-cell--8-col-tablet
+                  mdl-cell--8-col-phone
+                "
+              >
+                <ng-container *ngIf="item.content.assetType == 'Header'
+                    else CONTENT_TYPE">
+                  <div
+                    [ngClass]="headerStyle(parentItem)"
+                    class="header-content mdl-cell mdl-cell--4-col"
+                    (contextmenu)="item.content.assetType == 'Link' ? '' : onContextMenu($event, item)"
+                  >
+                    <i *ngIf="!dragDisabled" class="material-icons"> </i>
+                    <span *ngIf="item.content.assetType == 'Header'">{{
+                      item.content.tocid
+                    }}</span>
+                    <div
+                      style="position: fixed"
+                      [style.left]="contextMenuPosition.x"
+                      [style.top]="contextMenuPosition.y"
+                      [matMenuTriggerFor]="contextMenu"
+                    ></div>
+                    <mat-menu #contextMenu="matMenu">
+                      <ng-template matMenuContent let-item="item">
+                        <button mat-menu-item (click)="onOpenAddonsPopupSearch(item)">
+                          Add EKS Links
+                        </button>
+                        <button
+                          mat-menu-item
+                          (click)="onContextMenuExternal(item, true)"
+                        >
+                          Add Header
+                        </button>
+                        <button
+                          mat-menu-item
+                          (click)="onContextMenuExternal(item, false)"
+                        >
+                          Add External Links
+                        </button>
+                      </ng-template>
+                    </mat-menu>
+                    <ng-container
+                      *ngIf="item.content.isEdit; else PREVIEW_MODE"
+                    >
+                      <input
+                        class="inputMaterial"
+                        (keydown)="handleInput($event)"
+                        type=" text"
+                        [(ngModel)]="item.content.title"
+                        (focusout)="saveHeader(item)"
+                      />
+                    </ng-container>
+                    <ng-template #PREVIEW_MODE>
+                      <ng-container>
+                        <!-- <span *ngIf="item.content.assetType == 'Link'" style= "padding-left: 10px;"
+                          ><a
+                            [href]="'//' + item.content.contentUrl"
+                            target="_blank"
+                            title="{{ item.content.contentUrl }}"
+                            >{{ item.content.title }}</a
+                          ></span
+                        > -->
+                        <span style= "padding-left: 10px;">{{
+                          item.content.title
+                        }}</span>
+                      </ng-container>
+                    </ng-template>
+                  </div>
+                </ng-container>
+                <ng-template #CONTENT_TYPE>
+                  <ng-container>
+                    <div class="ct-content">
+                      <i *ngIf="!dragDisabled" class="material-icons"> </i>
+                      <span>
+                        <span [ngClass]="checkContentType(item)" *ngIf="item.content.assetType != 'Link'">
+                          {{ item.content.assetType }}</span
+                        >
+                        <span class="link" *ngIf="item.content.assetType == 'Link'">
+                          EX</span
+                        >
+                        <span class="title">{{ item.content.title }}</span>
+                      </span>
+                      &nbsp;&nbsp;&nbsp;
+                      <span class="index-seprator"> </span>
+                    </div>
+                  </ng-container>
+                </ng-template>
+              </div>
+              <div
+                class="
+                  mdl-cell
+                  mdl-cell--4-col
+                  mdl-cell--4-col-tablet
+                  mdl-cell--4-col-phone
+                "
+              >
+                <div
+                  *ngIf="isEditableMode; else CONTENT_TYPE_ONLY"
+                  class="icons"
+                >
+                  <span style="float: right">
+                    <span (click)="deleteItem(item)">
+                      <em class="delete">
+                        <mat-icon>delete</mat-icon>
+                      </em>
+                      <!--<label>Delete</label> -->
+                    </span>
+                  </span>
+                  <ng-container
+                    *ngIf="item.content.assetType == 'Header'
+                      else CONTENT_ID">
+                    <span (click)="editItem(item)" style="float: right">
+                      <em>
+                        <mat-icon>edit</mat-icon>
+                      </em>
+                      <!--<label>Delete</label> -->
+                    </span>
+                  </ng-container>
+                  <ng-template #CONTENT_ID>
+                    <ng-container>
+                      <span class="ct-num">
+                        <a *ngIf="item.content.assetType == 'Link'"
+                            class="ct-icons"
+                            [href]="'//' + item.content.contentUrl"
+                            target="_blank"
+                            title="{{ item.content.contentUrl }}"
+                            >{{ item.content.title }}</a>
+                        <a *ngIf="item.content.assetType != 'Link' && item.content.assetType != 'Header'"
+                          class="ct-icons"
+                          (click)="
+                            navigateTo(item.name, item.content.contentId)
+                          "
+                          >{{ item.content.contentId }}</a
+                        >
+                        &nbsp;&nbsp;
+                      </span>
+                    </ng-container>
+                  </ng-template>
+                </div>
+                <ng-template #CONTENT_TYPE_ONLY>
+                  <ng-container>
+                    <span *ngIf="item.content.assetType != 'Header'">
+                      <a
+                        class="ct-icons"
+                        (click)="navigateTo(item.name, item.content.contentId)"
+                        >{{ item.content.contentId }}</a
+                      >
+                    </span>
+                  </ng-container>
+                </ng-template>
+
+                <!-- <mat-table mat-table [dataSource]="ccDataSource" class="cc-modal-grid1">
+                            <mat-header-row *matHeaderRowDef="ccDisplayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: ccDisplayedColumns;" #contentDetails></mat-row>
+
+                            </mat-table> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      <div class="item-details" #contentDetails></div>
+      <div class="item-drag-preview" *cdkDragPreview>
+        {{ item.name }} with {{ item.children.length }} child item(s)
+      </div>
+      <ng-template matExpansionPanelContent>
+        <ul cdkDropList
+        class="item-dropzone parent isEditableMode"
+        *ngIf="isEditableMode && item.children && item.children.length > 0"
+        [id]="parentItemId"
+        [cdkDropListData]="parentItem"
+        [cdkDropListConnectedTo]="allDropListsIds"
+        (cdkDropListDropped)="onDragDrop($event)">
+          <li *ngFor="let subItem of item.children" cdkDrag>
+            <app-toc-list-item
+              [item]="subItem"
+              [parentItem]="item"
+              [connectedDropListsIds]="allDropListsIds"
+              [expanded]="allExpandState"
+              [isEditableMode]="isEditableMode"
+              (itemDrop)="onDragDrop($event)"
+              (deleteComponentEvent)="deleteComponent($event)"
+              (eksListEvent)="eksList($event)"
+            >
+            </app-toc-list-item>
+          </li>
+        </ul>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div
+  class="item-dropzone parent non-editable"
+  *ngIf="!isEditableMode"
+  [id]="parentItemId"
+  [cdkDropListData]="parentItem"
+  [cdkDropListConnectedTo]="allDropListsIds"
+>
+  <div [id]="item.uId" *ngIf="item.name">
+    <div title="Drag this item with children" class="item-drag-handle">
+      <ng-container
+        *ngIf="item.content.assetType == 'Header'; else CONTENT_TYPE"
+      >
+        <div [ngClass]="headerStyle(parentItem)" class="header-content">
+          <i *ngIf="!dragDisabled" class="material-icons"> </i>
+          <span *ngIf="item.content">{{ item.content.tocid }}</span
+          >&nbsp;&nbsp;
+          <ng-container *ngIf="item.content.isEdit; else PREVIEW_MODE">
+            <input
+              class="inputMaterial"
+              type="text"
+              [(ngModel)]="item.content.title"
+              (focusout)="saveHeader(item)"
+            />
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              {{ item.content.title }}
+            </ng-container>
+          </ng-template>
+        </div>
+      </ng-container>
+      <ng-template #CONTENT_TYPE>
+        <ng-container>
+          <div class="ct-content">
+            <i *ngIf="!dragDisabled" class="material-icons"> </i>
+            <span *ngIf="item.content"><span *ngIf="item.content.assetType != 'Header' && item.content.assetType != 'Link'" [ngClass]="checkContentType(item)">{{
+              item.content.assetType }}</span>
+              <span *ngIf="item.content.assetType == 'Link'" class="link">
+                EX</span>
+              <span class="title" *ngIf="item.content.assetType != 'Header'">{{
+                item.content.title
+              }}</span>
+            </span>
+            <span class="index-seprator"> </span>
+          </div>
+        </ng-container>
+      </ng-template>
+      <span *ngIf="item.content.assetType == 'Link'"
+      ><a
+        [href]="'//' + item.content.contentUrl"
+        title="{{ item.content.contentUrl }}"
+        target="_blank"
+        class="ct-icons"
+        >{{ item.content.title }}</a
+      ></span
+    >
+      <span *ngIf="item.content.assetType != 'Header' && item.content.assetType != 'Link'">
+        <a
+          class="ct-icons"
+          (click)="navigateTo(item.name, item.content.contentId)"
+          >{{ item.content.contentId }}</a
+        >
+      </span>
+    </div>
+  </div>
+  <div class="item-details" #contentDetails></div>
+
+  <ul>
+    <li *ngFor="let subItem of item.children">
+      <app-toc-list-item
+        [item]="subItem"
+        [parentItem]="item"
+        [connectedDropListsIds]="allDropListsIds"
+        [expanded]="allExpandState"
+        [isEditableMode]="isEditableMode"
+        (itemDrop)="onDragDrop($event)"
+        (deleteComponentEvent)="deleteComponent($event)"
+      >
+      </app-toc-list-item>
+    </li>
+  </ul>
+</div>

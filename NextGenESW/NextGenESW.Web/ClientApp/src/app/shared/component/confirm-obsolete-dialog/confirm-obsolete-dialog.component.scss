@@ -1,0 +1,38 @@
+.mat-button {
+  line-height: 25px;
+  font-size: 13px;
+}
+
+.dialog-mainDiv {
+  width: 100% !important;
+  padding: 35px;
+
+  .obsolete-warning {
+    font: normal normal normal 18px/28px BarlowSemiCondensed-Medium;
+    text-transform: capitalize;
+    color: black;
+    margin-bottom: 20px;
+  }
+}
+
+.btn-row {
+  text-align: center;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.confirm-btn {
+  padding: 2px 20px !important;
+  color: white;
+  font-size: 14px !important;
+  background: #3C445C !important;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  /* float: right; */
+  margin-left: 20px;
+  margin-top: 15px;
+}
+
+.content-list {
+  margin-top: 10px;
+  display: block;
+}

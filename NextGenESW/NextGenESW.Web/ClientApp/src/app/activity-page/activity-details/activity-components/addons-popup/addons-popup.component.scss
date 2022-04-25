@@ -1,0 +1,16 @@
+:host::ng-deep {
+  mat-checkbox {
+    &.mat-checkbox-disabled {
+      .mat-checkbox-inner-container {
+        background: #ccc;
+      }
+    }
+  }
+}
+
+.addons-popup-wrapper {
+  .result-table-wrapper {
+    height: 420px;
+    overflow-y: auto;
+  }
+}

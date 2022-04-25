@@ -1,0 +1,281 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.content-wraper-feedback-management {
+    padding: 5px 5px 5px 10px;
+    width: 100%;
+    height: 100%;
+
+    .feedbackPageHeading {
+        text-align: left;
+        letter-spacing: 0px;
+        color: $black-color;
+        opacity: 1;
+        font-size: 24px;
+        padding: 10px 0px 20px 0px;
+    }
+
+    .selectContainer {
+        padding: 15px;
+        background: $white-color 0% 0% no-repeat padding-box;
+        border: 1px solid $border-light-blue-color;
+        opacity: 1;
+
+        .textHeaders {
+            text-align: left;
+            letter-spacing: 0px;
+            color: $black-color;
+            opacity: 1;
+            font-size: 16px;
+            padding: 0px 25px 0px 10px;
+        }
+
+        .selectValue {
+            padding: 10px;
+            border: 1px solid $select-dropdown-border;
+            opacity: 0.9;
+            width: 300px;
+
+            .optionClass {
+                padding: 5px 7px 5px 7px;
+            }
+        }
+    }
+
+    .feedbackContent {
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        background: $white-color 0% 0% no-repeat padding-box;
+        border: 1px solid $border-light-blue-color;
+        opacity: 1;
+        margin: 10px 0px;
+
+        .feedbackContainers {
+
+            .feedbackTable {
+                @extend %table-style;
+                box-shadow: none !important;
+
+                mat-header-cell {
+                    background: $table-header-dark-blue-color 0% 0% no-repeat padding-box;
+                    opacity: 1;
+                    text-align: center;
+                    font-size: 14px !important;
+                    font-family: 'Barlow-Medium', sans-serif !important;
+                    letter-spacing: 0px;
+                    color: $white-color !important;
+                    text-transform: capitalize !important;
+                    padding: 15px 10px !important;
+                }
+
+                mat-table {
+                    border-radius: 0px !important;
+                    min-height: 326px;
+                }
+
+                mat-cell {
+                    text-align: center !important;
+                    font: normal normal medium 16px/19px Barlow;
+                    font-family: 'Barlow-Medium' !important;
+                    letter-spacing: 0px !important;
+                    color: $black-color !important;
+                    opacity: 1;
+                    font-size: 14px !important;
+                    padding-top: 8px !important;
+                    padding-bottom: 8px !important;
+                }
+
+                mat-header-row {
+                    margin-bottom: 10px;
+                    background: $table-header-dark-blue-color 0% 0% no-repeat padding-box;
+                    opacity: 1;
+                }
+
+                .mat-row:last-child {
+                    border-bottom-left-radius: 0px !important;
+                    border-bottom-right-radius: 0px !important;
+                }
+
+                .mat-table .mat-header-row .mat-header-cell {
+                    padding: 15px 10px !important;
+                }
+
+                .mat-column-title,
+                .mat-column-userId,
+                .mat-column-createdDateTime,
+                .mat-column-createdUser,
+                .mat-column-feedbackType,
+                .mat-column-status,
+                .mat-column-lastUpdateUser,
+                .mat-column-lastUpdateDateTime,
+                .mat-column-adminFeedback,
+                .mat-column-actionsPart {
+                    @extend %customColumn;
+                }
+
+                .mat-column-title {
+                    flex: 0 0 10% !important;
+                    width: 10% !important;
+                }
+
+                .mat-column-userId {
+                    flex: 0 0 11% !important;
+                    width: 11% !important;
+                }
+
+                .mat-column-createdDateTime {
+                    flex: 0 0 11% !important;
+                    width: 11% !important;
+                }
+
+                .mat-column-createdUser {
+                    flex: 0 0 10% !important;
+                    width: 10% !important;
+                }
+
+                .mat-column-feedbackType {
+                    flex: 0 0 11% !important;
+                    width: 11% !important;
+                }
+
+                .mat-column-status {
+                    flex: 0 0 7% !important;
+                    width: 7% !important;
+                }
+
+                .mat-column-lastUpdateUser {
+                    flex: 0 0 10% !important;
+                    width: 10% !important;
+                }
+
+                .mat-column-lastUpdateDateTime {
+                    flex: 0 0 10% !important;
+                    width: 10% !important;
+                }
+
+                .mat-column-adminFeedback {
+                    flex: 0 0 12% !important;
+                    width: 12% !important;
+                }
+
+                .mat-column-actionsPart {
+                    flex: 0 0 8% !important;
+                    width: 8% !important;
+                }
+
+                mat-header-row:hover {
+                    background: $table-header-dark-blue-color 0% 0% no-repeat padding-box !important;
+                    opacity: 1;
+                }
+
+                mat-row,
+                mat-footer-row {
+                    min-height: 38px;
+                }
+
+                mat-header-row {
+                    min-height: 38px;
+                }
+
+            }
+
+
+
+            .filterIcon {
+                background: url("../../../assets/images/icon-filter.svg") no-repeat;
+                width: 18px;
+                height: 18px;
+                cursor: pointer;
+                text-align: right;
+                align-items: left;
+                display: inline;
+            }
+
+            .filterActivityPage {
+                padding-bottom: 10px;
+
+                .filter-card {
+                    position: relative;
+                    width: 100% !important;
+                    background: $white-color 0% 0% no-repeat padding-box;
+                    box-shadow: 0px 0px 12px $box-shadow-black;
+                    border: 1px solid $box-border-grey;
+
+
+                    .material-icons.clsFilter {
+                        cursor: pointer;
+                        font-size: 20px !important;
+                    }
+
+                    .fieldWidths {
+                        width: 100%;
+
+                        .filter-block {
+                            width: 130px !important;
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+            .rowDataText {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                width: auto;
+                hyphens: none;
+                text-overflow: ellipsis;
+            }
+
+            .editFeedback {
+                background: url('../../../assets/images/edit-Icon.png') left no-repeat;
+                width: 25px;
+                cursor: pointer;
+            }
+
+            .deleteFeedback {
+                background: url('../../../assets/images/delete-Icon.png') left no-repeat;
+                width: 25px;
+                cursor: pointer;
+            }
+
+        }
+    }
+
+    .feedbackTable .mat-table.activitySearchData-table .mat-row .mat-cell,
+    .feedbackTable .mat-table.activitySearchData-table .mat-header-row .mat-cell {
+        padding: 8px 0px 8px 15px !important;
+    }
+
+    .feedbackTable .mat-table.activitySearchData-table .mat-row .mat-header-cell,
+    .feedbackTable .mat-table.activitySearchData-table .mat-header-row .mat-header-cell {
+        padding-bottom: 0px !important;
+
+    }
+
+
+}
+
+
+::ng-deep .mat-form-field.formSelect {
+    padding: 0px !important;
+
+    .mat-form-field-wrapper {
+        padding: 0px !important;
+    }
+}
+
+::ng-deep .mat-sort-header-arrow {
+    color: $white-color !important;
+}
+
+::ng-deep .mat-sort-header-stem {
+    color: $white-color !important;
+}

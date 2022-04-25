@@ -1,0 +1,51 @@
+.addItemHeader{
+  padding: 0px 0px 20px 0px;
+  
+  text-align: left;
+  font: normal normal normal 30px/26px Barlow;
+  letter-spacing: 1.25px;
+  color: #3E3E3E;
+  text-transform: uppercase;
+  opacity: 1;
+  font-family:  'Barlow-Medium', sans-serif !important;
+  font-size: 22px;
+}
+
+.addItemParent{
+  padding: 20px;
+}
+
+form, .formClass {
+  width: 100%;  
+}
+.formLabel{
+  width: 170px;
+  padding: 15px 0px 0px 0px;
+}
+input {
+  width: 100%;
+}
+.example-full-width {
+  width: 100%;
+}
+.textBoxs{
+  opacity: 0.8;
+  width: 430px;
+}
+.actionButtons{
+  padding:30px 15px 15px 15px;
+}
+.submit-btn{
+  margin-right:40px;
+}
+.inputElementHide{
+  opacity:0;
+  width: 0px;
+  border: 1px solid red;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+    cursor: pointer;
+}

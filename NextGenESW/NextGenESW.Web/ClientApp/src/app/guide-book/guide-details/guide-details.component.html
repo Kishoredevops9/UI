@@ -1,0 +1,75 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="full-width" [class.obsolete-document-bg]="globalData?.assetStatus === ASSET_STATUSES.OBSOLETE">
+  <div [class]="documentCreateStatus ? 'document-header top-band create-doc': 'document-header top-band'">
+    <!-- <div class="document-toolbar">
+      <a href="#" mat-button title="View"><span class="icon view"></span></a>
+      <a href="#" mat-button title="Refresh"><span class="icon refresh"></span></a>
+    </div> -->
+    <div class="header-wrapper">
+      <hr class="line-divider GB" />
+      <div class="top-band-wrapper">
+        <span class="document-type GB" *ngIf="contentType">{{
+          contentType
+          }}</span>
+        <span id="docTitle" class="doc-title name">{{ title }}</span>
+        <span class="gb-preview" *ngIf="previewMode">PREVIEW</span>
+        <span *ngIf="id && !previewMode && !hasApproved">
+          <!-- PREVIEW -->
+          <a (click)="openDoc()" class="open-document">Open Document</a>
+        </span>
+        <span *ngIf="showMenuActions == true">
+          <app-top-menu-actions [editMode]="!previewMode" [globalContent]="globalData" (handlePreviewMode)="handleOnPreviewClick($event)"
+            (handleApprovalAction)="handleApprovalAction($event)" (handleRequestAction)="handleRequestAction($event)" (recallMessageToEmit)="handleOnRecallClick($event)">
+          </app-top-menu-actions>
+        </span>
+      </div>
+    </div>
+  </div>
+  <app-progressbar *ngIf="documentStatus" [progressBar]='progressBar'
+                   [docType]="contentType" [docStatus]="documentStatus"></app-progressbar>
+  <div class="clear"></div>
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="wrapper tab-wrapper GB">
+      <mat-tab-group class="" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab label="Properties" *ngIf="!webContent">
+        </mat-tab>
+        <mat-tab label="Lessons Learned" *ngIf="!webContent" [disabled]="hasProperty">
+        </mat-tab>
+        <span *ngIf="webContent">
+          <mat-tab *ngFor="let tab of tablists" [label]="tab.displayTab">
+          </mat-tab>
+        </span>
+        <mat-tab label="Lessons Learned" *ngIf="webContent" [disabled]="hasProperty">
+        </mat-tab>
+        <mat-tab label="Properties" *ngIf="webContent">
+        </mat-tab>
+      </mat-tab-group>
+      <ng-container *ngIf="showMenuActions == true">
+        <app-sub-menu-actions [globalContent]="globalData" [id]="id" [contentType]="contentType" [type]="contentType"
+                              [isPublisheddocument]="hasTabLists"></app-sub-menu-actions>
+      </ng-container>
+    </div>
+    <div class="tab-detail-content">
+      <ng-container *ngFor="let tab of tablists">
+        <ng-container *ngIf="webContent && currentTabList[selectedIndex]?.textLabel === tab.displayTab">
+          <iframe [src]="tab.extractedDocUrl | safeurl" width="100%" height="968px" frameborder="0"></iframe>
+        </ng-container>
+      </ng-container>
+      <ng-container [ngSwitch]="currentTabList[selectedIndex]?.textLabel">
+        <ng-container *ngSwitchCase="'Properties'">
+          <ng-container *ngIf="!webContent">
+            <app-properties [contentType]="contentType" [globalData]="globalData"
+                            [updatedContentOwner]="updatedContentOwner"></app-properties>
+          </ng-container>
+          <ng-container *ngIf="webContent">
+            <app-properties [contentType]="contentType" [preview]="previewMode" [globalData]="globalData"
+                            [updatedContentOwner]="updatedContentOwner"></app-properties>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Lessons Learned'">
+          <app-lesson-learned [contentType]="contentType" [globalData]="globalData"></app-lesson-learned>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

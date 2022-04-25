@@ -1,0 +1,20 @@
+.app-task-execution-map {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__header-arrow {
+    cursor: pointer;
+  }
+
+  &__header-dropdown-option {
+    height: 2em !important;
+  }
+
+  &__diagram {
+    width: 100%;
+    height: calc(100vh - 300px);
+  }
+}

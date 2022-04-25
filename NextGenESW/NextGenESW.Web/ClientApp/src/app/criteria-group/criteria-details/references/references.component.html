@@ -1,0 +1,41 @@
+
+<div *ngIf="loading" id="cover-spin"></div>
+<div>
+  <div class="mdl-grid tab-margin">
+    <div class="editor-field">
+      <div class="header-field">References</div>
+      <div class="sub-field">Required References</div>
+      <ng-container *ngIf="!isEditableMode; else requiredReferencesEditView">
+        <app-html-viewer [content]="requiredReferences"></app-html-viewer>
+      </ng-container>
+      <ng-template #requiredReferencesEditView>
+        <ng-container>
+          <app-texteditor [placeholder]="requiredReferences" (focusout)="checkFocusOut()" (focusin)="checkValueChange()" [allowMedia]="false"
+                          (editorData)="requiredReferences = $event; onFocusOut()"></app-texteditor>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="editor-field">
+      <div class="sub-field">Informational References</div>
+      <ng-container *ngIf="!isEditableMode; else informationalReferencesEditView">
+        <app-html-viewer [content]="informationalReferences"></app-html-viewer>
+      </ng-container>
+      <ng-template #informationalReferencesEditView>
+        <ng-container>
+          <app-texteditor [placeholder]="informationalReferences" (focusout)="checkFocusOut()" (focusin)="checkValueChange()" [allowMedia]="false"
+                          (editorData)="informationalReferences = $event; onFocusOut()"></app-texteditor>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+  <div style="margin-right: 28%;">
+    <span class="arrow-icon">
+      <img
+        (click)="onArrowClick()"
+        src="./assets/images/EastArrow.svg"
+        width="50px"
+        height="50px"
+      />
+    </span>
+  </div>
+</div>

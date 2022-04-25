@@ -1,0 +1,22 @@
+<div class="guidance-box">
+  <div class="guidance-wrapper">GUIDANCE</div>
+  <div class="{{ bottomLineStyle }}"></div>
+  <div class="editor-wrapper inner-content">
+
+
+    <!-- <div *ngIf="docStatus == 2; else EDIT_MODE">
+      <angular-editor [ngClass]="{
+          'purpose-preview': docStatus == 2
+        }" id="editor" [config]="docStatus == 2 ? config1 : config" [ngModel]="contentInfo.content?.guidance">
+      </angular-editor>
+    </div> -->
+    <!-- <ng-template #EDIT_MODE> -->
+
+    <app-texteditor [placeholder]="contentInfo.content.guidance"
+                    id="angularEditor"
+                    (editorData)="contentInfo.content.guidance = $event"></app-texteditor>
+  <br>
+      <button mat-raised-button color="primary" class="submit-btn" (click)="saveGuidance()">Add</button>
+    <!-- </ng-template> -->
+  </div>
+</div>

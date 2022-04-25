@@ -1,0 +1,38 @@
+.modal {
+    display: block;
+    top: 150px;
+}
+
+.modal-title {
+    font: normal normal normal 24px/21px Barlow Semi Condensed Medium;
+}
+
+.form-control {
+    border: 0;
+    border-bottom: solid 1px #222;
+    border-radius: 0;
+    outline: none !important;
+    margin-bottom: 25px;
+}
+
+
+.form-control:focus {
+    outline: none;
+    border-bottom: 2px solid blue;
+    outline: none !important;
+  }
+
+  input:focus, textarea:focus, select:focus{
+    outline: none;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 600px;
+        box-shadow: 0 5px 15px #999;
+    }
+    }
+    
+    .modal-content {
+        border: 0;
+    }

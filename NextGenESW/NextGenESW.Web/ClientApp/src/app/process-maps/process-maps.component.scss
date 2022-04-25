@@ -1,0 +1,53 @@
+@import '/src/scss/helpers/variables';
+@import '/src/scss/helpers/mixins';
+@import '/src/scss/helpers/breakpoints';
+@import '/src/scss/helpers/placeholders';
+
+.container {
+  padding: 20px;
+  display: flex;
+}
+
+.table-wrapper {
+
+  border-top: 2px solid #ccc;
+  border-radius: 0%;
+  box-shadow: none;
+  width: 100%;
+
+  @extend %table-style;
+
+  .heading-band {
+    @extend %table-heading-band;
+    display: grid;
+    grid-template-areas: "mat-title btn";
+    grid-template-columns: auto auto;
+
+    .mat-title {
+      position: relative;
+      top: 10px;
+      grid-area: mat-title;
+    }
+
+    .btn {
+      grid-area: btn;
+      margin-right: 20px;
+
+      button {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .mat-headline {
+    @include breakpoint(mobileonly) {
+      font-size: 13px;
+    }
+  }
+
+  .material-icons {
+    font-size: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+}

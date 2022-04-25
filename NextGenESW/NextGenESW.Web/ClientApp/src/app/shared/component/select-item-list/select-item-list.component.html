@@ -1,0 +1,68 @@
+<mat-form-field class="w-100 px-2"
+                *ngIf="withSearchFilter">
+  <input matInput
+         minlength="2"
+         [ngModel]="filterText$ | async"
+         (ngModelChange)="filterTextBSub.next($event)"
+         placeholder="Search text"
+         #input>
+</mat-form-field>
+<mat-tree [dataSource]="dataSource"
+          [treeControl]="treeControl"
+          *ngIf="{ filterText: filterText$ | async } as vw">
+  <mat-tree-node *matTreeNodeDef="let node"
+                 matTreeNodeToggle
+                 matTreeNodePadding
+                 [style.display]="filterLeafNode(vw.filterText, node, 'label') ? 'flex' : 'none'"
+                 [matTreeNodePaddingIndent]="25">
+    <button *ngIf="getParentNode(node)"
+            class="indent-button"
+            mat-icon-button></button>
+    <mat-checkbox *ngIf="multiple"
+                  class="mr-1"
+                  [checked]="checklistSelection.isSelected(node)"
+                  [disabled]="node.selectable === false"
+                  (change)="todoLeafItemSelectionToggle(node)"></mat-checkbox>
+    <ng-container [ngTemplateOutlet]="itemRendererTpl"
+                  [ngTemplateOutletContext]="{ node: node }">
+    </ng-container>
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild"
+                 matTreeNodePadding
+                 [style.display]="filterParentNode(vw.filterText, node, 'label', treeControl) ? 'flex' : 'none'"
+                 [matTreeNodePaddingIndent]="25">
+    <button class="toggle-button"
+            mat-icon-button
+            matTreeNodeToggle
+            [attr.aria-label]="'Toggle ' + node.label">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    <mat-checkbox class="mr-1"
+                  *ngIf="multiple"
+                  [checked]="descendantsAllSelected(node)"
+                  [indeterminate]="!independentMode && descendantsPartiallySelected(node)"
+                  [disabled]="node.selectable === false"
+                  (change)="todoItemSelectionToggle(node, $event)"></mat-checkbox>
+    <ng-container [ngTemplateOutlet]="itemRendererTpl"
+                  [ngTemplateOutletContext]="{ node: node }">
+    </ng-container>
+  </mat-tree-node>
+</mat-tree>
+
+<ng-template #itemRendererTpl
+             let-node="node">
+  <ng-container *ngIf="itemRenderer"
+                [ngTemplateOutlet]="itemRenderer"
+                [ngTemplateOutletContext]="{ item: node }">
+  </ng-container>
+  <ng-container *ngIf="!itemRenderer">
+    <div class="node-label-wrapper p-1"
+         [class.clickable]="!multiple && (node.selectable !== false) && (!node.nbChildren || independentMode)"
+         [class.disabled]="node.selectable === false"
+         [class.selected]="!multiple && checklistSelection.isSelected(node)"
+         (click)="onClickNodeLabel(node)">{{ node.label }}</div>
+  </ng-container>
+</ng-template>

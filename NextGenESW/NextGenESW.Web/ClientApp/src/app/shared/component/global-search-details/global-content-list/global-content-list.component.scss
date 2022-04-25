@@ -1,0 +1,216 @@
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+@import '../../../../../scss/base/global';
+
+.EKS_btns_ds {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: $content-type-ds;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_wi {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: $content-type-wi;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_cg {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: black;
+    background-color: $content-type-cg;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_gb {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: $content-type-gb;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_rc {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: black;
+    background-color: $content-type-rc;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_kp {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: $content-type-kp;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_toc {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: #034796;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_ap {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: $content-type-ap;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_m {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: #DF4B09;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_sf {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: #C4B700;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+.EKS_btns_sp {
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  letter-spacing: 0.83px;
+
+  span {
+    color: #fff;
+    background-color: black;
+    padding: 3px 3px;
+  }
+
+  button {
+    background-color: white;
+    padding-left: 7px;
+    padding-right: 20px;
+    cursor: pointer;
+  }
+}
+
+
+.mat-raised-button {
+  cursor: pointer;
+  color: black;
+  box-shadow: none;
+  background-color: white;
+  padding-left: 0px 7px
+}
+
+.full-width {
+  margin-top: 1%;
+}

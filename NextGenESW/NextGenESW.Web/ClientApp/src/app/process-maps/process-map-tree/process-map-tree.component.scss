@@ -1,0 +1,85 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.mat-tree {
+    font-size: 20px;
+}
+
+.background-highlight span {
+    background-color: lightblue;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.leafNode {
+    cursor: pointer;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.heading-band {
+    background: #ededed;
+    margin: 0 0 20px;
+
+    .mat-title {
+        @include font-face-BarlowSemiCondensed-SemiBold(1.15rem, 1.15rem);
+        grid-area: mat-display-1;
+        text-transform: uppercase;
+        padding: 10px;
+        margin: 0;
+    }
+}
+
+.roundBullet {
+    width: 10px;
+    height: 10px;
+    font-size: 10px !important;
+    color: #EE9907;
+    opacity: 1;
+}
+
+.triangleIcons {
+    color: #598FCC;
+    opacity: 1;
+    font-size: 28px !important;
+}
+
+.roundBullet-blue {
+    width: 10px;
+    height: 10px;
+    font-size: 10px !important;
+    color: #598FCC;
+    opacity: 1;
+    padding-left: 10px;
+}
+
+.btnDisabled {
+    width: 0px !important;
+}
+
+.nodeText {
+    font-family: "Barlow-Regular";
+    color: #000000;
+    display: inline-block !important;
+}
+
+.textMenus {
+    padding-left: 10px;
+}
+
+.mat-menu-item {
+    line-height: 0px !important;
+    height: 30px !important;
+
+    img {
+        width: 13px !important;
+    }
+
+    span {
+        padding-left: 10px !important;
+    }
+}

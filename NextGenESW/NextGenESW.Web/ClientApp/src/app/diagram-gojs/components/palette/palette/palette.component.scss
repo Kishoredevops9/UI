@@ -1,0 +1,68 @@
+@import '../../../theme/_colors';
+@import '../../../theme/_fonts';
+@import '../../../theme/_shadows';
+@import '../../../theme/_zIndexes';
+
+$palette-width: 200px;
+$header-height: 28px;
+
+.app-palette {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: $zindex-content;
+  pointer-events: none;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  box-sizing: border-box;
+  padding: 16px;
+
+  &__container {
+    pointer-events: all;
+    border: 1px solid $gray;
+    font-size: 16px;
+    border-radius: 4px;
+    background: $white;
+    width: $palette-width;
+    @include box-shadow;
+  }
+
+  &__header {
+    font-family: $font-family;
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    height: $header-height;
+    cursor: grab;
+    box-sizing: border-box;
+  }
+
+  &__expand-arrow {
+    margin-left: auto;
+    cursor: pointer;
+  }
+
+  &__content {
+    transition: height 300ms ease-in-out, opacity 300ms ease-out;
+    overflow: hidden;
+    opacity: 1;
+    transform-origin: center;
+    border-top: 1px solid $gray;
+
+    &--collapsed {
+      opacity: 0;
+    }
+  }
+
+  &__palette {
+    width: $palette-width;
+    height: 100%;
+
+    canvas {
+      outline: 0;
+    }
+  }
+}

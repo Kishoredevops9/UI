@@ -1,0 +1,23 @@
+
+  ::ng-deep .previews .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+    mat-cell {
+      padding: 0px !important;
+    }
+  
+    //background-color: #f5f5f5 !important;
+    padding: 0px !important;
+    outline: none !important;
+    border: none !important;
+    min-height: max-content !important;
+    height: max-content !important;
+    resize: none !important;
+    //margin-left: 1%;
+  
+    ol {
+      margin-left: 23px !important;
+    }
+  
+    ul {
+      margin-left: 23px !important;
+    }
+  }

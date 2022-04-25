@@ -1,0 +1,232 @@
+<!-- <div class="components">
+  <div class="iframe-placeholder">
+    <ng-container *ngIf="isShowIframebox">
+      <div class="iframepopup">
+        <iframe class="iframedata" [src]="dataUrls | safeurl" frameborder="0" allow="autoplay; encrypted-media">
+        </iframe>
+      </div>
+    </ng-container>
+
+    <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done" [cdkDropListConnectedTo]="[todoList]"
+      class="drop-container" (cdkDropListDropped)="drop($event)">
+      <div *ngFor="let item of done" cdkDrag>
+        <span class="draged-list">{{ item.contentType }}</span>
+        {{ item.title }}
+
+        <div style="display: initial;">
+          <div class="document-no">
+            <span class="icon usa"></span>
+            <span class="name">{{ item.version }} / {{ item.contentId }} /
+              {{ item.contentNo }}</span>
+          </div>
+        </div>
+        <span class="component_arrow" (click)="iframeDataDisplayed(item.contentId)">
+          <mat-icon *ngIf="!listArrowBtn">keyboard_arrow_left</mat-icon>
+          <mat-icon *ngIf="listArrowBtn">keyboard_arrow_right</mat-icon>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="documents-container">
+    <mat-toolbar class="search-block mat-elevation-z4" [class.active]="toggleSearch">
+      <mat-toolbar-row style="padding: 0 5px;">
+        <button class="search-icon" mat-icon-button disabled>
+          <mat-icon>search</mat-icon>
+        </button>
+        <input class="search-control" type="text" placeholder="Search" [(ngModel)]="searchText" #searchbar />
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="componentWICDdocList"
+      [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of componentWICDdocList" cdkDrag>
+        <span class="draged-list">{{ item.contentType }}</span>
+        {{ item.title }}
+        <div>
+          <div class="document-no">
+            <span class="icon usa"></span>
+            <span class="name">{{ item.version }} / {{ item.contentId }} /
+              {{ item.contentNo }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div> -->
+<div *ngIf="isLoading" id="cover-spin"></div>
+
+<!-- <button mat-raised-button color="primary" (click)="addAddOns(type)" class="submit-btn custom">Search</button> -->
+<div class="mdl-grid">
+  <div
+    class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone eks-spacing"
+    *ngIf="docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT && docStatus !== ASSET_STATUSES.OBSOLETE && docStatus !== ASSET_STATUSES.APPROVED_WAITING_FOR_JC"
+  >
+    <div class="mdl-grid full-width">
+
+      <button style="right:-10px" mat-button mat-raised-button color="primary" (click)="addExternalAddOns(false)"
+            class="submit-btn custom">Add External
+            Link</button> &nbsp;&nbsp;&nbsp;
+
+      <button
+        mat-raised-button
+        mat-button
+        color="primary"
+        (click)="openAddonsPopupSearch()"
+        class="submit-btn custom"
+      >
+        Add EKS Links
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone eks-spacing"
+  *ngIf="docStatus != 2">
+    <mat-accordion multi="true">
+      <mat-expansion-panel *ngFor="let item of items" [expanded]="itemAdded"  (opened)="panelExpandCollapse(true)"
+      (closed)="panelExpandCollapse(false)"
+        style="border-style: solid; margin: 2px; border-color: rgb(39, 39, 39);">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{item}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-template matExpansionPanelContent>
+          <Br /><Br />
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <mat-radio-button class="radio" ="selectAddOns('WI')"></mat-radio-button>
+            <label class="EKS_btns_wi"><span>WI</span><label>Work Instructions</label></label>
+          </span>
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <mat-radio-button class="radio" ="selectAddOns('GB')"></mat-radio-button>
+            <label class="EKS_btns_gb"><span>GB</span><label>Guide Books</label></label>
+          </span>
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <mat-radio-button class="radio" (change)="selectAddOns('CG')"></mat-radio-button>
+            <label class="EKS_btns_cg"><span>CG</span><label>Criteria Groups</label></label>
+          </span>
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <mat-radio-button class="radio" (change)="selectAddOns('RC')"></mat-radio-button>
+            <label class="EKS_btns_rc"><span>RC</span><label>Related Content</label></label>
+          </span>
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <mat-radio-button class="radio" (change)="selectAddOns('KP')"></mat-radio-button>
+            <label class="EKS_btns_kp"><span>KP</span><label>Knowledge Pack</label></label>
+          </span>
+          <div *ngIf="contentSelected" class="content-selected">
+
+            <div class="content">
+
+              <ng-container *ngIf="type === 'WI' else TYPE_AP">
+                <div class="mdl-grid full-width bottom-line-wi">
+                  <span class="draged-list-wi">{{ type }}</span>&nbsp;&nbsp;Work Instructions
+                </div>
+              </ng-container>
+
+              <ng-template #TYPE_AP>
+                <ng-container *ngIf="type === 'AP' else TYPE_CG">
+                  <div class="mdl-grid full-width bottom-line-ap">
+                    <span class="draged-list-ap">{{ type }}</span>&nbsp;&nbsp;Activity Pages
+                  </div>
+                </ng-container>
+              </ng-template>
+
+              <ng-template #TYPE_CG>
+                <ng-container *ngIf="type === 'CG' else TYPE_GB">
+                  <div class="mdl-grid full-width bottom-line-cg">
+                    <span class="draged-list-cg">{{ type }}</span>&nbsp;&nbsp;Criteria Groups
+                  </div>
+                </ng-container>
+              </ng-template>
+
+              <ng-template #TYPE_GB>
+                <ng-container *ngIf="type === 'GB' else TYPE_RC">
+                  <div class="mdl-grid full-width bottom-line-gb">
+                    <span class="draged-list-gb">{{ type }}</span>&nbsp;&nbsp;Guide Books
+                  </div>
+                </ng-container>
+              </ng-template>
+              <ng-template #TYPE_RC>
+                <ng-container *ngIf="type === 'RC' else TYPE_KP">
+                  <div class="mdl-grid full-width bottom-line-rc">
+                    <span class="draged-list-rc">{{ type }}</span>&nbsp;&nbsp;Related Content
+                  </div>
+                </ng-container>
+              </ng-template>
+              <ng-template #TYPE_KP>
+                <ng-container *ngIf="type === 'KP'">
+                  <div class="mdl-grid full-width bottom-line-kp">
+                    <span class="draged-list-kp">{{ type }}</span>&nbsp;&nbsp;Knowledge Pack
+                  </div>
+                </ng-container>
+              </ng-template>
+            </div>
+            <Br /><Br />
+            <div class="mdl-grid full-width content-search content-label">
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-header search-label">
+                  <label>Content Id</label>
+              </div>
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-header search-label">
+                  <label>Title</label>
+              </div>
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-header search-label">
+                  <label>Disciplines</label>
+              </div>
+
+          </div>
+          <Br />
+          <div class="mdl-grid full-width content-search">
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-label">
+                  <input matInput placeholder="Content Id"  [(ngModel)]="ctContentId"/>
+              </div>
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-label">
+                  <input matInput placeholder="Title" [(ngModel)]="ctTitle" />
+              </div>
+              <div
+                  class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone search-label">
+                  <input matInput placeholder="Description" [(ngModel)]="ctDescription" />
+              </div>
+
+            </div>
+            <div class="mdl-grid full-width">
+              <button mat-raised-button color="primary" [disabled]="!contentSelected" (click)="addAddOns()" class="submit-btn custom">Search</button>
+          </div>
+
+          </div>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div> -->
+
+<Br />
+
+    <!-- <app-list-item
+      [item]="parentItem"
+      [connectedDropListsIds]="connectedDropListsIds"
+      [docStatus]="docStatus"
+      (itemDrop)="onDragDrop($event)"
+      (deleteComponentEvent)="deleteComponent($event)"
+    >
+    </app-list-item> -->
+
+    <app-activity-drag-drop
+    [nodes]="parentItem.children"
+    [connectedDropListsIds]="connectedDropListsIds"
+    [bindData] = "bindData"
+    [docStatus]="docStatus"
+    (itemDrop)="onDragDrop($event)"
+    (deleteComponentEvent)="deleteComponent($event)"
+>
+    </app-activity-drag-drop>
+
+
+ <!-- Add New Code for drag and drop -->

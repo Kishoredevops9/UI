@@ -1,0 +1,110 @@
+<h1 mat-dialog-title>ADD NEW BLANK STEP</h1>
+<div class="formBoxAdd" [ngClass]="{'stepSHgt': stepSHgt}">
+    <ul>
+        <li>
+            <label> Step:</label>
+            <mat-form-field>
+                <input matInput placeholder="Please enter a name for the step" [(ngModel)]="formData.title" (change)="valuechange()">
+            </mat-form-field>
+        </li>
+        <li>
+            <label>Export Group* </label>
+            <mat-form-field>
+                <mat-select placeholder="Please select an Export Group" [(ngModel)]="formData.exportAuthorityId" (selectionChange)="valuechange()">
+                    <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                        {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </li>
+        <li>
+            <label>No of Disciplines*</label>
+            <mat-form-field>
+                <mat-select  [(ngModel)]="formData.dlength" placeholder="Please select an Disciplines" (selectionChange)="onChange($event)">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </li>
+       <li *ngIf="formData.dlength>0">
+            <label>Discipline</label>
+            <div class="example-form-field top_margin_new">
+                <mat-label *ngIf="selctdata0.length > 0">
+                <div class="txtOverflows">{{selctdata0}}</div>
+                </mat-label>
+                <mat-label *ngIf="!selctdata0.length"> Select Discipline</mat-label>
+                <a class="iconwidth" mat-button matSuffix mat-icon-button
+                (click)="showDisciplineDropDown0=(showDisciplineDropDown0)?false:true">
+                <mat-icon>
+                    {{ ( showDisciplineDropDown0 ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+                </a>
+                <mat-card class="dropbox" [hidden]="!showDisciplineDropDown0">
+                <app-discipine-tree [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event, '0')" [treedata]="discipline">
+                </app-discipine-tree>
+                </mat-card>
+            </div>
+        </li>
+        <li *ngIf="formData.dlength>1">
+            <label>Discipline</label>
+            <div class="example-form-field top_margin_new">
+                <mat-label *ngIf="selctdata1.length > 0">
+                  <div class="txtOverflows">{{selctdata1}}</div>
+                </mat-label>
+                <mat-label *ngIf="!selctdata1.length"> Select Discipline</mat-label>
+                <a class="iconwidth" mat-button matSuffix mat-icon-button
+                  (click)="showDisciplineDropDown1=(showDisciplineDropDown1)?false:true">
+                  <mat-icon>
+                    {{ ( showDisciplineDropDown1 ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </a>
+                <mat-card class="dropbox" [hidden]="!showDisciplineDropDown1">
+                  <app-discipine-tree [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event, '1')" [treedata]="discipline">
+                  </app-discipine-tree>
+                </mat-card>
+              </div>
+        </li>
+        <li *ngIf="formData.dlength>2">
+            <label>Discipline</label>
+            <div class="example-form-field top_margin_new">
+                <mat-label *ngIf="selctdata2.length > 0">
+                  <div class="txtOverflows">{{selctdata2}}</div>
+                </mat-label>
+                <mat-label *ngIf="!selctdata2.length"> Select Discipline</mat-label>
+                <a class="iconwidth" mat-button matSuffix mat-icon-button
+                  (click)="showDisciplineDropDown2=(showDisciplineDropDown2)?false:true">
+                  <mat-icon>
+                    {{ ( showDisciplineDropDown2 ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </a>
+                <mat-card class="dropboxn" [hidden]="!showDisciplineDropDown2">
+                  <app-discipine-tree [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event, '2')" [treedata]="discipline">
+                  </app-discipine-tree>
+                </mat-card>
+              </div>
+        </li>
+        <li *ngFor='let in of counter(disciplinelen);let i = index'>
+
+        </li>
+
+
+
+
+    </ul>
+
+</div>
+<div class="action-btn">
+
+    <button mat-raised-button color="primary" class="mat-button" [disabled]="stepnewBtn" (click)="submitForm()">Save</button>
+    <button mat-raised-button color="primary" class="mat-button" (click)="cancelAction()">Close</button>
+
+
+</div>
+<div  *ngIf="loading" class="stepClass">
+  <div class="spinnerbox">
+    <mat-spinner  diameter="60"></mat-spinner>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="add-activities">
+    <div class="mat-dialoag-header">
+        <h1 mat-dialog-title>
+          {{ data.isNew ? 'Add Connector' : 'Edit connectors' }}
+        </h1>
+        <span class="material-icons" mat-dialog-close>
+            close
+        </span>
+    </div>
+    <mat-dialog-content>
+        <mat-card>
+            <form [formGroup]="connectorForm" id="editActivity">
+                <div class="flexItemBox">
+                    <div class="label">Label</div>
+                    <mat-form-field>
+                        <mat-label>Label</mat-label>
+                        <input matInput placeholder="Description" formControlName="captionMiddle" />
+                    </mat-form-field>
+                </div>
+                <div class="flexItemBox">
+                    <div class="label">Start Label</div>
+                    <mat-form-field>
+                        <mat-label>Start Label</mat-label>
+                        <input matInput placeholder="Description" formControlName="captionStart" />
+                    </mat-form-field>
+                </div>
+                <div class="flexItemBox">
+                    <div class="label">End Label</div>
+                    <mat-form-field>
+                        <mat-label>End Label</mat-label>
+                        <input matInput placeholder="Description" formControlName="captionEnd" />
+                    </mat-form-field>
+                </div>
+
+                <div class="button-group">
+                    <button [disabled]="!connectorForm.valid" (click)="onSubmit()" mat-flat-button color="primary">
+                      {{ data.isNew ? 'Add' : 'Update' }}
+                    </button>
+                    <button (click)="onClose()" mat-flat-button color="warn">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+    </mat-dialog-content>
+</div>

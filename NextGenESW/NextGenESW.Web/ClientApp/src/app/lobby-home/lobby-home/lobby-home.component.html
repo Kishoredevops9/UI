@@ -1,0 +1,55 @@
+<div class="lobby-wrapper">
+    <app-lobby-slider></app-lobby-slider>
+    <div class="pw-footer">
+        <div class="Left-foot"></div>
+        <div class="top-link">
+            <!-- <span class="block1" *ngFor="let data of lobbyHomeResponse">                
+                <h3 class="md-caption">{{ data.title }}</h3>
+                <a target="_blank" href="{{ data.externalLink }}"><span>{{ data.description }}</span></a>
+            </span> -->
+            
+            <div class="footer-nav-container">
+
+
+                <ul class="foot-nav-ul">
+                  <li class="foot-nav-item" *ngFor="let links of lobbyFotterLinks">
+                    <h3>{{links.title}}</h3>
+                    <a class="nav-link" href={{links.url}} target="_blank">{{links.description}}</a>
+                  </li>
+                  <!--  
+                  <li class="foot-nav-item border-none">
+                      <h3>PW LIBRARY</h3>
+                      <a class="nav-link" href="http://pwww.eh.pweh.com/groups-and-events/groups/pisl/library_pw/library/index.htm" target="_blank">Explore books, electronic documents and more.</a>
+                    </li>
+                   
+                      <li class="foot-nav-item">
+                        <h3>ETU</h3>
+                        <a class="nav-link" href="https://prod61-iws.pw.utc.com/pwetu/actionLogin.do" target="_blank">Explore courses at every career level</a>
+                      </li>
+                      <li class="foot-nav-item">
+                        <h3>KM TOOLBOX</h3>
+                        <a class="nav-link" href="https://pwcollab-tcc.pw.utc.com/sites/PLDMTM1/ekm/SitePages/KM%20Toolbox.aspx" target="_blank">Tool to implement Knowledge Management</a>
+                      </li>
+                      <li class="foot-nav-item">
+                        <h3>COMMUNITES OF PRACTICE</h3>
+                        <a class="nav-link" href="https://pwcollab-us.pw.utc.com/sites/ENG_NextGenESW/SitePages/Home.aspx" target="_blank">Practitioners who share knowledge across PW engineering</a>
+                      </li>
+                      <li class="foot-nav-item">
+                        <h3>ENGINE WORKS COMMUNITY PAGE</h3>
+                        <a class="nav-link" href="https://pwcollab-us.pw.utc.com/sites/ENG_NextGenESW/SitePages/Home.aspx" target="_blank">Search for additional help and training information</a>
+                      </li>
+                      -->
+                      <!-- <li class="foot-nav-item-lastright">
+                        <h3>ENGINE WORKS COMMUNITY PAGE</h3>
+                        <a class="nav-link" href="#">Search for additional help and training information</a>
+                      </li> -->
+                   
+                  </ul>
+
+            </div>
+            
+        </div>
+
+        <!-- <div class="copywrite">© 2020 Raytheon Technologies Corporation - Pratt & Whitney Division</div> -->
+    </div>
+</div>

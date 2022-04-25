@@ -1,0 +1,172 @@
+@import "/src/scss/helpers/variables";
+@import "/src/scss/helpers/mixins";
+@import "/src/scss/helpers/breakpoints";
+@import "/src/scss/helpers/placeholders";
+@import "../../../../../scss/base/_global.scss";
+
+.headTxt {
+  text-align: left;
+  font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  font-family: "BarlowSemiCondensed-Medium";
+  padding: 0px 20px 20px 0px;
+  font-size: 24px;
+}
+
+.upload-popup {
+  padding: 15px 15px 15px 35px;
+}
+
+.uploadBox {
+  padding: 5px;
+  max-width: 1407px;
+}
+
+.infoText {
+  text-align: left;
+  font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  font-family: "BarlowSemiCondensed-Medium";
+  padding: 20px;
+  border-left: 3px solid #00a9e0;
+  background-color: #bfe6f3;
+  font-size: 16px;
+  width: 100%;
+}
+
+.uploadArea {
+  border: 2px dashed #cbcbcb;
+  padding: 5% 0;
+  margin-top: 10px;
+  border-radius: 3px;
+  position: relative;
+  width: 100%;
+}
+
+.dropTxt {
+  text-align: center;
+  font: normal normal medium 24px/21px Barlow Semi Condensed Medium;
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  font-family: "BarlowSemiCondensed-Medium";
+  font-size: 20px;
+  padding: 0 0 2%;
+  //padding: 10px;
+}
+
+input {
+  opacity: 0;
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  //border: 1px solid red;
+}
+
+.displayBox {
+  padding: 10px;
+}
+
+.fileNameDisplay {
+  padding: 10px;
+}
+
+.elementName {
+  color: blue;
+  padding-right: 20px;
+  font-weight: bold;
+}
+
+.downloadBtn {
+  margin-top: 3%;
+}
+
+::ng-deep .mat-flat-button.mat-primary,
+.mat-raised-button.mat-primary,
+.mat-fab.mat-primary,
+.mat-mini-fab.mat-primary {
+  background-color: #3e485e;
+}
+
+.sortable:hover {
+  cursor: pointer;
+  cursor: hand;
+}
+
+.file_alignment {
+  display: inline-block;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 20px;
+}
+
+.progress-bar {
+  margin: 20px 0 0;
+  display: grid;
+  grid-template-columns: 6% 92%;
+  grid-template-rows: 18px 1fr 1fr;
+  background: none;
+  color: #2d40e7;
+  row-gap: 5px;
+  position: relative;
+  @include font-face-Inter-Regular(16px, 21px);
+  letter-spacing: 0.67px;
+
+  .file-icon {
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+
+  .file_name {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    text-align: left;
+    padding: 0 0 5px;
+    display: flex;
+    justify-content: space-between;
+
+    .percentage {
+      color: #585858;
+    }
+  }
+
+  .mat-progress-bar {
+    height: 10px;
+    grid-row-start: 2;
+    grid-row-end: 2;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    border-radius: 5px;
+
+    .mat-progress-bar-buffer {
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
+
+    ::ng-deep .mat-progress-bar-fill {
+      &::after {
+        background-color: #3e485e;
+        border-radius: 13px;
+      }
+    }
+  }
+  .showUploadProgress {
+    position: absolute;
+    right: 0;
+    color: #585858;
+    @include font-face-Inter-Regular(16px, 21px);
+    letter-spacing: 0.67px;
+  }
+}

@@ -1,0 +1,50 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.content-create-options {
+  .mat-form-field {
+    @include breakpoint(mobileonly) {
+      width: 100%;
+      margin: 0 0 15px;
+    }
+  }
+
+  mat-form-field span.mat-form-field-label-wrapper label {
+    top: 0.525rem !important;
+  }
+}
+
+// Custom Styling for Select Box
+.mat-select-panel-wrap .mat-select-panel {
+  overflow: auto;
+  max-height: 500px;
+
+  .mat-option {
+    font-family: "BarlowSemiCondensed-Regular", sans-serif;
+    font-size: 1.25rem;
+    color: $black-color;
+    font-weight: 400;
+    padding: 8px 15px;
+    line-height: normal;
+    height: auto;
+  }
+}
+
+.mat-form-field-type-mat-select {
+  .mat-form-field-label {
+    @include font-face-BarlowSemiCondensed-Regular(1.125rem, normal);
+    color: $select-basic-color;
+  }
+}
+
+.content-dropdown {
+  .mat-form-field {
+    display: inline;
+
+    @include breakpoint(mobileonly) {
+      width: 100%;
+    }
+  }
+}

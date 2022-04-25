@@ -1,0 +1,206 @@
+<div class="serachContainer-Kpack" fxLayout="column" >
+    <div class="searchHeading">
+       K-PACK Search
+    </div>
+    <div class="searchBar">
+        
+        <mat-form-field appearance="legacy" class="searchField">
+            <!-- <mat-label>Search By Content Title or Number</mat-label> -->
+            <input matInput class="searchInput" placeholder="Search By Content Title or Number" [formControl]="inputFieldValue" >
+            <mat-icon matPrefix class="searchIcon"></mat-icon>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="searchContents()">Search</button>
+    </div>
+    
+    <div fxLayout="row" fxLayoutAlign="end center">
+        <span class="filterIcon" (click)="filterActivitypop()"></span>
+    </div>
+
+    
+    <div *ngIf="filterSubMapShow" fxLayout="row" fxLayoutAlign="center center" class="filterActivityPage">
+        <mat-card class="filter-card" *ngIf="filterSubMapShow" >
+          <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-card-title>Filter</mat-card-title>
+            <span (click)="closeFilters()" class="material-icons clsFilter">close</span>
+          </mat-card-header>
+    
+            <mat-card-content>
+              <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="filterSubMapForm">
+                  <mat-form-field class="filter-block">
+                    <mat-label>Content Id/No</mat-label>
+                    <mat-select formControlName="idFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Content Id/No
+                      </mat-option>
+                      <mat-option *ngFor="let id of uniqueId" [value]="id">
+                        {{ id }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  
+                  <mat-form-field class="filter-block">
+                    <mat-label>Version</mat-label>
+                    <mat-select formControlName="versionFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Version
+                      </mat-option>
+                      <mat-option *ngFor="let version of uniqueVersion" [value]="version">
+                        {{ version }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field class="filter-block">
+                    <mat-label>Content Title</mat-label>
+                    <mat-select formControlName="titleFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select title
+                      </mat-option>
+                      <mat-option *ngFor="let title of uniqueTitle" [value]="title">
+                        {{ title }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field class="filter-block">
+                    <mat-label>Effective Date</mat-label>
+                    <mat-select formControlName="effectiveDateFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select Effective Date
+                      </mat-option>
+                      <mat-option *ngFor="let effectiveDate of shortEffectiveDate" [value]="effectiveDate">
+                        {{ effectiveDate | date:'MM/dd/yyyy' }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="filter-block" *ngIf="contentType=='M'">
+                    <mat-label>TRM Review Date</mat-label>
+                    <mat-select formControlName="trmDateFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select TRM Review Date
+                      </mat-option>
+                      <mat-option *ngFor="let trmDate of uniqueTRMReviewDate" [value]="trmDate">
+                        {{ trmDate | date:'MM/dd/yyyy' }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                  <mat-form-field class="filter-block">
+                    <mat-label>U.S J/C</mat-label>
+                    <mat-select formControlName="usJcFilter" >
+                      <mat-option (click)="clearFilter()" value="">
+                        Select U.S J/C
+                      </mat-option>
+                      <mat-option *ngFor="let usJc of uniqueUsJc" [value]="usJc">
+                        {{ usJc }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              
+                  <button mat-raised-button (click)="applySubMapFilter()" color="primary" >Apply Filter</button>
+                  <button mat-raised-button (click)="resetFilters()" color="accent" >Reset Filter</button>
+    
+                </div>
+              </div>
+            </mat-card-content>
+    
+        </mat-card>
+    </div>
+    
+    <ngx-ui-loader bgsPosition="center-center"></ngx-ui-loader>
+    
+    <div class="activitySeatchTable">
+        <mat-table [dataSource]="dataSourceActivitySearch" class="subMapSearchTable" matSort >
+            
+            <!-- Type1 Column -->
+            <ng-container matColumnDef="selectFields">
+                <mat-header-cell *matHeaderCellDef > &nbsp; </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-checkbox (change)="updateSelection(element, $event)" 
+                    color="primary"
+                     [(ngModel)]="element.checkbox"  
+                     [disabled]="checkboxDisabled"></mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Type1 Column -->
+            <ng-container matColumnDef="flagField">
+                <mat-header-cell *matHeaderCellDef > &nbsp; </mat-header-cell>
+                <mat-cell *matCellDef="let element" > &nbsp; </mat-cell>
+            </ng-container>
+
+             <!-- Name1 Column -->
+             <ng-container matColumnDef="EffectiveDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Effective Date</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.effectiveFrom  | date:'MM/dd/yyyy' }}</mat-cell>
+            </ng-container>
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="TRMReviewDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >TRM Review Date</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.TRMReviewDate  | date:'MM/dd/yyyy' }}</mat-cell>
+            </ng-container>
+
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Content No</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+            </ng-container>
+
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="title">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Content Title</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+            </ng-container>
+
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="usJc">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >U.S J/C</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.usclassificationId}}</mat-cell>
+            </ng-container>
+            
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="version">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Version</mat-header-cell>
+                <mat-cell *matCellDef="let element">{{element.version}}</mat-cell>
+            </ng-container>
+            
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="effectivefrom">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >Effective Date</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.effectivefrom  | date:'MM/dd/yyyy' }}</mat-cell>
+            </ng-container>
+
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="contentid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >Content Id</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.contentid}}</mat-cell>
+            </ng-container>
+
+            <!-- Name1 Column -->
+            <ng-container matColumnDef="usclassificationid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header >U.S J/C</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{element.usclassificationid}}</mat-cell>
+            </ng-container>
+          
+            <!-- Header and Row Declarations -->
+            <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+
+        </mat-table>
+
+        <mat-paginator 
+            [pageSize]="10"
+            [pageSizeOptions]='pageRowCounters'
+            showFirstLastButtons >
+        </mat-paginator>
+
+    </div>
+
+    <div fxLayout="column" fxLayoutAlign="center center" class="dialogActions">
+        <button mat-raised-button color="primary" [mat-dialog-close]="selectedElement" >Submit</button>
+    </div>
+
+</div>

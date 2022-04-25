@@ -1,0 +1,40 @@
+<div class="container mdl-grid tab-margin">
+  <div class="mdl-grid full-width">
+    <div class="table-wrapper">
+      <div class="heading-band">
+        <div class="mat-title">Lessons Learned</div>
+      </div>
+      <mat-table [dataSource]="items" class="data-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            ><a href="#" title="{{ element.item }}" class="matCell-href">{{
+              element.description
+            }}</a>
+          </mat-cell>
+        </ng-container>
+
+        <!-- User Column -->
+        <ng-container matColumnDef="linkNumber">
+          <mat-header-cell *matHeaderCellDef>
+            Link to Lessons Learned
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"
+            >{{ element.linkNumber }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Email Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.title }} </mat-cell>
+        </ng-container>
+
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,152 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+
+
+
+.collaborate-dialog {
+  @extend %mat-dialog;
+  padding: 20px;
+
+  .mat-dialoag-header {
+    @extend %mat-dialog-header;
+
+    .mat-card-title {
+      @include font-face-BarlowSemiCondensed-Medium(1.25rem, 1.2rem);
+      text-align: left;
+      font: normal normal normal 30px/26px Barlow Semi Condensed Medium;
+      letter-spacing: 1.25px;
+      color: #3E3E3E;
+      text-transform: uppercase;
+      opacity: 1;
+      font-size: 30px;
+      font-family: 'BarlowSemiCondensed-Medium';
+
+    }
+
+    .mat-card-subtitle {
+      @include font-face-BarlowSemiCondensed-Medium(1.25rem, 1.2rem);
+      text-align: left;
+      font: normal normal normal 20px/26px Barlow Semi Condensed;
+      letter-spacing: 0.83px;
+      color: #3E3E3E;
+      opacity: 1;
+      font-size: 20px;
+      font-family: 'BarlowSemiCondensed-Regular';
+      padding-top: 10px;
+    }
+  }
+
+  form {
+    padding: 0;
+    margin: 0;
+
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .mat-radio-group {
+    mat-label {
+      margin: 0 0 10px;
+      display: block;
+      @include font-face-BarlowSemiCondensed-Medium(1rem, 1.2rem);
+    }
+
+    .mat-radio-group {
+      display: grid;
+      grid-template-areas: 'edit view';
+      width: 40%;
+      margin: 0 0 30px;
+
+      .edit {
+        grid-area: edit;
+      }
+
+      .view {
+        grid-area: view;
+      }
+    }
+
+    .mat-radio-button {
+      display: block;
+    }
+  }
+
+}
+
+
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.mat-form-field-appearance-legacy .mat-form-field-infix .mat-select-value {
+  color: $black-color;
+  font-family: "BarlowSemiCondensed-Regular", sans-serif;
+}
+
+.sharewith-selector {
+  padding: 10px 0px;
+}
+
+.collaborate-dialog {
+  .mat-dialoag-header {
+    background: none !important;
+    padding-left: 0px;
+  }
+
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+}
+
+.full-width {
+  width: 100%;
+
+}
+
+.search-text {
+  width: 54%;
+  margin-right: 6%;
+
+  mat-form-field {
+    width: 44% !important;
+  }
+}
+
+.role {
+  width: 18%;
+  margin-right: 4%;
+
+  mat-form-field {
+    width: 22% !important;
+  }
+}
+
+.add-btn {
+  width: 20%;
+}
+
+.table-wrapper {
+  height: 100%;
+
+  .mat-column-user {
+    flex: 1 0 30% !important;
+    width: 70% !important;
+  }
+
+}
+
+.delete {
+  cursor: pointer;
+}
+
+.email {
+  font-size: small;
+}
+
+.roleSelect {
+  width: 120px !important;
+}

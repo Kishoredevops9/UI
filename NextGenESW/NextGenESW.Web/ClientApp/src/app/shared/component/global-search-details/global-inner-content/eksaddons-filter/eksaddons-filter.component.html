@@ -1,0 +1,17 @@
+<div class="collection_box collection_addons">
+  <h4>All EKS Addons</h4>
+    <div class="full-width md1-grid mdl-cell mdl-cell--12-col">
+      <ul>
+        <li *ngFor="let eksCollection of allEKSCollection">
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <label class="{{ eksCollection.class }}">
+              <input type="checkbox" (change)="onChangeEKSCollection(eksCollection)"
+                [(ngModel)]="eksCollection.checked">
+              <span class="all_type {{ eksCollection.keyword }}">{{ eksCollection.code }}</span>
+              <button> {{ eksCollection.name }} </button>
+            </label>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>

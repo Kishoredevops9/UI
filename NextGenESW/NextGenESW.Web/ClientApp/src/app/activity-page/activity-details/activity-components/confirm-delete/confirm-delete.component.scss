@@ -1,0 +1,49 @@
+.background-theme {
+  background: white;
+  color: black;
+  overflow: hidden;
+  padding: 18px;
+}
+.mat-button{
+line-height: 25px;
+font-size: 13px;
+}
+
+.confirmation-text{
+font-size: 16px;
+//margin-bottom: 40px;
+font-family: "BarlowSemiCondensed-Medium";
+}
+.assign-modal{ 
+text-align:right;
+//float: right;
+margin:10px;
+a {
+    font-size: 13px;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    &.yes {
+        // color: #407CCA;
+        margin-left: 20px;
+    }
+}
+.button {
+  float: right;
+  min-width: 64px!important;
+  margin-left: 10px;
+}
+}
+
+.mat-raised-button {
+line-height: 25px;
+}
+.buttongray{
+background-color: #a7a7a7;
+color: white;
+}
+::ng-deep .mat-dialog-container {
+border: none;
+padding: 0;
+}

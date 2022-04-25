@@ -1,0 +1,56 @@
+@mixin slideToggleBaseStyle($thumbColor, $thumbRadius, $space, $backgroundColor,$height, $width) {
+  .mat-slide-toggle-thumb-container {
+    .mat-slide-toggle-thumb {
+      background-color: $thumbColor !important;
+      height: $thumbRadius;
+      width: $thumbRadius;
+      margin-top: $space * 2 + 1px;
+    }
+  }
+
+  .mat-slide-toggle-bar {
+    background-color: $backgroundColor;
+    border-radius: $thumbRadius !important;
+    height: $height;
+    width: $width;
+    margin-left: $space;
+  }
+
+  .mat-ripple-element {
+    background-color: $backgroundColor !important;
+  }
+}
+
+@mixin slideToggleCheckedStyle($activeColor, $thumbRadius) {
+  .mat-slide-toggle-bar {
+    background-color: $activeColor !important;
+  }
+
+  .mat-ripple-element {
+    background-color: $activeColor !important;
+  }
+
+  .mat-slide-toggle-thumb-container {
+    transform: translate3d($thumbRadius - 1px, 0, 0) !important;
+  }
+}
+
+@mixin slideToggle($activeColor, $backgroundColor, $thumbColor, $width, $height, $space: 2px) {
+  $thumbRadius: $height - $space * 2;
+
+  mat-slide-toggle {
+    @include slideToggleBaseStyle($thumbColor, $thumbRadius, $space, $backgroundColor, $height, $width);
+
+    &.mat-checked {
+      @include slideToggleCheckedStyle($activeColor, $thumbRadius);
+    }
+  }
+
+  mat-slide-toggle::ng-deep {
+    @include slideToggleBaseStyle($thumbColor, $thumbRadius, $space, $backgroundColor, $height, $width);
+
+    &.mat-checked::ng-deep {
+      @include slideToggleCheckedStyle($activeColor, $thumbRadius);
+    }
+  }
+}

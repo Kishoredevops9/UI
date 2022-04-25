@@ -1,0 +1,502 @@
+<div class="page-layout" *ngIf="globalData">
+  <div *ngIf="loading" id="cover-spin"></div>
+  <div class="header-field">Criteria</div>
+  <div *ngIf="showAlert" class="alert alert-danger" role="alert">
+    {{ alertMsg }}
+    <mat-icon id="error-close-button" (click)="onClose()">close</mat-icon>
+  </div>
+  <div
+    class="criteria-container {{element.showBackgroundColor}}"
+    *ngFor="let element of criteriaData; let i = index"
+  >
+    <div class="item1">
+      <div class="mdl-grid full-width">
+        <div
+          class="
+            mdl-cell
+            mdl-cell--6-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+            header-row
+          "
+        >
+          <b>Criteria No: {{ i + 1 }}</b>
+        </div>
+        <div
+          class="
+            mdl-cell
+            mdl-cell--4-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+          "
+        >
+          <div class="toggle">
+            <ng-container
+              *ngIf="element.isEdit && isEditableMode else BP_PREVIEW_MODE"
+            >
+              <span class="leftToggleSpan" matTooltip="Best Practice"><b>BP</b></span>
+              <mat-slide-toggle [(ngModel)]="element.bpOrC"></mat-slide-toggle>
+              <span class="rightToggleSpan" matTooltip="Criterion"><b>C</b></span>
+            </ng-container>
+            <ng-template #BP_PREVIEW_MODE>
+              <ng-container>
+                <div *ngIf="element.bpOrC == true"><b>Criterion</b></div>
+                <div *ngIf="element.bpOrC == false"><b>Best Practice</b></div>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+        <div
+          class="
+            mdl-cell
+            mdl-cell--2-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+            action-items
+          "
+          *ngIf="isEditableMode"
+        >
+          <ng-container
+            *ngIf="element.isEdit; else ACTION_PREVIEW_MODE"
+          >
+            <mat-icon
+              (click)="deleteCriteria(element)"
+              class="action-delete-icon"
+              >delete</mat-icon
+            >
+            <mat-icon (click)="handleSave(element)">save</mat-icon>
+          </ng-container>
+          <ng-template #ACTION_PREVIEW_MODE>
+            <ng-container>
+              <mat-icon
+                (click)="deleteCriteria(element)"
+                class="action-delete-icon"
+                >delete</mat-icon
+              >
+              <mat-icon (click)="edit(element)">edit</mat-icon>
+            </ng-container>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="item2">
+      <div class="textFilter"><b>Criteria/Best Practice*</b></div>
+      <ng-container
+        *ngIf="element.isEdit && isEditableMode else CRITERIA_PREVIEW_MODE"
+      >
+        <app-texteditor [placeholder]="element.designCriteria" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                        [allowMedia]="false"
+                        id="angularEditor"
+                        [ngClass]="{ 'editor-error': isEmptyString(element.designCriteria) }"
+                        (editorData)="element.designCriteria = $event"></app-texteditor>
+      </ng-container>
+      <ng-template #CRITERIA_PREVIEW_MODE>
+        <ng-container>
+          <div class="previews" [innerHTML]="element.designCriteria | safe : 'html'"></div>
+        </ng-container>
+      </ng-template>
+    </div>
+
+    <div class="item3">
+      <div class="textFilter"><b>Rationale</b></div>
+      <ng-container
+        *ngIf="element.isEdit && isEditableMode else RATIONALE_PREVIEW_MODE"
+      >
+        <app-texteditor [placeholder]="element.rationale" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                        [allowMedia]="false"
+                        id="angularEditor1"
+                        (editorData)="element.rationale = $event"></app-texteditor>
+      </ng-container>
+      <ng-template #RATIONALE_PREVIEW_MODE>
+        <ng-container>
+          <div class="previews" [innerHTML]="element.rationale | safe : 'html'"></div>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="item4">
+      <div class="textFilter"><b>Links</b></div>
+      <ng-container
+        *ngIf="element.isEdit && isEditableMode else LINKS_PREVIEW_MODE"
+      >
+        <app-texteditor [placeholder]="element.links" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                        [allowMedia]="false"
+                        id="angularEditor2"
+                        (editorData)="element.links = $event"></app-texteditor>
+      </ng-container>
+      <ng-template #LINKS_PREVIEW_MODE>
+        <ng-container>
+          <div class="previews" [innerHTML]="element.links | safe : 'html'"></div>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div class="item5">
+      <div class="tag-template mdl-grid">
+        <div
+          class="
+            mdl-cell
+            mdl-cell--12-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+          "
+        >
+          <ng-container *ngIf="element.isEdit && isEditableMode">
+            <div>
+              <mat-label class="text-field">Phases* <span matTooltip="Product Lifecycle Phase. One or multiple entries selected from the predefined list." placement="left">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </span> </mat-label>
+            </div>
+            <mat-form-field>
+            <mat-label><b>Select Phases</b></mat-label>
+            <mat-select #phaseControl
+              multiple required
+              [(ngModel)]="element.selected"
+              (selectionChange)="onChangePhase($event.value, element)">
+              <mat-option *ngFor="let option of phaseList" [value]="option.id">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+            </mat-form-field>
+          </ng-container>
+        </div>
+      </div>
+      <div class="mdl-grid">
+        <div
+          class="
+            mdl-cell
+            mdl-cell--12-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+            phase-list
+          "
+        >
+          <div
+            *ngIf="
+              element.contentPhaseList && element.contentPhaseList.length > 0
+            "
+          >
+            <ng-container
+              *ngIf="element.isEdit && isEditableMode else PHASES_PREVIEW_MODE"
+            >
+              <div class="textFilter"><b>Selected Phases:</b></div>
+              <mat-chip-list>
+                <mat-chip
+                  *ngFor="let chip of element.contentPhaseList"
+                  [selectable]="selectable"
+                >
+                  {{ chip.name }}
+                  <mat-icon matChipRemove (click)="removePhases(chip, element)"
+                    >cancel</mat-icon
+                  >
+                </mat-chip>
+              </mat-chip-list>
+            </ng-container>
+            <ng-template #PHASES_PREVIEW_MODE>
+              <ng-container>
+                <div class="textFilter"><b>Selected Phases:</b></div>
+                <mat-chip-list>
+                  <mat-chip *ngFor="let chip of element.contentPhaseList">
+                    {{ chip.name }}
+                  </mat-chip>
+                </mat-chip-list>
+              </ng-container>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="item6">
+      <div class="tag-template mdl-grid">
+        <div
+          style="position: relative"
+          class="
+            mdl-cell
+            mdl-cell--12-col
+            mdl-cell--12-col-tablet
+            mdl-cell--12-col-phone
+            tag-bottom-style
+          "
+        >
+          <ng-container *ngIf="element.isEdit && isEditableMode">
+            <div class="tag-style">
+            <mat-label><b>Select Tags</b></mat-label>
+            <a
+              mat-button
+              matSuffix
+              mat-icon-button
+              (click)="onShowDropdownClick(element)"
+            >
+              <mat-icon>
+                {{ showDropDown ? 'close' : 'expand_more' }}
+              </mat-icon>
+            </a>
+            <mat-card
+              [hidden]="!showDropDown"
+              [config]="{ backdrop: 'static' }"
+            >
+              <app-left-box
+                [flag]="true"
+                [delevents]="eventsSubject.asObservable()"
+                (tagdata)="tagData($event, element)"
+                [treedata]="tagList"
+                [loadDropdownData]="eventSubject.asObservable()"
+              >
+              </app-left-box>
+            </mat-card>
+          </div>
+          </ng-container>
+        </div>
+
+        <div class="mdl-grid">
+          <div
+            class="
+              mdl-cell
+              mdl-cell--12-col
+              mdl-cell--12-col-tablet
+              mdl-cell--12-col-phone
+            "
+          >
+            <div
+              *ngIf="
+                element.contentTagList && element.contentTagList.length > 0
+              "
+            >
+              <ng-container
+                *ngIf="element.isEdit && isEditableMode else TAGS_PREVIEW_MODE"
+              >
+                <div class="textFilter"><b>Selected Tags:</b></div>
+                <mat-chip-list>
+                  <mat-chip
+                    *ngFor="let chip of element.contentTagList"
+                    [selectable]="selectable"
+                  >
+                    {{ chip.name }}
+                    <mat-icon matChipRemove (click)="removeChip(chip, element)"
+                      >cancel</mat-icon
+                    >
+                  </mat-chip>
+                </mat-chip-list>
+              </ng-container>
+              <ng-template #TAGS_PREVIEW_MODE>
+                <div class="textFilter"><b>Selected Tags:</b></div>
+                <ng-container>
+                  <mat-chip-list>
+                    <mat-chip
+                      *ngFor="let chip of element.contentTagList"
+                      [selectable]="selectable"
+                    >
+                      {{ chip.name }}
+                    </mat-chip>
+                  </mat-chip-list>
+                </ng-container>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div>
+    <mat-table #table [dataSource]="criteriaData">
+      <ng-container matColumnDef="no">
+        <mat-header-cell *matHeaderCellDef> No.# </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          {{ i + 1 }}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="designCriteria">
+        <mat-header-cell *matHeaderCellDef> Criteria/Best Practice* </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && this.(docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT)); else PREVIEW_MODE">
+            <angular-editor [ngClass]="{'ang-editor1' : element.designCriteria == ''}" id="angularEditor"
+              [config]="config" [(ngModel)]="element.designCriteria"></angular-editor>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <angular-editor [ngClass]="{
+                  preview: true
+                }" id="angularEditor" [config]="config1" [(ngModel)]="element.designCriteria"></angular-editor>
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="rationale">
+        <mat-header-cell *matHeaderCellDef> Rationale </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && this.(docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT)); else PREVIEW_MODE">
+            <angular-editor id="angularEditor1" [config]="config" [(ngModel)]="element.rationale"></angular-editor>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <angular-editor [ngClass]="{
+                  preview: true
+                }" id="angularEditor1" [config]="config1" [(ngModel)]="element.rationale"></angular-editor>
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="links">
+        <mat-header-cell *matHeaderCellDef> Links </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && this.(docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT)); else PREVIEW_MODE">
+            <angular-editor id="angularEditor2" [config]="config" [(ngModel)]="element.links"></angular-editor>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <angular-editor [ngClass]="{
+                  preview: true
+                }" id="angularEditor2" [config]="config1" [(ngModel)]="element.links"></angular-editor>
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tags">
+        <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
+        <mat-cell *matCellDef="let el; let i = index" class="tagColumn">
+          <div class="tag-template mdl-grid">
+            <div style="position:relative"
+            class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Select Tags</mat-label>
+            <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true">
+              <mat-icon>
+                {{ ( showDropDown ) ? 'close' : 'expand_more' }}
+              </mat-icon>
+            </a>
+            <mat-card [hidden]="!showDropDown" [config]="{backdrop: 'static'}">
+              <app-left-box [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)"
+                [treedata]="tagList" [criteriaProperty]="tags">
+              </app-left-box>
+            </mat-card>
+          </div>
+
+          <div class="mdl-grid ">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="topChipBox" *ngIf="chipContainer && chipContainer.length>0">
+                <div class="textFilter">Selected Tags:</div>
+                <div class="chipbox">
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let chip of chipContainer" [selectable]="selectable">
+                      {{ chip.name }}
+                      <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="phases">
+        <mat-header-cell *matHeaderCellDef> Phases </mat-header-cell>
+        <mat-cell *matCellDef="let el; let i = index" class="tagColumn">
+          <div class="mdl-grid ">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+          <mat-select multiple [(ngModel)]="selected" (selectionChange)="onChangePhase($event,el)" placeholder="Select Phases" >
+
+            <mat-option *ngFor="let option of phaseList" [value]="option.id">
+              {{ option.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        </div>
+        </div>
+        <div class="mdl-grid ">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="topChipBox" *ngIf="el.contentPhase && el.contentPhase.length>0">
+              <div class="textFilter">Selected Phases:</div>
+              <div class="chipbox">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let chip of el.contentPhase" [selectable]="selectable">
+                    {{ chip.name }}
+                    <mat-icon matChipRemove (click)="removePhases(chip,el)">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+        </div>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="bpOrC">
+        <mat-header-cell *matHeaderCellDef> BP or C </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit && this.(docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT)); else PREVIEW_MODE">
+            <div class="toggle">
+              <span class="leftToggleSpan">BP</span>
+              <mat-slide-toggle [(ngModel)]="element.bpOrC"></mat-slide-toggle>
+              <span class="rightToggleSpan">C</span>
+            </div>
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <div *ngIf="element.bpOrC == true">Criterion</div>
+            <div *ngIf="element.bpOrC == false">Best Practice</div>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete" *ngIf="(docStatus !== ASSET_STATUSES.PUBLISHED && docStatus !== ASSET_STATUSES.CURRENT)">
+        <mat-header-cell *matHeaderCellDef>Actions </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          <ng-container *ngIf="(element.isEdit); else PREVIEW_MODE">
+            <span>
+              <mat-icon (click)="deleteCriteria(element)" class="delete-icon">delete</mat-icon>
+            </span>
+              <mat-icon
+                (click)="handleSave(element)"
+                style="cursor: pointer; font-size: 16px;"
+                >save</mat-icon
+              >
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <span>
+                <mat-icon (click)="deleteCriteria(element)" class="delete-icon">delete</mat-icon>
+              </span>
+              <span>
+                <mat-icon (click)="edit(element)" class="edit-icon">edit</mat-icon>
+              </span>
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+    </mat-table>
+  </div> -->
+  <div *ngIf="isEditableMode" class="button">
+    <span>+</span>
+    <button
+      style="
+        background-color: white;
+        cursor: pointer;
+        font-family: 'Inter-Medium';
+        font-size: small;
+      "
+      (click)="addCriteria(requestApprovalTemplate)"
+    >
+      Add Row
+    </button>
+  </div>
+  <br />
+  <div style="margin-left: 100%">
+    <span class="arrow-icon">
+      <img
+        (click)="onArrowClick(requestApprovalTemplate)"
+        src="./assets/images/EastArrow.svg"
+        width="50px"
+        height="50px"
+      />
+    </span>
+  </div>
+</div>
+<ng-template #requestApprovalTemplate>
+  <div class="warning-msg">You have unsaved changes. Save them to proceed.</div>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="handleOnOkButton()"
+    class="mat-button ok-button"
+  >
+    OK
+  </button>
+</ng-template>

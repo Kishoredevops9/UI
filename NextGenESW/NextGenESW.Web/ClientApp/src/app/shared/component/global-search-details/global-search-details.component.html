@@ -1,0 +1,23 @@
+<div class="global-search-wrapper">
+  <div>    
+    <!-- <span class="search-title">{{ searchTerm }}</span> -->
+    <!-- <span class="serach-list-count">{{ searchListCount }}</span> -->
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="outline cg">
+      <app-eks-internal-search (searchListCountEventHander)="searchListCountEventHander($event)">
+      </app-eks-internal-search>
+    </div>
+  </div>
+</div>
+
+<!-- <span *ngIf="searchListCount; else nosearchcount" class="super-script"> -->
+<!-- <span class="super-script">
+        <mat-icon>fiber_manual_record</mat-icon>
+      </span> -->
+
+<!-- <ng-template #nosearchcount>
+        <span class="serach-list-count">Did you mean: <a href="#" (click)="onArrowClick()">{{ suggesterm }}</a>
+        </span>
+      </ng-template> -->

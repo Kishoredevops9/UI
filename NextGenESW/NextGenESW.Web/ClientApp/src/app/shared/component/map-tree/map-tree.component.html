@@ -1,0 +1,210 @@
+<ul class="bredCrump"> 
+  <li class="active" (click)="resetView()">
+  Selected Map:  
+</li>
+  <li class="animate__animated animate__fadeIn" *ngFor="let item of bredCrumb;let i = index"> 
+  <a href="javascript:;"  (click)="removeBredCrumb(i)" >  <mat-icon *ngIf="i" >chevron_right</mat-icon>  {{item.title}} </a>
+
+  </li>
+ 
+
+</ul>
+ 
+
+<div class="accordianPanel" *ngFor="let Data of Data" [ngClass]="{'hide': !Data.addedMap}">
+  <!-- Map View -->
+  <div [ngClass]="Data.type == 'M' ? 'itemTab' : 'itemTab'">
+    <div class="cap">{{ Data.type }}</div>
+    <div class="titleHead">{{ Data.title }} {{ Data.contentId }}</div>
+    <div class="actionbox-head">
+      <ul>
+        <li [matMenuTriggerFor]="beforeMenu">
+          <span class="material-icons" *ngIf="bredCrumbStatus"  >add</span>
+          <mat-menu class="mat-menu-block" #beforeMenu="matMenu" xPosition="before" class="contentMatMenu">
+            <button class="forDrodown" mat-menu-item>
+              <span (click)="onTaskAddSwimlane(Data)">Swim Lane</span>
+            </button>
+          </mat-menu>
+        </li>
+        <li><span class="material-icons" (click)="confirmMapDelete(Data)">delete</span></li>
+        <li class="expcol" *ngIf="bredCrumbStatus"  >
+          <a href="javascript:;" (click)="Data.extend=true" *ngIf="!Data.extend"><span
+              class="material-icons">expand_more</span></a>
+          <a href="javascript:;" (click)="Data.extend=false" *ngIf="Data.extend"><span
+              class="material-icons">expand_less</span></a>  
+
+
+        </li>
+        <li class="expcol" *ngIf="!bredCrumbStatus"  >
+        
+        <span style="font-size: 16px !important;" 
+        (click)="changeBredCrumb(Data)"
+        class="material-icons">launch</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- Map View -->
+  <div style="height: 30px;"></div>
+  <mat-accordion *ngIf="Data.extend">
+    <mat-expansion-panel *ngFor="let processMap of Data.swimLanes" (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false" [expanded]="true">
+
+      <!-- SwimLane View -->
+      <mat-expansion-panel-header>
+        <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[processMap.type] }">
+          <div class="cap" [ngStyle]="{ 'background-color': cCode[processMap.type] }">
+            {{processMap.type}}</div>
+          <div class="title"> {{processMap.name}} </div>
+          <div class="actionbox">
+            <ul>
+              <li [matMenuTriggerFor]="beforeMenu">
+                <span class="material-icons">add</span>
+                <mat-menu class="mat-menu-block" #beforeMenu="matMenu" xPosition="before" class="contentMatMenu">
+                  <button class="forDrodown" mat-menu-item>
+                    <span (click)="openTaskActivityPage(processMap)">Activity</span>
+                  </button>
+                  <button class="forDrodown" mat-menu-item>
+                    <span (click)="openTaskActivityPage(processMap)">Blank Activity</span>
+                  </button>
+                  <button class="forDrodown" mat-menu-item>
+                    <span (click)="openTaskSubMap(processMap)">Submap</span>
+                  </button>
+                  <button class="forDrodown" mat-menu-item>
+                    <span (click)="openTaskKPacks(processMap)">K-pack</span>
+                  </button>
+                </mat-menu>
+              </li>
+              <li><span *ngIf="!processMap.protectedInd" class="material-icons"
+                  (click)="confirmSwimlaneDelete(Data, processMap)">delete</span></li>
+            </ul>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      <!-- SwimLane View -->
+
+      <ng-container *ngIf="processMap.activityBlocks">
+
+        <mat-expansion-panel [expanded]="true" *ngFor="let activityComponent of processMap.activityBlocks"
+          (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!activityComponent.content">
+
+          <!-- AP Parent View -->
+          <mat-expansion-panel-header>
+            <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[activityComponent.acticityDocumentCode] }">
+              <div class="cap" [ngStyle]="{ 'background-color': cCode[activityComponent.acticityDocumentCode] }">{{
+                activityComponent.type }} </div>
+              <div class="title">{{activityComponent.name}}  </div>
+              <div class="actionbox">
+                <ul>
+                  <li *ngIf="activityComponent.type=='M'" (click)="changeBredCrumb(activityComponent)"><span class="material-icons">launch</span></li>    
+                  <li *ngIf="activityComponent.type!='M'"><span *ngIf="!activityComponent.protectedInd" class="material-icons"
+                      (click)="confirmActivityDelete(processMap)">delete</span></li>
+                </ul>
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <!-- AP Parent View -->
+
+          <mat-expansion-panel [expanded]="true" *ngFor="let childLevel1 of activityComponent.content"
+            (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!childLevel1.content">
+
+            <!-- AP Child Level 1 View -->
+            <mat-expansion-panel-header>
+              <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[childLevel1.acticityDocumentCode] }">
+                <div class="cap" [ngStyle]="{ 'background-color': cCode[childLevel1.acticityDocumentCode] }">{{ childLevel1.type }}
+                </div>
+                <div class="title">{{childLevel1.name}} </div>
+              </div>
+            </mat-expansion-panel-header>
+            <!-- AP Child Level 1 View -->
+
+            <mat-expansion-panel [expanded]="true" *ngFor="let childLevel2 of childLevel1.childList"
+              (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!childLevel2.childList">
+
+              <!-- AP Child Level 2 View -->
+              <mat-expansion-panel-header>
+                <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[childLevel2.acticityDocumentCode] }">
+                  <div class="cap" [ngStyle]="{ 'background-color': cCode[childLevel2.acticityDocumentCode] }">{{ childLevel2.type
+                    }}</div>
+                  <div class="title"> {{childLevel2.name}} </div>
+                </div>
+              </mat-expansion-panel-header>
+              <!-- AP Child Level 2 View -->
+
+              <mat-expansion-panel [expanded]="true" *ngFor="let childLevel3 of childLevel2.childList"
+                (opened)="panelOpenState = true" (closed)="panelOpenState = false" [disabled]="!childLevel3.childList">
+
+                <!-- AP Child Level 3 View -->
+                <mat-expansion-panel-header>
+                  <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[childLevel3.acticityDocumentCode] }">
+                    <div class="cap" [ngStyle]="{ 'background-color': cCode[childLevel3.acticityDocumentCode] }">{{
+                      childLevel3.type }}</div>
+                    <div class="title"> {{childLevel3.name}} </div>
+                  </div>
+                </mat-expansion-panel-header>
+                <!-- AP Child Level 3 View -->
+
+                <mat-expansion-panel [expanded]="true" *ngFor="let childLevel4 of childLevel3.childList"
+                  (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                  [disabled]="!childLevel4.childList">
+
+                  <!-- AP Child Level 4 View -->
+                  <mat-expansion-panel-header>
+                    <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[childLevel4.acticityDocumentCode] }">
+                      <div class="cap" [ngStyle]="{ 'background-color': cCode[childLevel4.acticityDocumentCode] }">{{
+                        childLevel4.type }}</div>
+                      <div class="title"> {{childLevel4.name}} </div>
+                    </div>
+                  </mat-expansion-panel-header>
+                  <!-- AP Child Level 4 View -->
+
+                  <mat-expansion-panel [expanded]="true" *ngFor="let childLevel5 of childLevel4.childList"
+                    (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+                    [disabled]="!childLevel5.childList">
+
+                    <!-- AP Child Level 5 View -->
+                    <mat-expansion-panel-header>
+                      <div class="itemTab" [ngStyle]="{ 'border-bottom': borderCode[childLevel5.acticityDocumentCode] }">
+                        <div class="cap" [ngStyle]="{ 'background-color': cCode[childLevel5.acticityDocumentCode] }">{{
+                          childLevel5.type }}</div>
+                        <div class="title"> {{childLevel5.name}} </div>
+                      </div>
+                    </mat-expansion-panel-header>
+                    <!-- AP Child Level 5 View -->
+
+                  </mat-expansion-panel>
+                </mat-expansion-panel>
+              </mat-expansion-panel>
+            </mat-expansion-panel>
+          </mat-expansion-panel>
+        </mat-expansion-panel>
+
+      </ng-container>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
+<div style="height: 20px; float: left;"></div>
+
+<div *ngIf="!bredCrumbStatus"> 
+  <div class="addBlankBTN">
+    <div class="btn-left">Search Results:</div>
+    <div class="btn-right"><button class="button_style" (click)="onAddBlankMap()">Blank Map</button></div>
+  </div>
+  
+  <div class="accordianPanel" *ngFor="let Data of masterData" [ngClass]="{'hide': Data.addedMap}">
+    <div [ngClass]="Data.type == 'M' ? 'itemTab' : 'itemTab'">
+      <div class="cap">{{ Data.type }}</div>
+      <div class="titleHead">{{ Data.title }} {{ Data.contentId }}</div>
+      <div class="actionbox-head">
+        <ul>
+          <li><span class="material-icons" (click)="openSite('/process-maps/edit/', Data.id)">launch</span></li>
+          <li><span class="material-icons"   (click)="Data.addedMap = true; addProcessMap()">add</span></li>
+        </ul>
+      </div>
+    </div>
+    <div style="height: 20px;"></div>
+  </div>
+
+</div>

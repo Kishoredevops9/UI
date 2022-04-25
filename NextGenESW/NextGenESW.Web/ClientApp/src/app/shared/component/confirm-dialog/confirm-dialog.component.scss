@@ -1,0 +1,53 @@
+.background-theme {
+    background: #fff;
+    color: rgb(36, 28, 28);
+    overflow: hidden;
+    padding: 18px;
+}
+.mat-button{
+  line-height: 25px;
+  font-size: 13px;
+}
+.mat-raised-button {
+  line-height: 25px;
+  }  
+.confirmation-text{
+  font-size: 12px;
+  margin-bottom: 40px;
+}
+.assign-modal{ 
+  text-align:right;
+  float: right;
+  margin:10px;
+  a {
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      &.yes {
+          color: #407CCA;
+          margin-left: 20px;
+      }
+  }
+}
+.dialog-mainDiv{
+  width: 350px !important;
+  padding: 20px;
+}
+
+.btn-row{text-align: center;margin-top: 10px;}
+.confirm-btn{  
+  padding: 2px 20px !important;
+  color: white;
+  font-size: 14px !important;
+  background: #3C445C !important;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  /* float: right; */
+  margin-left: 20px;
+  margin-top: 15px;
+}
+// ::ng-deep .mat-dialog-container {
+//   border: none;
+//   padding: 0;
+// }

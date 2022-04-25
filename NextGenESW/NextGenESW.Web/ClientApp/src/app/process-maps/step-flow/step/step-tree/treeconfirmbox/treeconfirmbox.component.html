@@ -1,0 +1,10 @@
+ 
+<div mat-dialog-content>
+    <h3>DELETE?</h3>
+   <p>Are you sure you want to delete?</p>
+ 
+</div>
+<div class="centerbox" mat-dialog-actions>
+  <button mat-button   class="mat-button"   mat-raised-button color="primary"   (click)="onNoClick()">Cancel</button>
+  <button mat-button   class="mat-button"   mat-raised-button color="primary"  [mat-dialog-close]=true cdkFocusInitial>Confirm</button>
+</div>

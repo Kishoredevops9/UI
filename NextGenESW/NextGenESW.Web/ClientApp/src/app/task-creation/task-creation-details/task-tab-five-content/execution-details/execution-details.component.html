@@ -1,0 +1,321 @@
+<div *ngIf="loading" class="exedet-3" id="cover-spin"></div>
+<div class="mdl-grid table_style content-container" *ngIf="contentInfo">
+  <span *ngIf="contentInfo.name == 'A'">
+    <div class="box {{ contentInfo.name | lowercase }}" *ngIf="contentInfo.name == 'A'">
+      <span class="table-width">
+        <div class="content">
+          <div class="head_line">
+            The Activity is Complete with all relevant Work Instructions.
+          </div>
+          <div
+            [ngClass]="contentInfo.activityCriteriaChk ? 'toggle disabled' : (contentInfo.editResultsStatus  ? 'toggle disabled' : 'toggle')">
+            No&nbsp;<mat-slide-toggle name="WIToggler" [(ngModel)]="contentInfo.WIToggler" (change)="
+                setActivityDeviationOptions(
+                  contentInfo,
+                  $event,
+                  true,
+                  'disableWIToggler'
+                )
+              "
+              [disabled]="contentInfo.activityCriteriaChk ? contentInfo.activityCriteriaChk :((contentInfo.editResultsStatus && contentInfo.editResultsStatus == true) ? contentInfo.editResultsStatus : false)">
+            </mat-slide-toggle>
+            <span class="toggleSpan text-field-data radio-button-alignment"></span>&nbsp;Yes
+
+          </div>
+
+        </div>
+        <div class="content">
+          <div class="head_line">All relevant Best Practices are met.</div>
+          No&nbsp;
+          <div [ngClass]="contentInfo.bestPractiseChk ? 'toggle disabled' :(contentInfo.editResultsStatus ? 'toggle disabled' : 'toggle')">
+            <mat-slide-toggle [(ngModel)]="contentInfo.BPToggler" name="BPToggler" (change)="
+                setActivityDeviationOptions(
+                  contentInfo,
+                  $event,
+                  false,
+                  'disableBPToggler'
+                )
+              "
+              [disabled]="contentInfo.bestPractiseChk ? contentInfo.bestPractiseChk : ((contentInfo.editResultsStatus && contentInfo.editResultsStatus == true) ? contentInfo.editResultsStatus : false)">
+            </mat-slide-toggle>
+            <span class="toggleSpan text-field-data radio-button-alignment"></span>&nbsp;Yes
+          </div>
+        </div>
+        <br />
+        <div class="content">
+          <div class="head_line" style="width:44%">Attach Work Instructions</div>
+          &nbsp;&nbsp;
+          <div class="toggle file-upload">
+            <span class="
+            toggleSpan
+            text-field-data
+            radio-button-alignment
+            upload-conatiner
+          ">
+              <button mat-button mat-raised-button color="primary" [disabled]="contentInfo.editResultsStatus" mat-button
+                [matMenuTriggerFor]="menu" overlapTrigger="false">Upload </button>
+                <span *ngIf="fileUploadData == null">No file uploaded</span>
+              <span *ngFor="let file of selectedContentActDev;let i = index">
+                <span class="chip exeDt" *ngIf="(contentInfo.content.taskComponentId == file.taskComponentId && (i < 2 || i ==1))">
+                  <!-- <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }}</span> -->
+                  <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }} <img src="./assets/icons/edit_icon.svg" class="popup-edit_icon" (click)="popupEditPopup(file,file.uploadDestinationCode)" /> <img src="./assets/icons/close_icon.svg" class="popup-delete_icon"  (click)="popupDeletePopup(file)" /></span>
+                </span>
+              </span>
+              <span *ngIf="viewMore" class="chip more" (click)="viewAllDocuments(contentInfo.content.taskComponentId)">View
+                More ({{
+                moreData(contentInfo.content.taskComponentId, selectedContentActDev)
+                }})</span>
+            </span>
+            <mat-menu #menu="matMenu" overlapTrigger="false">
+              <ul class="file-options">
+                <li (click)="uploadFile($event, contentInfo)">To ETFF</li>
+                <li class="ddm-item" (click)="launchDDMTrigger(); $event.stopPropagation();"> To DDM </li>
+                <li class="ddm-item" (click)="launchWebLinkTrigger(); $event.stopPropagation()">
+                  Other
+                </li>
+              </ul>
+              <div class="dropdown-ddm" *ngIf="launchDDM" (click)="$event.stopPropagation();">
+
+                <a href="{{ddmEndPoint}}" mat-button mat-raised-button color="primary" target="_blank">Launch DDM</a>
+                <form class="ddm-form" [formGroup]="ddmform">
+                  <div *ngIf="isLoading" class="exedet-D-3-1" id="cover-spin"></div>
+                  <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+                  <div class="form-fields">
+                    <label>File Name:</label>
+                    <input formControlName="fileName" type="text" name='filename' required />
+                  </div>
+
+                  <div class="form-fields">
+                    <label>ID:</label>
+                    <input type="text" formControlName="id" name='id' required />
+                  </div>
+
+                  <div class="action-buttons">
+                    <button mat-button mat-raised-button color="primary" [disabled]="!ddmform.valid" (click)="uploadAttach(parentItem, contentInfo,'DDM', 'OUTPT')">Save</button>
+                    <button mat-button mat-raised-button color="primary" (click)="closeDropdown()">Cancel</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="dropdown-ddm" *ngIf="launchWebLink" (click)="$event.stopPropagation()">
+                <!-- <a href="{{ ddmEndPoint }}" mat-button mat-raised-button color="primary" target="_blank">Web Link</a> -->
+                <form class="ddm-form" [formGroup]="ddmform">
+                  <div *ngIf="isLoading" class="exedet-D-3-2" id="cover-spin"></div>
+                  <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+                  <div class="form-fields">
+                    <label>File name/ID:</label>
+                    <input formControlName="fileName" type="text" name="fileName" required />
+                  </div>
+
+                  <div class="form-fields">
+                    <label>Location:</label>
+                    <input type="text" formControlName="id" name="id" required />
+                  </div>
+
+                  <div class="action-buttons">
+                    <button mat-button mat-raised-button color="primary" [disabled]="!ddmform.valid"
+                      (click)="uploadAttach(parentItem, contentInfo,'WLNK', 'OUTPT')">
+                      Save
+                    </button>
+                    <button mat-button mat-raised-button color="primary" (click)="closeWebLink()">
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </mat-menu>
+          </div>
+        </div>
+      </span>
+      <span class="timeline">
+        <div class="deivation">Deviation Status</div>
+        <app-progressbar *ngIf="contentInfo.content.taskComponentId == activityTaskComponentID;else default"
+          [progressBar]="progressBar" [docType]="contentInfo.name" [docStatus]="'WIP'"
+          [deviationGlobalStatus]="deviationGlobalStatus" [counterEnable]="counterEnable"
+          [selectedDeviationIndex]='selectedDeviationIndex' [lastIndexOfDeviation]="lastIndexOfDeviationDocNum"
+          [firstIndexOfDeviation]="firstIndexOfDeviationDocNum">
+        </app-progressbar>
+
+        <ng-template #default>
+          <app-progressbar [progressBar]="progressBarDefault" [docType]="contentInfo.name" [docStatus]="'WIP'"
+            [deviationGlobalStatus]="deviationGlobalStatus" [counterEnable]="counterEnable">
+          </app-progressbar>
+        </ng-template>
+        <div class="clear"></div>
+      </span>
+    </div>
+  </span>
+
+  <span *ngIf="contentInfo.name == 'CG' || contentInfo.name == 'C'">
+    <div class="cg-box-heading" *ngIf="contentInfo.cgActivityForm">
+      <div class="content">
+        <span class="bpOrC">C or BP</span>
+        <span class="criteria"> Criteria/Best Practice </span>
+        <span class="rationale"> Rationale </span>
+        <span class="criteria-met">
+          Criteria/Best Practice Met?
+          <span  matTooltip="Criteria Deviation History">
+            <img src="./assets/icons/exclamation-circle.svg" width="12" (click)="statusReportCrt(contentInfo.taskREAId)" />
+          </span>
+          
+        </span>
+      </div>
+    </div>
+    <div [ngClass]="contentInfo.cgActivityForm ? 'cg-box' + ' ' + (contentInfo.name | lowercase): 'cg-box no-data' ">
+      <span class="cg-table-width" *ngIf="contentInfo.cgActivityForm">
+        <ng-container *ngFor="let item of contentInfo.cgActivityForm; let i = index">
+          <form [formGroup]="item.cgForm">
+            <div formGroupName="deviation" *ngIf="item.AssetStatementTypeCode == 'C'">
+              <div class="content">
+                <span class="bpOrC">{{ item.AssetStatementTypeCode }} 
+                  <!-- {{item.TaskComponentId}} -->
+                </span>
+                <span class="criteria" [innerHTML]="item.Statement | safe : 'html'"> </span>
+                <span class="rationale">
+                  <div class="deivation" [innerHTML]="item.Rationale | safe : 'html'"> </div>
+                  <div class="clear"></div>
+                </span>
+                <span class="criteria-met">
+                  <mat-radio-group
+                    [disabled]="((parentItem.editResultsStatus && parentItem.editResultsStatus == true) ?  parentItem.editResultsStatus : false)"
+                    name="statementEvaluationId_{{contentInfo.content.contentId}}_{{i}}" formControlName="statementEvaluationId">
+                    <mat-radio-button class="radio" value="1" (change)="
+                        setCriteriaMetOptions(item, '1', i, item.cgForm, warningTemplateCG)
+                      ">Yes</mat-radio-button>
+                    <mat-radio-button class="radio" value="2" (change)="
+                        setCriteriaMetOptions(item, '2', i, item.cgForm, warningTemplateCG)
+                      ">No</mat-radio-button>
+                  </mat-radio-group>
+                </span>
+              </div>
+              <br /><br />
+              <div class="deviation" *ngIf="
+                  item.cgForm.value.deviation.statementEvaluationId &&
+                  item.cgForm.value.deviation.statementEvaluationId == '2'
+                ">
+                <div class="criteria">
+                  <span class="deviation_head">
+                    Is this captured by existing deviation, in the phase?
+                  </span>
+                  <span class="deviation_width">
+                    <mat-radio-group
+                      [disabled]="((parentItem.editResultsStatus && parentItem.editResultsStatus == true) ?  parentItem.editResultsStatus : false)"
+                      name="existingDeviationInd_{{contentInfo.content.contentId}}_{{i}}" formControlName="existingDeviationInd">
+                      <mat-radio-button class="radio" value="yes"
+                        (change)="setDeviationOptions(item, 'yes',item.cgForm,  warningTemplateCG)">Yes
+                      </mat-radio-button>
+                      <mat-radio-button class="radio" value="no"
+                        (change)="setDeviationOptions(item, 'no',item.cgForm, warningTemplateCG)">No
+                      </mat-radio-button>
+                    </mat-radio-group>
+                  </span>
+                  <div class="deviation_info deviation_border" *ngIf="
+                  item.AssetStatementTypeCode == 'C' &&
+                  item.cgForm.value.deviation.existingDeviationInd &&
+                  item.cgForm.value.deviation.existingDeviationInd == 'yes' &&
+                  item.cgForm.value.deviation.statementEvaluationId == '2'
+                ">
+                    <!-- <span class="deviation_padding">
+                  <b>Deviation Information</b>
+                </span> -->
+
+                    <span>
+                      <input matInput placeholder="Enter Deviation Number" name="deviationNumber" formControlName="deviationNumber"
+                        (focusout)="setDeviationId(item, $event)" />
+                        <mat-error class="criteriaError" *ngIf="actDeviationNumError">{{actDeviationNumMessage}}</mat-error>
+                    </span>
+                    <span>if no, explain what was different</span>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="deviation_border" *ngIf="
+                item.AssetStatementTypeCode == 'C' &&
+                item.cgForm.value.deviation.existingDeviationInd &&
+                item.cgForm.value.deviation.existingDeviationInd == 'no' &&
+                item.cgForm.value.deviation.statementEvaluationId == '2'
+              ">
+              <app-deviation formGroupName="deviation" [docStatus]="item.cgForm.value.deviation.deviationStatusCode"
+                [parentItem]="parentItem" [contentInfo]="item" (passExecutionDetails)="getDeviationData($event)" [criteriaMetOptions]="criteriaMetOptions" [editResultsStatus]='parentItem.editResultsStatus'
+                [isCgFormDelete]="isCgFormDelete">
+              </app-deviation>
+            </div>
+            <div *ngIf="item.AssetStatementTypeCode == 'B'" formGroupName="exception"
+              class="deviation_border best-practices">
+              <div class="content">
+                <span class="bpOrC">{{ item.AssetStatementTypeCode }} 
+                  <!-- {{item.TaskComponentId}} -->
+                </span>
+                
+                <span class="criteria" [innerHTML]="item.Statement | safe : 'html'"> </span>
+                <span class="rationale">
+                  <div class="deivation" [innerHTML]="item.Rationale | safe : 'html'"> </div>
+                  <div class="clear"></div>
+                </span>
+                <span class="criteria-met">
+                  <mat-radio-group
+                    [disabled]="((parentItem.editResultsStatus && parentItem.editResultsStatus == true) ?  parentItem.editResultsStatus : false)"
+                    name="exceptionStatementEvaluation_{{contentInfo.content.contentId}}_{{i}}" formControlName="statementEvaluationId">
+                    <mat-radio-button class="radio" value="1" (change)="
+                        setBPMetOption(item, '1', item.cgForm, warningTemplate)
+                      ">Yes</mat-radio-button>
+                    <mat-radio-button class="radio" value="2" (change)="
+                        setBPMetOption(item, '2', item.cgForm, warningTemplate)
+                      ">No</mat-radio-button>
+                    <mat-radio-button class="radio" value="3" (change)="
+                        setBPMetOption(item, '3', item.cgForm, warningTemplate)
+                      ">NA</mat-radio-button>
+                  </mat-radio-group>
+                </span>
+              </div>
+              <br /><br />
+            </div>
+            <div class="deviation_border" *ngIf="
+                item.AssetStatementTypeCode == 'B' &&
+                item.cgForm.value.exception.statementEvaluationId &&
+                item.cgForm.value.exception.statementEvaluationId == '2'
+              ">
+              <app-exception formGroupName="exception" (updateExceptionForm)="updateExceptionForm($event)"
+                [parentItem]="parentItem" [contentInfo]="item" [editResultsStatus]='parentItem.editResultsStatus'>
+              </app-exception>
+            </div>
+          </form>
+        </ng-container>
+      </span>
+      <span class="cg-table-width" *ngIf="!contentInfo.cgActivityForm">
+        <strong>No Criteria Data</strong>
+      </span>
+    </div>
+  </span>
+</div>
+<ng-template #warningTemplate>
+  <div class="warning-msg">
+    Selecting “yes” will remove the “Exception” and all associated data. Any
+    data attached to other systems will not be affected.
+    <br /><br />
+    Do you want to continue?
+  </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">
+    OK
+  </button>
+  <button mat-raised-button color="primary" (click)="handleOnCloseButton()" class="mat-button ok-button">
+    CANCEL
+  </button>
+</ng-template>
+
+<ng-template #warningTemplateCG>
+  <div class="warning-msg">
+    Selecting “yes” will remove the “Deviation” and all associated data. Any
+    data attached to other systems will not be affected.
+    <br /><br />
+    Do you want to continue?
+  </div>
+  <button mat-raised-button (click)="handleOnOkButton()" color="primary" class="mat-button ok-button">
+    OK
+  </button>
+  <button mat-raised-button (click)="handleOnCloseButton()" color="primary" class="mat-button ok-button">
+    CANCEL
+  </button>
+</ng-template>

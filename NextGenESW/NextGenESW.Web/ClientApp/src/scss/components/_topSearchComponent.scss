@@ -1,0 +1,316 @@
+@import "../helpers/mixins";
+@import "../helpers/variables";
+@import "../helpers/breakpoints";
+
+
+.eks_page_top {
+    .centerMenu {
+        margin-top: 0;
+        width: 710px;
+        position: relative;
+        margin-bottom: 0;
+    }
+
+    .ekstopleft {
+        float: left;
+        width: 70%;
+        margin-top: 11px;
+    }
+
+    .mat-form-field-infix {
+        @include font-face-BarlowSemiCondensed-Medium(15px, 18px);
+        letter-spacing: 0.15px;
+        //flex: 0 0 124px;
+        padding-bottom: 0px;
+    }
+
+    .angularformcss {
+        img {
+            margin-bottom: 0;
+            width: 12px;
+            height: 12px;
+            margin-right: 10px;
+        }
+    }
+
+    .adv_btn {
+        margin-top: 15px;
+        cursor: pointer;
+        padding: 0 !important;
+        margin-left: 50 !important;
+        color: #222;
+        @include font-face-BarlowSemiCondensed-Medium(15px, 18px);
+        letter-spacing: 0.83px;
+    }
+
+    .collection_dropdown {
+        float: left;
+        width: 100%;
+        margin: 0 0 0 12px;
+        max-width: 168px;
+
+        .mat-form-field {
+            width: 100%;
+        }
+
+        .mat-form-field-appearance-fill {
+            .mat-form-field-flex {
+                background-color: transparent;
+                font-family: "BarlowSemiCondensed-Medium" !important;
+                letter-spacing: 0.83px;
+                padding-left: 0;
+                padding-bottom: 0;
+            }
+        }
+
+        .mat-select-value-text {
+            font-family: "BarlowSemiCondensed-Medium" !important;
+            letter-spacing: 0.83px;
+            margin-top: -2px;
+            float: left;
+            padding-bottom: 0px;
+            font-size: 11px;
+            line-height: 12px;
+        }
+    }
+
+    .mat-option-text {
+        font-family: "BarlowSemiCondensed-Medium" !important;
+        letter-spacing: -0.17px;
+        font-size: 13px;
+    }
+
+    .eks_adv_pos {
+        float: left;
+        margin-left: 1%;
+        padding: 18px 0 0;
+        text-align: left;
+    }
+
+    .srch_cursor {
+        cursor: pointer;
+        float: left;
+        position: relative;
+        margin-left: -28px;
+    }
+
+    .mat-tab-header-pagination-controls-enabled {
+        .eks_page_top {
+            .mat-tab-header-pagination {
+                display: none !important;
+            }
+        }
+    }
+
+    .ekstopleft {
+        .mat-input-element {
+            font-family: "Inter-regular" !important;
+            font-size: 13px;
+            letter-spacing: 0;
+            width: 98%;
+        }
+
+        .mat-input-element::placeholder {
+            font-family: "Inter-regular" !important;
+            font-size: 20px;
+            letter-spacing: 0;
+            opacity: 0.5;
+        }
+    }
+
+    &.eks-top-srch-popup {
+        .menu {
+            width: 650px;
+            margin: 0px auto;
+        }
+    }
+}
+
+// Left Filter Seaction
+.eks-collection-filter,
+.filter_box {
+    border: 1px solid #CFD1D7;
+    padding: 20px;
+    margin-bottom: 30px;
+    overflow: hidden;
+
+    h4 {
+        @include font-face-BarlowSemiCondensed-Medium(24px, 21px);
+        letter-spacing: 1px;
+        color: rgba(0, 0, 0, .9);
+        padding-bottom: 14px;
+    }
+}
+
+
+.collection_box {
+    label {
+        @include font-face-BarlowSemiCondensed-Regular(13px, 16px);
+        display: flex;
+        color: rgba(0, 0, 0, .9);
+
+        .mat-checkbox-inner-container {
+            width: 10px;
+            height: 10px;
+            position: relative;
+            top: 3px;
+            border: 1px solid #bfbfbf;
+            border-radius: 1px;
+
+            .mat-checkbox-frame {
+                border: none;
+            }
+
+            .mat-checkbox-checked {
+                .mat-checkbox-checkmark {
+                    display: none;
+                }
+            }
+        }
+
+        .mat-checkbox-checked {
+            .mat-checkbox-background {
+                border: 1px solid #fff !important;
+                padding: 1px !important;
+                outline: 1px solid #3f51b5;
+                background: #3f51b5 !important
+            }
+
+            .mat-checkbox-checkmark {
+                display: none;
+            }
+        }
+
+
+        button {
+            background: none;
+        }
+    }
+}
+
+//EKS Collection Drop down
+.eks-collection-form {
+    &.mat-select-panel {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+        max-height: 300px !important;
+
+        .mat-option {
+            @include font-face-BarlowSemiCondensed-Regular(13px, 16px);
+            display: flex;
+            color: rgba(0, 0, 0, .9);
+            line-height: 18px !important;
+            height: auto !important;
+            padding: 0 16px 10px;
+
+            .mat-pseudo-checkbox {
+                width: 10px;
+                height: 10px;
+                position: relative;
+                top: 3px;
+                border: 1px solid #bfbfbf;
+                border-radius: 1px;
+                margin: 0;
+            }
+
+            .mat-pseudo-checkbox-checked {
+                border: 1px solid #fff !important;
+                padding: 1px !important;
+                outline: 1px solid #3f51b5;
+
+                &::after {
+                    display: none;
+                }
+            }
+
+            .mat-option-text {
+                display: flex;
+                flex-grow: 1;
+                @include font-face-BarlowSemiCondensed-Regular(13px, 16px);
+                margin-left: 3px;
+
+                .type-name {
+                    margin-left: 5px;
+                }
+            }
+
+            &.mat-active {
+                background: none;
+            }
+        }
+    }
+}
+
+//Document Types
+
+.all_type {
+    @include font-face-Barlow-Medium(8px, 1px);
+    letter-spacing: 0.33px;
+    text-transform: uppercase;
+    width: 16px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $white-color;
+    margin-left: 4px;
+
+
+    &.S {
+        background-color: $content-type-ds;
+    }
+
+    &.A {
+        background-color: $content-type-ap;
+    }
+
+    &.C {
+        background-color: $content-type-cg;
+        border: 1px solid $content-type-brd;
+        color: #404040;
+    }
+
+    &.G {
+        background-color: $content-type-gb;
+    }
+
+    &.R {
+        background-color: $content-type-rc;
+    }
+
+    &.I {
+        background-color: $content-type-wi;
+    }
+
+    &.K {
+        background-color: $content-type-kp;
+        color: $white-color;
+    }
+
+    &.M {
+        background-color: $content-type-m;
+        color: $white-color;
+    }
+
+    &.F {
+        background-color: $content-type-sf;
+        color: $white-color;
+    }
+
+    &.T {
+        background-color: $content-type-toc;
+        padding: 0% 1%;
+        color: $white-color;
+    }
+
+    &.P {
+        background-color: $content-type-sp;
+        color: $white-color;
+    }
+
+    .mat-table {
+        overflow-y: auto;
+        max-height: 425px;
+    }
+
+}

@@ -1,0 +1,95 @@
+<div class="modal-wrapper">
+  <div class="collaborate-dialog">
+    <div class="mat-dialoag-header">
+      <h1 class="mat-card-title">INVITE CO-AUTHOR</h1>
+      <!-- <h1 class="mat-card-title">Share: "{{ data.doc.title }}"</h1> -->
+      <span class="material-icons" mat-dialog-close>close</span>
+    </div>
+    <h2 class="mat-card-subtitle">File Name : "{{ data.doc.title }}"</h2>
+    <Br />
+    {{ message }}
+    <div>
+      <form [formGroup]="collaborateUserForm">
+        <div class="mdl-grid full-width">
+          <span class="search-text">
+            <mat-form-field>
+              <input matInput class="inputMaterial" type="text" (ngModelChange)="filterCoauthor($event)"
+                [matAutocomplete]="Coauthor" formControlName="coauthor" name="Coauthor" required>
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <br>
+              <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor">
+                <mat-option (click)="setUser(item); onChange()" *ngFor="let item of filteredCoauthor | async"
+                  [value]="item.displayName">
+                  <span>{{ item.displayName }}</span>
+                  &nbsp;(<span class="email">{{ item.email }}</span>)
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+          </span>
+          <span class="role">
+            <mat-form-field>
+              <mat-select formControlName="permission" required class="roleSelect" (selectionChange)="onChange()">
+                <!-- <mat-option *ngFor="let option of permissionList" [value]="option.id +'#' + option.name">
+                        {{ option.name }}</mat-option> -->
+                <mat-option value="edit">Can Edit</mat-option>
+<!--                <mat-option value="comment">Can Comment</mat-option>-->
+              </mat-select>
+            </mat-form-field>
+          </span>
+          <span class="add-btn">
+            <button mat-raised-button color="primary" [disabled]="!collaborateUserForm.valid" class="submit-btn"
+              (click)="sendInvite()">Send Invite</button>
+          </span>
+        </div>
+
+      </form>
+
+      <div *ngIf="coauthorListData$?.length" class="mdl-grid full-width">
+        <div class="table-wrapper">
+          <mat-table [dataSource]="coauthorListData$" class="data-table">
+            <!-- user Column -->
+            <ng-container matColumnDef="user">
+              <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.userName }}
+              </mat-cell>
+            </ng-container>
+
+            <!-- permission Column *ngIf='element.actionName !="Owner"'-->
+            <ng-container matColumnDef="delete">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element">
+
+                <mat-icon *ngIf='element.actionName !="owner"' class="delete" (click)="deletePermission(element)">delete
+                </mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <!-- permission Column -->
+            <ng-container matColumnDef="permission">
+              <mat-header-cell *matHeaderCellDef> Permission </mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <span *ngIf='element.actionName =="owner"'> {{ element.actionName }} </span>
+                <mat-select *ngIf='element.actionName !="owner"' [ngModel]="element.actionName"
+                  (selectionChange)="changePermission($event.value, element)">
+                  <!-- <mat-option *ngFor="let option of permissionList" [value]="option.id +'#' + option.name">
+                            {{ option.name }}</mat-option> -->
+                  <mat-option value="edit">Edit</mat-option>
+<!--                  <mat-option value="comment">Comment</mat-option>-->
+                </mat-select>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Header and Row Declarations -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="message == ''">
+      <button mat-raised-button color="primary" (click)="doPost()">Share</button>
+    </div>
+  </div>
+</div>

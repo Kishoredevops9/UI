@@ -1,0 +1,33 @@
+<div class="manualsParent" fxLayout="column">
+  <div class="manualHeader">STEP Flows</div>
+
+  <div class="searchBar" fxLayout="row" fxLayoutAlign="space-around center">
+    <mat-form-field appearance="legacy" class="searchField">
+      <input
+        matInput
+        class="searchInput"
+        placeholder="Filter STEP Flows"
+        [formControl]="inputFieldValue"
+        (keyup)="onKeyUp($event)"
+        [(ngModel)]="serchBoxTest"
+      />
+      <div matPrefix class="searchIcon"></div>
+    </mat-form-field>
+  </div>
+
+  <div class="flexBox">
+    <div  *ngIf="!maps.length" class="noResults" >No Result found</div>
+    <div>
+
+      <app-browse-map  [searchText]="serchBoxTest" [navData]="maps | slice: 0:10"> </app-browse-map>
+    </div>
+
+    <div>
+      <app-browse-map [searchText]="serchBoxTest"  [navData]="maps | slice: 10:20"> </app-browse-map>
+    </div>
+
+    <div>
+      <app-browse-map  [searchText]="serchBoxTest"  [navData]="maps | slice: 20:30"> </app-browse-map>
+    </div>
+  </div>
+</div>

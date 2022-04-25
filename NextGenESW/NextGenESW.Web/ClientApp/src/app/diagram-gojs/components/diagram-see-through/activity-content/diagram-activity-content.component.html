@@ -1,0 +1,70 @@
+<!--
+  NOTE: This code was extracted from src\app\process-maps\step-flow\step\step-tree\step-tree.component.html
+-->
+<div class="diagram-activity-content">
+  <ul *ngIf="data && data.length; else: noData">
+    <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: data , type : 'C' }"></ng-container>
+  </ul>
+</div>
+
+<ng-template #noData>
+  <div class="diagram-activity-content__no-content">
+    No content
+  </div>
+</ng-template>
+
+<ng-template #recursiveListTmpl let-list="list" let-type="type">
+  <li *ngFor="let item of list; let i=index" id="index_{{i}}">
+    <div class="licopy">
+      <div *ngIf="!item.selectedData &&
+        (!isFiltered
+          || (item.assetContentId && contentVisibilityMap[item.assetContentId])
+          || (item.contentNo && contentVisibilityMap[item.contentNo])
+        )
+      ">
+        <div [ngClass]="(type=='C') ?  getID(  item.contentTypeId) : type">
+          <aside class="rectBoxAside" *ngIf="type=='C'">
+            {{ getID( item.contentTypeId) }}
+          </aside>
+
+          <aside class="rectBoxAside" *ngIf="type!='C'">
+            {{type}}
+          </aside>
+
+          <span class="title"> {{ item.stepTitle || item.swimLaneTitle || item.name || item.title || item.stepContentId
+            || 'N/A' }} </span>
+          <span *ngIf="type == 'A'" class="contentIds"> <a style="color: #0076ff; cursor: pointer"
+              (click)="handleOnContentIDClick(item)">{{item.assetContentId}}</a></span>
+          <span *ngIf="type == 'C'" class="contentIds"> <a style="color: #0076ff; cursor: pointer"
+              (click)="handleOnContentIDClick(item)">{{item.contentNo}}</a> </span>
+
+        </div>
+      </div>
+    </div>
+
+
+    <ul *ngIf="(item.stepSwimLanes  && item.stepSwimLanes.length > 0 &&  ( item.active || !fl.SP  ) )">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.stepSwimLanes , type : 'D' }">
+      </ng-container>
+    </ul>
+
+    <ul *ngIf="(item.activityBlocks && item.activityBlocks.length > 0 &&   item.active   )">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.activityBlocks , type : 'A' }">
+      </ng-container>
+    </ul>
+
+    <ul
+      *ngIf="(item.activityContainers && item.activityContainers.length > 0 &&   ( item.active || !fl.A  ) ) || type=='C'">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.activityContainers  , type : 'C' }">
+      </ng-container>
+    </ul>
+
+    <ul *ngIf="( item.childList && item.childList.length > 0 && item.active ) || type=='C'">
+      <ng-container *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childList   , type :  'C'  }">
+      </ng-container>
+    </ul>
+
+
+
+  </li>
+</ng-template>

@@ -1,0 +1,274 @@
+<div *ngIf="isLoading" class="devi4" id="cover-spin"></div>
+
+<!-- <form [formGroup]="deviationUpdateForm">
+  <textarea rows="4" cols="29" class="text-area" placeholder="Explain what is different" formControlName="difference_{{deviationCompId}}"
+  >
+</textarea>
+</form> -->
+
+<form class="deviation" [formGroup]="deviationUpdateForm">
+  <!-- {{deviationTaskItem.taskComponentId}} -->
+  <span class="deviation_head">
+    <b>Deviation Information</b>
+    <!-- {{deviationCompId}} -- {{deviationId}} -->
+    <span class="deviation-number" *ngIf="deviationNumber != null">Deviation #: {{deviationNumber}}</span>
+  </span>
+  <div class="deviation_container">
+    <div class="criteria criteria_upadate">If no, Explain what is different</div>
+    <textarea rows="4" cols="29" class="text-area" placeholder="Explain what is different" formControlName="difference_{{deviationCompId}}"
+      (focusout)="onSubmitDeviationForm(parentItem, deviationCompId)">
+    </textarea>
+    <Br />
+
+    <div class="criteria reason">
+      Reason that its acceptable
+      <!-- -- {{deviationCompId}} -->
+      <span class="text-field-data radio-button-alignment upload-conatiner">
+        <button class="upload" mat-button mat-raised-button color="primary" [matMenuTriggerFor]="menu"
+          overlapTrigger="false" [disabled]="editResultsStatus">
+          <!-- formControlName="taskExecutionUpload" (click)="onSubmitDeviationForm(parentItem)" -->
+          Upload
+        </button>
+        <span *ngIf="fileUploadDataDev == null">No file uploaded</span>
+        <span *ngFor="let file of selectedContentReasonDev;let i = index">
+          <span class="chip exeDt" *ngIf="(deviationCompId == file.taskComponentId && i < 2)">
+            <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }}</span>
+            <!-- <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }} <img src="./assets/icons/edit_icon.svg" class="popup-edit_icon" (click)="popupEditPopup(file,file.uploadDestinationCode)" /> <img src="./assets/icons/close_icon.svg" class="popup-delete_icon"  (click)="popupDeletePopup(file)" /></span> -->
+             <!-- -- {{deviationTaskItem.taskComponentId}} -- {{file.taskComponentId}} -->
+          </span>
+        </span>
+        <span *ngIf="viewMore" class="chip more" (click)="viewAllDocuments(deviationCompId, selectedContentReasonDev, 'DJUST')">
+          View More ({{ moreDataReason(deviationCompId, selectedContentReasonDev)
+          }})</span>
+      </span>
+
+      <mat-menu #menu="matMenu" overlapTrigger="false">
+        <ul class="file-options">
+          <li (click)="uploadFile($event, parentItem, deviationCompId)">To ETFF</li>
+          <li class="ddm-item" (click)="launchDDMTrigger(); $event.stopPropagation();"> To DDM </li>
+          <li class="ddm-item" (click)="launchWebLinkTrigger(); $event.stopPropagation()">
+            Other
+          </li>
+        </ul>
+        <div class="dropdown-ddm" *ngIf="launchDDM" (click)="$event.stopPropagation();">
+
+          <a href="{{ddmEndPoint}}" mat-button mat-raised-button color="primary" target="_blank">Launch DDM</a>
+          <form class="ddm-form" [formGroup]="ddmformDev">
+            <div *ngIf="isDLoading" class="deviD-4-1" id="cover-spin"></div>
+            <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+            <div class="form-fields">
+              <label>File Name:</label>
+              <input type="text" formControlName="fileNameDev" name='filename' />
+            </div>
+
+            <div class="form-fields">
+              <label>ID</label>
+              <input type="text" name='id'  formControlName="idDev" />
+            </div>
+
+            <div class="action-buttons">
+              <button mat-button mat-raised-button color="primary" [disabled]="!ddmformDev.valid" (click)="uploadAttach(parentItem,deviationCompId,'DDM', 'DJUST')">Save</button>
+              <button mat-button mat-raised-button color="primary" (click)="closeDropdown()">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <div class="dropdown-ddm" *ngIf="launchWebLink" (click)="$event.stopPropagation()">
+          <!-- <a href="{{ ddmEndPoint }}" mat-button mat-raised-button color="primary" target="_blank">Web Link</a> -->
+          <form class="ddm-form" [formGroup]="ddmformDev">
+            <div *ngIf="isLoading" class="deviD-4-2" id="cover-spin"></div>
+            <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+            <div class="form-fields">
+              <label>File name/ID:</label>
+              <input formControlName="fileNameDev" type="text" name="fileName" required />
+            </div>
+
+            <div class="form-fields">
+              <label>Location:</label>
+              <input type="text" formControlName="idDev" name="id" required />
+            </div>
+
+            <div class="action-buttons">
+              <button mat-button mat-raised-button color="primary" [disabled]="!ddmformDev.valid"
+              (click)="uploadAttach(parentItem,deviationCompId,'WLNK', 'DJUST')">
+                Save
+              </button>
+              <button mat-button mat-raised-button color="primary" (click)="closeWebLink()">
+                Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-menu>
+    </div>
+
+    <textarea rows="4" cols="29" class="text-area" placeholder="Explain reason that its acceptable"
+      formControlName="reason_{{deviationCompId}}" (focusout)="onSubmitDeviationForm(parentItem, deviationCompId)"></textarea>
+    <Br />
+    <div class="criteria criteria_upadate">
+      <span class="criteria_right_alignment"> Should Criteria be updated? </span>
+      <mat-radio-group formControlName="criteriaUpdateInd_{{deviationCompId}}">
+        <mat-radio-button class="radio" name="cu" value="true">Yes</mat-radio-button>
+
+        <mat-radio-button class="radio" name="cu" value="false">No</mat-radio-button>
+      </mat-radio-group>
+
+      <div *ngIf="deviationUpdateForm.get('criteriaUpdateInd_'+deviationCompId)?.value == 'true'">
+        <textarea rows="4" cols="29" class="text-area" placeholder="Enter how the criteria should be updated"
+          formControlName="criteriaUpdate_{{deviationCompId}}" (focusout)="onSubmitDeviationForm(parentItem, deviationCompId)"></textarea>
+      </div>
+    </div>
+    <div class="criteria">
+      <span class="criteria_right_alignment"> Risk level </span>
+      <mat-radio-group formControlName="riskLevelCode_{{deviationCompId}}" (change)="onSubmitDeviationForm(parentItem, deviationCompId)">
+        <mat-radio-button class="radio red" name="rl" value="r" (change)="handleOnRiskLevelChange('r');"><span
+            class="red">Red</span>
+        </mat-radio-button>
+
+        <mat-radio-button class="radio yellow" name="rl" value="y" (change)="handleOnRiskLevelChange('y');"><span
+            class="yellow">Yellow</span>
+        </mat-radio-button>
+
+        <mat-radio-button class="radio green" name="rl" value="g" (change)="handleOnRiskLevelChange('g');"><span
+            class="green">Green </span>
+        </mat-radio-button> (See <a href="http://pwww.eh.pweh.com/iview/qualsys/wwp/one_company_pw_processes_l3/pwl3_1_1_5_1.pdf" target="_blank">PW1.5.1.13</a>)
+      </mat-radio-group>
+    </div>
+    <div *ngIf="(deviationUpdateForm.get('riskLevelCode_'+deviationCompId)?.value == 'r') || (deviationUpdateForm.get('riskLevelCode_'+deviationCompId)?.value == 'y')" class="criteria">
+      <div class="risk-level-wrapper">
+        Risk Mitigation Plan &nbsp;&nbsp;&nbsp; (require for Yellow and Red
+        risk)&nbsp;&nbsp;
+        <span class="text-field-data radio-button-alignment upload-conatiner up-height">
+          <button mat-button
+            mat-raised-button color="primary" class="upload" ngDefaultControl
+            [matMenuTriggerFor]="menuDev" [disabled]="editResultsStatus">
+            <!-- formControlName="uploadDeviationFile" (click)="onSubmitDeviationForm(parentItem)" -->
+            Upload
+          </button>
+          <span *ngIf="fileUploadDataDev == null">No file uploaded</span>
+          <span *ngFor="let file of selectedContentRiskDev;let i = index">
+            <span class="chip exeDt" *ngIf="(deviationCompId == file.taskComponentId && i < 2)">
+              <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }} </span>
+              <!-- <span>{{file.uploadDestinationCode}} : {{ file.documentTitle }} <img src="./assets/icons/edit_icon.svg" class="popup-edit_icon" (click)="popupEditPopup(file,file.uploadDestinationCode)" /> <img src="./assets/icons/close_icon.svg" class="popup-delete_icon"  (click)="popupDeletePopup(file)" /></span> -->
+              <!-- -- {{deviationTaskItem.taskComponentId}} -- {{file.taskComponentId}} -->
+            </span>
+          </span>
+          <span *ngIf="viewMore" class="chip more" (click)="viewAllDocuments(deviationCompId, selectedContentRiskDev, 'RSKMP')">View
+            More ({{
+            moreDataRisk(deviationCompId, selectedContentRiskDev)
+            }})</span>
+        </span>
+
+        <mat-menu #menuDev="matMenu" overlapTrigger="false">
+          <ul class="file-options">
+            <li (click)="uploadFileRisk($event, parentItem, deviationCompId)">To ETFF</li>
+            <li class="ddm-item" (click)="launchDDMTrigger(); $event.stopPropagation();"> To DDM </li>
+            <li class="ddm-item" (click)="launchWebLinkTrigger(); $event.stopPropagation()">
+              Other
+            </li>
+          </ul>
+          <div class="dropdown-ddm" *ngIf="launchDDM" (click)="$event.stopPropagation();">
+
+            <a href="{{ddmEndPoint}}" mat-button mat-raised-button color="primary" target="_blank">Launch DDM</a>
+            <form class="ddm-form" [formGroup]="ddmformDev">
+              <div *ngIf="isRLoading" class="deviD-4-3" id="cover-spin"></div>
+              <div class="popup-messages" *ngIf="isRaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploadRdocumentTitle}}</b> Added Successfully</span></div>
+              <div class="form-fields">
+                <label>File Name:</label>
+                <input type="text" formControlName="fileNameDev" name='filename' />
+              </div>
+
+              <div class="form-fields">
+                <label>ID</label>
+                <input type="text" name='id'  formControlName="idDev" />
+              </div>
+
+              <div class="action-buttons">
+                <button mat-button mat-raised-button color="primary" [disabled]="!ddmformDev.valid" (click)="uploadAttach(parentItem,deviationCompId,'DDM', 'RSKMP')">Save</button>
+                <button mat-button mat-raised-button color="primary" (click)="closeDropdown()">Cancel</button>
+              </div>
+            </form>
+          </div>
+          <div class="dropdown-ddm" *ngIf="launchWebLink" (click)="$event.stopPropagation()">
+            <!-- <a href="{{ ddmEndPoint }}" mat-button mat-raised-button color="primary" target="_blank">Web Link</a> -->
+            <form class="ddm-form" [formGroup]="ddmformDev">
+              <div *ngIf="isLoading" class="deviD-4-4" id="cover-spin"></div>
+              <div class="popup-messages" *ngIf="isaddedData"><mat-icon>check_circle</mat-icon> <span class="popup-messages-text"> <b>{{uploaddocumentTitle}}</b> Added Successfully</span></div>
+              <div class="form-fields">
+                <label>File name/ID:</label>
+                <input formControlName="fileNameDev" type="text" name="fileName" required />
+              </div>
+  
+              <div class="form-fields">
+                <label>Location:</label>
+                <input type="text" formControlName="idDev" name="id" required />
+              </div>
+  
+              <div class="action-buttons">
+                <button mat-button mat-raised-button color="primary" [disabled]="!ddmformDev.valid"
+                (click)="uploadAttach(parentItem,deviationCompId,'WLNK', 'RSKMP')">
+                  Save
+                </button>
+                <button mat-button mat-raised-button color="primary" (click)="closeWebLink()">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </mat-menu>
+        <span class="system-risk-wrapper">
+          <span class="info-icon">
+            <i class=" icon info"></i>
+            <span class="help">{{systemRiskInfo}}</span>
+          </span>
+
+          <mat-checkbox (change)="onSubmitDeviationForm(parentItem, deviationCompId)" class="style-checked system-risk" name="systemRisk"
+            formControlName="systemRisk_{{deviationCompId}}"> System
+            Risk
+          </mat-checkbox>
+        </span>
+      </div>
+
+      <textarea rows="4" cols="29" class="text-area" placeholder="Enter Risk Mitigation Plan"
+        (focusout)="onSubmitDeviationForm(parentItem,  deviationCompId)" formControlName="riskMitigationPlan_{{deviationCompId}}"
+        name="riskMitigationPlan"></textarea>
+      <Br /><Br />
+    </div>
+    <Br />
+    <div class="risk_width">
+      <span class="risk-1 criteria">
+        Program risk ID,<span class="inner_content">If exists/known</span>
+        &nbsp;&nbsp; <input type="number" placeholder="Enter Program Risk ID" class="input_text_style"
+          formControlName="programRiskId_{{deviationCompId}}" (focusout)="onSubmitDeviationForm(parentItem,  deviationCompId)" />
+      </span>
+      <span class="risk-2 criteria">        
+        Complete &nbsp;&nbsp;
+        No&nbsp;<div class="toggle criteria">
+          <mat-slide-toggle formControlName="complete_{{deviationCompId}}" (change)="onSubmitDeviationForm(parentItem,  deviationCompId)"
+            [disabled]='editResultsStatus'>
+          </mat-slide-toggle>
+          <span class="
+            toggleSpan
+            text-field-data
+            radio-button-alignment
+            toggle_button
+          "></span>&nbsp;
+        </div>Yes
+      </span>
+      <span class="risk-3">
+        <span class="history-logs" (click)="openHistoryLogDialog(parentItem, 'Deviation')">View History Logs
+        </span>
+
+        <span *ngIf="deviationUpdateForm.get('deviationStatusCode_'+deviationCompId)?.value == 'SUBM'" class="action-btn recall"
+          (click)="openRecallDialog(parentItem,'Deviation Recall')">Recall</span>
+        <span *ngIf="deviationUpdateForm.get('deviationStatusCode_'+deviationCompId)?.value == 'APP'" class="action-btn revise"
+          (click)="openRecallDialog(parentItem, 'Deviation Revise')">Revise</span>
+
+        <app-progressbar [progressBar]='progressBar' docType="AP" [docStatus]="deviationUpdateForm.get('deviationStatusCode_'+deviationCompId)?.value"
+          [deviationStatus]="deviationStatus">
+        </app-progressbar>
+
+      </span>
+    </div>
+  </div>
+
+</form>

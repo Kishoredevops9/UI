@@ -1,0 +1,13 @@
+<div class="dialog-mainDiv">
+  <div class="obsolete-warning">This Document Is Being Used In Below Task/ Contents. Do You Want To Continue?</div>
+
+  <div mat-dialog-content class="table-container">
+    <app-related-obsolete-task-list [taskList]="data?.taskList"></app-related-obsolete-task-list>
+    <app-related-obsolete-content-list class="content-list" [contentList]="data?.contentList"></app-related-obsolete-content-list>
+  </div>
+
+  <div mat-dialog-actions class="btn-row">
+    <button mat-raised-button class="confirm-btn" color="primary" (click)="onConfirm()">Continue</button>
+    <button mat-raised-button class="confirm-btn" (click)="onDismiss()">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+<!--
+<div class="user-profile" >
+  
+  <div class="user-name" mat-button [matMenuTriggerFor]="menu">
+    {{profile?.displayName}} <img src="../../assets/images/arrow_drop_down-24px.svg" alt="" width="14px" >
+  </div>
+
+  <div class="curcleDiv">
+    <span class="icon user-img"
+    *ngIf="imageUrl; else defaultPic"
+    [matMenuTriggerFor]="menu">
+      <img src="{{imageUrl}}" alt="" width="25" height="25" class="imgClass">
+    </span>
+    <ng-template #defaultPic>
+      <span class="icon user-img" [matMenuTriggerFor]="menu">
+        <div class="curcle">{{finalInitial}}</div>
+      </span>
+    </ng-template>
+  </div>
+  
+  <mat-menu #menu="matMenu" class="topMenu">
+    <div mat-menu-item class="brandName" >
+      <span class="brandText" (click)="$event.stopPropagation();$event.preventDefault();" >PRATT & WHITNEY </span>
+      <span (click)="logout()" class="loggedOut">
+        <img src="../../assets/images/log-out.png" alt="" width="18px" />
+      </span>
+    </div>
+    <div mat-menu-item class="userProfiles"  [disabled]="isDisabled" (click)="$event.stopPropagation();$event.preventDefault();" >
+      <div class="icon user-img" *ngIf="imageUrl; else initialsParts" >
+        <img src="{{imageUrl}}" alt=""  class="userImg" width="40px" />
+      </div>
+      <ng-template #initialsParts class="initialClass" >
+        <span class="curclePop">{{finalInitial}}</span>
+      </ng-template>
+      <div class="profileName">{{profile?.displayName}}</div> 
+    </div>
+    <button mat-menu-item (click)="profileSettings(profile)" class="settingProfiles">
+      <div class="icon-settings">
+        <img src="../../assets/images/outline_settings_black_24dp.png" alt="icon" class="iconSets" width="24" />
+      </div>  
+      <div class="settings-text">
+        <span class="textLine">Profile Settings</span><br> 
+        <span class="sub-titles">Update and modify your profile</span>
+      </div>
+    </button>
+  </mat-menu>
+
+</div>
+
+-->
+
+<div class="userProfile" mat-button [matMenuTriggerFor]="menu" fxLayout="row" fxLayoutAlign="center center">
+
+  <div class="curcleDiv">
+    <span class="icon user-img" *ngIf="imageUrl; else defaultPic">
+      <img src="{{imageUrl}}" alt="" width="40" height="40" class="imgClass">
+    </span>
+    <ng-template #defaultPic>
+      <span class="icon user-img">
+        <div class="curcle">{{finalInitial}}</div>
+      </span>
+    </ng-template>
+  </div>
+
+  <div class="userName">
+    {{profile?.displayName}}
+    <span class="arrow down"></span>
+  </div>
+
+</div>
+
+
+<mat-menu #menu="matMenu" class="topMenu">
+  <div mat-menu-item class="brandName">
+    <span class="brandText" (click)="$event.stopPropagation();$event.preventDefault();">PRATT & WHITNEY </span>
+    <span (click)="logout()" class="loggedOut">
+      <img src="../../assets/images/log-out.png" alt="" width="18px" />
+    </span>
+  </div>
+  <div mat-menu-item class="userProfiles" [disabled]="isDisabled"
+    (click)="$event.stopPropagation();$event.preventDefault();">
+    <div class="icon user-img" *ngIf="imageUrl; else initialsParts">
+      <img src="{{imageUrl}}" alt="" class="userImg" width="40px" />
+    </div>
+    <ng-template #initialsParts class="initialClass">
+      <span class="curclePop">{{finalInitial}}</span>
+    </ng-template>
+    <div class="profileName">{{profile?.displayName}}</div>
+  </div>
+  <button mat-menu-item class="settingProfiles">
+    <div class="icon-settings" (click)="profileSettings(profile,userProfileDataNew)">
+      <img src="../../assets/images/outline_settings_black_24dp.png" alt="icon" class="iconSets" width="24" />
+    </div>
+    <div class="settings-text">
+      <span class="textLine" (click)="profileSettings(profile,userProfileDataNew)">Profile Settings</span><br>
+      <span class="sub-titles">Click <a href="https://engineworks-sp.prattwhitney.com/EKSHelp/Request Permission Change 1.0.pdf" target="_blank" class="link-text">here</a> to update profile</span>
+    </div>
+  </button>
+</mat-menu>

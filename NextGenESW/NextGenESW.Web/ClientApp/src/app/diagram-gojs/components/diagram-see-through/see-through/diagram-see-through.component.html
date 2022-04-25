@@ -1,0 +1,19 @@
+<div class="app-diagram-see-through"
+  #menuTrigger="matMenuTrigger"
+  [matMenuTriggerFor]="seeThrough"
+  [ngStyle]="{
+    left: model.position.left + 'px',
+    top: model.position.top + 'px'
+  }"
+></div>
+
+<mat-menu
+  class="app-diagram-see-through__menu"
+  #seeThrough="matMenu"
+>
+  <app-diagram-see-through-activity-content
+    *ngIf="showActivityDetails"
+    [data]="model.data.activityContainers"
+    [contentVisibilityMap]="model.data.contentVisibilityMap"
+  ></app-diagram-see-through-activity-content>
+</mat-menu>

@@ -1,0 +1,377 @@
+
+ <div style="position: relative">
+  <!-- the position of the parent container must be set to relative -->
+  <!-- It is really important to set loaderId for non-master loader -->
+  <ngx-ui-loader [loaderId]="'dragdrop'"></ngx-ui-loader>
+</div>
+
+<div  *ngIf="isEditableMode">
+
+  <ng-template #tmplNode let-node="node">
+    <div
+
+      class="node-item"
+      [attr.data-id]="node.id"
+      [attr.id]="'node-' + node.id"
+    >
+      <div
+        class="
+          previewMode
+          mdl-grid
+          mdl-cell
+          mdl-cell--12-col
+          mdl-cell--12-col-tablet
+          mdl-cell--12-col-phone
+          toc-full-width
+        "
+      >
+      <span [ngClass]="node.children.length ? node.isExpanded ? 'expandMinus' : 'expandPlus' : ''" (click)="node.isExpanded = !node.isExpanded" >
+        {{
+          node.children.length
+            ? node.isExpanded
+              ? '-'
+              : '+'
+            : ''
+        }}
+
+      </span>
+        <ng-container
+          *ngIf="node.content.assetType == 'Header'; else CONTENT_TYPE"
+        >
+          <span
+            class="header-style"
+            [ngClass]="headerStyle(node)"
+            (contextmenu)="onContextMenu($event, node)"
+          >
+            <i *ngIf="!dragDisabled" class="material-icons"> </i>
+            <div
+              style="position: fixed"
+              [style.left]="contextMenuPosition.x"
+              [style.top]="contextMenuPosition.y"
+              [matMenuTriggerFor]="contextMenu"
+            ></div>
+            <mat-menu #contextMenu="matMenu" class="toccontextMenu">
+              <ng-template matMenuContent let-item="item">
+                <button mat-menu-item (click)="onOpenAddonsPopupSearch(item)">
+                  Add EKS Links
+                </button>
+                <button mat-menu-item (click)="onContextMenuExternal(item, true)">
+                  Add Header
+                </button>
+                <button
+                  mat-menu-item
+                  (click)="onContextMenuExternal(item, false)"
+                >
+                  Add External Links
+                </button>
+              </ng-template>
+            </mat-menu>
+            <ng-container *ngIf="node.content.isEdit; else PREVIEW_MODE">
+              <input
+                class="inputMaterial title"
+                (keydown)="handleInput($event)"
+                type="text"
+                [(ngModel)]="node.content.title"
+                (focusout)="saveHeader(node)"
+                maxlength="50"
+              />
+            </ng-container>
+            <ng-template #PREVIEW_MODE>
+              <ng-container>
+                <span class="title">
+
+                  {{ node.content.title }}
+                </span>
+              </ng-container>
+            </ng-template>
+          </span>
+          <span style="width: 40%"> </span>
+          <span style="float: right;width: 10%;">
+            <span class="icons">
+              <mat-icon class="materialIcons editIcon" (click)="editItem(node)"
+                >edit</mat-icon
+              >
+              <mat-icon class="materialIcons deleteIcon" (click)="deleteItem(node)"
+                >delete</mat-icon
+              >
+            </span>
+          </span>
+          <span style="width: 5%"> </span>
+        </ng-container>
+        <ng-template #CONTENT_TYPE>
+          <ng-container>
+            <!-- <i *ngIf="!dragDisabled" class="material-icons"> </i> -->
+            <span class="header-style">
+              <!-- &nbsp;&nbsp;&nbsp; -->
+              <span
+                [ngClass]="checkContentType(node)"
+                *ngIf="node.content.assetType != 'Link'"
+              >
+              {{ getID(node.content.assetType) }}</span
+              >
+              <span class="link" *ngIf="node.content.assetType == 'Link'"
+                >EX</span
+              >
+              <span class="ct-title"
+                >{{ node.content.title }}
+                <!-- &nbsp;&nbsp;&nbsp; -->
+              </span>
+                 <span *ngIf="node.content.assetStatus == 'Obsolete'"  class="obsolete-document-label-tag"></span>
+            </span>
+
+            <span style="float: right; width: 13%">
+              <span class="icons">
+                <span style="width: 20%;">
+                  <mat-icon class="materialIcons editIcon" *ngIf="node.content.assetType == 'Link'" (click)="editItem(node)"
+                  >edit</mat-icon
+                >
+                  <mat-icon class="materialIcons deleteIcon" (click)="deleteItem(node)"
+                  >delete</mat-icon
+                >&nbsp;&nbsp;
+                </span>
+                <span style="width: 50%;">
+                  <a
+                  *ngIf="node.content.assetType == 'Link'"
+                  [href]="getExternalLink(node.content.contentUrl)"
+                  title="{{ node.content.contentUrl }}"
+                  target="_blank"
+                  class="ct-icons"
+                  >{{ node.content.title }}</a
+                >
+                <a
+                  *ngIf="node.content.assetType != 'Link'"
+                  class="ct-icons"
+                  (click)="navigateTo(node.name, node.content.contentId)"
+                  >{{ node.content.contentId }}</a
+                >
+                </span>
+
+
+              </span>
+            </span>
+          </ng-container>
+        </ng-template>
+      </div>
+      <div
+        *ngIf="node.isExpanded && node.children.length"
+        class="node-children"
+        cdkDropList
+        [cdkDropListData]="node.children"
+        [id]="node.id"
+        [cdkDropListConnectedTo]="dropTargetIds"
+        (cdkDropListDropped)="drop($event)"
+        [cdkDropListSortingDisabled]="true"
+      >
+        <div
+          *ngFor="let child of node.children"
+          cdkDrag
+          [cdkDragData]="child.id"
+          (cdkDragMoved)="dragMoved($event)"
+        >
+          <ng-container
+            *ngTemplateOutlet="tmplNode; context: { node: child }"
+          ></ng-container>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <div
+    cdkDropList
+    [cdkDropListData]="nodes"
+    [id]="'main'"
+    [cdkDropListConnectedTo]="dropTargetIds"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListSortingDisabled]="true"
+  >
+    <div
+      *ngFor="let node of nodes"
+      cdkDrag
+      [cdkDragData]="node?.uId"
+      (cdkDragMoved)="dragMoved($event)"
+    >
+      <ng-container
+        *ngTemplateOutlet="tmplNode; context: { node: node }"
+      ></ng-container>
+    </div>
+  </div>
+</div>
+
+<div  *ngIf="!isEditableMode">
+
+  <ng-template #tmplNode let-node="node">
+    <div
+
+    class="node-item"
+    [attr.data-id]="node.id"
+    [attr.id]="'node-' + node.id"
+  >
+    <div
+      class="
+        previewMode
+        mdl-grid
+        mdl-cell
+        mdl-cell--12-col
+        mdl-cell--12-col-tablet
+        mdl-cell--12-col-phone
+        toc-full-width
+      "
+    >
+
+    <span [ngClass]="node.children.length ? node.isExpanded ? 'expandMinus' : 'expandPlus' : ''" (click)="node.isExpanded = !node.isExpanded" >
+      {{
+        node.children.length
+          ? node.isExpanded
+            ? '-'
+            : '+'
+          : ''
+      }}
+
+    </span>
+      <ng-container
+        *ngIf="node.content.assetType == 'Header'; else CONTENT_TYPE"
+      >
+        <span
+          class="header-style"
+          [ngClass]="headerStyle(node)"
+          (contextmenu)="onContextMenu($event, node)"
+        >
+          <i *ngIf="!dragDisabled" class="material-icons"> </i>
+          <div
+            style="position: fixed"
+            [style.left]="contextMenuPosition.x"
+            [style.top]="contextMenuPosition.y"
+            [matMenuTriggerFor]="contextMenu"
+          ></div>
+          <mat-menu #contextMenu="matMenu" class="toccontextMenu">
+            <ng-template matMenuContent let-item="item">
+              <button mat-menu-item (click)="onOpenAddonsPopupSearch(item)">
+                Add EKS Links
+              </button>
+              <button mat-menu-item (click)="onContextMenuExternal(item, true)">
+                Add Header
+              </button>
+              <button
+                mat-menu-item
+                (click)="onContextMenuExternal(item, false)"
+              >
+                Add External Links
+              </button>
+            </ng-template>
+          </mat-menu>
+          <ng-container *ngIf="node.content.isEdit; else PREVIEW_MODE">
+            <input
+              class="inputMaterial title"
+              (keydown)="handleInput($event)"
+              type="text"
+              [(ngModel)]="node.content.title"
+              (focusout)="saveHeader(node)"
+              maxlength="50"
+            />
+          </ng-container>
+          <ng-template #PREVIEW_MODE>
+            <ng-container>
+              <span class="title">
+                {{ node.content.title }}
+              </span>
+            </ng-container>
+          </ng-template>
+        </span>
+        <span style="width: 40%"> </span>
+
+      </ng-container>
+      <ng-template #CONTENT_TYPE>
+        <ng-container>
+          <!-- <i *ngIf="!dragDisabled" class="material-icons"> </i> -->
+          <span class="header-style">
+            <!-- &nbsp;&nbsp;&nbsp; -->
+            <span
+              [ngClass]="checkContentType(node)"
+              *ngIf="node.content.assetType != 'Link'"
+            >
+            {{ getID(node.content.assetType) }}</span
+            >
+            <span class="link" *ngIf="node.content.assetType == 'Link'"
+              >EX</span
+            >
+            <span class="ct-title"
+              >{{ node.content.title }}
+              <!-- &nbsp;&nbsp;&nbsp; -->
+            </span>
+              <span *ngIf="node.content.assetStatus == 'Obsolete'"  class="obsolete-document-label-tag"></span>
+          </span>
+
+          <span style="float: right; width: 13%">
+            <span class="icons">
+              <span style="width: 20%;">
+                &nbsp;&nbsp;
+              </span>
+              <span style="width: 50%;">
+                <a
+                *ngIf="node.content.assetType == 'Link'"
+                [href]="getExternalLink(node.content.contentUrl)"
+                title="{{ node.content.contentUrl }}"
+                target="_blank"
+                class="ct-icons"
+                >{{ node.content.title }}</a
+              >
+              <a
+                *ngIf="node.content.assetType != 'Link'"
+                class="ct-icons"
+                (click)="navigateTo(node.name, node.content.contentId)"
+                >{{ node.content.contentId }}</a
+              >
+              </span>
+
+
+            </span>
+          </span>
+        </ng-container>
+      </ng-template>
+    </div>
+    <div
+      *ngIf="node.isExpanded && node.children.length"
+      class="node-children"
+      cdkDropList
+      [cdkDropListData]="node.children"
+      [id]="node.id"
+      [cdkDropListConnectedTo]="dropTargetIds"
+      (cdkDropListDropped)="drop($event)"
+      [cdkDropListSortingDisabled]="true"
+    >
+      <div
+        *ngFor="let child of node.children"
+        cdkDrag
+        [cdkDragData]="child.id"
+        (cdkDragMoved)="dragMoved($event)"
+      >
+        <ng-container
+          *ngTemplateOutlet="tmplNode; context: { node: child }"
+        ></ng-container>
+      </div>
+    </div>
+  </div>
+
+  </ng-template>
+
+  <div
+    cdkDropList
+    [cdkDropListData]="nodes"
+    [id]="'main'"
+    [cdkDropListConnectedTo]="dropTargetIds"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListSortingDisabled]="true"
+  >
+    <div
+      *ngFor="let node of nodes"
+      cdkDrag
+      [cdkDragData]="node.uId"
+      (cdkDragMoved)="dragMoved($event)"
+    >
+      <ng-container
+        *ngTemplateOutlet="tmplNode; context: { node: node }"
+      ></ng-container>
+    </div>
+  </div>
+</div>

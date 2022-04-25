@@ -1,0 +1,32 @@
+@import '../../../theme/_colors';
+
+$icon-size: 16px;
+$large-icon-size: 24px;
+
+.app-context-menu-item {
+    display: flex;
+    align-items: center;
+    min-width: 140px;
+
+    .mat-menu-item &__icon.mat-icon {
+        color: $text;
+        width: $icon-size;
+        height: $icon-size;
+        padding: 0;
+        margin-right: 6px;
+    }
+
+  .mat-menu-item &__icon--large.mat-icon {
+    color: $text;
+    width: $large-icon-size;
+    height: $large-icon-size;
+    padding: 0;
+    margin-right: 2px;
+    margin-left: -4px;
+  }
+
+    &__text {
+        margin-left: 8px;
+        font-size: 16px;
+    }
+}

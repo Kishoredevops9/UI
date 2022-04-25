@@ -1,0 +1,30 @@
+<span class="content_alignment">
+ 
+  <span><button class="button_style">Progress</button></span>
+  <span><button class="button_progress_style">16%</button></span>
+  <span class="vertical_line"></span>
+  <span><button class="button_text_style">65/90</button></span>
+  <span><button class="button_style">Approved</button></span>
+  <span class="vertical_line"></span>
+  <span><button class="button_text_style">15/90</button></span>
+  <span><button class="button_style">Ready For Approval</button></span>
+  <span class="vertical_line"></span>
+  <span><button class="button_text_style">0</button></span>
+  <span><button class="button_style">Deviation</button></span>
+  <span class="vertical_line"></span> 
+
+
+  <span *ngIf="loading==0 && addToOption"> 
+    <button class="button_style"  (click)="addToTask()"> 
+    <img src="./assets/images/addtotask.png" width="15" >
+    Add to "Your Task"</button>  
+  </span>
+
+  <span *ngIf="loading==1">Sending...</span>  
+  
+  <span *ngIf="loading==2 || !addToOption">    
+    <button class="button_style" style="opacity: .5; cursor: no-drop;"     > 
+    <img src="./assets/images/addtotask.png" width="15" >
+    Add to "Your Task"</button>  
+  </span>
+</span>

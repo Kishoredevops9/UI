@@ -1,0 +1,70 @@
+<div class="deviation_approval" *ngIf="!showSubmitDialog">
+  <div class="heading">
+    <label *ngIf="taskType=='activity'"><b>SEND BACK ACTIVITIES</b></label>
+    <label *ngIf="taskType=='deviation'"><b>SEND BACK DEVIATION</b></label>
+    <div class="sub_heading">
+      <span class="header-theam">T</span>
+      <span id="docTitle"><sub>{{docTitle}}</sub></span>
+      <span id="content_Id"><sub></sub></span>
+    </div>
+    <form class="deviation_form" [formGroup]="activitySendBackForm">      
+      <div class="tasks">
+        <ul>
+          <li *ngFor="let item of resultArray">
+            <div class="header main_title main_header">
+              <div class="title">{{ item.activityName }}</div>
+              <div class="doc-number">
+                {{item.activityContentId}} / <span class="jc-number">{{item.usClassification}}
+                  {{item.usJurisdiction}}</span>
+              </div>
+            </div>
+            <div class="sub_title">
+              This will send the activity back to <span>"{{item.activitySubmitter}}"</span>
+            </div>
+          </li>
+        </ul>
+        <textarea rows="3" matInput formControlName="comments" placeholder="Comment For Approvers Here"> </textarea>
+      </div>
+    </form>
+    <div class="button">
+      <button mat-button mat-raised-button color="primary" class="cancel_button" (click)="handleOnCancelButtonClick()">
+        Cancel
+      </button>
+      <button mat-button mat-raised-button color="primary" [disabled]="!resultArray"
+        (click)="handleOnSubmitButtonClick()">
+        Send Back
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showSubmitDialog" class="deviation_approval">
+  <span class="heading">
+    <label *ngIf="taskType=='activity'"><b>SEND BACK ACTIVITIES SUBMITTED FOR APPROVAL</b></label>
+    <label *ngIf="taskType=='deviation'"><b>SEND BACK DEVIATION SUBMITTED FOR APPROVAL</b></label>
+  </span>
+  <div class="sub_heading">
+    <span class="header-theam">T</span>
+    <span id="docTitle"><sub>{{ title }}</sub></span>
+    <span id="content_Id"><sub>{{ taskReaid }}</sub></span>
+  </div>
+  <div class="tasks">
+    <ul>
+      <li *ngFor="let item of resultArray">
+        <div class="header main_title main_header">
+          <div class="title">{{ item.activityName }}</div>
+          <div class="doc-number">{{ item.activityContentId }} / <span class="jc-number">{{item.usClassification}}
+              {{item.usJurisdiction}}</span></div>
+          <div class="sub_title">
+            This will send the activity back to <span>"{{item.activitySubmitter}}"</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="button">
+    <button mat-button mat-raised-button color="primary" (click)="handleOnCancelButtonClick()">
+      CLOSE
+    </button>
+  </div>
+</div>

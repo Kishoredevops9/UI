@@ -1,0 +1,372 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import '../../../../scss/helpers/mat-slide-toggle';
+
+.tab-margin {
+  margin-top: 5%;
+}
+
+.properties {
+  margin-top: 2%;
+
+}
+
+form {
+  width: 100%;
+  padding-bottom: 50px;
+
+  .message {
+    color: red;
+  }
+
+  .mat-display-1 {
+    margin: 0 0 10px;
+    @include font-face-BarlowSemiCondensed-SemiBold(1.5rem, normal);
+  }
+
+  .mat-form-field,
+  .mat-radio-group,
+  .mat-raised-button {
+    width: 100%;
+    margin: 0 0 15px;
+    display: block;
+  }
+
+
+  .mat-radio-group {
+    .mat-radio-button {
+      margin-right: 10px;
+    }
+  }
+
+  .mat-raised-button {
+    max-width: 220px;
+    width: 100%;
+    margin: 0px auto;
+  }
+
+  @include breakpoint(mobileonly) {
+    padding: 0 1%;
+  }
+
+  .chip-collection {
+    height: 10%;
+    border: 1px solid gray;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    ::ng-deep .mat-form-field-underline {
+      height: 0;
+    }
+
+  }
+
+  .toggle {
+    float: left;
+  }
+
+  .submit-btn {
+    margin-right: 8%;
+    padding: 7px 20px;
+  }
+}
+
+.global-sidenav {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  background: #25b7f7;
+  color: #ffffff;
+  float: right;
+}
+
+.toggleSpan {
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.Keyword-area {
+  padding-right: 30px;
+}
+
+.chips {
+  padding-top: 20px;
+}
+
+.discipline-tree {
+  max-height: 300px;
+  border: 1px solid black;
+  overflow: auto;
+  overflow-x: hidden;
+  width: 140%;
+}
+
+.nodePath {
+  cursor: pointer;
+  margin-top: 2%;
+  width: 100%;
+  font-size: 12px !important;
+
+  button {
+    width: 100%;
+  }
+}
+
+.box-width {
+  border-radius: 1px;
+  background: #fff;
+  box-sizing: border-box;
+  background-color: #ebebeb;
+  max-height: max-content;
+  padding: 4px;
+  display: flex;
+  margin-bottom: 0.3%;
+  margin-right: 2.5px !important;
+  word-break: break-word;
+}
+
+.box-space {
+  margin-left: 2% !important
+}
+
+.header-space {
+  margin-top: 2%;
+  margin-bottom: -1%;
+}
+
+.global-sidenav-expanded {
+  display: flex;
+  justify-content: center;
+  width: 480px;
+  background: #ffffff;
+  color: #000000;
+  top: 192px;
+  height: 68%;
+}
+
+.btn-submit {
+  display: inline-flex;
+  margin-right: -42px;
+  float: right;
+  margin-bottom: 80px;
+}
+
+.text-formate {
+  color: #000000;
+  font-size: 18px;
+  display: block;
+  padding: 2px 0;
+  font-family: 'Barlow-Medium';
+
+}
+
+.text-field {
+  color: #5B6376;
+  font-size: 14px;
+  margin: 3px 0;
+  display: block;
+  font: normal normal normal 13px/28px Inter-regular;
+}
+
+.text-field-data {
+  color: #000000;
+  font-size: 12px !important;
+  font: normal normal normal 13px/28px Inter-regular;
+}
+
+.radio-button-alignment {
+  display: block;
+  float: right;
+  padding-left: 10px;
+  padding-top: 0px;
+  margin-bottom: 20px;
+}
+
+.text-field-level {
+  color: #5B6376;
+  font-size: 14px;
+  margin-top: 35px;
+  display: block;
+}
+
+.text-field-radio {
+  color: #5B6376;
+  font-size: 14px;
+  margin: 20px 0;
+  display: block;
+}
+
+.formData {
+  width: 130%;
+}
+
+
+/* add new css 06-04-2021 */
+
+::ng-deep .mat-select-panel {
+  margin-left: 25px;
+  max-width: 550px;
+}
+
+.container .mdl-cell--6-col {
+  width: 51.5% !important;
+}
+
+.top_margin_new {
+  margin-top: 10px !important;
+
+  a {
+    float: right;
+    top: -8px;
+    padding: 3px 3px !important;
+  }
+}
+
+.mat-card {
+  // position: absolute !important;
+  width: 140%;
+  z-index: 100;
+  background-color: #fff !important;
+  top: 0;
+  max-height: 300px;
+  overflow: auto;
+}
+
+
+.applyFilters {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  clear: both;
+}
+
+
+
+.chipbox {
+  display: inline-block;
+}
+
+.topChipBox {
+  padding: 0px 20px 20px 0px;
+  width: 90%;
+}
+
+.textFilter {
+  padding: 5px 10px 10px 0px;
+  display: inline-block;
+}
+
+.mat-chip-list-wrapper,
+.mat-standard-chip {
+  margin: 4px;
+  width: max-content;
+}
+
+.classifier-view {
+  position: absolute;
+  right: -35px;
+  top: 15px;
+}
+
+.mat-icon {
+  cursor: pointer;
+}
+
+.no-box-space-sf{
+  margin-left: 0% !important;
+}
+
+::ng-deep .disabled{
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  opacity: 0.2;
+  text-decoration: none;
+  background-color: #f9f9f9 !important;
+  width: 355px !important;
+  height: 44px !important;
+  margin-right: 40px;
+  // border-bottom: 1.5px solid #99a1a7;
+}
+
+::ng-deep .disabledPub{
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  opacity: 0.2;
+  text-decoration: none;
+  background-color: #f9f9f9 !important;
+  width: 350px !important;
+  height: 44px !important;
+  margin-right: 52px !important;
+}
+
+::ng-deep .undisabled{
+  height: 44px !important;
+  border-bottom: 1.5px solid #99a1a7;
+  width: 366px !important;
+  margin-right: 35px;
+}
+::ng-deep .classifierMatOption{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 38px;
+  height: 34px;
+  padding: 0 16px;
+  text-align: left;
+  text-decoration: none;
+  max-width: 100%;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  -webkit-tap-highlight-color: transparent;
+  font-size: 14px;
+  }
+
+ input:-webkit-autofill,
+ input:-webkit-autofill:hover,
+ input:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+:host {
+  @include slideToggle(green, gray, #fff, 33px, 21px);
+}
+.mdl-cell--4-col {
+  width: calc(23%) !important;
+  margin-right: 50px;
+}
+
+::ng-deep .select-phase-container {
+  display: flex;
+  flex-direction: column;
+
+  .select-all {
+    padding: 0 16px;
+
+    .mat-option-text {
+      position: relative;
+      top: 7px;
+    }
+  }
+
+  .mat-checkbox-inner-container {
+    border: 2px solid !important;
+  }
+
+  .select-phase-options {
+    overflow: auto;
+    max-height: 210px;
+  }
+}

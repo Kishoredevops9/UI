@@ -1,0 +1,18 @@
+<div class="page-layout status-tab">
+  <div *ngIf="loading" id="cover-spin"></div>
+  <div class="header-field">Please click on the below status to view:</div>
+  <div class="status-container">
+    <div class="status-container-button">
+      <button mat-button mat-raised-button color="primary" (click)="statusReportTask()">Task Status</button>
+      <button mat-button mat-raised-button color="primary" (click)="statusReportDev()">Task Deviation</button>
+      <button mat-button mat-raised-button color="primary" (click)="statusCrtDeviation()">Criteria Deviation</button>
+    </div>
+    <div class="status-container-button mgnbp5">
+      <button mat-button mat-raised-button color="primary" (click)="statusIncompleteActivity()">Activity Status, Incomplete</button>
+      <button mat-button mat-raised-button color="primary" (click)="statusDetailedActivity()">Activity Status, Detailed</button>
+      <button mat-button mat-raised-button color="primary" (click)="statusContentRevisionCheck()">Task Content Revision Check</button>
+    </div> 
+    
+  </div>
+</div>
+<app-deviation-report [title]='title'></app-deviation-report>

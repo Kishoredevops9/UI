@@ -1,0 +1,13 @@
+<div fxLayout="column" class="adminDeleteParent">
+    <div class="deleteHeader">Delete?</div>
+    <div *ngIf="!delMultipleData" class="txtClass" fxLayout="row" fxLayoutAlign="start center">
+        Are you sure you want to delete - {{ deleteElementTitles }}
+    </div>
+    <div *ngIf="delMultipleData" class="txtClass" fxLayout="row" fxLayoutAlign="start center">
+        Are you sure you want delete multiple STEP Flow
+    </div>
+    <div fxLayout="row" fxLayoutAlign="space-evenly center">
+        <button mat-button mat-raised-button color="primary" (click)="onClickYes()">Confirm</button>
+        <button mat-button mat-raised-button color="primary" (click)="onClickNo()">Cancel</button>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<div class="deviation_approval" *ngIf="!showSubmitDialog">
+  <div class="heading">
+    <label><b>SEND BACK DEVIATION</b></label>
+    <div class="sub_heading">
+      <span class="header-theam">T</span>
+      <span id="docTitle"><sub></sub></span>
+      <span id="content_Id"><sub></sub></span>
+      <br/>
+      <div class="sub_title">
+          <label>This will send the activity back to "JOHN DOE"</label>
+      </div>
+    </div>
+    <form class="deviation_form" [formGroup]="activityForm">
+      <div class="tasks">
+        <ul>
+          <li *ngFor="let item of parentItem">
+            <div class="header {{ item.name | lowercase }} main_header">
+              <div class="type {{ item.name | lowercase }}">{{ item.name }}</div>
+              <div class="activity_title dev_title">{{ item.content.title }}</div>
+              <div class="content_number">{{ item.content.contentId }}</div>
+            </div>
+            <div class="deviationId"><b>Deviation Id:</b> 20ca123-D02</div>
+            <div class="deviationContent">Design Conforms to the relevant preferred configuration,design standard,lessons learned and/or best practices documents.</div>
+            <textarea rows="3" matInput formControlName="comments" placeholder="Comment For Approvers Here"></textarea>
+          </li>
+        </ul>
+      </div>
+    </form>
+    <div class="button">
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        class="cancel_button"
+        (click)="handleOnCancelButtonClick()"
+      >
+        Cancel
+      </button>
+      <button
+        mat-button
+        mat-raised-button
+        color="primary"
+        (click)="handleOnSubmitButtonClick()"
+      >
+        Send Back
+      </button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showSubmitDialog" class="deviation_approval">
+  <span class="heading">
+    <label><b>SEND BACK ACTIVITY APPROVAL SUBMITTED</b></label>
+  </span>
+  <div class="sub_heading">
+    <span class="header-theam">T</span>
+    <span id="docTitle"><sub>{{ title }}</sub></span>
+    <span id="content_Id"><sub>{{ taskReaid }}</sub></span>
+  </div>
+  <div class="button">
+    <button mat-button mat-raised-button color="primary" (click)="handleOnCancelButtonClick()">
+      CLOSE
+    </button>
+  </div>
+</div>

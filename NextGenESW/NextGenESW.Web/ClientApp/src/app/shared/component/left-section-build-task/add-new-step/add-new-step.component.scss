@@ -1,0 +1,85 @@
+h1 { padding: 10px; } 
+.action-btn { border-top: 1px solid  #CFD1D7; text-align: center; padding: 15px; 
+    button { margin-left: 10px; }
+}
+
+.stepClass{
+    position: absolute;
+    top: 0px;
+    background: grey;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    margin: 0 auto;
+    left: 0px;
+    z-index: 1;
+    .spinnerbox { width: 60px;
+        margin: 0px auto;
+        height: 0px;  }
+}
+
+.formBoxAdd { 
+    ul {  margin-left: 20px;    
+        li {          
+            label { float: left;
+                width: 180px;
+                padding: 14px;
+                padding-left: 0px; }                   
+                
+                mat-form-field { width: 330px;  }
+                .top_margin_new { 
+                    width: 330px;  
+                    display: inline-block;
+                    position: relative;
+                    margin-bottom: 19px;
+                    padding-bottom: 6px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+                    mat-label{
+                        display: inline-block;
+                        width: 210px;
+                    }
+                    .iconwidth{
+                        display: inline-block;
+                    }
+                    .dropbox {
+                        position: fixed;
+                        height: 200px;
+                        background: white;
+                        z-index: 100;
+                        overflow: hidden;
+                        overflow-y: auto;
+                        padding: 3px;
+                      }
+                      .dropboxn {
+                        position: fixed;
+                        height: 180px;
+                        background: white;
+                        z-index: 100;
+                        overflow: hidden;
+                        overflow-y: auto;
+                        padding: 3px;
+                      }
+                }
+                .mat-icon-button{
+                    line-height: 30px;
+                    width: 30px;
+                    height: 30px;
+                }
+        }
+    }
+    .stepSHgt{
+        height: 320px;
+    }   
+
+
+}
+
+.disciplineHgt1{
+    height: 220px;
+}
+.disciplineHgt2{
+    height: 220px;
+}
+.disciplineHgt3{
+    height: 220px;
+}

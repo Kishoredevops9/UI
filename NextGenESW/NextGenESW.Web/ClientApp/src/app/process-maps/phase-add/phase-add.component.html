@@ -1,0 +1,38 @@
+<div class="add-activities">
+    <div class="mat-dialoag-header">
+        <h1 mat-dialog-title>Add Gate</h1>
+        <span class="material-icons" mat-dialog-close>
+            close
+        </span>
+    </div>
+    <mat-dialog-content>
+        <mat-card>
+            <form [formGroup]="addPhaseForm" id="editActivity">
+
+                <div class="flexItemBox">
+                    <div class="label">Label</div>
+                    <mat-form-field>
+                        <mat-label>Label</mat-label>
+                        <input matInput placeholder="Label" formControlName="name" />
+                    </mat-form-field>
+                </div>
+                <div class="flexItemBox">
+                    <div class="label">Description</div>
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input matInput placeholder="Description" formControlName="caption" />
+                    </mat-form-field>
+                </div>
+
+                <div class="button-group">
+                    <button [disabled]="!addPhaseForm.valid" (click)="onAddphase()" mat-flat-button color="primary">
+                        Save
+                    </button>
+                    <button (click)="onClose()" mat-flat-button color="warn">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+    </mat-dialog-content>
+</div>

@@ -1,0 +1,88 @@
+
+  <loading *ngIf="isLoading">{{ isLoading }}</loading>
+ 
+<mat-table #table [dataSource]="EKSInternalSearchData">
+
+
+    <ng-container matColumnDef="arrow">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <span class="expand" *ngIf="element.expanded == true">
+                <em (click)="expandChildItemDetails(element, '', i)">
+                    <mat-icon style="font-size: 20px; cursor: pointer">keyboard_arrow_down</mat-icon>
+                </em>
+            </span>
+            <span class="expand" *ngIf="element.expanded == false">
+                <em (click)="expandChildItemDetails(element, 'collapse', i)">
+                    <mat-icon style="font-size: 20px; cursor: pointer">chevron_right</mat-icon>
+                </em>
+            </span>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="eks">
+        <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <span class="type {{ element._source.assettypecode }}">{{
+                element._source.contentType
+                }}</span>
+            <label style="padding-left: 2%; overflow: auto">{{
+                element._source.title
+                }}</label>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef>Content Id </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <a style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(element)">{{
+                element._source.contentid }}</a>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="version">
+        <mat-header-cell *matHeaderCellDef>Version </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <b>{{ element._source.version }}</b>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastUpdate">
+        <mat-header-cell *matHeaderCellDef>Last Update </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            {{ element._source.lastupdatedatetime | date }}
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="jc">
+        <mat-header-cell *matHeaderCellDef>J&C</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index"><b>
+                {{ element._source.jc }}</b>
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+          {{ assetStatusMapping[element._source.assetstatusid] }}
+        </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="outsourcable">
+        <mat-header-cell *matHeaderCellDef>Outsourcable</mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            <div *ngIf="
+              element._source.outsourceable &&
+                element._source.outsourceable == true;
+              else CLEAR_ICON
+            ">
+                <mat-icon style="color: #37a000; font-size: 20px">done</mat-icon>
+            </div>
+            <ng-template #CLEAR_ICON>
+                <mat-icon style="color: red; font-size: 20px">clear</mat-icon>
+            </ng-template>
+        </mat-cell>
+    </ng-container>
+    <mat-header-row id="header-style" *matHeaderRowDef="displayedColumns; sticky: true">
+    </mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let index = index" #searchDetails>
+    </mat-row>
+
+</mat-table>
+
+<mat-paginator #paginator1 [pageSize]="pageSize" [length]="internalLength" [pageSizeOptions]="pageRowCounters"
+    (page)="onPageEvent($event)"></mat-paginator>
+ 

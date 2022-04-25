@@ -1,0 +1,35 @@
+<div class="app-diagram-context-menu"
+  #menuTrigger="matMenuTrigger"
+  [matMenuTriggerFor]="contextMenu"
+  [ngStyle]="{
+    left: model.position.left + 'px',
+    top: model.position.top + 'px'
+  }"
+></div>
+
+<mat-menu
+  class="app-diagram-context-menu__menu"
+  #contextMenu="matMenu"
+>
+  <button
+    *ngIf="!model.data.primary"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onDeleteClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:delete"
+      text="Delete"
+    ></app-context-menu-item>
+  </button>
+  <button
+    class="app-diagram-context-menu__menu-item"
+    (click)="onPropertiesClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:properties"
+      text="Properties"
+    ></app-context-menu-item>
+  </button>
+</mat-menu>

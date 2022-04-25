@@ -1,0 +1,101 @@
+<div class="activities-maps">
+  <div class="container">
+    <div class="table-wrapper">
+      <div class="heading-band">
+        <div class="mat-title">Process Maps</div>
+        <div class="btn">
+          <button
+            mat-flat-button
+            color="primary"
+            routerLink="create-progressmap"
+          >
+            New Process Map
+          </button>
+        </div>
+      </div>
+      <mat-table [dataSource]="processMaps$" class="data-table">
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> #id </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.id }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef>Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.title }} </mat-cell>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef>Description </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.description }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Discipline Column -->
+        <ng-container matColumnDef="discipline">
+          <mat-header-cell *matHeaderCellDef>Discipline </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.discipline }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Engine Family Column -->
+        <ng-container matColumnDef="engine_family">
+          <mat-header-cell *matHeaderCellDef>Engine Family </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.engine_family }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Crown Jewels Column -->
+        <ng-container matColumnDef="crown_jewels">
+          <mat-header-cell *matHeaderCellDef>Crown Jewels </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.crown_jewels }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Date of Submitted Column -->
+        <ng-container matColumnDef="outsourcable">
+          <mat-header-cell *matHeaderCellDef>Outsourcable </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.outsourcable }}
+          </mat-cell>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span
+              class="material-icons"
+              title="edit"
+              (click)="onSelect(element)"
+              >edit
+            </span>
+            <span
+              class="material-icons"
+              title="content_copy"
+              (click)="onCopy(element.id)"
+              >content_copy
+            </span>
+            <span
+              class="material-icons"
+              title="delete"
+              (click)="deleteProcessMap(element.id)"
+              >delete
+            </span>
+          </mat-cell>
+        </ng-container>
+        <!-- Header and Row Declarations -->
+        <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,205 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+
+.mat-dialog-content {
+  max-height: auto;
+}
+::ng-deep.mat-dialog-container{
+  padding: 24px !important;
+   border-radius: 0px;
+}
+.flexItemBox {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 45px;
+
+  .label {
+    padding: 22px 22px 22px 0px;
+    width: 30%;
+  }
+
+  .blockBox {
+    width: 100%;
+  }
+}
+
+.button-group {
+  text-align: center
+}
+
+.add-activities {
+  position: relative;
+  @extend %mat-dialog;
+
+  .mat-dialoag-header {
+    background: none;
+
+    h1 {
+      display: inline;
+      text-transform: uppercase;
+      font-size: 30px;
+    }
+
+    span {
+      display: inline;
+      float: right;
+      position: absolute;
+      top: -22px;
+      right: -20px;
+    }
+  }
+
+
+  .mat-card {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  form {
+    display: grid;
+    padding: 10px 10px 20px;
+    grid-template-columns: 100%;
+    grid-gap: 20px;
+
+    .help-block {
+      font-size: 0.65rem;
+      color: $alert-basic-bg;
+      position: relative;
+      top: -30px;
+    }
+
+    .mat-form-field,
+    .mat-radio-group,
+    .mat-raised-button {
+      width: 100%;
+      margin: 0px;
+      @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+      display: block;
+    }
+
+    .mat-radio-group {
+      .mat-radio-button {
+        margin-right: 10px;
+      }
+    }
+
+    .mat-raised-button {
+      margin-top: 15px;
+      padding: 10px 0;
+      max-width: 120px;
+      width: 100%;
+      margin: 0px auto;
+    }
+
+    @include breakpoint(mobileonly) {
+      padding: 0 1%;
+    }
+
+    .activityGroups {
+      position: relative;
+      background: #fafafa;
+      padding: 0 10px 10px;
+      margin: 0 0 10px;
+
+      .add-btn {
+        margin: 0;
+      }
+
+      .remove-btn {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 0;
+        right: 0;
+
+        .mat-button-wrapper {
+          padding: 0 !important;
+
+          .material-icons {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .button-group {
+      margin-top: 20px;
+
+      .mat-flat-button {
+        margin-right: 10px;
+      }
+    }
+
+    .meta-data {
+      @extend .activityGroups;
+
+      .group-wrapper {
+        position: relative;
+      }
+    }
+
+    @include breakpoint(mobileonly) {
+      grid-template-columns: 1fr;
+    }
+
+  }
+
+  //Add shape activity search icon
+  .selectText {
+    //color: blue;
+    cursor: pointer;
+  }
+
+  .searchSelect {
+    display: flex;
+
+    button {
+      display: flex;
+      position: relative;
+      bottom: -10px;
+
+      span {
+        color: #002A6E;
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+  display: block;
+  font-size: 13px;
+  width: 2.5em;
+  top: 10px;
+}
+
+::ng-deep.mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 0px;
+  padding: 0px;
+  background-color: transparent;
+}
+
+// .uploader input {
+//   display: none;
+// }
+
+
+.uploader {
+  align-items: flex-end;
+  cursor: pointer;
+  display: flex;
+  outline-offset: 5px;
+  position: relative;
+  width: 100%;
+  border-bottom: 1.8px solid #9e9d9d;
+  
+}
+
+
+.uploader img,
+.uploader .icon {
+  pointer-events: none;
+}
+

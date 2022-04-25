@@ -1,0 +1,35 @@
+  <mat-tree #tree  [dataSource]="dataSource" [treeControl]="treeControl">
+    <!-- This is the tree node template for leaf nodes -->
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
+      <!-- use a disabled button to provide padding for tree leaf -->
+      <button mat-icon-button disabled></button>
+      <mat-checkbox (change)="filterdata(node)" (click)="computeCheckboxState()"  [(ngModel)]="selectedBox[node.id]"  tabindex="-1" ></mat-checkbox>
+      &nbsp; {{node.name}}
+    </mat-tree-node>
+    <!-- This is the tree node template for expandable nodes -->
+    <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
+      <ng-container *ngIf="allowSelectAll else singleSelect">
+        <div class="select-all-container">
+          <mat-checkbox [(ngModel)]="allItemSelected[node.id]"
+                        color="accent"
+                        [indeterminate]="indetermineState[node.id]"
+                        [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllSelection(node)">
+          </mat-checkbox>
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" tabindex="-1">
+              <mat-icon class="mat-icon-rtl-mirror">
+                {{treeControl.isExpanded(node) ? 'remove' : 'add'}}
+              </mat-icon>
+            </button>
+        </div>
+      </ng-container>
+      <ng-template #singleSelect>
+        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" tabindex="-1">
+          <mat-icon class="mat-icon-rtl-mirror">
+            {{treeControl.isExpanded(node) ? 'remove' : 'add'}}
+          </mat-icon>
+        </button>
+      </ng-template>
+      {{node.name}}
+    </mat-tree-node>
+  </mat-tree>

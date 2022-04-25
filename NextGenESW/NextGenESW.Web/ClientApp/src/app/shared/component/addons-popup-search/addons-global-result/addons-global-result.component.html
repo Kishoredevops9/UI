@@ -1,0 +1,11 @@
+<div class="h-100 w-100 p-1">
+  <app-mat-table *ngIf="globalGridOptions"
+                 [gridHeight]="'550px'"
+                 [gridOptions]="globalGridOptions"
+                 [rowData]="(globalGridData$ | async) || []"
+                 [pageSize]="10"
+                 [partialDatasource]="true"
+                 [pageLength]="(globalSearchResult$ | async).totalResult || 0"
+                 (onPageChanged)="onPageChanged($event)">
+  </app-mat-table>
+</div>

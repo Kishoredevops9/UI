@@ -1,0 +1,75 @@
+.m20 {
+    margin-top: 20px;
+}
+
+.content_alignment {
+    font-family: 'Barlow-Medium';
+    float: right;
+    width: 46%;
+    margin-top: -17px;
+    display: block;
+    overflow: hidden;
+    padding: 20px 0 0 0;
+    z-index: -1;
+  
+    .image_alignment {
+      margin-bottom: -2px;
+      width: 2.5%;
+    }
+  
+    .button_style {
+      background-color: white;
+      cursor: pointer;
+      outline: none;
+      color: #3E3E3E;
+    }
+  
+    .publishMode {
+      float: right;
+    }
+  
+    .compliance-published {
+      float: right;
+    }
+  
+    .flt-right {
+      float: right;
+      border: 1px solid red;
+      cursor: pointer;
+    }
+  
+}
+
+.ok-button {
+    float: right;
+    background-color: #3f51b5;
+    color: white;
+    min-width: 64px !important;
+}
+  
+.warning-msg {
+    font-family: 'BarlowSemiCondensed-Medium';
+    font-size: large;
+}
+
+::ng-deep .custom-dialog-container .mat-dialog-container {
+  padding: 24px !important;
+}
+
+.clsss{
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.backButtons{
+  cursor: pointer;
+  padding: 10px 20px 0px 20px;
+
+  text-align: left;
+  letter-spacing: 0.63px;
+  color: #000000;
+  opacity: 1;
+  font-size: 15px;
+  font-family: "Barlow-Regular";
+  line-height: 18px;
+}

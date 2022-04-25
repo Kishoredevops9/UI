@@ -1,0 +1,25 @@
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+@import '../../../../../scss/base/global';
+
+.deviation_approval {
+  textarea {
+    width: 100%;
+    border: 1px solid grey;
+    @include font-face-Barlow-Medium(14px, 30px);
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  .sub_title {
+    @include font-face-Inter-Medium(12px, normal);
+    text-transform: initial;
+    span {
+        color: #004EFF;
+        text-transform: uppercase;
+    }
+  }
+}

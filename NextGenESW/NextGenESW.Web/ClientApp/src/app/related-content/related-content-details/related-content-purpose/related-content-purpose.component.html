@@ -1,0 +1,29 @@
+<div class="content-block purpose" *ngIf="globalData">
+    <form [formGroup]="rcPurposeForm" (ngSubmit)="updatePurpose()">
+      <div class="header-field">Purpose</div>
+      <mat-label
+        style="
+          font: normal normal normal 13px/28px Inter-regular;
+          letter-spacing: 0.67px;
+        "
+        ></mat-label
+      >
+      <div *ngIf="!isEditableMode; else EDIT_MODE">
+        <app-html-viewer [content]="activityTabs?.purpose"></app-html-viewer>
+      </div>
+      <ng-template #EDIT_MODE>
+        <span>Note: The Purpose text must not contain any export-controlled technical data.</span>
+        <app-texteditor [placeholder]="activityTabs?.purpose" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                        id="angularEditor"
+                        formControlName="Purpose"
+                        (editorData)="activityTabs.purpose = $event; updatePurpose()"></app-texteditor>
+      </ng-template>
+
+      <!-- <angular-editor
+        formControlName="Purpose"
+        [ngModel]="activityTabs?.purpose"
+        [config]="config"
+      >
+      </angular-editor> -->
+    </form>
+  </div>

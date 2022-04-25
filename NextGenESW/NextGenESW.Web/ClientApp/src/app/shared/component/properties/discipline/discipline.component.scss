@@ -1,0 +1,35 @@
+
+@import "../../../../../scss/helpers/mixins";
+
+
+.mat-tree-node {
+  @include font-face-Inter-Regular(14px, 20px);
+  min-height: 35px;
+}
+
+
+.mat-icon-button{
+
+
+  height: 20px !important;
+  width: 20px;
+  line-height: 20px !important;
+
+  }
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 265px;
+
+  .discipline-search{
+    padding: 6px 4px;
+    font-size: 14px;
+  }
+
+  .mat-tree {
+    flex-grow: 1;
+    overflow: auto;
+  }
+
+}

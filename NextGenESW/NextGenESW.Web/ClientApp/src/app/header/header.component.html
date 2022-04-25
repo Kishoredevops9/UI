@@ -1,0 +1,8 @@
+<header class="header-block">
+  <div class="">
+    <mat-toolbar>
+      <app-top-nav [topNavisAdmin]="leftNaveAdminPanelOutput" class="navBar-block"></app-top-nav>
+      <app-user-auth (leftNavPanelShow)="leftNavPanelShow($event)" (leftNavAdminPanelShow)="leftNavAdminPanelShow($event)" class="user-profile-block"></app-user-auth>
+    </mat-toolbar>
+  </div>
+</header>

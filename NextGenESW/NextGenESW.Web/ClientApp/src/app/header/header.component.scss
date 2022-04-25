@@ -1,0 +1,62 @@
+@import "../../scss/helpers/variables";
+@import "../../scss/helpers/breakpoints";
+@import "../../scss/helpers/mixins";
+
+.header-block {
+  position: relative;
+  width: 100%;
+  float: left;
+
+  @include breakpoint(mobileonly) {
+    padding: 0;
+  }
+}
+
+.mat-toolbar {
+  // display: grid;
+  // grid-template-areas: "logo-block navBar-block user-profile-block";
+  // align-items: center;
+  // background: none;
+  // padding: 0;
+  // position: relative;
+  // justify-content: space-between;
+
+  /* Logo Block  */
+  .logo-block {
+    grid-area: logo-block;
+    display: grid;
+
+    img {
+      @include breakpoint(tablet) {
+        max-width: 100%;
+      }
+
+      @include breakpoint(mobileonly) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  /* Top Navigation Block  */
+  .navbar-block {
+    grid-area: navBar-block;
+
+    a {
+      color: $white-color;
+    }
+  }
+
+  .user-profile-block {
+    grid-area: user-profile-block;
+  }
+
+  @include breakpoint(tablet) {
+    grid-template-areas: "logo-block  navBar-block user-profile-block";
+    grid-template-columns: 16% 68% 15%;
+  }
+
+  @include breakpoint(mobileonly) {
+    grid-template-areas: "logo-block  user-profile-block navBar-block ";
+    grid-template-columns: 50% 35% 10%;
+  }
+}

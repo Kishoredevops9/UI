@@ -1,0 +1,74 @@
+<div class="feedbackParent-comments">
+  <div class="feedbackHeader">HELP Feedback</div>
+
+  <div class="formClass" novalidate>
+    <form [formGroup]="feedbackForm" class="form">
+
+      <div fxLayout="row" class="">
+        <label class="formLabel">Name:</label> 
+        <mat-form-field class="example-full-width textBoxs grayOut" >
+            <input matInput value="{{currentUserName}}" readonly formControlName="userName">
+        </mat-form-field>
+      </div>
+      
+      <div fxLayout="row" class="">
+        <label class="formLabel">Email Address:</label> 
+        <mat-form-field class="example-full-width textBoxs grayOut" >
+            <input matInput value="{{currentUserMail}}" readonly formControlName="userEmail">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="">
+          <label class="formLabel">Title:</label> 
+          <mat-form-field class="example-full-width textBoxs grayOut" >
+              <input matInput value="{{elementValues.title}}" readonly formControlName="title">
+          </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+          <label class="formLabel">Feedback:</label> 
+          <mat-form-field class="example-full-width textAreas grayOut" appearance="outline">
+            <textarea class="textAreaBox" matInput placeholder="Please enter your feedback" readonly formControlName="feedbackComment"></textarea>
+            <mat-error *ngIf="!feedbackForm.controls['feedbackComment'].valid && feedbackForm.controls['feedbackComment'].touched">
+              {{ feedbackAlert }}
+            </mat-error>
+          </mat-form-field>
+      </div>
+
+      <div fxLayout="row" class="" *ngIf="isViewMode">
+        <label class="formLabel">Status:</label> 
+        <mat-form-field class="example-full-width">
+          <mat-select formControlName="feedbackStatus">
+            <mat-option *ngFor="let status of statusValues" [value]="status">
+              {{status}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+    <div fxLayout="row" *ngIf="isViewMode" >
+        <label class="formLabel">Admin Feedback:</label> 
+        <mat-form-field class="example-full-width textAreas" appearance="outline">
+          <textarea class="textAreaBox" matInput placeholder="Please enter Admin feedback" formControlName="adminFeedback"></textarea>
+          <mat-error *ngIf="!feedbackForm.controls['adminFeedback'].valid && feedbackForm.controls['adminFeedback'].touched">
+            {{ feedbackAlert }}
+          </mat-error>
+        </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="actionButtons" *ngIf="isViewMode">
+        <button mat-button mat-raised-button color="primary" [disabled]="!feedbackForm.valid" (click)="onFeedbackSubmit()" class="submit-btn">Save</button>
+        <button class="hiddenButton"></button>
+        <button mat-button mat-raised-button color="primary" (click)="closeFeedback()" class="submit-btn">Cancel</button>
+    </div>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="actionButtons" *ngIf="!isViewMode">
+      <button mat-button mat-raised-button color="primary" (click)="closeFeedback()" class="submit-btn">Close</button>
+    </div>
+
+    </form>
+
+  </div>
+
+</div>

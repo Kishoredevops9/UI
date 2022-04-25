@@ -1,0 +1,285 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div>
+  <!--<textarea rows="2" cols="29" class="text-box" placeholder="Enter message here"
+    [(ngModel)]="addComments"></textarea>-->
+
+  <form class="example-form" [formGroup]="propertiesFormData">
+    <div class="request-approval-text" *ngIf="showIcon == true">
+      APPROVE OR SEND BACK
+    </div>
+    <br />
+    <div class="text-width" *ngIf="showIcon == true">
+      <span class="curcle text-width">
+        <span class="icon-text text-width"> {{ finalInitial }} </span></span>
+      <span> {{author}} has sent a request for approval</span>
+      <span style="float:right" *ngIf="status == 'Approved'">
+        <mat-icon style="color: #37a000; font-size: 20px">done</mat-icon>
+        <label>{{status}}</label>
+      </span>
+    </div>
+    <div style="margin-top: 9%; margin-bottom: 5%" *ngIf="showIcon == true">
+      <span style="margin-right: 3%">
+        <button class="send-button" mat-raised-button color="primary" (click)="handleOnRequestApproval('approve')">
+          <div>APPROVE</div>
+        </button>
+      </span>
+      <span>
+        <button class="send-button" mat-raised-button color="primary" (click)="handleOnRequestApproval('sendBack')">
+          SEND BACK
+        </button>
+      </span>
+    </div>
+    <div class="comments-text">COMMENTS</div>
+    <br />
+    <mat-form-field class="example-full-width" style="width: 75%">
+      <mat-label>enter message here...</mat-label>
+      <textarea matInput formControlName="addComments" [ngModel]="addComments" (keyup.enter)="addComment()"></textarea>
+    </mat-form-field>
+  </form>
+  <span class="button">
+    <span *ngIf="showIcon == true; else COMMENT_BUTTON">
+      <button class="buttonComments" mat-raised-button color="primary">
+        Reply
+      </button>
+      <button class="cancel-button">Cancel</button>
+    </span>
+    <ng-template #COMMENT_BUTTON>
+      <button class="buttonComments" mat-raised-button color="primary" (click)="addComment()">
+        Submit
+      </button>
+    </ng-template>
+  </span>
+  <div *ngIf="messageList$" class="mdl-grid full-width">
+    <div class="table-wrapper">
+      <div>
+        <mat-table [dataSource]="messageList$" class="data-table">
+          <ng-container matColumnDef="comments">
+            <mat-header-cell *matHeaderCellDef style="display: none"></mat-header-cell>
+            <mat-cell class="comments-Box" *matCellDef="let element; let i = index">
+              <div class="mdl-grid full-width">
+                <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                  <div class="user-icon">
+                    <!-- <mat-icon class="user-icon" matTooltipPosition="above"
+                      matTooltip="{{element.creatorClockId}}">
+                      account_circle</mat-icon>
+
+                      <img  src="./assets/images/full-moon.png" width="23" />-->
+                    <div class="curcle">
+                      <div class="icon-text">{{ finalInitial }}</div>
+                    </div>
+                  </div>
+
+                  <div class="mdl-cell mdl-cell--9-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="comments-date">
+                      {{ element.createdOn | date: 'short' }}
+                    </div>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                  <div class="comments-user userId">{{ element.user }}</div>
+                  <br />
+                </div>
+                <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                  <div class="comments">{{ element.comments }}</div>
+                  <br />
+
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="reply">
+                      <a (click)="showCommets()" (click)="edit(element)">Reply</a>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+                <div *ngIf="element.isEdit; else PREVIEW_MODE"
+                  class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                  <!-- <textarea rows="2" cols="29" class="text-box-child" placeholder="Enter message here"
+                    [(ngModel)]="childCommentData"></textarea><br />-->
+
+                  <form class="example-form" [formGroup]="propertiesFormData">
+                    <mat-form-field class="example-full-width" style="width: 76%; margin-left: 9%">
+                      <mat-label>enter message here...</mat-label>
+                      <textarea matInput formControlName="childCommentData" [ngModel]="childCommentData"
+                        (keyup.enter)="addComment()"></textarea>
+                    </mat-form-field>
+                  </form>
+
+                  <span class="button">
+                    <button class="buttonComments-child" mat-raised-button color="primary" (click)="edit(element)"
+                      (click)="reply(element)">
+                      <a>Reply</a>
+                    </button> </span><br />
+                </div>
+                <div *ngFor="let element of element.childList">
+                  <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div>
+                      <!-- <img  src="./assets/images/full-moon.png" width="20" /> -->
+                      <div class="curcle-child">
+                        <div class="icon-text">{{ finalInitial }}</div>
+                      </div>
+                    </div>
+
+                    <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                      <div class="child-comments-date">
+                        {{ element.createdOn | date: 'short' }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="userId-child">{{ element.user }}</div>
+                    <br />
+                    <br />
+                  </div>
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="comments-child">
+                      {{ element.comments }}<br />
+
+                      <span class="reply-child"><a (click)="showCommets()"
+                          (click)="edit(element)">Reply</a></span><br />
+                    </div>
+                    <br />
+                  </div>
+                  <div *ngIf="element.isEdit; else PREVIEW_MODE"
+                    class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <!-- <textarea rows="2" cols="29" class="text-box-child" placeholder="Enter message here"
+                    [(ngModel)]="childCommentData"></textarea><br />-->
+
+                    <form class="example-form" [formGroup]="propertiesFormData">
+                      <mat-form-field class="example-full-width" style="width: 76%; margin-left: 9%">
+                        <mat-label>enter message here...</mat-label>
+                        <textarea matInput formControlName="childCommentData" [ngModel]="childCommentData"
+                          (keyup.enter)="addComment()"></textarea>
+                      </mat-form-field>
+                    </form>
+                 
+                    <span class="button">
+                      <button class="buttonComments-child" mat-raised-button color="primary" (click)="edit(element)"
+                        (click)="reply(element)">
+                        <a>Reply</a>
+                      </button> </span><br />
+                    </div>
+                      <div *ngFor="let element of element.childList">
+                        <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                          <div>
+                            <!-- <img  src="./assets/images/full-moon.png" width="20" /> -->
+                            <div class="curcle-child-2">
+                              <div class="icon-text">{{ finalInitial }}</div>
+                            </div>
+                          </div>
+      
+                          <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                            <div class="child-comments-date-2">
+                              {{ element.createdOn | date: 'short' }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                          <div class="userId-child-2">{{ element.user }}</div>
+                          <br />
+                          <br />
+                        </div>
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                          <div class="comments-child-2">
+                            {{ element.comments }}<br />
+      
+                            <span class="reply-child"><a >Reply</a></span><br />
+                          </div>
+                          <br />
+                        </div>
+                        <div *ngIf="element.isEdit; else PREVIEW_MODE"
+                          class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                          <!-- <textarea rows="2" cols="29" class="text-box-child" placeholder="Enter message here"
+                          [(ngModel)]="childCommentData"></textarea><br />-->
+      
+                          <form class="example-form" [formGroup]="propertiesFormData">
+                            <mat-form-field class="example-full-width" style="width: 76%; margin-left: 9%">
+                              <mat-label>enter message here...</mat-label>
+                              <textarea matInput formControlName="childCommentData" [ngModel]="childCommentData"
+                                (keyup.enter)="addComment()"></textarea>
+                            </mat-form-field>
+                          </form>
+      
+                          <span class="button">
+                            <button class="buttonComments-child" mat-raised-button color="primary" 
+                             >
+                              <a>Reply</a>
+                            </button> </span><br />
+      
+                          <div>
+      
+      
+                          </div>
+                        </div>
+      
+      
+                        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"></div>
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div>
+
+
+                    </div>
+                 
+
+
+                  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone"></div>
+                </div>
+              </div>
+
+              <!--<dl>
+                <dt>
+                  <div>
+                    <mat-icon style="color: #3f51b5;" matTooltipPosition="above"
+                      matTooltip="{{element.creatorClockId}}">account_circle</mat-icon>&nbsp; <label style="margin-top: -13%;
+              color: #3f51b5;margin-top: -13%;">{{element.createdOn}} </label> &nbsp;
+                  </div>
+                  <div> <br /> <span style="color: #3f51b5;margin-left: -61%">{{element.creatorClockId}}</span>
+                  </div>
+                </dt>
+                <dd>
+                  <div>
+                    <br /> <br /> <br /> <b
+                      style="margin-left: -101%;margin-bottom: -21%;"><label>{{ element.comments }} <br /> <a
+                          style="color: #3f51b5">reply</a></label></b>
+
+                  </div>
+                </dd>
+
+              </dl>-->
+
+              <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu"></button>
+            <mat-icon>more_vert</mat-icon>-->
+            </mat-cell>
+          </ng-container>
+          <!-- Header and Row Declarations -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-menu style="font-size: smaller" #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>edit</mat-icon>
+    <label>Edit</label>
+  </button>
+  <button mat-menu-item>
+    <mat-icon>delete_outline</mat-icon>
+    <label>Delete</label>
+  </button>
+</mat-menu>

@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let data of disciplineItems" [ngClass]="data.children.length > 0 ? 'hasChild' : ''"
+    (mouseenter)="data.child=true" (mouseleave)="data.child=false">
+    <button *ngIf="data.disciplineUrl && data.disciplineUrl != null" mat-menu-item>
+      <a target="_blank" href="{{ data.disciplineUrl }}">{{data.title}}</a></button>
+    <button *ngIf="!data.disciplineUrl || data.disciplineUrl == null" mat-menu-item>{{data.title}}</button>
+    <app-left-menu-panel *ngIf="data.children && data.child && data.children.length>0"
+      [disciplineItems]="data.children"></app-left-menu-panel>
+  </li>
+</ul>

@@ -1,0 +1,85 @@
+<div *ngIf="loading" id="cover-spin"></div>
+<div class="full-width" [class.obsolete-document-bg]="globalData?.assetStatus === ASSET_STATUSES.OBSOLETE">
+  <div class="document-header top-band">
+    <div class="document-toolbar">
+      <!-- <a href="#" mat-button title="View"><span class="icon view"></span></a>
+      <a href="#" mat-button title="Refresh"><span class="icon refresh"></span></a> -->
+      <!-- <a (click)="downloadSourceFile()" mat-button title="Download"
+        ><span class="icon download"></span
+      ></a> -->
+    </div>
+
+    <div class="header-wrapper">
+      <hr class="line-divider {{ type }}" />
+      <div [className]="previewMode ? 'top-band-wrapper' : 'top-band-wrapper no-open-doc'">
+        <span class="document-type {{ type }}" *ngIf="type">{{ type }}</span>
+        <span id="docTitle" class="doc-title name">{{ globalData?.title }}
+          <span class="jc-title" *ngIf="globalData && globalData.contentId">{{globalData.contentId}}</span>
+          <span class="jc-title" *ngIf="globalData && globalData.versionNumber">/</span>
+          <span class="classifier-title" *ngIf="globalData && globalData.versionNumber">V
+            {{globalData.versionNumber}}</span>
+          <span class="jc-title" *ngIf="UsClassification">/</span>
+          <span class="jc-title" *ngIf="UsClassification">
+            <span>{{UsJurisdiction}}</span>&nbsp;
+            <span *ngIf="UsJurisdiction != NSR">{{UsClassification}}</span>
+          </span>
+        </span>
+        <!--<span class="preview-style" *ngIf="isPublishMode">Preview
+             <button mat-raised-button color="primary" class="submit-btn"
+            (click)="openDoc()">Open Document</button>
+          </span>-->
+        <span>
+          <app-top-menu-actions [editMode]="!previewMode" [globalContent]="globalData" (handlePreviewMode)="handleOnPreviewClick($event)"
+            [contentType]="contentType">
+          </app-top-menu-actions>
+        </span>
+      </div>
+    </div>
+  </div>
+  <app-progressbar [progressBar]="progressBar" [docType]="type" [docStatus]="documentStatus"></app-progressbar>
+  <div class="clear"></div>
+
+  <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+    <div class="wrapper tab-wrapper {{ type }}">
+      <mat-tab-group class="{{ type }}" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab label="Properties" *ngIf="webContent !== undefined && webContent == false">
+        </mat-tab>
+        <mat-tab label="Lessons Learned" *ngIf="webContent !== undefined && webContent == false">
+        </mat-tab>
+        <span *ngIf="webContent && webContent == true">
+          <ng-container  *ngFor="let tab of tablists">
+            <mat-tab [label]="tab.displayTab">
+            </mat-tab>
+          </ng-container>
+        </span>
+        <mat-tab label="Lessons Learned" *ngIf="webContent && webContent == true">
+        </mat-tab>
+        <mat-tab label="Properties" *ngIf="webContent && webContent == true">
+        </mat-tab>
+      </mat-tab-group>
+      <app-sub-menu-actions [contentType]="contentType" [globalContent]="globalData" [type]="type"
+                            (messageToEmit)="handleOnSaveAsClick($event)" (revisionMessageToEmit)="handleOnRevisionClick($event)" (recallMessageToEmit)="handleOnRecallClick($event)"
+                            [isPublisheddocument]="hasTabLists"></app-sub-menu-actions>
+    </div>
+    <div class="tab-detail-content">
+      <ng-container *ngFor="let tab of tablists">
+        <ng-container *ngIf="webContent && currentTabList[selectedIndex]?.textLabel === tab.displayTab">
+          <iframe [src]="tab.extractedDocUrl | safeurl" width="100%" height="968px" frameborder="0"></iframe>
+        </ng-container>
+      </ng-container>
+      <ng-container [ngSwitch]="currentTabList[selectedIndex]?.textLabel">
+        <ng-container *ngSwitchCase="'Properties'">
+          <ng-container *ngIf="webContent !== undefined && webContent == false">
+            <app-properties [contentType]="contentType" [globalData]="globalData"></app-properties>
+          </ng-container>
+          <ng-container *ngIf="webContent">
+            <app-properties [contentType]="contentType" [preview]="previewMode" [globalData]="globalData"></app-properties>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngSwitchCase="'Lessons Learned'">
+          <app-lesson-learned [contentType]="type" [globalData]="globalData"></app-lesson-learned>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>

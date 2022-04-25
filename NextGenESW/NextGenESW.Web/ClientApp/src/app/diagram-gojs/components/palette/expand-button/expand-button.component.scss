@@ -1,0 +1,20 @@
+.app-expand-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    .mat-icon#{&}__button {
+        cursor: pointer;
+        width:24px;
+        height: 24px;
+        transition: transform 300ms ease-in-out;
+        
+        &--collapsed {
+            transform: rotate(-180deg);
+        }
+    }
+}

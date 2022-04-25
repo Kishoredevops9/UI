@@ -1,0 +1,3066 @@
+<ng-container *ngIf="preview; then previewMode else normalMode"></ng-container>
+
+<ng-template #normalMode>
+  <ng-container *ngIf="assetStatus === ASSET_STATUSES.PUBLISHED || assetStatus === ASSET_STATUSES.CURRENT || assetStatus === ASSET_STATUSES.OBSOLETE || assetStatus === ASSET_STATUSES.ARCHIVED || assetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC || (assetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL && globalData?.contentOwnerId !== currentLoginUser); then publishMode else draftMode"></ng-container>
+</ng-template>
+
+<ng-template #draftMode>
+  <div *ngIf="contentType != 'KP'">
+    <div class="container fleft mdl-grid tab-margin properties formData">
+      <form [formGroup]="propertiesFormData" (focusout)="checkFocusOut()">
+        <div class="mdl-grid full-width">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Content ID<a tooltip="" data-tooltip="8016" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Title* <a tooltip="" data-tooltip="8017" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Approval Requirements * <a tooltip="" data-tooltip="8012" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a> </mat-label>
+          </div>
+          <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Set of Categories * <a tooltip="" data-tooltip="8012" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a> </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+  <input *ngIf="!draftViewData?.contentId" type="text" placeholder="System Generated" matInput formControlName="contentID" [value]="draftViewData?.contentId" [readonly]='true' />
+  <input *ngIf="draftViewData?.contentId" type="text"  matInput formControlName="contentID" [value]="draftViewData?.contentId" [readonly]='true' />
+            </mat-form-field>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput formControlName="title" #titleref
+                (input)="onSearchChangeTitle($event.target.value)" [value]="draftViewData?.title" required />
+                <mat-error *ngIf="propertiesFormData.controls.title.touched && propertiesFormData.controls.title.errors?.pattern">Title is invalid characters. Please use a different title.</mat-error>
+              </mat-form-field>
+          </div>
+
+          <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="approvalRequirementsId" #approvalRequirement required>
+                <mat-option *ngFor="let approvalRequirement of approvalRequirementsIdList" [value]="approvalRequirement.name">
+                  {{ approvalRequirement.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="relatedContentCategory" #setOfCategories multiple required>
+                <mat-option *ngFor="let category of rcCategoryList" [value]="category.categoryId">
+                  {{ category.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>
+              <b class="text-formate">Tags <a tooltip="" data-tooltip="8018" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </b>
+            </mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Discipline* <a tooltip="" data-tooltip="8019" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Discipline Code* <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Keyword
+              <a tooltip="" data-tooltip="8021" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+        <div class="mdl-grid full-width formData">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  style="position:relative"
+            class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+            <mat-label>Select Discipline</mat-label>
+            <a mat-button matSuffix mat-icon-button (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true;showDropDown=false">
+              <div id="btnId" #toggleButton>
+                <mat-icon>
+                  {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </div>
+            </a>
+            <div #menu>
+              <mat-card class="dropbox" [hidden]="!showDisciplineDropDown" [config]="{backdrop: 'static'}">
+                <discipline [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                  (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                </discipline>
+              </mat-card>
+            </div>
+          </div>
+          <div  [className]="(isDCEnabled == true) ? 'undisabled' : 'disabled'" *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select  formControlName="disciplineCode" #disciplineCoderef
+                (selectionChange)="onChangeNewDisciplineCode(disciplineCoderef.value)" required>
+                <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList" [value]="disciplineCode.code">
+                  {{ disciplineCode.code }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <mat-form-field class="text-field-data">
+              <input matInput class="inputMaterial" type="text" formControlName="keyword" [value]="draftViewData?.keyword"
+              #keywordref (keyup)="messageHandlerKeyword(keywordref)" (change)="messageHandlerKeyword(keywordref)"
+              [(ngModel)]="keyword" autocomplete="on" name="keyword" />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <br />
+            </mat-form-field>
+          </div>
+
+        </div>
+        <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <div class="topChipBox" *ngIf="chipDisciplineContainer.length > 0">
+                <div class="textFilter d-block">Selected Discipline:</div>
+              <div class="chipbox">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let chip of chipDisciplineContainer" [selectable]="selectable">
+                    {{ chip?.name }}
+                    <mat-icon matChipRemove (click)="removeDisciplineChip(chip)">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+          <div class="topChipBox" *ngIf="keyword">
+          <div class="textFilter d-block">Selected Keyword:</div>
+          <div class="chipbox">
+          <mat-chip-list>
+          <mat-chip >
+          {{keyword}}
+          <mat-icon matChipRemove (click)="removeDisciplineChip1(keyword)">cancel</mat-icon>
+          </mat-chip>
+          </mat-chip-list>
+          </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Phases <span *ngIf="!isTocDocument">*</span>
+              <a tooltip="" data-tooltip="8022" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Tags <a tooltip="" data-tooltip="8023" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data" *ngIf="!isTocDocument">
+              <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple required
+                (selectionChange)="onChangePhase($event.value)">
+                <div class="select-phase-container">
+                  <div class="select-all">
+                    <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                  color="primary"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                  (change)="toggleAllSelection(selectPhase)">
+                      <div class="mat-option-text">Select All</div></mat-checkbox>
+                  </div>
+                  <div class="select-phase-options">
+                    <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </div>
+                </div>
+
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="text-field-data" *ngIf="isTocDocument">
+              <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple
+                (selectionChange)="onChangePhase($event.value)">
+                <div class="select-phase-container">
+                  <div class="select-all">
+                    <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                  color="primary"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                  (change)="toggleAllSelection(selectPhase)">
+                      <div class="mat-option-text">Select All</div></mat-checkbox>
+                  </div>
+                  <div class="select-phase-options">
+                    <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </div>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+          <div style="position:relative"
+            class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+            <mat-label>Select Tags</mat-label>
+            <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true;showDisciplineDropDown=false">
+              <div id="btnId2" #toggleButton1>
+                <mat-icon>
+                  {{ ( showDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </div>
+            </a>
+            <div #menu1>
+              <mat-card class="dropbox" [hidden]="!showDropDown" [config]="{backdrop: 'static'}">
+                <app-left-box [allowSelectAll]="true" [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)" [checkednode]="chipContainer"
+                  [treedata]="tagList" [loadDropdownData]="eventSubject.asObservable()">
+                </app-left-box>
+              </mat-card>
+            </div>
+          </div>
+           <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="topChipBox" *ngIf="chipContainer.length > 0 || chipContainer.length>0">
+                <div class="textFilter">Selected Tags:</div>
+                <div class="chipbox">
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let chip of chipContainer" [selectable]="selectable">
+                      {{ chip?.name }}
+                      <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Related People</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1">
+            <mat-label class="text-field">
+              Content Owner * <a tooltip="" data-tooltip="8024" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Authors* <a tooltip="" data-tooltip="8025" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Classifier* <a tooltip="" data-tooltip="8026" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input matInput class="inputMaterial" (ngModelChange)="filterCoauthor($event)" type="text"
+                [matAutocomplete]="Coauthor" formControlName="contentOwnerName" [value]="filteredCoAndAuthName"
+                name="displayCoAuthor" required #contentOwnerref (input)="messageHandlerContentOwner($event.target.value)"
+                minlength="5" />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <br />
+              <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor" (optionSelected)="selectContentOwner($event)">
+                <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+                  <span>{{ item.displayName }}</span>
+                  &nbsp;(<span class="email">{{ item.email }}</span>)
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput formControlName="authors" [readonly]='true' />
+            </mat-form-field>
+          </div>
+          <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone position-relative">
+            <mat-form-field class="text-field-data" *ngIf="classifiersDropDownList?.length">
+              <input type="text"
+                     matInput
+                     (ngModelChange)="filterClassifers($event)"
+                     [matAutocomplete]="gymAuto"
+                     formControlName="classifier" required>
+
+                     <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+
+              <mat-autocomplete autoActiveFirstOption
+                                [displayWith]="getDisplayClassifier"
+                                #gymAuto="matAutocomplete">
+                <mat-option class="classifierMatOption" *ngFor="let option of filteredClassifers"
+                            [value]="option.classifiersId">
+                            {{option.lastName}} {{option.firstName}}
+
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-icon class="classifier-view" (click)="openClassifierModal()" title="Classifier">remove_red_eye</mat-icon>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Outsourceable <a tooltip="" data-tooltip="8029" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Confidentiality <a tooltip="" data-tooltip="8027" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Program Controlled <a tooltip="" data-tooltip="8028" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectoutsourceable()' formControlName="outsourceable"
+                [value]="draftViewData?.outsourceable" #Outsourceable>
+              </mat-slide-toggle>
+              <!-- <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span> -->
+              <span *ngIf='isOutsourceable == true' class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              <span *ngIf='isOutsourceable == false' class="toggleSpan" class="text-field-data radio-button-alignment">No</span>
+
+            </div>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectConfidentiality()' formControlName="confidentiality"
+                [value]="draftViewData?.confidentiality" #Confidentiality>
+              </mat-slide-toggle>
+              <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+            </div>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectprogramControlled()' formControlName="programControlled"
+                [value]="draftViewData?.programControlled" #ProgramControlled>
+              </mat-slide-toggle>
+              <!-- <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span> -->
+              <span *ngIf='isProgramControlled == true' class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              <span *ngIf='isProgramControlled == false' class="toggleSpan" class="text-field-data radio-button-alignment">No</span>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-level">Export Group*
+              <a tooltip="" data-tooltip="8031" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+
+            </mat-label>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label *ngIf='isConfidentiality' class="text-field-level">Confidentiality level* <a tooltip=""
+                data-tooltip="8027" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label *ngIf='isProgramControlled' class="text-field-level">Restricting Program*
+              <a tooltip="" data-tooltip="8030" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablets mdl-cell--12-col-phone">
+            <mat-form-field class="top_margin_new">
+              <mat-select formControlName="exportAuthority" #exportAuthority
+                (selectionChange)="onChangeExportAuthority(exportAuthority.value)" required>
+                <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                  {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field *ngIf='isConfidentiality' class="text-field-data confidentiality">
+              <mat-select formControlName="confidentialityLevel" ng-required='isConfidentiality' #confidentialityLevel
+                (selectionChange)="onChangeisConfidentiality(confidentialityLevel.value)">
+                <mat-option *ngFor="let option of confidentialitiesList" [value]="option.confidentialityId">
+                  {{ option.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field *ngIf='isProgramControlled' class="top_margin_new">
+              <mat-select formControlName="restrictingProgram" ng-required='isProgramControlled' #restrictingProgram
+                (selectionChange)="onChangeProgramControl(restrictingProgram.value)">
+                <mat-option *ngFor="let option of restrictingProgramList" [value]="option.controllingProgramId">
+                  {{ option.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Misc</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Revision Type*
+
+              <a tooltip="" data-tooltip="8032" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+
+            </mat-label>
+          </div>
+        </div>
+
+        <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="revisionType" #revisionTyperef
+                (selectionChange)="onChangeNewRevisionType(revisionTyperef.value)" required>
+                <mat-option *ngFor="let option of revionTypeList" [value]="option.revisionTypeId">
+                  {{ option.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Revision Type
+              <a tooltip="" data-tooltip="8032" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+
+        <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput value="Initial Release" [readonly]='true' />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="btn-submit">
+          <div *ngIf="hideSuccessMessage" class="alert alert-success alert-dismissible fade show">
+            <strong>Success!</strong> Content has been saved successfully.
+          </div>
+          <div *ngIf="assetStatus != ASSET_STATUSES.PUBLISHED || assetStatus != ASSET_STATUSES.CURRENT">
+            <button mat-button mat-raised-button color="primary"
+              [disabled]="(!(propertiesFormData.valid && isSelectedDicipline)) || (disableSubmitButton)" class="submit-btn" (click)="onSubmit()">
+              Save Properties & Continue
+            </button>
+          </div>
+
+          <div *ngIf="loading">
+            <ngx-ui-loader></ngx-ui-loader>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="contentType == 'KP'">
+    <div class="container fleft mdl-grid tab-margin properties formData">
+      <form [formGroup]="propertiesFormData" (focusout)="checkFocusOut()">
+        <div class="mdl-grid full-width">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Content ID<a tooltip="" data-tooltip="8016" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Title* <a tooltip="" data-tooltip="8017" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Approval Requirements * <a tooltip="" data-tooltip="8012" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a> </mat-label>
+          </div>
+          <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Set of Categories * <a tooltip="" data-tooltip="8012" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a> </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+  <input *ngIf="!draftViewData?.contentId" type="text" placeholder="System Generated" matInput formControlName="contentID" [value]="draftViewData?.contentId" [readonly]='true' />
+  <input *ngIf="draftViewData?.contentId" type="text"  matInput formControlName="contentID" [value]="draftViewData?.contentId" [readonly]='true' />
+            </mat-form-field>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput formControlName="title" #titleref
+                (input)="onSearchChangeTitle($event.target.value)" [value]="draftViewData?.title" required />
+                <mat-error *ngIf="propertiesFormData.controls.title.touched && propertiesFormData.controls.title.errors?.pattern">Title is invalid characters. Please use a different title.</mat-error>
+              </mat-form-field>
+          </div>
+
+          <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="approvalRequirementsId" #approvalRequirement required>
+                <mat-option *ngFor="let approvalRequirement of approvalRequirementsIdList" [value]="approvalRequirement.name">
+                  {{ approvalRequirement.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="relatedContentCategory" #setOfCategories multiple required>
+                <mat-option *ngFor="let category of rcCategoryList" [value]="category.categoryId">
+                  {{ category.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>
+              <b class="text-formate">Tags <a tooltip="" data-tooltip="8018" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </b>
+            </mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Discipline* <a tooltip="" data-tooltip="8019" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Discipline Code* <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Keyword
+              <a tooltip="" data-tooltip="8021" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+        <div class="mdl-grid full-width formData">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  style="position:relative"
+            class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+            <mat-label>Select Discipline</mat-label>
+            <a mat-button matSuffix mat-icon-button (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true;showDropDown=false">
+              <div id="btnId" #toggleButton>
+                <mat-icon>
+                  {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </div>
+            </a>
+            <div #menu>
+              <mat-card class="dropbox" [hidden]="!showDisciplineDropDown" [config]="{backdrop: 'static'}">
+                <discipline [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                  (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                </discipline>
+              </mat-card>
+            </div>
+          </div>
+          <div  [className]="(isDCEnabled == true) ? 'undisabled' : 'disabled'" *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select  formControlName="disciplineCode" #disciplineCoderef
+                (selectionChange)="onChangeNewDisciplineCode(disciplineCoderef.value)" required>
+                <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList" [value]="disciplineCode.code">
+                  {{ disciplineCode.code }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input matInput class="inputMaterial" type="text" formControlName="keyword" [value]="draftViewData?.keyword"
+              #keywordref (keyup)="messageHandlerKeyword(keywordref)" (change)="messageHandlerKeyword(keywordref)"
+              [(ngModel)]="keyword" autocomplete="on" name="keyword" />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <br />
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <div class="topChipBox" *ngIf="chipDisciplineContainer.length > 0">
+              <div class="textFilter d-block">Selected Discipline:</div>
+              <div class="chipbox">
+                <mat-chip-list>
+                  <mat-chip *ngFor="let chip of chipDisciplineContainer" [selectable]="selectable">
+                    {{ chip?.name }}
+                    <mat-icon matChipRemove (click)="removeDisciplineChip(chip)">cancel</mat-icon>
+                  </mat-chip>
+                </mat-chip-list>
+              </div>
+            </div>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+          </div>
+
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+          <div class="topChipBox" *ngIf="keyword">
+          <div class="textFilter d-block">Selected Keyword:</div>
+          <div class="chipbox">
+          <mat-chip-list>
+          <mat-chip >
+          {{keyword}}
+          <mat-icon matChipRemove (click)="removeDisciplineChip1(keyword)">cancel</mat-icon>
+          </mat-chip>
+          </mat-chip-list>
+          </div>
+          </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Phases <span *ngIf="!isTocDocument">*</span>
+              <a tooltip="" data-tooltip="8022" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Tags <a tooltip="" data-tooltip="8023" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data" *ngIf="!isTocDocument">
+              <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple required
+                (selectionChange)="onChangePhase($event.value)">
+                <div class="select-phase-container">
+                  <div class="select-all">
+                    <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                  color="primary"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                  (change)="toggleAllSelection(selectPhase)">
+                      <div class="mat-option-text">Select All</div></mat-checkbox>
+                  </div>
+                  <div class="select-phase-options">
+                    <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </div>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="text-field-data" *ngIf="isTocDocument">
+              <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple
+                (selectionChange)="onChangePhase($event.value)">
+                <div class="select-phase-container">
+                  <div class="select-all">
+                    <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                  color="primary"
+                                  [ngModelOptions]="{standalone: true}"
+                                  [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                  (change)="toggleAllSelection(selectPhase)">
+                      <div class="mat-option-text">Select All</div></mat-checkbox>
+                  </div>
+                  <div class="select-phase-options">
+                    <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                [value]="option.id">
+                      {{ option.name }}
+                    </mat-option>
+                  </div>
+                </div>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+          <div style="position:relative"
+            class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+            <mat-label>Select Tags</mat-label>
+            <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true;showDisciplineDropDown=false">
+              <div id="btnId2" #toggleButton1>
+                <mat-icon>
+                  {{ ( showDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </div>
+            </a>
+            <div #menu1>
+              <mat-card class="dropbox" [hidden]="!showDropDown" [config]="{backdrop: 'static'}">
+                <app-left-box [allowSelectAll]="true" [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)" [checkednode]="chipContainer"
+                  [treedata]="tagList" [loadDropdownData]="eventSubject.asObservable()">
+                </app-left-box>
+              </mat-card>
+            </div>
+          </div>
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="topChipBox" *ngIf="chipContainer.length > 0 || chipContainer.length>0">
+                <div class="textFilter">Selected Tags:</div>
+                <div class="chipbox">
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let chip of chipContainer" [selectable]="selectable">
+                      {{ chip?.name }}
+                      <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Related People</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--1">
+            <mat-label class="text-field">
+              Content Owner * <a tooltip="" data-tooltip="8024" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label class="text-field">Authors* <a tooltip="" data-tooltip="8025" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+          <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Classifier* <a tooltip="" data-tooltip="8026" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input matInput class="inputMaterial" (ngModelChange)="filterCoauthor($event)" type="text"
+                [matAutocomplete]="Coauthor" formControlName="contentOwnerName" [value]="filteredCoAndAuthName"
+                name="displayCoAuthor" required #contentOwnerref (input)="messageHandlerContentOwner($event.target.value)"
+                minlength="5" />
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <br />
+              <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor"(optionSelected)="selectContentOwner($event)">
+                <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+                  <span>{{ item.displayName }}</span>
+                  &nbsp;(<span class="email">{{ item.email }}</span>)
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput formControlName="authors" [readonly]='true' />
+            </mat-form-field>
+          </div>
+          <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone position-relative">
+            <mat-form-field class="text-field-data" *ngIf="classifiersDropDownList?.length">
+              <input type="text"
+                     matInput
+                     (ngModelChange)="filterClassifers($event)"
+                     [matAutocomplete]="gymAuto"
+                     formControlName="classifier" required>
+
+                     <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+
+              <mat-autocomplete autoActiveFirstOption
+                                [displayWith]="getDisplayClassifier"
+                                #gymAuto="matAutocomplete">
+                <mat-option class="classifierMatOption" *ngFor="let option of filteredClassifers"
+                            [value]="option.classifiersId">
+                  {{option.description}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-icon class="classifier-view" (click)="openClassifierModal()" title="Classifier">remove_red_eye</mat-icon>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Outsourceable <a tooltip="" data-tooltip="8029" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Confidentiality <a tooltip="" data-tooltip="8027" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-radio">Program Controlled <a tooltip="" data-tooltip="8028" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectoutsourceable()' formControlName="outsourceable"
+                [value]="draftViewData?.outsourceable" #Outsourceable>
+              </mat-slide-toggle>
+              <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+            </div>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectConfidentiality()' formControlName="confidentiality"
+                [value]="draftViewData?.confidentiality" #Confidentiality>
+              </mat-slide-toggle>
+              <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+            </div>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <div class="toggle">
+              <mat-slide-toggle (click)='selectprogramControlled()' formControlName="programControlled"
+                [value]="draftViewData?.programControlled" #ProgramControlled>
+              </mat-slide-toggle>
+              <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field-level">Export Group*
+              <a tooltip="" data-tooltip="8031" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+
+            </mat-label>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label *ngIf='isConfidentiality' class="text-field-level">Confidentiality level* <a tooltip=""
+                data-tooltip="8027" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a></mat-label>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label *ngIf='isProgramControlled' class="text-field-level">Restricting Program*
+              <a tooltip="" data-tooltip="8030" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablets mdl-cell--12-col-phone">
+            <mat-form-field class="top_margin_new">
+              <mat-select formControlName="exportAuthority" #exportAuthority
+                (selectionChange)="onChangeExportAuthority(exportAuthority.value)" required>
+                <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                  {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field *ngIf='isConfidentiality' class="text-field-data confidentiality">
+              <mat-select formControlName="confidentialityLevel" ng-required='isConfidentiality' #confidentialityLevel
+                (selectionChange)="onChangeisConfidentiality(confidentialityLevel.value)">
+                <mat-option *ngFor="let option of confidentialitiesList" [value]="option.confidentialityId">
+                  {{ option.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field *ngIf='isProgramControlled' class="top_margin_new">
+              <mat-select formControlName="restrictingProgram" ng-required='isProgramControlled' #restrictingProgram
+                (selectionChange)="onChangeProgramControl(restrictingProgram.value)">
+                <mat-option *ngFor="let option of restrictingProgramList" [value]="option.controllingProgramId">
+                  {{ option.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Misc</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Revision Type*
+
+              <a tooltip="" data-tooltip="8032" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+
+            </mat-label>
+          </div>
+        </div>
+
+        <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <mat-select formControlName="revisionType" #revisionTyperef
+                (selectionChange)="onChangeNewRevisionType(revisionTyperef.value)" required>
+                <mat-option *ngFor="let option of revionTypeList" [value]="option.revisionTypeId">
+                  {{ option.description }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Revision Type
+              <a tooltip="" data-tooltip="8032" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a>
+            </mat-label>
+          </div>
+        </div>
+
+        <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+          <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-form-field class="text-field-data">
+              <input type="text" matInput value="Initial Release" [readonly]='true' />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="btn-submit">
+          <div *ngIf="hideSuccessMessage" class="alert alert-success alert-dismissible fade show">
+            <strong>Success!</strong> Content has been saved successfully.
+          </div>
+          <div *ngIf="assetStatus != ASSET_STATUSES.PUBLISHED || assetStatus != ASSET_STATUSES.CURRENT">
+            <button mat-button mat-raised-button color="primary"
+              [disabled]="(!(propertiesFormData.valid && isSelectedDicipline)) || (disableSubmitButton)" class="submit-btn" (click)="onSubmit()">
+              Save Properties & Continue
+            </button>
+          </div>
+
+          <div *ngIf="loading">
+            <ngx-ui-loader></ngx-ui-loader>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #previewMode>
+  <div *ngIf="contentType != 'KP'">
+    <div class="container fleft mdl-grid">
+      <form [formGroup]="propertiesFormData">
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Content ID:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Title:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.title }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div *ngIf="contentType == 'AP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Approval Requirement:</mat-label>
+          </div>
+          <div *ngIf="contentType == 'AP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ propertiesFormData.value.approvalRequirementsId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div *ngIf="contentType == 'RC'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Set of Categories:</mat-label>
+          </div>
+          <div *ngIf="contentType == 'RC'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ globalData?.setOfCategoriesName }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Tags</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Discipline:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.disciplineIds }}
+          </div>
+          <div *ngIf="contentType != 'CG'"
+            class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Phases:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentPhaseName}}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Phases:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentPhaseDisplay}}
+          </div>
+
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+          <div  *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Discipline Code:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.disciplineCode }}
+          </div>
+          <div *ngIf="contentType != 'CG'"
+            class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Tags:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentTagName }}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+          <div  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Tags:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentTagName }}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Keywords:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.keyword }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Related People</b></mat-label>
+          </div>
+        </div>
+        <br />
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Content Owner:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentOwnerId }}
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentOwnerId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Authors:</mat-label>
+          </div>
+          <div  *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.author }}
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.author }}
+          </div>
+        </div>
+
+        <div *ngIf="!isTocDocument" class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Classifier:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{  (classifiersname && classifiersname.length )? classifiersname[0].description : activityTabs?.classifierName  }}
+            <!-- {{ activityTabs?.classifierId }} -->
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{  (classifiersname && classifiersname.length )? classifiersname[0].description : "N/A"  }}
+            <!-- {{ activityTabs?.classifierId }} -->
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <!-- <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Confidentiality:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.confidentiality }}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Confidentiality level:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.confidentialityName }}
+          </div>
+          <div *ngIf="contentType == 'SF'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ stepflowConfidentialitylevel }}
+          </div>
+        </div> -->
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Program Controlled:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.programControlled}}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Restricting Program:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.restrictingProgram }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Outsourceable:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{activityTabs?.outsourceable }}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Export Group:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.exportAuthorityValue }}
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Misc</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Revision Type:</mat-label>
+          </div>
+          <div *ngIf='isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.revisionTypeId }}
+          </div>
+          <div *ngIf='!isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            INIT
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <div *ngIf="contentType == 'KP'">
+    <div class="container fleft mdl-grid">
+      <form [formGroup]="propertiesFormData">
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Content ID:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Title:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.title }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div *ngIf="contentType == 'AP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Approval Requirement:</mat-label>
+          </div>
+          <div *ngIf="contentType == 'AP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ propertiesFormData.value.approvalRequirementsId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div *ngIf="contentType == 'RC'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Set of Categories:</mat-label>
+          </div>
+          <div *ngIf="contentType == 'RC'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ globalData?.setOfCategoriesName }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Tags</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Discipline:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.disciplineIds }}
+          </div>
+          <div *ngIf="contentType != 'CG'"
+            class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Phases:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentPhaseName}}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Phases:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentPhaseDisplay}}
+          </div>
+
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+          <div  *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Discipline Code:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.disciplineCode }}
+          </div>
+          <div *ngIf="contentType != 'CG'"
+            class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Tags:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentTagName }}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+          <div  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Tags:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentTagName }}
+          </div>
+        </div>
+
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Keywords:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.keyword }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Related People</b></mat-label>
+          </div>
+        </div>
+        <br />
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Content Owner:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentOwnerId }}
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.contentOwnerId }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Authors:</mat-label>
+          </div>
+          <div  *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.author }}
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.author }}
+          </div>
+        </div>
+
+        <div *ngIf="!isTocDocument" class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Classifier:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{  (classifiersname && classifiersname.length )? classifiersname[0].description : activityTabs?.classifierName  }}
+            <!-- {{ activityTabs?.classifierId }} -->
+          </div>
+          <div *ngIf="contentType == 'SF' || contentType == 'SP'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{  (classifiersname && classifiersname.length )? classifiersname[0].description : "N/A"  }}
+            <!-- {{ activityTabs?.classifierId }} -->
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <!-- <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Confidentiality:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.confidentiality }}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Confidentiality level:</mat-label>
+          </div>
+          <div *ngIf="contentType != 'SF'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.confidentialityName }}
+          </div>
+          <div *ngIf="contentType == 'SF'"
+            class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ stepflowConfidentialitylevel }}
+          </div>
+        </div> -->
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Program Controlled:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.programControlled}}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Restricting Program:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.restrictingProgram }}
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Outsourceable:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{activityTabs?.outsourceable }}
+          </div>
+          <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label class="text-field">Export Group:</mat-label>
+          </div>
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.exportAuthorityValue }}
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label> <b class="text-formate">Misc</b></mat-label>
+          </div>
+        </div>
+        <br />
+
+        <div class="mdl-grid full-width">
+          <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+            <mat-label>Revision Type:</mat-label>
+          </div>
+          <div *ngIf='isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            {{ activityTabs?.revisionTypeId }}
+          </div>
+          <div *ngIf='!isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            INIT
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #publishMode>
+  <div *ngIf="contentType == 'KP'">
+    <div *ngIf="!ownerEditBTN">
+      <div class="container fleft mdl-grid">
+        <form [formGroup]="propertiesFormData">
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Content ID:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Title:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.title }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div *ngIf="contentType == 'AP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Approval Requirement:</mat-label>
+            </div>
+            <div *ngIf="contentType == 'AP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ propertiesFormData.value.approvalRequirementsId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div *ngIf="contentType == 'RC'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Set of Categories:</mat-label>
+            </div>
+            <div *ngIf="contentType == 'RC'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ globalData?.setOfCategoriesName }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Tags</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Discipline:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.disciplineIds }}
+            </div>
+            <div *ngIf="contentType != 'CG'"
+              class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Phases:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentPhaseName}}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Phases:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentPhaseDisplay}}
+            </div>
+
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+            <div  *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Discipline Code:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.disciplineCode }}
+            </div>
+            <div *ngIf="contentType != 'CG'"
+              class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Tags:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentTagName }}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+            <div  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Tags:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentTagName }}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Keywords:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.keyword }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Related People</b></mat-label>
+            </div>
+          </div>
+          <br />
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Content Owner:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentOwnerId }}
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentOwnerId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Authors:</mat-label>
+            </div>
+            <div  *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.author }}
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.author }}
+            </div>
+          </div>
+
+          <div *ngIf="!isTocDocument" class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Classifier:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{  (classifiersname && classifiersname.length )? classifiersname[0].description : activityTabs?.classifierName  }}
+              <!-- {{ activityTabs?.classifierId }} -->
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{  (classifiersname && classifiersname.length )? classifiersname[0].description : "N/A"  }}
+              <!-- {{ activityTabs?.classifierId }} -->
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <!-- <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Confidentiality:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.confidentiality }}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Confidentiality level:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.confidentialityName }}
+            </div>
+            <div *ngIf="contentType == 'SF'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ stepflowConfidentialitylevel }}
+            </div>
+          </div> -->
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Program Controlled:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.programControlled}}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Restricting Program:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.restrictingProgram }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Outsourceable:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{activityTabs?.outsourceable }}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Export Group:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.exportAuthorityValue }}
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Misc</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Revision Type:</mat-label>
+            </div>
+            <div *ngIf='isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.revisionTypeId }}
+            </div>
+            <div *ngIf='!isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              INIT
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <div *ngIf="ownerEditBTN">
+      <div class="container fleft mdl-grid tab-margin properties formData">
+        <form [formGroup]="propertiesFormData">
+          <div class="mdl-grid full-width">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Content ID<a tooltip="" data-tooltip="8016" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Title* <a tooltip="" data-tooltip="8017" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Approval Requirements * <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+            </div>
+            <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Set of Categories * <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="contentID" [value]="draftViewData?.contentId"/>
+              </mat-form-field>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="title" #titleref
+                  (input)="onSearchChangeTitle($event.target.value)" [value]="draftViewData?.title" required />
+                  <mat-error *ngIf="propertiesFormData.controls.title.touched && propertiesFormData.controls.title.errors?.pattern">Title is invalid characters. Please use a different title.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="approvalRequirementsId" #approvalRequirement required>
+                  <mat-option *ngFor="let approvalRequirement of approvalRequirementsIdList" [value]="approvalRequirement.name">
+                    {{ approvalRequirement.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="relatedContentCategory" #setOfCategories multiple required>
+                  <mat-option *ngFor="let category of rcCategoryList" [value]="category.categoryId">
+                    {{ category.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>
+                <b class="text-formate">Tags <a tooltip="" data-tooltip="8018" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </b>
+              </mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Discipline* <a tooltip="" data-tooltip="8019" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Discipline Code* <a tooltip="" data-tooltip="8012" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Keyword
+                <a tooltip="" data-tooltip="8021" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+          <div class="mdl-grid full-width formData">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  style="position:relative"
+              class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+              <mat-label>Select Discipline</mat-label>
+              <a mat-button matSuffix mat-icon-button (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true;showDropDown=false">
+                <div id="btnId" #toggleButton>
+                  <mat-icon>
+                    {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+              </a>
+              <div #menu>
+                <mat-card class="dropbox" [hidden]="!showDisciplineDropDown" [config]="{backdrop: 'static'}">
+                  <discipline [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                  </discipline>
+                </mat-card>
+              </div>
+            </div>
+            <div  [className]="(isDCEnabled == true) ? 'undisabled' : 'disabledPub'" *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select  formControlName="disciplineCode" #disciplineCoderef
+                  (selectionChange)="onChangeNewDisciplineCode(disciplineCoderef.value)" required>
+                  <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList" [value]="disciplineCode.code">
+                    {{ disciplineCode.code }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <mat-form-field class="text-field-data">
+                <input matInput class="inputMaterial" type="text" formControlName="keyword" [value]="draftViewData?.keyword"
+                #keywordref (keyup)="messageHandlerKeyword(keywordref)" (change)="messageHandlerKeyword(keywordref)"
+                [(ngModel)]="keyword" autocomplete="on" name="keyword" />
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <br />
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <div class="topChipBox" *ngIf="chipDisciplineContainer.length > 0">
+                  <div class="textFilter d-block">Selected Discipline:</div>
+                <div class="chipbox">
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let chip of chipDisciplineContainer" [selectable]="selectable">
+                      {{ chip.name }}
+                      <mat-icon matChipRemove (click)="removeDisciplineChip(chip)">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <div class="topChipBox" *ngIf="keyword">
+            <div class="textFilter d-block">Selected Keyword:</div>
+            <div class="chipbox">
+            <mat-chip-list>
+            <mat-chip >
+            {{keyword}}
+            <mat-icon matChipRemove (click)="removeDisciplineChip1(keyword)">cancel</mat-icon>
+            </mat-chip>
+            </mat-chip-list>
+            </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Phases <span *ngIf="!isTocDocument">*</span>
+                <a tooltip="" data-tooltip="8022" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Tags <a tooltip="" data-tooltip="8023" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data" *ngIf="!isTocDocument">
+                <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple required
+                  (selectionChange)="onChangePhase($event.value)">
+                  <div class="select-phase-container">
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                    color="primary"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                    (change)="toggleAllSelection(selectPhase)">
+                        <div class="mat-option-text">Select All</div></mat-checkbox>
+                    </div>
+                    <div class="select-phase-options">
+                      <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                  [value]="option.id">
+                        {{ option.name }}
+                      </mat-option>
+                    </div>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="text-field-data" *ngIf="isTocDocument">
+                <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple
+                  (selectionChange)="onChangePhase($event.value)">
+                  <div class="select-phase-container">
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                    color="primary"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                    (change)="toggleAllSelection(selectPhase)">
+                        <div class="mat-option-text">Select All</div></mat-checkbox>
+                    </div>
+                    <div class="select-phase-options">
+                      <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                  [value]="option.id">
+                        {{ option.name }}
+                      </mat-option>
+                    </div>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+            <div style="position:relative"
+              class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+              <mat-label>Select Tags</mat-label>
+              <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true;showDisciplineDropDown=false">
+                <div id="btnId2" #toggleButton1>
+                  <mat-icon>
+                    {{ ( showDropDown ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+              </a>
+              <div #menu1>
+                <mat-card class="dropbox" [hidden]="!showDropDown" [config]="{backdrop: 'static'}">
+                  <app-left-box [allowSelectAll]="true" [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)" [checkednode]="chipContainer"
+                    [treedata]="tagList" [loadDropdownData]="eventSubject.asObservable()">
+                  </app-left-box>
+                </mat-card>
+              </div>
+            </div>
+            <div class="mdl-grid full-width formData">
+              <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                <div class="topChipBox" *ngIf="chipContainer.length > 0 || chipContainer.length>0">
+                  <div class="textFilter">Selected Tags:</div>
+                  <div class="chipbox">
+                    <mat-chip-list>
+                      <mat-chip *ngFor="let chip of chipContainer" [selectable]="selectable">
+                        {{ chip.name }}
+                        <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Related People</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--1">
+              <mat-label class="text-field">
+                Content Owner * <a tooltip="" data-tooltip="8024" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Authors* <a tooltip="" data-tooltip="8025" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Classifier* <a tooltip="" data-tooltip="8026" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input matInput class="inputMaterial" (ngModelChange)="filterCoauthor($event)" type="text"
+                  [matAutocomplete]="Coauthor" formControlName="contentOwnerName" [value]="filteredCoAndAuthName"
+                  name="displayCoAuthor" required #contentOwnerref (input)="messageHandlerContentOwner($event.target.value)"
+                  minlength="5" />
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <br />
+                <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor"(optionSelected)="selectContentOwner($event)">
+                  <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+                    <span>{{ item.displayName }}</span>
+                    &nbsp;(<span class="email">{{ item.email }}</span>)
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="authors" [readonly]='true' />
+              </mat-form-field>
+            </div>
+            <div *ngIf="!isTocDocument" class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone position-relative">
+              <mat-form-field class="text-field-data" *ngIf="classifiersDropDownList?.length">
+                <input type="text"
+                       matInput
+                       (ngModelChange)="filterClassifers($event)"
+                       [matAutocomplete]="gymAuto"
+                       formControlName="classifier" required>
+
+                       <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+
+                <mat-autocomplete autoActiveFirstOption
+                                  [displayWith]="getDisplayClassifier"
+                                  #gymAuto="matAutocomplete">
+                  <mat-option class="classifierMatOption" *ngFor="let option of filteredClassifers"
+                              [value]="option.classifiersId">
+                    {{option.description}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-icon class="classifier-view" (click)="openClassifierModal()" title="Classifier">remove_red_eye</mat-icon>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Outsourceable <a tooltip="" data-tooltip="8029" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Confidentiality <a tooltip="" data-tooltip="8027" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div> -->
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Program Controlled <a tooltip="" data-tooltip="8028" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectoutsourceable()' formControlName="outsourceable"
+                  [value]="draftViewData?.outsourceable" #Outsourceable>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectConfidentiality()' formControlName="confidentiality"
+                  [value]="draftViewData?.confidentiality" #Confidentiality>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div> -->
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectprogramControlled()' formControlName="programControlled"
+                  [value]="draftViewData?.programControlled" #ProgramControlled>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-level">Export Group*
+                <a tooltip="" data-tooltip="8031" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+
+              </mat-label>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label *ngIf='isConfidentiality' class="text-field-level">Confidentiality level* <a tooltip=""
+                  data-tooltip="8027" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div> -->
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label *ngIf='isProgramControlled' class="text-field-level">Restricting Program*
+                <a tooltip="" data-tooltip="8030" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablets mdl-cell--12-col-phone">
+              <mat-form-field class="top_margin_new">
+                <mat-select formControlName="exportAuthority" #exportAuthority
+                  (selectionChange)="onChangeExportAuthority(exportAuthority.value)" required>
+                  <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                    {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field *ngIf='isConfidentiality' class="text-field-data confidentiality">
+                <mat-select formControlName="confidentialityLevel" ng-required='isConfidentiality' #confidentialityLevel
+                  (selectionChange)="onChangeisConfidentiality(confidentialityLevel.value)">
+                  <mat-option *ngFor="let option of confidentialitiesList" [value]="option.confidentialityId">
+                    {{ option.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> -->
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field *ngIf='isProgramControlled' class="top_margin_new">
+                <mat-select formControlName="restrictingProgram" ng-required='isProgramControlled' #restrictingProgram
+                  (selectionChange)="onChangeProgramControl(restrictingProgram.value)">
+                  <mat-option *ngFor="let option of restrictingProgramList" [value]="option.controllingProgramId">
+                    {{ option.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Misc</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Revision Type*
+
+                <a tooltip="" data-tooltip="8032" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+
+              </mat-label>
+            </div>
+          </div>
+
+          <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="revisionType" #revisionTyperef
+                  (selectionChange)="onChangeNewRevisionType(revisionTyperef.value)" required>
+                  <mat-option *ngFor="let option of revionTypeList" [value]="option.revisionTypeId">
+                    {{ option.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Revision Type
+                <a tooltip="" data-tooltip="8032" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+
+          <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput value="Initial Release" [readonly]='true' />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="btn-submit">
+            <div *ngIf="hideSuccessMessage" class="alert alert-success alert-dismissible fade show">
+              <strong>Success!</strong> Content has been saved successfully.
+            </div>
+            <div *ngIf="assetStatus === ASSET_STATUSES.PUBLISHED || assetStatus === ASSET_STATUSES.CURRENT || assetStatus === ASSET_STATUSES.OBSOLETE || assetStatus === ASSET_STATUSES.ARCHIVED;">
+              <button [disabled]="(!(propertiesFormData.valid && isSelectedDicipline)) || (disableSubmitButton)" mat-button mat-raised-button color="primary" class="submit-btn" (click)="onSubmitPublished()">
+                Save Properties & Continue
+              </button>
+            </div>
+
+            <div *ngIf="loading">
+              <ngx-ui-loader></ngx-ui-loader>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="contentType != 'KP'">
+    <div *ngIf="!ownerEditBTN">
+      <div class="container fleft mdl-grid">
+        <form [formGroup]="propertiesFormData">
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Content ID:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Title:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.title }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div *ngIf="contentType == 'AP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Approval Requirement:</mat-label>
+            </div>
+            <div *ngIf="contentType == 'AP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ propertiesFormData.value.approvalRequirementsId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div *ngIf="contentType == 'RC'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Set of Categories:</mat-label>
+            </div>
+            <div *ngIf="contentType == 'RC'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ globalData?.setOfCategoriesName }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Tags</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Discipline:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.disciplineIds }}
+            </div>
+            <div *ngIf="contentType != 'CG'"
+              class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Phases:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentPhaseName}}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Phases:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentPhaseDisplay}}
+            </div>
+
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType != 'SF' && contentType != 'SP'">
+            <div  *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Discipline Code:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.disciplineCode }}
+            </div>
+            <div *ngIf="contentType != 'CG'"
+              class="box-width box-space mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Tags:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'CG' && contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentTagName }}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width" *ngIf="contentType == 'SF' || contentType == 'SP'">
+            <div  class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Tags:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentTagName }}
+            </div>
+          </div>
+
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Keywords:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.keyword }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Related People</b></mat-label>
+            </div>
+          </div>
+          <br />
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Content Owner:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentOwnerId }}
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.contentOwnerId }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Authors:</mat-label>
+            </div>
+            <div  *ngIf="contentType != 'SF' && contentType != 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.author }}
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'" class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.author }}
+            </div>
+          </div>
+
+          <div *ngIf="!isTocDocument" class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Classifier:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{  (classifiersname && classifiersname.length )? classifiersname[0].description : activityTabs?.classifierName  }}
+              <!-- {{ activityTabs?.classifierId }} -->
+            </div>
+            <div *ngIf="contentType == 'SF' || contentType == 'SP'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{  (classifiersname && classifiersname.length )? classifiersname[0].description : "N/A"  }}
+              <!-- {{ activityTabs?.classifierId }} -->
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <!-- <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Confidentiality:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.confidentiality }}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Confidentiality level:</mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.confidentialityName }}
+            </div>
+            <div *ngIf="contentType == 'SF'"
+              class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ stepflowConfidentialitylevel }}
+            </div>
+          </div> -->
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Program Controlled:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.programControlled}}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Restricting Program:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.restrictingProgram }}
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width" *ngIf="!isTocDocument">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>Outsourceable:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{activityTabs?.outsourceable }}
+            </div>
+            <div class="box-width box-space mdl-cell mdl-cell--2-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Export Group:</mat-label>
+            </div>
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.exportAuthorityValue }}
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Misc</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width">
+            <div class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label>Revision Type:</mat-label>
+            </div>
+            <div *ngIf='isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              {{ activityTabs?.revisionTypeId }}
+            </div>
+            <div *ngIf='!isUpdateFormForRevision' class="box-width mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              INIT
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <div *ngIf="ownerEditBTN">
+      <div class="container fleft mdl-grid tab-margin properties formData">
+        <form [formGroup]="propertiesFormData">
+          <div class="mdl-grid full-width">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Content Identifiers</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Content ID<a tooltip="" data-tooltip="8016" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Title* <a tooltip="" data-tooltip="8017" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Approval Requirements * <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+            </div>
+            <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Set of Categories * <a tooltip="" data-tooltip="8012" placement="right">
+                <img src="./assets/icons/exclamation-circle.svg" width="12" />
+              </a> </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="contentID" [value]="draftViewData?.contentId"
+                  [readonly]='true' />
+              </mat-form-field>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="title" #titleref
+                  (input)="onSearchChangeTitle($event.target.value)" [value]="draftViewData?.title" required />
+                  <mat-error *ngIf="propertiesFormData.controls.title.touched && propertiesFormData.controls.title.errors?.pattern">Title is invalid characters. Please use a different title.</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div *ngIf="contentType == 'AP' && propertiesFormData.controls.approvalRequirementsId"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="approvalRequirementsId" #approvalRequirement required>
+                  <mat-option *ngFor="let approvalRequirement of approvalRequirementsIdList" [value]="approvalRequirement.name">
+                    {{ approvalRequirement.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div *ngIf="contentType == 'RC' && propertiesFormData.controls.relatedContentCategory"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="relatedContentCategory" #setOfCategories multiple required>
+                  <mat-option *ngFor="let category of rcCategoryList" [value]="category.categoryId">
+                    {{ category.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label>
+                <b class="text-formate">Tags <a tooltip="" data-tooltip="8018" placement="right">
+                    <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                  </a>
+                </b>
+              </mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Discipline* <a tooltip="" data-tooltip="8019" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Discipline Code* <a tooltip="" data-tooltip="8012" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Keyword
+                <a tooltip="" data-tooltip="8021" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+          <div class="mdl-grid full-width formData">
+            <div *ngIf="contentType != 'SF' && contentType != 'SP'"  style="position:relative"
+              class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+              <mat-label>Select Discipline</mat-label>
+              <a mat-button matSuffix mat-icon-button (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true;showDropDown=false">
+                <div id="btnId" #toggleButton>
+                  <mat-icon>
+                    {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+              </a>
+              <div #menu>
+                <mat-card class="dropbox" [hidden]="!showDisciplineDropDown" [config]="{backdrop: 'static'}">
+                  <discipline [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                    (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                  </discipline>
+                </mat-card>
+              </div>
+            </div>
+            <div  [className]="(isDCEnabled == true) ? 'undisabled' : 'disabled'" *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select  formControlName="disciplineCode" #disciplineCoderef
+                  (selectionChange)="onChangeNewDisciplineCode(disciplineCoderef.value)" required>
+                  <mat-option *ngFor="let disciplineCode of WIDisciplineCodeList" [value]="disciplineCode.code">
+                    {{ disciplineCode.code }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <mat-form-field class="text-field-data">
+                <input matInput class="inputMaterial" type="text" formControlName="keyword" [value]="draftViewData?.keyword"
+                #keywordref (keyup)="messageHandlerKeyword(keywordref)" (change)="messageHandlerKeyword(keywordref)"
+                [(ngModel)]="keyword" autocomplete="on" name="keyword" />
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <br />
+              </mat-form-field>
+            </div>
+          </div>
+          <div *ngIf="contentType != 'SF' && contentType != 'SP'"  class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+              <div class="topChipBox" *ngIf="chipDisciplineContainer.length > 0">
+                  <div class="textFilter d-block">Selected Discipline:</div>
+                <div class="chipbox">
+                  <mat-chip-list>
+                    <mat-chip *ngFor="let chip of chipDisciplineContainer" [selectable]="selectable">
+                      {{ chip.name }}
+                      <mat-icon matChipRemove (click)="removeDisciplineChip(chip)">cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+              </div>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone">
+            <div class="topChipBox" *ngIf="keyword">
+            <div class="textFilter d-block">Selected Keyword:</div>
+            <div class="chipbox">
+            <mat-chip-list>
+            <mat-chip >
+            {{keyword}}
+            <mat-icon matChipRemove (click)="removeDisciplineChip1(keyword)">cancel</mat-icon>
+            </mat-chip>
+            </mat-chip-list>
+            </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Phases <span *ngIf="!isTocDocument">*</span>
+                <a tooltip="" data-tooltip="8022" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Tags <a tooltip="" data-tooltip="8023" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="contentType != 'CG'">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data" *ngIf="!isTocDocument">
+                <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple required
+                  (selectionChange)="onChangePhase($event.value)">
+                  <div class="select-phase-container">
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                    color="primary"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                    (change)="toggleAllSelection(selectPhase)">
+                        <div class="mat-option-text">Select All</div></mat-checkbox>
+                    </div>
+                    <div class="select-phase-options">
+                      <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                  [value]="option.id">
+                        {{ option.name }}
+                      </mat-option>
+                    </div>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="text-field-data" *ngIf="isTocDocument">
+                <mat-select #selectPhase formControlName="phases" [value]="draftViewData?.contentPhase" multiple
+                  (selectionChange)="onChangePhase($event.value)">
+                  <div class="select-phase-container">
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allPhaseSelected"
+                                    color="primary"
+                                    [ngModelOptions]="{standalone: true}"
+                                    [indeterminate]="setOfPhasesList?.length > selectPhase.value?.length && !!selectPhase.value?.length"
+                                    (change)="toggleAllSelection(selectPhase)">
+                        <div class="mat-option-text">Select All</div></mat-checkbox>
+                    </div>
+                    <div class="select-phase-options">
+                      <mat-option *ngFor="let option of setOfPhasesList" (click)="onPhaseOptionClicked(selectPhase)"
+                                  [value]="option.id">
+                        {{ option.name }}
+                      </mat-option>
+                    </div>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+            <div style="position:relative"
+              class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone example-form-field top_margin_new">
+              <mat-label>Select Tags</mat-label>
+              <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true;showDisciplineDropDown=false">
+                <div id="btnId2" #toggleButton1>
+                  <mat-icon>
+                    {{ ( showDropDown ) ? 'close' : 'expand_more' }}
+                  </mat-icon>
+                </div>
+              </a>
+              <div #menu1>
+                <mat-card class="dropbox" [hidden]="!showDropDown" [config]="{backdrop: 'static'}">
+                  <app-left-box [allowSelectAll]="true" [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)" [checkednode]="chipContainer"
+                    [treedata]="tagList" [loadDropdownData]="eventSubject.asObservable()">
+                  </app-left-box>
+                </mat-card>
+              </div>
+            </div>
+            <div class="mdl-grid full-width formData">
+              <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                <div class="topChipBox" *ngIf="chipContainer.length > 0 || chipContainer.length>0">
+                  <div class="textFilter">Selected Tags:</div>
+                  <div class="chipbox">
+                    <mat-chip-list>
+                      <mat-chip *ngFor="let chip of chipContainer" [selectable]="selectable">
+                        {{ chip.name }}
+                        <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Related People</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--1">
+              <mat-label class="text-field">
+                Content Owner * <a tooltip="" data-tooltip="8024" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone header-row">
+              <mat-label class="text-field">Authors* <a tooltip="" data-tooltip="8025" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+            <div *ngIf="!isTocDocument" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Classifier* <a tooltip="" data-tooltip="8026" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input matInput class="inputMaterial" (ngModelChange)="filterCoauthor($event)" type="text"
+                  [matAutocomplete]="Coauthor" formControlName="contentOwnerName" [value]="filteredCoAndAuthName"
+                  name="displayCoAuthor" required #contentOwnerref (input)="messageHandlerContentOwner($event.target.value)"
+                  minlength="5" />
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <br />
+                <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor"(optionSelected)="selectContentOwner($event)">
+                  <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+                    <span>{{ item.displayName }}</span>
+                    &nbsp;(<span class="email">{{ item.email }}</span>)
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput formControlName="authors" [readonly]='true' />
+              </mat-form-field>
+            </div>
+            <div *ngIf="!isTocDocument" class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone position-relative">
+              <mat-form-field class="text-field-data" *ngIf="classifiersDropDownList?.length">
+                <input type="text"
+                       matInput
+                       (ngModelChange)="filterClassifers($event)"
+                       [matAutocomplete]="gymAuto"
+                       formControlName="classifier" required />
+
+                       <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+
+                <mat-autocomplete autoActiveFirstOption
+                                  [displayWith]="getDisplayClassifier"
+                                  #gymAuto="matAutocomplete">
+                  <mat-option class="classifierMatOption" *ngFor="let option of filteredClassifers"
+                              [value]="option.classifiersId">
+                    {{option.description}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-icon class="classifier-view" (click)="openClassifierModal()" title="Classifier">remove_red_eye</mat-icon>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Outsourceable <a tooltip="" data-tooltip="8029" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Confidentiality <a tooltip="" data-tooltip="8027" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div> -->
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-radio">Program Controlled <a tooltip="" data-tooltip="8028" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a> </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="disabled mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectoutsourceable()' formControlName="outsourceable"
+                  [value]="draftViewData?.outsourceable" #Outsourceable>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectConfidentiality()' formControlName="confidentiality"
+                  [value]="draftViewData?.confidentiality" #Confidentiality>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div> -->
+            <div class="disabledPub mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <div class="toggle">
+                <mat-slide-toggle (click)='selectprogramControlled()' formControlName="programControlled"
+                  [value]="draftViewData?.programControlled" #ProgramControlled>
+                </mat-slide-toggle>
+                <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field-level">Export Group*
+                <a tooltip="" data-tooltip="8031" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+
+              </mat-label>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label *ngIf='isConfidentiality' class="text-field-level">Confidentiality level* <a tooltip=""
+                  data-tooltip="8027" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a></mat-label>
+            </div> -->
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label *ngIf='isProgramControlled' class="text-field-level">Restricting Program*
+                <a tooltip="" data-tooltip="8030" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData" *ngIf="!isTocDocument">
+            <div class="disabled mdl-cell mdl-cell--4-col mdl-cell--12-col-tablets mdl-cell--12-col-phone">
+              <mat-form-field class="top_margin_new">
+                <mat-select formControlName="exportAuthority" #exportAuthority
+                  (selectionChange)="onChangeExportAuthority(exportAuthority.value)" required>
+                  <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                    {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field *ngIf='isConfidentiality' class="text-field-data confidentiality">
+                <mat-select formControlName="confidentialityLevel" ng-required='isConfidentiality' #confidentialityLevel
+                  (selectionChange)="onChangeisConfidentiality(confidentialityLevel.value)">
+                  <mat-option *ngFor="let option of confidentialitiesList" [value]="option.confidentialityId">
+                    {{ option.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div> -->
+            <div class="disabled mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field *ngIf='isProgramControlled' class="top_margin_new">
+                <mat-select formControlName="restrictingProgram" ng-required='isProgramControlled' #restrictingProgram
+                  (selectionChange)="onChangeProgramControl(restrictingProgram.value)">
+                  <mat-option *ngFor="let option of restrictingProgramList" [value]="option.controllingProgramId">
+                    {{ option.name }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label> <b class="text-formate">Misc</b></mat-label>
+            </div>
+          </div>
+          <br />
+
+          <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Revision Type*
+
+                <a tooltip="" data-tooltip="8032" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+
+              </mat-label>
+            </div>
+          </div>
+
+          <div *ngIf='isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <mat-select formControlName="revisionType" #revisionTyperef
+                  (selectionChange)="onChangeNewRevisionType(revisionTyperef.value)" required>
+                  <mat-option *ngFor="let option of revionTypeList" [value]="option.revisionTypeId">
+                    {{ option.description }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-label class="text-field">Revision Type
+                <a tooltip="" data-tooltip="8032" placement="right">
+                  <img src="./assets/icons/exclamation-circle.svg" width="12" />
+                </a>
+              </mat-label>
+            </div>
+          </div>
+
+          <div *ngIf='!isUpdateFormForRevision' class="mdl-grid full-width formData">
+            <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+              <mat-form-field class="text-field-data">
+                <input type="text" matInput value="Initial Release" [readonly]='true' />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="btn-submit">
+            <div *ngIf="hideSuccessMessage" class="alert alert-success alert-dismissible fade show">
+              <strong>Success!</strong> Content has been saved successfully.
+            </div>
+            <div *ngIf="assetStatus === ASSET_STATUSES.PUBLISHED || assetStatus === ASSET_STATUSES.CURRENT || assetStatus === ASSET_STATUSES.OBSOLETE || assetStatus === ASSET_STATUSES.ARCHIVED;">
+              <button mat-button mat-raised-button color="primary"
+                [disabled]="(!(propertiesFormData.valid)) || (disableSubmitButton)" class="submit-btn" (click)="onSubmitPublished()">
+                Save Properties & Continue
+              </button>
+            </div>
+
+            <div *ngIf="loading">
+              <ngx-ui-loader></ngx-ui-loader>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

@@ -1,0 +1,123 @@
+<loading *ngIf="loading"></loading>
+<div class="scrollable-table-container mat-elevation-z8">
+    <mat-table [style.height]="gridHeight"
+               [dataSource]="dataSource"
+               (scroll)="onTableScroll($event)"
+               cdkDropList
+               cdkDropListOrientation="horizontal"
+               (cdkDropListDropped)="drop($event)"
+               matSort>
+        <ng-container [matColumnDef]="colDef.field || colDef.headerName || ''"
+                      [sticky]="colDef.pinned === 'left'"
+                      [stickyEnd]="colDef.pinned === 'right'"
+                      *ngFor="let colDef of gridOptions.columnDefs; let colIdx = index">
+            <mat-header-cell class="d-flex align-items-center"
+                             *matHeaderCellDef
+                             mat-sort-header
+                             cdkDrag
+                             [cdkDragDisabled]="colDef.pinned"
+                             [class.compacted-row]="gridOptions.isCompacted"
+                             [style.flex-grow]="colDef.width"
+                             [ngStyle]="colDef.headerStyle"
+                             [ngClass]="colDef.headerClass">
+                <mat-checkbox *ngIf="colDef.headerCheckboxSelection && gridOptions.rowSelection === 'multiple'"
+                              (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+                <span class="text-ellipsis"> {{ colDef.headerName || getHeadingName(colDef.field) }} </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let rowData; let rowIdx = index"
+                      class="d-flex align-items-center"
+                      [style.height]="gridOptions.rowHeight"
+                      [style.flex-grow]="colDef.width"
+                      [ngStyle]="colDef.cellStyle"
+                      [ngClass]="colDef.cellClass">
+                <mat-checkbox *ngIf="colDef.checkboxSelection"
+                              class="mr-1"
+                              style="margin-top: 2px;"
+                              (click)="$event.stopPropagation()"
+                              (change)="$event ? onRowClicked(rowData, 'checkboxClicked') : null"
+                              [disabled]="colDef.checkboxSelectable && !colDef.checkboxSelectable(rowData)"
+                              [checked]="selection.isSelected(rowData) || (colDef.checked && colDef.checked(rowData))"
+                              [aria-label]="checkboxLabel(rowData)">
+                </mat-checkbox>
+                <!-- Cell renderer -->
+                <ng-container *ngIf="!colDef.editable || !selection.isSelected(rowData)">
+                    <ng-container *ngIf="colDef.cellRenderer">
+                        <ng-container *ngIf="getInnerHtmlCellRenderer(colDef, gridOptions)">
+                            <ng-container [ngTemplateOutlet]="colDef.cellRenderer"
+                                          [ngTemplateOutletContext]="{ rowData: rowData }">
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="getComponentCellRenderer(colDef, gridOptions)">
+                            <div [id]="getCellId(colDef, rowData)"
+                                 [ngClass]="gridId + '-cell-renderer'"></div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!colDef.cellRenderer">
+                        <span class="text-ellipsis"> {{ getCellValue(rowData, colDef) }} </span>
+                    </ng-container>
+                </ng-container>
+                <!-- Cell editor -->
+                <ng-container *ngIf="colDef.editable && selection.isSelected(rowData)">
+                    <ng-container *ngIf="colDef.cellEditor">
+                        <ng-container *ngIf="getInnerHtmlCellEditor(colDef, gridOptions)">
+                            <ng-container [ngTemplateOutlet]="colDef.cellEditor"
+                                          [ngTemplateOutletContext]="{ rowData: rowData }">
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="getComponentCellEditor(colDef, gridOptions)">
+                            <div [id]="getCellId(colDef, rowData)"
+                                 [ngClass]="gridId + '-cell-editor'"></div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!colDef.cellEditor">
+                        <input *ngIf="colDef.field"
+                               [type]="colDef.type || 'text'"
+                               class="w-100"
+                               [(ngModel)]="rowData[colDef.field]">
+                    </ng-container>
+                </ng-container>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="footer">
+            <mat-footer-cell *matFooterCellDef
+                             [ngClass]="gridOptions?.footerClass"
+                             [attr.colspan]="gridOptions.columnDefs.length">
+                <ng-container *ngIf="gridOptions && gridOptions.footerRenderer else defaultFooterRenderer"
+                              [ngTemplateOutlet]="gridOptions.footerRenderer">
+                </ng-container>
+                <ng-template #defaultFooterRenderer> Rows: {{ allRowData.length }} </ng-template>
+            </mat-footer-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="
+                displayedColumns;
+                sticky: gridOptions.headerSticky != null ? gridOptions.headerSticky : true">
+        </mat-header-row>
+        <mat-row mat-row
+                 *matRowDef="let rowData; columns: displayedColumns"
+                 [style.height]="gridOptions.rowHeight"
+                 [class.compacted-row]="gridOptions.isCompacted"
+                 [class.selected-row]="selection.isSelected(rowData)"
+                 (click)="onRowClicked(rowData)">
+        </mat-row>
+        <ng-container *ngIf="gridOptions.footerEnabled || gridOptions.footerEnabled === undefined">
+            <!-- Add a margin-top for footer-row when dataSource is empty -->
+            <!-- So there is enough height to display the loading icon -->
+            <mat-footer-row mat-footer-row
+                            *matFooterRowDef="['footer']; sticky: gridOptions.footerSticky != null ? gridOptions.footerSticky : true"
+                            [style.margin-top]="dataSource.data?.length ? 0 : '45px'"
+                            class="example-second-footer-row">
+            </mat-footer-row>
+        </ng-container>
+    </mat-table>
+    <mat-paginator *ngIf="withPaginator"
+                   #paginator
+                   [pageSize]="pageSize"
+                   [length]="pageLength"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="onPageChanged.emit({ pageEvent: $event, paginator: paginator })">
+    </mat-paginator>
+</div>

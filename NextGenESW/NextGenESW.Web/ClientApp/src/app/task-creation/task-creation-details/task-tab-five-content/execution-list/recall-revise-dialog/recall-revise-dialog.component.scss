@@ -1,0 +1,33 @@
+@import "../../../../../../scss/helpers/variables";
+@import "../../../../../../scss/helpers/mixins";
+@import "../../../../../../scss/helpers/breakpoints";
+@import "../../../../../../scss/helpers/placeholders";
+@import "../../../../../../scss/base/_global.scss";
+
+.recall-revise-wrapper {
+  padding: 38px;
+
+  h2 {
+    @include font-face-BarlowSemiCondensed-Medium(24px, 28px);
+    letter-spacing: 1.24px;
+    color: #3e3e3e;
+    padding: 0 0 15px;
+  }
+  textarea {
+    border: 1px solid #707070;
+    width: 100%;
+    padding: 17px;
+  }
+  .action-buttons {
+    text-align: center;
+    margin-top: 20px;
+
+    button {
+      margin-right: 10px;
+      color: $white-color;
+    }
+  }
+}
+#cover-spin {
+  position: absolute;
+}

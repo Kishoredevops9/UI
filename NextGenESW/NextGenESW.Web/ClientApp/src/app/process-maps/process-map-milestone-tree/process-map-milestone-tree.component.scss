@@ -1,0 +1,44 @@
+@import '/src/scss/helpers/variables';
+@import '/src/scss/helpers/mixins';
+@import '/src/scss/helpers/breakpoints';
+@import '/src/scss/helpers/placeholders';
+
+.mat-tree {
+    font-size: 20px;
+}
+
+.background-highlight span {
+    background-color: lightblue;
+    cursor: pointer;
+    font-weight: bolder;
+    //font-style: italic;
+}
+
+.leafNode {
+    cursor: pointer;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.background-highlight-group span {
+    background-color: lightblue;
+    cursor: pointer;
+    font-weight: bolder;
+    //font-style: italic;
+}
+
+
+.heading-band {
+    background: #ededed;
+    margin: 0 0 20px;
+
+    .mat-title {
+        @include font-face-BarlowSemiCondensed-SemiBold(1.15rem, 1.15rem);
+        grid-area: mat-display-1;
+        text-transform: uppercase;
+        padding: 10px;
+        margin: 0;
+    }
+}

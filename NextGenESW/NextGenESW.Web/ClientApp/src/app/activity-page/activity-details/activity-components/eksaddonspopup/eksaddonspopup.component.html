@@ -1,0 +1,93 @@
+<div class="addons">
+  <div class="add-on-wrapper">
+    <div class="add-on-body addons_inner"
+         style="position:relative">
+      <div>
+        <div class="A">
+          <aside class="sideBoxBg">A</aside>
+          <span class="title"> {{ data.activity.Title || 'N/A' }} </span>
+        </div>
+        <div style="clear: both;width:100%;">&nbsp;</div>
+      </div>
+      <ng-template #tmplNode
+                   let-node="node">
+        <div class="node-item"
+             [attr.data-id]="node.id"
+             [attr.id]="'node-'+node.id">
+          <div class="node-title">
+            <div [ngClass]="(node.contentTypeId) ?  'node-'+getID(  node.contentTypeId) : ''">
+              <span class="type"> {{getID( node.contentTypeId)}} </span>
+              <span class="title">{{node.text}}</span>
+            </div>
+          </div>
+
+          <div *ngIf="node.isExpanded && node.children  && node.children.length"
+               class="node-children"
+               cdkDropList
+               [cdkDropListData]="node.children"
+               [id]="node.id"
+               [cdkDropListConnectedTo]="dropTargetIds"
+               (cdkDropListDropped)="drop($event)"
+               [cdkDropListSortingDisabled]="true">
+            <div *ngFor="let child of node.children"
+                 cdkDrag
+                 [cdkDragData]="child.id"
+                 (cdkDragMoved)="dragMoved($event)">
+              <ng-container *ngTemplateOutlet="tmplNode,context:{node:child}"></ng-container>
+            </div>
+          </div>
+
+        </div>
+      </ng-template>
+
+      <div cdkDropList
+           [cdkDropListData]="nodes"
+           [id]="'main'"
+           [cdkDropListConnectedTo]="dropTargetIds"
+           (cdkDropListDropped)="drop($event)"
+           [cdkDropListSortingDisabled]="true">
+
+        <div *ngFor="let node of nodes"
+             cdkDrag
+             [cdkDragData]="node.id"
+             (cdkDragMoved)="dragMoved($event)">
+          <ng-container *ngTemplateOutlet="tmplNode,context:{node:node}"></ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="add-on-footer eksaddonsFooter"
+     *ngIf="!apiError">
+  <div>
+    <button mat-raised-button
+            color="primary"
+            class="submit-btn"
+            mat-button
+            (click)="openAddonsPopupSearch()">
+      Add
+    </button>
+    <button mat-raised-button
+            color="primary"
+            class="submit-btn"
+            mat-button
+            (click)="saveNested()">
+      Save
+    </button>
+    <button mat-raised-button
+            color="primary"
+            class="submit-btn"
+            mat-button
+            (click)="closeModal()">
+      Close
+    </button>
+  </div>
+</div>
+
+<div *ngIf="containerLoading"
+     class="activityaddonsClass">
+  <div class="spinnerbox">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+// Helper
+@import "../../../../scss/helpers/mixins";
+@import "../../../../scss/helpers/variables";
+@import "../../../../scss/helpers/breakpoints";
+@import "../../../../scss/helpers/placeholders";
+
+.addItemParent {
+  padding: 20px;
+
+  .addItemHeader {
+    padding: 0px 0px 20px 0px;
+
+    text-align: left;
+    @include font-face-Barlow-Medium(22px, 26px);
+    letter-spacing: 1.25px;
+    color: $blue-darken-color;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+
+
+  form,
+  .formClass {
+    width: 100%;
+  }
+
+  .formLabel {
+    width: 170px;
+    padding: 15px 0px 0px 0px;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  .textBoxs {
+    opacity: 0.8;
+    width: 430px;
+  }
+
+  .actionButtons {
+    padding: 30px 15px 15px 15px;
+  }
+
+  .submit-btn {
+    margin-right: 40px;
+  }
+
+  .buttonClass {
+    display: flex;
+  }
+}
+
+.commonPopup {
+  padding: 20px;
+  .txtClass {
+    padding-bottom: 40px;
+    @include font-face-Barlow-Medium(16px, 19px);
+    letter-spacing: 0px !important;
+    color: $black-color !important;
+    opacity: 1;     
+  }
+  .userInnerTxt{
+    margin-top:10px;
+    min-height: 400px;  
+    max-height: 400px;  
+    // overflow-y: scroll;
+  }
+  .userStatusHeader{
+    .userStatus{
+      border: 1px solid #707070;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      display: inline-block;
+      &.active{
+        background: #01A21C 0% 0% no-repeat padding-box;    
+      }
+      &.inactive{
+        background: #ACACAC 0% 0% no-repeat padding-box;
+      }
+    }
+    .userId{
+      @include font-face-Barlow-Regular(13px, 14px);
+      color: #606060;
+    }
+  }
+  
+  .rowbgTxt{
+    width: 49%;
+    margin: 0.3%;
+    padding: 10px;
+    display: inline-block;
+    @include font-face-Barlow-Medium(14px, 15px);
+    background: #F5F5F5 0% 0% no-repeat padding-box;
+  }
+  .headerTxt {
+    padding: 0px 0px 20px 0px;
+    @include font-face-Barlow-Medium(22px, 26px);
+    text-align: left;
+    letter-spacing: 1.25px;
+    color: $blue-darken-color;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+
+}

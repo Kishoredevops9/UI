@@ -1,0 +1,84 @@
+<div class="add-activities">
+    <div class="mat-dialoag-header">
+        <h1 mat-dialog-title>Add Knowledge Asset</h1>
+        <span class="material-icons" mat-dialog-close>
+            close
+        </span>
+    </div>
+    <mat-dialog-content>
+        <mat-card>
+            <form [formGroup]="addAssetForm">
+
+                <div class="flexItemBox">
+                    <div class="label">Title</div>
+                    <mat-form-field>
+                        <mat-label>Title</mat-label>
+                        <input matInput placeholder="Featured Video 1" formControlName="title" />
+                    </mat-form-field>
+                </div>
+
+                <div class="flexItemBox">
+                    <div class="label">Featured Date</div>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker1" formControlName="effectiveFrom">
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+
+                <div class="flexItemBox">
+                        <div class="label">Expiration Date</div>
+                        <mat-form-field appearance="fill">
+                            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker2" formControlName="effectiveTo">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                </div>
+               
+                <div class="flexItemBox">
+                    <div class="label">Description </div>
+                    <mat-form-field>
+                        <mat-label>Description Comes here</mat-label>
+                        <input matInput placeholder="Description Comes here" formControlName="description" />
+                    </mat-form-field>
+                </div>
+                <!-- <div class="flexItemBox">
+                    <div class="label">Last Modified</div>
+                    <mat-form-field appearance="fill">
+                        <input matInput [matDatepicker]="picker" formControlName="lastUpdateDateTime">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div> -->
+
+                <div class="flexItemBox">
+                    <div class="label">Link</div>
+                    <mat-form-field>
+                        <mat-label>Link</mat-label>
+                        <input matInput placeholder="Link" formControlName="assetUrl" />
+                    </mat-form-field>
+                </div>
+
+                <div class="flexItemBox">
+                    <div class="label">Thumbnail</div>
+                    <mat-form-field class="filetypeStyle">
+                        <!-- <mat-label>Thumbnail</mat-label> -->
+                        <!-- <label class="uploader">Browse -->
+                        <input matInput placeholder="" />
+                        <input type="file" (change)="onFileChanged($event)">
+                    <!-- </label> -->
+                    </mat-form-field>
+                </div>
+
+                <div class="button-group">
+                    <button [disabled]="!addAssetForm.valid" (click)="onAddAssetFetured()" mat-flat-button color="primary">
+                        {{ addEditBTN == false ? 'Add' : 'Update' }}
+                    </button>
+                    <button (click)="onClose()" mat-flat-button color="warn">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+    </mat-dialog-content>
+</div>

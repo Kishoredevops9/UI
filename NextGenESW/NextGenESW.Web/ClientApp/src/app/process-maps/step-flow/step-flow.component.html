@@ -1,0 +1,27 @@
+<aside class="top-margn" *ngIf="globalData">
+
+  <app-step-tree
+    [(isChecked)]="isChecked"
+    [globalData]="globalData"
+    [previewMode]="previewMode"
+    *ngIf="addedStep"
+    [item]="addedStep"
+    (dataReload)="reloadData($event)"
+    [treetype]="'sf'">
+  </app-step-tree>
+
+
+<div *ngIf="globalData?.assetStatus == ASSET_STATUSES.PUBLISHED || globalData?.assetStatus == ASSET_STATUSES.CURRENT" class="vertical-center"  [ngClass]="{'active': addedStep && addedStep.length}"></div>
+
+<div *ngIf="globalData?.assetStatus == ASSET_STATUSES.DRAFT" class="vertical-center" [ngClass]="{'active': addedStep && addedStep.length  }" >
+    <a class="mat-button" *ngIf="!addedStep.length" mat-raised-button color="primary" (click)="addStepPopup()" mat-button>Add STEP</a>
+    <a class="mat-button" *ngIf="addedStep.length" mat-raised-button color="primary" (click)="addStepPopup()" mat-button>Add Another STEP</a>
+</div>
+
+<div class="spinnerbox" *ngIf="loading">
+  <mat-spinner  diameter="60"></mat-spinner>
+</div>
+
+
+</aside>
+

@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-title> Share: "{{ data.doc.title }}" </mat-card-title>
+  <br />
+  {{ message }}
+  <mat-card-content *ngIf="message == ''">
+    <form>
+      <mat-form-field>
+        <mat-label>Share With...</mat-label>
+        <mat-select [(value)]="selectedUser" (openedChange)="clearFilter()">
+          <input
+            [(ngModel)]="filter"
+            type="text"
+            matInput
+            [formControl]="filterControl"
+            autocomplete="off"
+            style="height: 25px; padding: 10px;"
+          />
+          <mat-divider></mat-divider>
+          <mat-option
+            *ngFor="let user of $filteredUsers | async"
+            [value]="user"
+          >
+            {{ user.userName }}
+          </mat-option>
+        </mat-select>
+        <!--Single Selector-->
+      </mat-form-field>
+    </form>
+    <br />
+    <mat-radio-group [(ngModel)]="selectedAction" aria-label="Select an option">
+      <mat-label>Permission<br /></mat-label>
+      <mat-radio-button value="edit">Edit</mat-radio-button>
+      <br />
+      <mat-radio-button value="view">View</mat-radio-button>
+      <br />
+    </mat-radio-group>
+  </mat-card-content>
+  <mat-card-actions *ngIf="message == ''">
+    <button mat-raised-button color="primary" (click)="doPost()">Share</button>
+  </mat-card-actions>
+</mat-card>

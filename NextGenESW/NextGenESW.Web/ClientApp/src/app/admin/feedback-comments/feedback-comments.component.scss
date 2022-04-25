@@ -1,0 +1,73 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.feedbackParent-comments {
+  padding: 20px;
+
+  .feedbackHeader {
+    padding: 0px 0px 15px 0px;
+    text-align: left;
+    letter-spacing: 1.25px;
+    color: $popup-heading-light-black;
+    text-transform: uppercase;
+    opacity: 1;
+    @include font-face-Barlow-Medium(24px, 28px);
+  }
+
+  .formClass {
+
+    .form {
+      width: 100%;
+
+      .formLabel {
+        width: 30%;
+        padding: 15px 0px 0px 0px;
+      }
+
+      .example-form {
+        min-width: 150px;
+        max-width: 500px;
+        width: 100%;
+      }
+
+      .example-full-width {
+        width: 100%;
+      }
+
+      .textAreaBox {
+        height: 60px;
+      }
+
+      .textBoxs {
+        opacity: 0.8;
+      }
+
+      .actionButtons {
+        padding: 10px 0px 0px 0px;
+      }
+
+      .grayOut {
+        background: $gray-lighten-2-color 0% 0% no-repeat padding-box;
+      }
+
+      .hiddenButton {
+        opacity: 0;
+        width: 30px;
+      }
+    }
+  }
+}
+
+::ng-deep .mat-form-field.textAreas {
+  padding: 0px !important;
+
+  .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+}
+
+::ng-deep .mat-form-field-appearance-outline.textAreas .mat-form-field-infix {
+  padding: 7px !important;
+}

@@ -1,0 +1,21 @@
+<div [class]="{ 'app-step-map': true, 'app-step-map__bigger': largerDiagram }">
+  <ng-container *ngIf="!loading; else: loadingTemp">
+    <app-diagram
+      *ngIf="processMap.swimLanes && processMap.swimLanes.length; else: noSwimlanes"
+      [processMap]="processMap"
+      [configuration]="diagramConfiguration"
+      [paletteItems]="paletteItems"
+      [headerContainer]="headerContainer"
+    ></app-diagram>
+  </ng-container>
+</div>
+
+<ng-template #loadingTemp>
+  Loading map...
+</ng-template>
+
+<ng-template #noSwimlanes>
+  <div class="app-step-map__no-content">
+    Please insert disciplines first
+  </div>
+</ng-template>

@@ -1,0 +1,152 @@
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+
+
+ul,
+li {
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-left: 10px;
+  background-color: white;
+  border-bottom-left-radius: 4px;
+  list-style: none;
+}
+
+ul li ul li {
+  border-left: 2px dotted black;
+  // padding-left: 3%;
+  padding-top: 0px;
+}
+
+ul li ul li:last-child {
+  border-left: none;
+  border-left: 2px dotted black;
+}
+
+ul li ul li:last-child :after {
+  border-left: 2px dotted black;
+  height: 50%;
+}
+
+.item {
+  &-dropzone {
+    border: 1px dashed grey;
+    // min-height: 20px;
+
+    &.parent {
+      border: none
+    }
+  }
+
+  &-drag {
+    &-handle {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    &-preview {
+      box-sizing: border-box;
+      border-radius: 4px;
+      padding: 10px;
+      box-shadow: 2px 2px 2px 1pxr red;
+      background-color: white;
+    }
+  }
+}
+
+// .cdk-drop-list-dragging {
+//   background: lightgreen;
+// }
+
+.cdk-drag-placeholder {
+  opacity: 0;
+  height: 0;
+}
+
+.expand {
+  float: right;
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.delete {
+  cursor: pointer;
+}
+
+.item-details {
+  position: relative;
+}
+
+.item-dropzone {
+  border: none;
+}
+
+.content {
+  width: 95%;
+  // padding: 8px 0;
+}
+
+.item-drag-handle {
+  width: 100%;
+}
+
+.icons {
+  width: 5%;
+  font-size: 22px !important;
+
+}
+
+
+//Drag List Content Types
+
+.all-type {
+  color: $white-color;
+  width: 30px;
+  height: 31px;
+  display: inline-block;
+
+  &.draged-list-wi {
+    @include draged-list-content($content-type-wi);
+  }
+
+  &.draged-list-ap {
+    @include draged-list-content($content-type-ap);
+  }
+
+  &.draged-list-cg {
+    @include draged-list-content($content-type-cg);
+    color: #404040;
+    border: 1px solid $content-type-brd;
+  }
+
+  &.draged-list-gb {
+    @include draged-list-content($content-type-gb);
+  }
+
+  &.draged-list-rc {
+    @include draged-list-content($content-type-rc);
+    //color: #404040;
+  }
+
+  &.draged-list-kp {
+    @include draged-list-content($content-type-kp);
+  }
+
+  &.draged-list-toc {
+    @include draged-list-content($content-type-toc);
+  }
+
+  &.draged-list-ds {
+    @include draged-list-content($content-type-ds);
+  }
+
+  &.draged-list-m {
+    @include draged-list-content($content-type-m);
+  }
+
+  &.draged-list-sf {
+    @include draged-list-content($content-type-sf);
+  }
+}

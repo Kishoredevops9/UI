@@ -1,0 +1,130 @@
+aside {
+    width: 365px;
+   
+    article {
+      margin: 20px;
+      h2 {
+        text-align: left;
+        letter-spacing: 1.25px;
+        color: #3e3e3e;
+        text-transform: uppercase;
+        padding: 0px;
+      }
+   
+      .formbox {
+  
+        div { clear: both; display: block; }
+        label {
+          float: left;
+          width: 90px;
+          padding: 5px;
+          font-size: 12px;
+        }
+        mat-form-field {
+          width: 215px;
+          float: left;
+          margin-top: -15px;
+        }
+      }
+    }
+  
+    div.buttonbox {
+      width: 100%;
+      border-top: 1px solid #CFD1D7;
+      text-align: center;
+      padding: 10px;
+      clear: both;
+      .mat-button:first-child { margin-right: 10px;}
+    }
+  }
+  .dropbox {
+
+    position: absolute;
+    height: 250px;
+    background: white;
+    z-index: 100;
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  .example-form-field {
+    &.top_margin_new {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+        height: 40px;
+    }
+}
+
+form .mat-button.mat-icon-button {
+  color: #000;
+}
+form .mat-button.mat-icon-button.a:hover{
+  background-color: transparent;
+}
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.node-padding {
+  padding-left: 10%;
+}
+
+.mat-tree-node {
+  min-height: 0px !important;
+  font-size: 12px !important;
+}
+::ng-deep.mat-icon-button .mat-icon {
+  line-height: 22px;
+  font-size: 15px;
+}
+::ng-deep.mat-tree-node, .mat-nested-tree-node {
+  font-weight: 400;
+  font-size: 12px !important;
+}
+::ng-deep.dropbox{
+  margin-top: 4px !important;
+}
+::ng-deep.mat-button{width: auto !important; min-width: auto !important;} 
+// ::ng-deep.selectDrop{
+//   width: 215px;
+//   position: absolute;
+//   left: 110px;
+//   border-bottom: 1.5px solid #959595;
+
+// }
+::ng-deep form .mat-button.mat-icon-button .mat-button-wrapper {
+  font-size: 24px;
+  font-weight: bold;
+  top: -12px;
+  right: 27px;
+}
+::ng-deep form .mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 19px !important;
+  height: 25px !important;
+  flex-shrink: 0;
+  line-height: 25px;
+  border-radius: 50%;
+}
+::ng-deep.dropbox{height: 211px !important;}
+::ng-deep.mat-card {padding: 7px 12px 7px 0px !important;}
+
+
+
+.txtOverflows{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis !important;
+  line-height: 19px !important;
+  height: 19px !important;
+  width: 150px !important;
+  display: inline-block !important; 
+}

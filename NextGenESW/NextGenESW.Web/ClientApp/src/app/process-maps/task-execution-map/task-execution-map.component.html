@@ -1,0 +1,32 @@
+<div class="app-task-execution-map">
+  <div class="app-task-execution-map__header">
+    <span
+      class="material-icons app-task-execution-map__header-arrow"
+      (click)="openListView.emit()"
+    >
+      west
+    </span>
+    <mat-form-field [floatLabel]="'never'">
+      <mat-select
+        [placeholder]="'Pick Step Flow'"
+        [disableOptionCentering]="true"
+        [value]="selectedDropdownOption ? selectedDropdownOption.value : undefined"
+        (selectionChange)="onSelectedStepFlowChange($event.value)"
+        >
+        <mat-option
+          *ngFor="let option of dropdownOptions" [value]="option.value"
+          class="app-task-execution-map__header-dropdown-option">
+          {{ option.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="app-task-execution-map__diagram">
+    <app-diagram
+      #diagram
+      [processMap]="processMap"
+      [configuration]="diagramConfiguration"
+      [loading]="loading"
+    ></app-diagram>
+  </div>
+</div>

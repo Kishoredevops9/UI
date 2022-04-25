@@ -1,0 +1,325 @@
+<div class="container-fluid  mdl-grid tab-margin properties">
+
+<div class="maskGray" *ngIf="!propertyEditable"> </div>
+<div *ngIf="isLoading" id="cover-spin"></div>
+  <div class="topChipBox" *ngIf="chipValues?.length > 0 || chipData?.length>0">
+    <div class="textFilter">Selected Filter:</div>
+    <div class="chipbox">
+      <mat-chip-list>
+        <mat-chip *ngFor="let chip of chipValues" [selectable]="selectable">
+          {{ chip.name }}
+          <mat-icon matChipRemove (click)="removeChip(chip)">cancel</mat-icon>
+        </mat-chip>
+
+        <mat-chip *ngFor="let chip of  TaskItems$ | async" [selectable]="selectable" [hidden]='chip.id<8'>
+          {{ chip.name }}
+          <mat-icon matChipRemove (click)="removeChipData(chip)">cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+
+  <div class="container fleft" novalidate>
+    <form [formGroup]="taskCretionForm" class="form">
+
+      <!-- <div *ngIf="reaNotExistMessage" class="alert alert-danger alert-dismissible fade show">
+        <strong>Alert!!</strong> REA does't Exist in Database.
+      </div> -->
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Task ID* <a tooltip="" data-tooltip="8036" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="20" />
+            </a> </mat-label>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>REA ?</mat-label>
+        </div>
+      </div>
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+            <input matInput formControlName="taskID">
+            <mat-error *ngIf="!taskCretionForm.controls['taskID'].valid && taskCretionForm.controls['taskID'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <div class="toggle">
+            <mat-slide-toggle formControlName="rea" (change)="getReaDetailsOnToggle($event,true)"
+              [disabled]="hasExistingTask">
+            </mat-slide-toggle>
+            <span class="toggleSpan">YES</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Title*</mat-label>
+        </div>
+        <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Program Restricted
+            <a tooltip="" data-tooltip="8037" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="20" />
+            </a>
+
+          </mat-label>
+        </div> -->
+      </div>
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field class="form-element">
+            <input matInput formControlName="title">
+            <mat-error *ngIf="!taskCretionForm.controls['title'].valid && taskCretionForm.controls['title'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <div class="toggle">
+            <mat-slide-toggle formControlName="programControlled">
+            </mat-slide-toggle>
+            <span class="toggleSpan">YES</span>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>IPT</mat-label>
+          <mat-form-field class="form-element">
+            <input matInput formControlName="ipt">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- Security Attributes Start Here  -->
+      <div class="mdl-grid full-width">
+        <div class="header-space mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label> <b class="text-formate">Security Attributes</b></mat-label>
+        </div>
+      </div>
+      <br />
+      <div class="mdl-grid full-width formData">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label class="text-field-radio">Program Controlled <a tooltip="" data-tooltip="8028" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a> </mat-label>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label *ngIf='isProgramControlled' class="text-field-level">Restricting Program*
+            <a tooltip="" data-tooltip="8030" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a>
+          </mat-label>
+        </div>
+      </div>
+      <div class="mdl-grid full-width formData">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <div class="toggle">
+            <mat-slide-toggle  (click)='selectprogramControlled()' formControlName="programControlled"  #ProgramControlled>
+            </mat-slide-toggle>
+            <span class="toggleSpan" class="text-field-data radio-button-alignment">Yes</span>
+          </div>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field *ngIf='isProgramControlled' class="top_margin_new" style="margin: 0px;">
+            <mat-select formControlName="restrictingProgram" ng-required='isProgramControlled' #restrictingProgram (selectionChange)="onChangeProgramControl(restrictingProgram.value)">
+              <mat-option *ngFor="let option of restrictingProgramList" [value]="option.controllingProgramId">
+                {{ option.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <br />
+      <div class="mdl-grid full-width formData">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label class="text-field-level">Export Group*
+            <a tooltip="" data-tooltip="8031" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="12" />
+            </a>
+
+          </mat-label>
+        </div>
+
+      </div>
+
+      <div class="mdl-grid full-width formData">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablets mdl-cell--12-col-phone">
+          <mat-form-field class="top_margin_new">
+            <mat-select formControlName="exportAuthority" #exportAuthority required (selectionChange)="onChangeExportAuthority(exportAuthority.value)">
+              <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId">
+                {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <!-- Security Attributes End Here  -->
+
+      <!-- Phase Block starts here -->
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label> <b class="text-formate">Tags</b></mat-label>
+        </div>
+      </div>
+      <br />
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Phases*</mat-label>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Tags</mat-label>
+        </div>
+      </div>
+
+      <div class="mdl-grid full-width">
+
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+            <mat-select formControlName="phasesTask" multiple (selectionChange)="phaseSelection($event.value)">
+              <mat-option *ngFor="let option of phasesData" [value]="option">
+                {{ option.description }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!taskCretionForm.controls['phasesTask'].valid && taskCretionForm.controls['phasesTask'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div style="position:relative" class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field class="example-form-field">
+            <mat-label>Select Tags</mat-label>
+            <input matInput type="text" readonly [value]="getPlaceData()">
+            <a mat-button matSuffix mat-icon-button (click)="showDropDown=(showDropDown)?false:true">
+              <mat-icon>
+                {{ ( showDropDown ) ? 'expand_less' : 'expand_more' }}
+              </mat-icon>
+            </a>
+          </mat-form-field>
+          <mat-card class="dropbox" [hidden]="!showDropDown">
+            <app-left-box [flag]="true" [delevents]="eventsSubject.asObservable()" (tagdata)="tagData($event)"
+              [treedata]="tagList">
+            </app-left-box>
+          </mat-card>
+        </div>
+
+
+
+      </div>
+      <!-- Phase Block Ends Here -->
+
+      <!-- Block start here -->
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label> <b class="text-formate">Engine</b></mat-label>
+        </div>
+      </div>
+      <br />
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Engine Model Group*</mat-label>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Initial Engine Model*</mat-label>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-label>Engine Section*</mat-label>
+        </div>
+      </div>
+
+      <div class="mdl-grid full-width">
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+            <mat-select formControlName="engineModelTagId" (ngModelChange)="onEngineModelChangeEvent($event)">
+              <mat-option *ngFor="let engineData of engineModelGroupDropDownList" [value]="engineData.id">
+                {{ engineData.name }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!taskCretionForm.controls['engineModelTagId'].valid && taskCretionForm.controls['engineModelTagId'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+            <mat-select formControlName="initialEngineModelTagId">
+              <mat-option *ngFor="let initialEngineData of initialEngineModelDropDownList"
+                [value]="initialEngineData.id">
+                {{ initialEngineData.name }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!taskCretionForm.controls['initialEngineModelTagId'].valid && taskCretionForm.controls['initialEngineModelTagId'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mdl-cell mdl-cell--4-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-form-field>
+            <mat-select formControlName="engineSectionId">
+              <mat-option *ngFor="let engineSecData of engineSectionList" [value]="engineSecData.id">
+                {{ engineSecData.description }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="!taskCretionForm.controls['engineSectionId'].valid && taskCretionForm.controls['engineSectionId'].touched">
+              {{ titleAlert }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- Block end here -->
+      <div style="width: 100%; float: left;">
+        
+        <div class="mdl-grid full-width" style="width: 82% !important; float: left;">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Announcements</mat-label>
+            <mat-form-field class="form-element" appearance="outline">
+              <textarea matInput formControlName="announcement" [placeholder]="PlaceholderDict.TechnicalInfoForbidden"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+        <div class="mdl-grid full-width" style="width: 82% !important; float: left;">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Full Event Description</mat-label>
+            <mat-form-field class="form-element" appearance="outline">
+              <textarea matInput formControlName="fullEventDescription" [placeholder]="PlaceholderDict.TechnicalInfoForbidden"v></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="mdl-grid full-width" style="width: 82% !important; float: left;">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+            <mat-label>Desired Solution</mat-label>
+            <mat-form-field class="form-element" appearance="outline">
+              <textarea matInput formControlName="desiredSolution" [placeholder]="PlaceholderDict.TechnicalInfoForbidden"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="form-element">
+        <button mat-raised-button class="mat-button" color="primary" type="submit" (click)="onSubmit()" class="button"
+          [disabled]="(!taskCretionForm.valid || !disableSubmitButton)">Save Properties & Continue
+        </button>
+        <ngx-ui-loader></ngx-ui-loader>
+      </div>
+
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="app-diagram-context-menu"
+    #menuTrigger="matMenuTrigger"
+    [matMenuTriggerFor]="contextMenu"
+    [ngStyle]="{
+        left: model.position.left + 'px',
+        top: model.position.top + 'px'
+    }"
+></div>
+
+<mat-menu
+    class="app-diagram-context-menu__menu"
+    #contextMenu="matMenu"
+>
+    <ng-container *ngIf="!stepFlow">
+      <button
+          class="app-diagram-context-menu__menu-item"
+          (click)="onAddLaneClick()"
+          mat-menu-item
+      >
+          <app-context-menu-item
+              icon="map-view:add"
+              [text]="step ? 'Add discipline' : 'Add lane'"
+          ></app-context-menu-item>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="!blank">
+      <button
+        class="app-diagram-context-menu__menu-item"
+        (click)="onAddPhaseClick()"
+        mat-menu-item
+      >
+        <app-context-menu-item
+          icon="map-view:add"
+          text="Add phase"
+        ></app-context-menu-item>
+      </button>
+    </ng-container>
+</mat-menu>

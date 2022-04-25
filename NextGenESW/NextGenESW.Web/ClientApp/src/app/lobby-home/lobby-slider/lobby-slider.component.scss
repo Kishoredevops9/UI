@@ -1,0 +1,123 @@
+.slider-wrap {
+  position: absolute;
+  z-index: 1;
+  top: 150px;
+  right: 0px;
+}
+.slider-container-wrp {
+  background: white;
+  overflow: hidden;
+  width: 390px;
+  position: relative;
+  display: flex;
+}
+.slider-container {
+  height: 150px;
+  width: 470px;
+  display: block;
+}
+.slide-next-pre {
+  position: relative;
+  z-index: 100;
+  top: 30%;
+}
+.slide {
+  position: absolute;
+}
+.description {
+  width: 180px;
+  position: absolute;
+  background-color: white;
+  color: black;
+  height: 150px;
+  left: 172px;
+  padding: 39px 10px;
+  font-size: 18px;
+  span {
+    font-size: 14px;
+  }
+}
+.btn {
+  position: absolute;
+  top: 116px;
+  background-color: transparent;
+}
+.btn .btn-default {
+  position: relative;
+}
+.btn a :focus {
+  border: none;
+  text-decoration: none;
+}
+.btn-defaultNext {
+  margin-left: 448px;
+  position: relative;
+}
+.btn:focus {
+  outline: none;
+}
+.static-slider-wrap {
+  position: absolute;
+  z-index: 999;
+  top: 21%;
+  right: 0;
+  width: 390px;
+}
+.slider-imgcontainer {
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 0 10px 10px;
+  background-color: white;
+}
+.slider-imgcontainer img {
+  float: left;
+  margin-right: 10px;
+  background-color: white;
+  width: 180px;
+  height: 130px;
+  //cursor: pointer;
+}
+.slider-clickcontainer {
+  width: 100%;
+  bottom: 0;
+  top: 0;
+  overflow:hidden;
+}
+.slider-clickcontainer .before {
+  border-width: 0 20px 16px 0;
+  border-color: transparent #ffffff transparent transparent;
+  border-style: solid;
+  width: 0px;
+  height: 0px;
+  line-height: 0px;
+  position: absolute;
+  left: 74px;
+}
+
+.slider-clickcontainer ul {
+  margin: 0;
+  width: 80%;
+  float: right;
+  background: white;
+  overflow: hidden;
+  transform: skewX(40deg);
+  margin-right: -10px;
+
+  padding-bottom: 6px;
+}
+.slider-clickcontainer ul li {
+  margin-left: 111px;
+  transform: skewX(-40deg);
+}
+.slider-clickcontainer ul li a {
+  display: block;
+  float: left;
+  margin-left: 5px;
+  border-radius: 9px;
+  padding: 4px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.slider-clickcontainer ul li a.active {
+  background-color: black;
+}

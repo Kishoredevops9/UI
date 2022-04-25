@@ -1,0 +1,14 @@
+<div class="serachContainer">  
+  <div class="searchHeading">
+    Add New Swim lane      
+  </div>
+    <mat-form-field appearance="legacy" class="searchField">
+      <input matInput class="searchInput" placeholder="Swim Lane Name" [formControl]="newSwimlaneValue" required>
+    </mat-form-field>
+  <div class="btn-row">
+    <button class="button_style" mat-raised-button color="primary" [disabled]="!newSwimlaneValue.value" [mat-dialog-close]="newSwimlaneValue.value">Submit</button>
+    <button class="button_style" mat-raised-button [mat-dialog-close]="">Cancel</button>
+  </div>
+</div>
+
+

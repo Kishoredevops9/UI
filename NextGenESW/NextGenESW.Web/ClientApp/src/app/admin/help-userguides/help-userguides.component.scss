@@ -1,0 +1,38 @@
+@import '../../../scss/helpers/variables';
+
+.content-wraper-help-userguides {
+    padding: 5px;
+
+    .selectContainer {
+        padding: 15px;
+        background: $white-color 0% 0% no-repeat padding-box;
+        border: 1px solid $border-light-blue-color;
+        opacity: 1;
+
+        .textHeaders {
+            text-align: left;
+            letter-spacing: 0px;
+            color: $black-color;
+            opacity: 1;
+            font-size: 16px;
+            padding: 0px 25px 0px 10px;
+        }
+
+        .selectValue {
+            padding: 10px;
+            border: 1px solid $select-dropdown-border;
+            opacity: 0.9;
+            width: 300px;
+
+            .optionClass {
+                padding: 5px 7px 5px 7px;
+            }
+        }
+    }
+
+    .bodyBox {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+}

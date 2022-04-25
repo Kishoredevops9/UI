@@ -1,0 +1,45 @@
+<div class="d-flex flex-column w-100">
+    <div class="row w-100">
+        <div *ngIf="gridOptions?.quickFilterEnabled"
+             class="col-auto mb-3">
+            <mat-form-field class="example-form-field"
+                            appearance="fill">
+                <mat-label>Search</mat-label>
+                <input matInput
+                       type="text"
+                       placeholder="Type to search"
+                       [ngModel]="searchTerm$ | async"
+                       (ngModelChange)="searchTermSub.next($event)">
+                <button *ngIf="searchTerm"
+                        matSuffix
+                        mat-icon-button
+                        aria-label="Clear"
+                        (click)="value=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+        <div class="col"></div>
+        <div class="col-auto">
+            <ng-content></ng-content>
+        </div>
+    </div>
+    <div class="row flex-grow-1 w-100">
+        <app-scrollable-table *ngIf="rowData$ | async as rowData"
+                              #scrollableTable
+                              class="h-100 w-100"
+                              [gridHeight]="gridHeight"
+                              [gridOptions]="gridOptions"
+                              [rowData]="rowData"
+                              [nbOfRowsPerScroll]="nbOfRowsPerScroll"
+                              [withPaginator]="withPaginator"
+                              [pageSize]="pageSize"
+                              [pageLength]="pageLength"
+                              [pageSizeOptions]="pageSizeOptions"
+                              [partialDatasource]="partialDatasource"
+                              (onPageChanged)="onPageChanged.emit($event)"
+                              [loading]="loading">
+        </app-scrollable-table>
+    </div>
+    <div class="footer-div w-100"></div>
+</div>

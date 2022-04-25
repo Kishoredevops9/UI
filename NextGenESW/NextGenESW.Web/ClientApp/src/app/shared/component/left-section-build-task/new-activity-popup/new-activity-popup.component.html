@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>NEW ACTIVITY</h1>
+  <div class="formBox">
+       <ul>
+
+        <li>
+  <label> Title* </label>
+
+  <mat-form-field>
+    <input matInput placeholder="Please enter a name for the New Activity" [(ngModel)]="formData.title" (change)="valuechange()">
+</mat-form-field>
+
+
+
+
+
+
+
+
+
+        </li>
+
+        <li>
+            <label>Export Group* </label>
+
+            <mat-form-field>
+            <mat-select placeholder="Please select an Export Group" [(ngModel)]="formData.exportAuthorityId" (selectionChange)="valuechange()">
+              <mat-option *ngFor="let option of exportAuthorityList" [value]="option.exportAuthorityId" >
+                {{ option.exportAuthorityCode }} - {{ option.description }}</mat-option>
+            </mat-select>
+
+        </mat-form-field>
+
+
+
+
+                  </li>
+                 </ul>
+
+  </div>
+  <div class="action-btn" >
+
+    <button mat-raised-button color="primary" class="mat-button  " [disabled]="stepActivityBtn"  (click)="submitForm()">Save</button>
+    <button mat-raised-button color="primary" class="mat-button  " (click)="cancelAction()">Close</button>
+
+
+  </div>
+
+  <div  *ngIf="loading" class="activityClass">
+    <div class="spinnerbox">
+      <mat-spinner  diameter="60"></mat-spinner>
+    </div>
+  </div>

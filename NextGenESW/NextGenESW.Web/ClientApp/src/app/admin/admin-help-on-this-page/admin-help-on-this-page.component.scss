@@ -1,0 +1,256 @@
+* {
+  font-family: "Inter-Regular";
+}
+
+.cdk-drag-placeholder {
+    display: none;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2),
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    background: #fff;
+    opacity: 0.3;
+}
+
+.drop-inside {
+    border: 1px solid #00f;
+}
+
+.drop-before {
+    border-top: 1px solid #00f;
+}
+
+.drop-after {
+    border-bottom: 1px solid #00f;
+}
+
+.node-title {
+
+  margin: 5px;
+  //background: #eee;
+  cursor: grab;
+}
+
+.node-children {
+    position: relative;
+    transition: height 0.2s;
+    margin-left: 40px;
+}
+.item-notes { 
+  margin-left:20px;
+  color:#aaa;
+ }
+ .node-active{
+  flex-direction: row;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center flex-start;
+  align-items: center;
+  
+}
+.node-active.active{background: #CDDCE1 ;}
+ 
+.triangleIcons{    
+  color:  #598FCC;
+  opacity: 1;
+  font-size: 28px !important;
+  font-family: 'Material Icons' !important;
+}
+.itemText{
+  display: inline;
+  text-align: left !important;
+  font: normal normal medium 16px/19px Barlow;
+  font-family: 'Barlow-Medium' !important;
+  letter-spacing: 0px !important;
+  color: #000000 !important;
+  opacity: 1;
+  font-size: 16px !important;
+  padding-right: 10px;
+}
+.materialIcons{    
+  font-family: 'Material Icons' !important;
+}
+::ng-deep .mat-menu-item.menuBtn {
+  padding: 0px 10px;
+}
+.menuText{
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  font-family: 'Barlow-Regular';
+  font-size: 14px;
+}
+
+
+
+
+
+
+.bodyBox {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;  
+  .leftbox {
+    width: 50%;
+    height: 700px;
+    float: left;
+    border:  1px solid #C2CDEF;
+    padding: 15px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+    margin-bottom: 10px;
+  }
+  
+  .leftBoxHeading{
+    text-align: left;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1; 
+    font-size: 20px;
+    padding-bottom: 20px;
+    font-family: 'Barlow-Regular';
+  }
+
+  .rightbox {
+    width: calc(50% - 20px);
+    height: 700px;
+    padding: 15px;
+    float: right;
+    border: 1px solid #c2cdef;
+    margin-bottom: 10px;
+
+    h3 {  font-size: 16px; }
+    
+    .propText{
+      text-align: left;
+      letter-spacing: 0px;
+      color: #000000;
+      opacity: 1; 
+      font-size: 20px;
+      padding-bottom: 20px;
+      font-family: 'Barlow-Regular';
+    }
+
+    mat-form-field  { display: block; clear: both; width: 300px; }
+
+    .formLabel{
+      width: 170px;
+      margin-bottom: none;
+      font-family: 'Inter-Regular';
+    }
+    input {
+      width: 100%;
+    }
+    .example-full-width {
+      width: 100%;
+    }
+    .textBoxs{
+      opacity: 0.8;
+      width: 430px;
+    }
+    .mat-form-field-infix {
+    border-top: none;
+    }
+    .btnGroups{
+      padding: 20px 0px 5px 0px;
+      // margin-top: calc(700px - 440px);
+      margin-top: 20px;
+      border-top: 1px solid rgb(201, 199, 199);
+    }
+  }
+}
+
+.selectContainer{
+  padding: 15px;
+  background: #FFFFFF 0% 0% no-repeat padding-box;
+  border: 1px solid #C2CDEF;
+  opacity: 1;
+}
+
+.textHeaders{
+  text-align: left;
+  letter-spacing: 0px;
+  color: #000000;
+  opacity: 1;
+  font-size: 16px;
+  padding: 0px 25px 0px 10px;
+}
+
+::ng-deep .mat-form-field.formSelect {
+  padding: 0px !important;
+
+  .mat-form-field-wrapper {
+    padding: 0px !important;
+  }
+}
+
+.selectValue{
+  padding: 10px;
+  border: 1px solid #707070;
+  opacity: 0.9;
+  width: 300px;
+}
+
+.optionClass{
+  padding: 5px 7px 5px 7px;
+}
+
+.roundBullet {
+  color:  #598FCC;
+  opacity: 1;
+  font-size: 28px !important;
+  
+  background: #598FCC 0% 0% no-repeat padding-box;
+  opacity: 1;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+}
+.bulletContainer{
+  padding: 0px 10px 0px 10px;
+}
+
+.matspinner {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  z-index: 5;
+  top: 30%;
+  left: 0;
+
+  mat-spinner {
+    margin: auto;
+  }
+}
+
+.modifiedField{
+  background: #F8F8F8 0% 0% no-repeat padding-box;
+  mix-blend-mode: darken;
+  opacity: 1;
+}
+
+
+.searchIcon{
+  display: inline-block;
+  width: 13px !important;
+  height:  13px !important;
+  background: url('../../../assets/images/search-icon-pw.svg') no-repeat;
+  border: none;
+  margin: 0px 5px 0px 12px;
+  font-size: 13px;
+  background-size: 13px 13px;
+}  
+
+.inputElementHide{
+  width: 0px !important;
+  height: 0px !important;
+  border: 1px solid red;
+  opacity: 0;
+}

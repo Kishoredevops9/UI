@@ -1,0 +1,61 @@
+<!-- <a class="btn btn-sm btn-primary adv_btn" (click)="openModal(mytemplate2)">EKS Search</a> -->
+
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">EKS Search</h2>
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" mat-button mat-dialog-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="top_bar_search">
+        <app-top-eks-searchbar (eksLeftSearchData)="eksLeftSearchData($event)"
+          (eksSearchOutput)="eksSearchOutput($event)" (eksSearchCount)="eksSearchCount($event)"
+          (eksSearchTitle)="eksSearchTitle($event)"></app-top-eks-searchbar>
+      </div>
+      <h4 class="left_title">
+        {{ eksSearchTitleCreated }} <span>{{ eksSearchCountCreated }}</span>
+      </h4>
+      <div class="col-sm-3">
+        <app-eks-filter-section class="col filter-by-type" (eksLeftSearchData)="eksLeftSearchData($event)"
+          (eksSearchOutput)="eksSearchOutput($event)" (eksSearchCount)="eksSearchCount($event)">
+        </app-eks-filter-section>
+      </div>
+
+      <div class="col-sm-9">
+        <div class="outline cg">
+          <mat-tab-group>
+            <mat-tab class="mat-tab-label-content" label="EKS Search">
+              <div class="eks_tab_new">
+                <div class="Eks_tab_result">
+                  <app-eks-tab-result [eksAdvSearchData]="eksSearchDataCreated"></app-eks-tab-result>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </mat-tab>
+
+            <mat-tab class="mat-tab-label-content" label="Global Search">
+              <div class="eks_tab_new">
+                <div class="Eks_tab_result">
+                  <app-global-search-result></app-global-search-result>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </mat-tab>
+
+            <mat-tab class="mat-tab-label-content" label="PWPlay"></mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-sm btn-primary add-btn">Add</button>
+    </div>
+  </div>
+</div>

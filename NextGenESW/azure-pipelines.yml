@@ -1,0 +1,58 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- Dev
+
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: replacetokens@4
+  inputs:
+    rootDirectory: '$(System.DefaultWorkingDirectory)'
+    targetFiles: '**/*env.js'
+    encoding: 'auto'
+    tokenPattern: 'azpipelines'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: true
+    actionOnNoFiles: 'continue'
+    enableTransforms: true
+    transformPrefix: '('
+    transformSuffix: ')'
+    variableFiles: 'js'
+    useLegacyPattern: false
+    enableTelemetry: true
+- task: NodeTool@0
+  inputs:
+    versionSpec: '12.x'
+  displayName: 'Install Node.js'
+- task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 'sonarqube'
+    scannerMode: 'CLI'
+    configMode: 'manual'
+    cliProjectKey: 'NextGenESW_NextGenESW'
+    cliProjectName: 'NextGenESW'
+    cliSources: '.'
+
+- script: |
+    cd NextGenESW.Web/ClientApp
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration="production"
+  displayName: 'npm install and build'
+
+#- task: SonarQubeAnalyze@5
+#- task: SonarQubePublish@5
+#  inputs:
+#    pollingTimeoutSec: '300'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: 'NextGenESW.Web/ClientApp/dist'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'

@@ -1,0 +1,243 @@
+<div class="content-wraper-feedback-management">
+
+  <div class="feedbackPageHeading">Feedback Management</div>
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="selectContainer"> 
+    <div class="textHeaders">Select a menu to edit</div>
+    <select (change)="onSelectChange($event.target.value)" class="selectValue">
+      <ng-container *ngFor="let options of selectDropdownData">
+        <option class="optionClass" value="{{options}}">{{options}}</option>
+      </ng-container>
+    </select>
+  </div>
+
+  <div class="feedbackContent">
+
+    <div class="feedbackContainers" fxLayout="column" >
+  
+      <div fxLayout="row" fxLayoutAlign="end center">
+          <span class="filterIcon" (click)="filterActivitypop()"></span>
+      </div>
+  
+      <div *ngIf="filterActivityShow" fxLayout="row" fxLayoutAlign="center center" class="filterActivityPage">
+          <mat-card class="filter-card" *ngIf="filterActivityShow" >
+            <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-card-title>Filter</mat-card-title>
+              <span (click)="closeFilters()" class="material-icons clsFilter">close</span>
+            </mat-card-header>
+      
+              <mat-card-content>
+                <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+                  <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="filterActivityForm">
+                    
+                    <mat-form-field class="filter-block">
+                      <mat-label>Title</mat-label>
+                      <mat-select formControlName="titleFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Title
+                        </mat-option>
+                        <mat-option *ngFor="let title of uniqueTitle" [value]="title">
+                          {{ title }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+      
+                    <mat-form-field class="filter-block">
+                      <mat-label>Feedback From</mat-label>
+                      <mat-select formControlName="userIdFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Feedback From
+                        </mat-option>
+                        <mat-option *ngFor="let feedbackfrom of uniqueFeedbackFrom" [value]="feedbackfrom">
+                          {{ feedbackfrom }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+  
+                    <mat-form-field class="filter-block">
+                      <mat-label>Feedback Date</mat-label>
+                      <mat-select formControlName="createdDateTimeFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Feedback Date
+                        </mat-option>
+                        <mat-option *ngFor="let feedbackDate of uniqueFeedbackDate" [value]="feedbackDate">
+                          {{ feedbackDate }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="filter-block">
+                      <mat-label>Email Id</mat-label>
+                      <mat-select formControlName="createdUserFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Email Id
+                        </mat-option>
+                        <mat-option *ngFor="let emailId of uniqueEmail" [value]="emailId">
+                          {{ emailId }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="filter-block">
+                      <mat-label>Status</mat-label>
+                      <mat-select formControlName="statusFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Status
+                        </mat-option>
+                        <mat-option *ngFor="let status of uniqueStatus" [value]="status">
+                          {{ status }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="filter-block">
+                      <mat-label>Modified By</mat-label>
+                      <mat-select formControlName="lastUpdateUserFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Modified By
+                        </mat-option>
+                        <mat-option *ngFor="let ModifiedBy of uniqueModifiedBy" [value]="ModifiedBy">
+                          {{ ModifiedBy }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="filter-block">
+                      <mat-label>Modified On</mat-label>
+                      <mat-select formControlName="lastUpdateDateTimeFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Modified On
+                        </mat-option>
+                        <mat-option *ngFor="let ModifiedOn of uniqueModifiedOn" [value]="ModifiedOn">
+                          {{ ModifiedOn }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="filter-block">
+                      <mat-label>Admin Comments</mat-label>
+                      <mat-select formControlName="adminFeedbackFilter" >
+                        <mat-option (click)="clearFilter()" value="">
+                          Select Admin Comments
+                        </mat-option>
+                        <mat-option *ngFor="let adminComments of uniqueAdminComments" [value]="adminComments">
+                          {{ adminComments }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <button mat-button mat-raised-button (click)="applyActivityFilter()" color="primary" >Apply Filter</button>
+                    <button mat-button mat-raised-button (click)="resetFilters()" color="primary" >Reset Filter</button>
+      
+                  </div>
+                </div>
+              </mat-card-content>
+      
+          </mat-card>
+      </div>
+  
+  
+      <div class="feedbackTable">
+          <mat-table [dataSource]="dataSourceFeedback" class="activitySearchData-table" matSort >
+  
+              <!-- Title Column -->
+              <ng-container matColumnDef="title">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Title</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.title}}</div>
+                </mat-cell>
+              </ng-container>
+              
+              <!-- Feedback From Column -->
+              <ng-container matColumnDef="userId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Feedback From</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.userId}}</div>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Feedback Date Column -->
+              <ng-container matColumnDef="createdDateTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Feedback Date</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.createdDateTime | date: 'MM/dd/yyyy' }}</div>
+                </mat-cell>
+              </ng-container>
+
+              <!-- Email Column -->
+              <ng-container matColumnDef="createdUser">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header >Email</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <div class="rowDataText">{{element.createdUser}}</div>
+                  </mat-cell>
+              </ng-container>
+
+              <!-- Feedback Type Column -->
+              <ng-container matColumnDef="feedbackType">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Feedback Type</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText" >{{element.helpType}}</div>
+                </mat-cell>
+            </ng-container>
+    
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header >Status</mat-header-cell>
+                  <mat-cell *matCellDef="let element">
+                    <div class="rowDataText">{{element.status}}</div>
+                  </mat-cell>
+              </ng-container>
+              
+  
+              <!-- Modified By Column -->
+              <ng-container matColumnDef="lastUpdateUser">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Modified By</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.lastUpdateUser}}</div>
+                </mat-cell>
+              </ng-container>
+    
+              <!-- Last Modified Column -->
+              <ng-container matColumnDef="lastUpdateDateTime">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Last Modified</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.lastUpdateDateTime | date:'MM/dd/yyyy' }}</div>
+                </mat-cell>
+              </ng-container>
+  
+              <!-- Admin Comments Column -->
+              <ng-container matColumnDef="adminFeedback">
+                <mat-header-cell *matHeaderCellDef mat-sort-header >Admin Comments</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <div class="rowDataText">{{element.adminFeedback}}</div>
+                </mat-cell>
+              </ng-container>
+  
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actionsPart">
+                <mat-header-cell *matHeaderCellDef >Actions</mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <span (click)="onFeedbackEdit(element)" class="editFeedback" >&nbsp;&nbsp;&nbsp;</span>
+                  <span>&nbsp;&nbsp;&nbsp;</span>
+                  <span (click)="onFeedbackDelete(element)" class="deleteFeedback" >&nbsp;&nbsp;&nbsp;</span>
+                </mat-cell>
+              </ng-container>
+  
+              <!-- Header and Row Declarations -->
+              <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+  
+          </mat-table>
+  
+          <mat-paginator 
+              [pageSize]="10"
+              [pageSizeOptions]='pageRowCounters'
+              showFirstLastButtons >
+          </mat-paginator>
+  
+      </div>
+  
+    </div>
+  </div>
+  
+</div>

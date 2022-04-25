@@ -1,0 +1,66 @@
+<div class="manage-metaData">
+    <div class="mat-dialoag-header">
+      <h1 mat-dialog-title>Manage Activity Metadata</h1>
+      <span class="material-icons" mat-dialog-close>
+        close
+      </span>
+    </div>
+    <div mat-dialog-content>
+      <form [formGroup]="manageMetaDataForm">
+        <mat-form-field>
+          <mat-label>eg. Duration</mat-label>
+          <input matInput placeholder="key" formControlName="key" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>eg. Long</mat-label>
+          <input matInput placeholder="value" formControlName="value" />
+        </mat-form-field>
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="onAddMetaData()"
+          [disabled]="!manageMetaDataForm.valid"
+        >
+          Add
+        </button>
+      </form>
+      <div class="content-wrapper table-wrapper">
+        <mat-table [dataSource]="activityMetaData" class="data-table">
+          <!-- Key Column -->
+          <ng-container matColumnDef="key">
+            <mat-header-cell *matHeaderCellDef> Key </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.key }}
+            </mat-cell>
+          </ng-container>
+  
+          <!-- Value Column -->
+          <ng-container matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef>Value </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.value }}
+            </mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef>Action </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                matTooltip="Delete Activity Meta Data"
+                mat-icon-button
+                color="primary"
+                (click)="onDeleteMetaData(element.id)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <!--
+                Header and Row Declarations -->
+          <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+  

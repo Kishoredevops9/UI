@@ -1,0 +1,146 @@
+<div *ngIf="!showSubmitDialog" class="deviation_approval">
+  <div class="heading">
+    <label *ngIf="taskType=='activity'"><b>APPROVE ACTIVITIES</b></label>
+    <label *ngIf="taskType=='deviation'"><b>APPROVE DEVIATION</b></label>
+    <div class="sub_heading">
+      <span class="header-theam">T</span>
+      <span id="docTitle"><sub>{{docTitle}}</sub></span>
+      <span id="content_Id"><sub></sub></span>
+    </div>
+  </div>
+
+  <div *ngIf="taskType=='deviation'" class="form-group">
+    <span class="left_container">
+      <form [formGroup]="deviationForm" [disabled]="true">
+        <span *ngIf="!isDeviation">
+          <div>
+            <mat-label>*Manager:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here" type="text" formControlName="manager"
+              minlength="8" required readonly />
+          </div>
+          <div>
+            <mat-label>*Discipline Chief:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here" type="text"
+              formControlName="disciplineChief" minlength="8" required readonly />
+          </div>
+          <div>
+            <mat-label>CIPT Leader:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here" type="text" formControlName="ciptLeader"
+              minlength="8" required readonly />
+          </div>
+          <div>
+            <mat-label>Program Chief Engineer:</mat-label>
+            <input matInput class="inputMaterial" placeholder="Search Here" type="text"
+              formControlName="programChiefEngineer" minlength="8" required readonly/>
+          </div>
+        </span>
+      </form>
+    </span>
+    <form [formGroup]="commentForm">
+      <span class="right_container">
+        <textarea rows="3" cols="3" matInput formControlName="comments"
+          placeholder="Comment For Approvers Here"></textarea>
+      </span>
+    </form>
+  </div>
+
+  <div *ngIf="taskType=='deviation'" class="task-execution">
+    <div class="heading">
+      <mat-accordion>
+        <ng-container *ngFor="let item of selectedDeviationActivitiesData; let i = index">
+
+          <mat-expansion-panel class="mat_panel">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+
+                <div class="hr {{ item.type | lowercase }}">
+                  <div class="type {{ item.type | lowercase }}">{{item.type}}</div>
+                  <div class="title contentId" *ngIf="(item.type === 'A')">
+                    {{item.title}}
+                    <div class="activity-doc-wrapper">
+                      <span class="jc-title">{{item.contentId}}</span> / <span
+                        class="classifier-title">{{item.usClassification}}</span> /
+                      <span class="jc-title">{{item.usJurisdiction}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="title contentId deviation-block" *ngIf="item.submittedDeviationDtoList[0].deviationNumber">
+                  <strong>Deviation ID :</strong> {{item.submittedDeviationDtoList[0].deviationNumber}} <br />
+                  <span class="deviation">
+                    <mat-checkbox [checked]="true" *ngIf="item.submittedDeviationDtoList[0].deviationNumber"
+                      class="checkbox style-checked" readonly>
+                    </mat-checkbox>
+                    System Risk
+                  </span><br />
+                  <div class="deviation deviation-text" [innerHTML]="item.submittedDeviationDtoList[0].assetStatement | truncate:[200, '...']">
+                  </div>
+                </div>
+
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+          </mat-expansion-panel>
+        </ng-container>
+      </mat-accordion>
+    </div>
+  </div>
+
+  <form *ngIf="taskType=='activity'" class="deviation_form" [formGroup]="activityForm">
+    <div class="tasks">
+      <ul>
+        <li *ngFor="let item of resultArray">
+          <div class="header main_title main_header">
+            <div class="title">{{ item.activityName }}</div>
+            <div class="doc-details">
+              <span class="doc-number">{{item.activityContentId}} /</span>
+              <span class="jc-number">{{item.usClassification}} {{item.usJurisdiction}}</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <textarea rows="6" matInput formControlName="comments" placeholder="Comment For Approvers Here"> </textarea>
+    </div>
+  </form>
+
+  <div class="button button_content">
+    <b>This will approve the above activities, and notify the requester.</b>
+    <br /><br />
+    <button mat-button mat-raised-button color="primary" class="cancel_button" (click)="handleOnCancelButtonClick(showSubmitDialog)">
+      Cancel
+    </button>
+    <button mat-button mat-raised-button color="primary" [disabled]="!resultArray || resultArray == undefined || resultArray.length == 0"
+      (click)="handleOnSubmitButtonClick()">
+      Confirm
+    </button>
+  </div>
+</div>
+
+<div *ngIf="showSubmitDialog" class="deviation_approval">
+  <span class="heading">
+    <label *ngIf="taskType=='activity'"><b>ACTIVITY SUBMITTED FOR APPROVAL</b></label>
+    <label *ngIf="taskType=='deviation'"><b>DEVIATION SUBMITTED FOR APPROVAL</b></label>
+  </span>
+  <div class="sub_heading">
+    <span class="header-theam">T</span>
+    <span id="docTitle"><sub>{{ title }}</sub></span>
+    <span id="content_Id"><sub>{{ taskReaid }}</sub></span>
+  </div>
+  <div class="tasks">
+    <ul>
+      <li *ngFor="let item of resultArray">
+        <div class="header main_title main_header">
+          <div class="title">{{ item.activityName }}</div>
+          <div class="doc-details">
+            <span class="doc-number">{{item.activityContentId}} /</span>
+            <span class="jc-number">{{item.usClassification}} {{item.usJurisdiction}}</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="button">
+    <button mat-button mat-raised-button color="primary" (click)="handleOnCancelButtonClick(showSubmitDialog)">
+      CLOSE
+    </button>
+  </div>
+</div>

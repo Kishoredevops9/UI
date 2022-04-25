@@ -1,0 +1,35 @@
+<mat-dialog-content class="app-step-map-dialog">
+  <div class="app-step-map-dialog__header">
+    <span class="app-step-map-dialog__title">
+      {{ data.name }}
+    </span>
+    <span
+      class="app-step-map-dialog__close material-icons"
+      (click)="onClose()">
+      close
+    </span>
+  </div>
+  <div class="app-step-map-dialog__diagram">
+    <ng-container *ngIf="!loading; else: loadingTemp">
+      <app-diagram
+        *ngIf="processMap.swimLanes && processMap.swimLanes.length; else: noSwimlanes"
+        [processMap]="processMap"
+        [configuration]="diagramConfiguration"
+        [paletteItems]="[]"
+      ></app-diagram>
+    </ng-container>
+  </div>
+
+  <ng-template #loadingTemp>
+    <div class="app-step-map-dialog__loading">
+      Loading map...
+    </div>
+  </ng-template>
+
+  <ng-template #noSwimlanes>
+    <div class="app-step-map-dialog__no-content">
+      This STEP has no disciplines
+    </div>
+  </ng-template>
+</mat-dialog-content>
+

@@ -1,0 +1,1199 @@
+
+<div *ngIf="loading" id="cover-spin"></div>
+
+<ng-container *ngIf="currentTabData">
+  <div *ngIf="(contentOwner1 != displayName1)">
+
+    <!-- Publish View Section Start Here -->
+    <div *ngIf="kPacksPropertiesData && (kPacksPropertiesData.assetStatus === ASSET_STATUSES.PUBLISHED || kPacksPropertiesData.assetStatus === ASSET_STATUSES.CURRENT || kPacksPropertiesData.assetStatus === ASSET_STATUSES.OBSOLETE || kPacksPropertiesData.assetStatus === ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || kPacksPropertiesData.assetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC)">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <Br />
+        <!-- <label>{{title}}</label><Br /> -->
+        <label [innerHTML]="description | safe : 'html'"></label>
+        <Br />
+      </div>
+      <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="kPackDesign">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index">
+            <!-- <button  [disabled]="i === 0"style="background:none; height: 40px;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+          <button [disabled]="i == array.length - 1" style="background:none; height: 40px;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button> -->
+            <ng-container *ngIf="element.layout == layoutFormat.layout1; else Layout2">
+              <label id="KP1" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+            </ng-container>
+
+            <ng-template #Layout2>
+              <ng-container *ngIf="element.layout == layoutFormat.layout2; else Layout3">
+
+                <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+
+              </ng-container>
+            </ng-template>
+            <ng-template #Layout3>
+              <ng-container *ngIf="element.layout == layoutFormat.layout3">
+
+
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign3 | safe: 'html'"></label>
+
+              </ng-container>
+            </ng-template>
+
+
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
+    <!-- Publish View Section End Here -->
+
+    <!-- Draft View Section Start Here -->
+    <div *ngIf="kPacksPropertiesData && (kPacksPropertiesData.assetStatus !== ASSET_STATUSES.PUBLISHED && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.CURRENT && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.OBSOLETE && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.SUBMITTED_FOR_APPROVAL && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.APPROVED_WAITING_FOR_JC)">
+
+      <div class="mdl-grid">
+
+        <!-- <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone title">
+        <input type="text" matInput required (focusout)="saveCommonData()" [(ngModel)]="title" />
+      </div> -->
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone description">
+          <app-texteditor [placeholder]="description" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                          id="angularEditor"
+                          (editorData)="saveCommonData();"></app-texteditor>
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone select-layout">
+          <div class="kPack-container">
+            <div class="layout-label">Select Layout &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout1 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout1)">
+              <div id="parent_div_4"></div>
+            </div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout2 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout2)">
+              <div id="parent_div_5"></div>
+              <div id="parent_div_6"></div>
+            </div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout3 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout3)">
+              <div id="parent_div_1"></div>
+              <div id="parent_div_2"></div>
+              <div id="parent_div_3"></div>
+            </div>
+
+            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn btnstyle" [disabled]="layoutSelected">
+            <span (click)="createKPack()" #myDiv5>Create</span></button> -->
+            <button mat-button mat-raised-button color="primary" class="submit-btn btnstyle" [disabled]="layoutSelected"
+                    (click)="createKPack()">
+              Create
+            </button>
+            &nbsp;&nbsp;&nbsp;
+
+            <a tooltip="Create" data-tooltip="8034" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="20" />
+            </a>
+
+
+          </div>
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+          <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="kPackDesign">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index">
+
+                <!-- <button  [disabled]="i === 0" style="background:none; height: 40px;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+              <button [disabled]="i == array.length - 1" style="background:none; height: 40px;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button> -->
+
+                <!-- <button (click)="moveUpSimple(i)" class="fa-angle-up"></button>
+              <button (click)="moveDownSimple(i)" class="fa-angle-down"></button> -->
+
+                <ng-container *ngIf="element.layout == layoutFormat.layout1; else Layout2">
+
+                  <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                    <div class="editor-2">
+                      <!-- <div style="margin: 0 0 -30px;">
+                      <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                      <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+                      </div> -->
+                      <div class="actions-button">
+                      <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                          <mat-icon>keyboard_arrow_up</mat-icon>
+                        </button>
+                      </span>
+                        <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                       (click)="moveDownSimple(element,i)">
+                          <mat-icon>keyboard_arrow_down</mat-icon>
+                        </button>
+                      </span>
+                        <span >
+                        <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+                      </span>
+                        <span >
+                        <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+                      </span>
+                      </div>
+                      <div class="editable">
+
+                        <label id="KP1" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #EDIT_MODE>
+                    <div class="layout-wrapper-1">
+                      <div class="actions-button">
+                      <span >
+                        <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                      </span>
+                        <span >
+                        <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+                      </span>
+                      </div>
+
+                      <div class="editor">
+                        <div class="position-relative">
+                          <!-- <angular-editor class="layout1" [config]="config" [(ngModel)]="element.kPackDesign.kPackDesign1"
+                          (blur)="nonEditableMode(element)"></angular-editor>
+  <input type="text" matInput required (focusout)="saveCommonData()" [(ngModel)]="title" />
+                        <button mat-button mat-raised-button color="primary" class="submit-btn add-eks"
+                          *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign1')">Add EKS
+                          Links</button>
+                        <button mat-button mat-raised-button color="primary"
+                          (click)="videoHandler(element, 'kPackDesign1')" class=" add-video">Add
+                          Video</button> -->
+
+                          <div *ngIf="addTextSelected">
+
+
+                            <app-texteditor  [placeholder]="element.kPackDesign.kPackDesign1" (editorData)="element.kPackDesign.kPackDesign1 = $event" (focusout)="checkFocusOut()" (focusin)="checkValueChange()" [canAttachEKSLink]="true"> </app-texteditor>
+
+                            <!-- <angular-editor id="editor1" class="layout1" [config]="config"
+                              [(ngModel)]="element.kPackDesign.kPackDesign1">
+                            </angular-editor> -->
+
+
+                          </div>
+
+                          <div *ngIf="!addVideoSelected" class="layout1" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                               [(ngModel)]="element.kPackDesign.kPackDesign1">
+                            <iframe [src]="element.kPackDesign.kPackDesign1 | safeurl" width="560" height="315"
+                                    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                          </div>
+
+                          <!--                        <button mat-button mat-raised-button color="primary"-->
+                          <!--                          class="submit-btn add-eks-layout1 mt-1 mr-1"-->
+                          <!--                          *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                          <!--                          (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                          <!--                          EKS-->
+                          <!--                          Links</button>-->
+
+                          <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                            *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                            (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                            Link</button> -->
+
+
+                          <!--                        <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">-->
+                          <!--                          <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>-->
+                          <!--                        </button>-->
+                          <!--                        <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">-->
+                          <!--                          <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change-->
+                          <!--                            Video</span></button>-->
+                          <!--                        <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"-->
+                          <!--                          (click)="deleteVideo(element, 'kPackDesign1', i)" #myDiv2>-->
+                          <!--                          delete Video-->
+                          <!--                        </button>-->
+
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                </ng-container>
+                <ng-template #Layout2>
+                  <ng-container *ngIf="element.layout == layoutFormat.layout2; else Layout3">
+                    <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                      <div class="editor-2 layout-wrapper-2">
+                        <!-- <div style="margin: 0 0 -30px;">
+                        <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                        <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+                        </div> -->
+                        <div class="actions-button">
+                        <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                            <mat-icon>keyboard_arrow_up</mat-icon>
+                          </button>
+                        </span>
+                          <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                         (click)="moveDownSimple(element,i)">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                          </button>
+                        </span>
+                          <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+
+                        </span>
+                        </div>
+
+                        <span class="editable">
+                     <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+               <label class="editor-label" id="KP2"
+                      [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+                      </span>
+
+                      </div>
+
+
+                    </ng-container>
+                    <ng-template #EDIT_MODE>
+
+                      <div class="full-width layout-wrapper-2">
+                        <div class="actions-button">
+                        <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+                        </span>
+                          <span >
+                          <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+                        </span>
+                        </div>
+
+                        <div class="editor">
+
+                          <div class="position-relative">
+                            <div *ngIf="addTextSelected">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign1" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign1 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected" class="layout2" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign1">
+                              <iframe [src]="element.kPackDesign.kPackDesign1 | safeurl" width="560" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                            <!--                            (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                            *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                            (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                            Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign1', i)">delete Video</button>-->
+
+
+                            <!-- <span (click)="deleteItem(element, i)">
+                              <mat-icon>delete</mat-icon>
+                            </span> -->
+
+                          </div>
+
+
+                          <div class="swap-section" style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <div class="tooltip1 swap-section">
+                              <mat-icon (click)="onSwap1(element)">keyboard_arrow_left</mat-icon>
+                              <!--  <mat-icon>radio_button_checked</mat-icon>  -->
+                              <mat-icon (click)="onSwap1(element)">keyboard_arrow_right</mat-icon>
+                              <span class="tooltiptext">Swap</span>
+                            </div>
+
+
+                          </div>
+
+                          <div class="position-relative">
+                            <div *ngIf="addTextSelected1">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign2" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign2 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected1" class="layout2" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign2">
+                              <iframe [src]="element.kPackDesign.kPackDesign2 | safeurl" width="560" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected1"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign2')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                            *ngIf="element.rowData != 'readonly' && addVideoSelected1"
+                            (click)="addExternalAddOns(type, element, 'kPackDesign2')">Add External
+                            Link</button> -->
+
+
+                            <!--  <button *ngIf="!safeSrc1" mat-button mat-raised-button color="primary"
+                                class=" add-video mt-1">
+                                <span (click)="addVideo(element, 'kPackDesign2')" #myDiv>Add Video</span>
+                              </button>
+                              <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary" class=" add-video">
+                                <span (click)="changeVideo(element, 'kPackDesign2',requestApprovalTemplate)" #myDiv1>Change
+                                  Video</span>
+                              </button>
+                              <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary"
+                                (click)="deleteVideo(element, 'kPackDesign2', i)">delete Video</button>-->
+
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                    </ng-template>
+
+                  </ng-container>
+                </ng-template>
+                <ng-template #Layout3>
+                  <ng-container *ngIf="element.layout == layoutFormat.layout3">
+                    <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                      <div class="full-width layout-wrapper-3">
+                        <!-- <div style="margin: 0 0 -30px;">
+            <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+            <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+            </div> -->
+                        <div class="actions-button">
+                        <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                            <mat-icon>keyboard_arrow_up</mat-icon>
+                          </button>
+                        </span>
+                          <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                         (click)="moveDownSimple(element,i)">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                          </button>
+                        </span>
+
+                          <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+
+                        </span>
+                        </div>
+                        <div class="editable">
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign3 | safe: 'html'"></label>
+                        </div>
+                      </div>
+
+                    </ng-container>
+                    <ng-template #EDIT_MODE>
+                      <div class="full-width layout-wrapper-3">
+
+                        <div class="actions-button">
+                        <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+
+                        </span>
+                        </div>
+
+                        <div class="editor full-width">
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                            [(ngModel)]="element.kPackDesign.kPackDesign1">
+                          </angular-editor>
+                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks"
+                            *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign1')">Add
+                            EKS
+                            Links</button>
+                          <button mat-button mat-raised-button color="primary"
+                            (click)="videoHandler(element, 'kPackDesign1')" class=" add-video">Add Video</button> -->
+
+
+                            <div *ngIf="addTextSelected">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign1" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign1 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign1">
+                              <iframe [src]="element.kPackDesign.kPackDesign1 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                            <!--                            (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                              Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign1', i)">delete Video</button>-->
+
+                          </div>
+                          <div class="tooltip2 swap-section" (click)="onSwap1(element)"
+                               style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            <!--   <mat-icon>radio_button_checked</mat-icon> -->
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                            <span class="tooltiptext2">Swap</span>
+                          </div>
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                            [(ngModel)]="element.kPackDesign.kPackDesign2">
+                          </angular-editor>
+                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout3-2"
+                            *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign2')">Add
+                            EKS
+                            Links</button>
+                          <button mat-button mat-raised-button color="primary"
+                            (click)="videoHandler(element, 'kPackDesign2')" class=" add-video">Add Video</button> -->
+
+                            <div *ngIf="addTextSelected1">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign2" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign2 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected1" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign2">
+                              <iframe [src]="element.kPackDesign.kPackDesign2 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout3-2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected1"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign2')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected1"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign2')">Add External
+                              Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign2')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign2',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign2', i)">delete Video</button>-->
+                          </div>
+                          <div class="tooltip2 swap-section" (click)="onSwap2(element)"
+                               style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            <!--  <mat-icon>radio_button_checked</mat-icon> -->
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                            <span class="tooltiptext2">Swap</span>
+                          </div>
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                            [(ngModel)]="element.kPackDesign.kPackDesign3">
+                          </angular-editor>
+
+                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout3-3"
+                            *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign3')">Add
+                            EKS
+                            Links</button>
+                          <button mat-button mat-raised-button color="primary"
+                            (click)="videoHandler(element, 'kPackDesign3')" class=" add-video">Add Video</button> -->
+
+                            <div *ngIf="addTextSelected2">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign3" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign3 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected2" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign3">
+                              <iframe [src]="element.kPackDesign.kPackDesign3 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout3-3 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected2"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign3')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected2"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign3')">Add External
+                              Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc2" mat-button mat-raised-button color="primary"-->
+                            <!--                            class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign3')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc2" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign3',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc2" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign3', i)">delete Video</button>-->
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <!-- Draft View Section End Here -->
+
+  </div>
+
+  <div *ngIf="(contentOwner1 == displayName1)">
+
+    <!-- Draft View Section Start Here -->
+    <div *ngIf="kPacksPropertiesData && (kPacksPropertiesData.assetStatus !== ASSET_STATUSES.PUBLISHED && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.CURRENT && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.OBSOLETE && kPacksPropertiesData.assetStatus !== ASSET_STATUSES.APPROVED_WAITING_FOR_JC)">
+
+      <div class="mdl-grid">
+        <span class="purps-mrgn">Note: The Purpose text must not contain any export-controlled technical data.</span>
+        <!-- <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone title">
+          <input type="text" matInput required (focusout)="saveCommonData()" [(ngModel)]="title" />
+        </div> -->
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone description">
+          <app-texteditor [placeholder]="description" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                          id="angularEditor"
+                          (editorData)="description = $event; saveCommonData();"></app-texteditor>
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone select-layout">
+          <div class="kPack-container">
+            <div class="layout-label">Select Layout &nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout1 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout1)">
+              <div id="parent_div_4"></div>
+            </div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout2 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout2)">
+              <div id="parent_div_5"></div>
+              <div id="parent_div_6"></div>
+            </div>
+            <div class="Layout" [ngClass]="layoutSet == layoutFormat.layout3 ? 'active' : ''"
+                 (click)="setLayout(layoutFormat.layout3)">
+              <div id="parent_div_1"></div>
+              <div id="parent_div_2"></div>
+              <div id="parent_div_3"></div>
+            </div>
+
+            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn btnstyle" [disabled]="layoutSelected">
+              <span (click)="createKPack()" #myDiv5>Create</span></button> -->
+            <button mat-button mat-raised-button color="primary" class="submit-btn btnstyle" [disabled]="layoutSelected"
+                    (click)="createKPack()">
+              Create
+            </button>
+            &nbsp;&nbsp;&nbsp;
+
+            <a tooltip="Create" data-tooltip="8034" placement="right">
+              <img src="./assets/icons/exclamation-circle.svg" width="20" />
+            </a>
+
+
+          </div>
+        </div>
+
+        <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+
+          <mat-table #table [dataSource]="dataSource">
+            <ng-container matColumnDef="kPackDesign">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index">
+
+                <!-- <button  [disabled]="i === 0" style="background:none; height: 40px;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                <button [disabled]="i == array.length - 1" style="background:none; height: 40px;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button> -->
+
+                <!-- <button (click)="moveUpSimple(i)" class="fa-angle-up"></button>
+                <button (click)="moveDownSimple(i)" class="fa-angle-down"></button> -->
+
+                <ng-container *ngIf="element.layout == layoutFormat.layout1; else Layout2">
+
+                  <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                    <div class="editor-2">
+                      <!-- <div style="margin: 0 0 -30px;">
+                        <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                        <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+                        </div> -->
+                      <div class="actions-button">
+                      <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                          <mat-icon>keyboard_arrow_up</mat-icon>
+                        </button>
+                      </span>
+                        <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                       (click)="moveDownSimple(element,i)">
+                          <mat-icon>keyboard_arrow_down</mat-icon>
+                        </button>
+                      </span>
+                        <span >
+                        <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+                      </span>
+                        <span >
+                        <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+                      </span>
+                      </div>
+                      <div class="editable">
+                        <label id="KP1" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-template #EDIT_MODE>
+                    <div class="layout-wrapper-1">
+                      <div class="actions-button">
+                      <span >
+                        <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                      </span>
+                        <span >
+                        <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+                      </span>
+                      </div>
+
+                      <div class="editor">
+                        <div class="position-relative">
+                          <!-- <angular-editor class="layout1" [config]="config" [(ngModel)]="element.kPackDesign.kPackDesign1"
+                            (blur)="nonEditableMode(element)"></angular-editor>
+    <input type="text" matInput required (focusout)="saveCommonData()" [(ngModel)]="title" />
+                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks"
+                            *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign1')">Add EKS
+                            Links</button>
+                          <button mat-button mat-raised-button color="primary"
+                            (click)="videoHandler(element, 'kPackDesign1')" class=" add-video">Add
+                            Video</button> -->
+
+                          <div *ngIf="addTextSelected">
+                            <app-texteditor  [placeholder]="element.kPackDesign.kPackDesign1" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                             [canAttachEKSLink]="true"
+                                             (editorData)="element.kPackDesign.kPackDesign1 = $event" > </app-texteditor>
+                          </div>
+
+                          <!--                         <button mat-button mat-raised-button color="primary"-->
+                          <!--                          class="submit-btn add-eks-layout1 mt-1 mr-1"-->
+                          <!--                          *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                          <!--                          (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                          <!--                          EKS-->
+                          <!--                          Links</button>-->
+
+                          <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                              Link</button> -->
+
+
+                          <!-- <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">
+                            <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>
+                          </button>
+                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">
+                            <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change
+                              Video</span></button>
+                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"
+                            (click)="deleteVideo(element, 'kPackDesign1', i)" #myDiv2>
+                            delete Video
+                          </button> -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+
+                </ng-container>
+                <ng-template #Layout2>
+                  <ng-container *ngIf="element.layout == layoutFormat.layout2; else Layout3">
+                    <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                      <div class="editor-2 layout-wrapper-2">
+                        <!-- <div style="margin: 0 0 -30px;">
+                          <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+                          <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+                          </div> -->
+                        <div class="actions-button">
+                        <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                            <mat-icon>keyboard_arrow_up</mat-icon>
+                          </button>
+                        </span>
+                          <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                         (click)="moveDownSimple(element,i)">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                          </button>
+                        </span>
+                          <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+
+                        </span>
+                        </div>
+
+                        <span class="editable">
+                        <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'">
+                        </label>
+
+                        <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'">
+                        </label>
+                      </span>
+
+                      </div>
+
+
+                    </ng-container>
+                    <ng-template #EDIT_MODE>
+
+                      <div class="full-width layout-wrapper-2">
+                        <div class="actions-button">
+                        <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+                        </span>
+                          <span >
+                          <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+                        </span>
+                        </div>
+
+                        <div class="editor">
+
+                          <div class="position-relative">
+                            <div *ngIf="addTextSelected">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign1" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign1 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected" class="layout2" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign1">
+                              <iframe [src]="element.kPackDesign.kPackDesign1 | safeurl" width="560" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                            <!--                            (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                              Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign1', i)">delete Video</button>-->
+
+
+                            <!-- <span (click)="deleteItem(element, i)">
+                                <mat-icon>delete</mat-icon>
+                              </span> -->
+
+                          </div>
+                          <div class="swap-section" style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <div class="tooltip1 ">
+                              <mat-icon (click)="onSwap1(element)">keyboard_arrow_left</mat-icon>
+                              <!--  <mat-icon>radio_button_checked</mat-icon>  -->
+                              <mat-icon (click)="onSwap1(element)">keyboard_arrow_right</mat-icon>
+                              <span class="tooltiptext">Swap</span>
+                            </div>
+
+
+                          </div>
+
+                          <div class="position-relative">
+                            <div *ngIf="addTextSelected1">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign2" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign2 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected1" class="layout2" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign2">
+                              <iframe [src]="element.kPackDesign.kPackDesign2 | safeurl" width="560" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected1"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign2')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                              *ngIf="element.rowData != 'readonly' && addVideoSelected1"
+                              (click)="addExternalAddOns(type, element, 'kPackDesign2')">Add External
+                              Link</button> -->
+
+
+                            <!--                          <button *ngIf="!safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign2')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign2',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign2', i)">delete Video</button>-->
+
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                    </ng-template>
+
+                  </ng-container>
+                </ng-template>
+                <ng-template #Layout3>
+                  <ng-container *ngIf="element.layout == layoutFormat.layout3">
+                    <ng-container *ngIf="element.rowData == 'readonly'; else EDIT_MODE">
+                      <div class="full-width layout-wrapper-3">
+                        <!-- <div style="margin: 0 0 -30px;">
+              <button  [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+              <button [disabled]="i == array.length - 1" style="background:none;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button>
+              </div> -->
+                        <div class="actions-button">
+                        <span> <button [disabled]="i === 0" style="background:none;" (click)="moveUpSimple(element,i)">
+                            <mat-icon>keyboard_arrow_up</mat-icon>
+                          </button>
+                        </span>
+                          <span> <button [disabled]="i == array.length - 1" style="background:none;"
+                                         (click)="moveDownSimple(element,i)">
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                          </button>
+                        </span>
+
+                          <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="handleOnClick(element)">edit</mat-icon>
+
+                        </span>
+                        </div>
+                        <div class="editable">
+
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+                          <label id="KP3" class="editor-label"
+                                 [innerHTML]="element.kPackDesign.kPackDesign3 | safe: 'html'"></label>
+                        </div>
+                      </div>
+
+                    </ng-container>
+                    <ng-template #EDIT_MODE>
+                      <div class="full-width layout-wrapper-3">
+
+                        <div class="actions-button">
+                        <span >
+                          <mat-icon (click)="deleteItem(element, i)">delete</mat-icon>
+
+                        </span>
+                          <span >
+                          <mat-icon (click)="nonEditableMode(element)">save</mat-icon>
+
+                        </span>
+                        </div>
+
+                        <div class="editor full-width">
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                              [(ngModel)]="element.kPackDesign.kPackDesign1">
+                            </angular-editor>
+                            <button mat-button mat-raised-button color="primary" class="submit-btn add-eks"
+                              *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign1')">Add
+                              EKS
+                              Links</button>
+                            <button mat-button mat-raised-button color="primary"
+                              (click)="videoHandler(element, 'kPackDesign1')" class=" add-video">Add Video</button> -->
+
+
+                            <div *ngIf="addTextSelected">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign1" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign1 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign1">
+                              <iframe [src]="element.kPackDesign.kPackDesign1 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary" class="submit-btn add-eks mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected"-->
+                            <!--                            (click)="addAddOns(type, element, 'kPackDesign1')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                                *ngIf="element.rowData != 'readonly' && addVideoSelected"
+                                (click)="addExternalAddOns(type, element, 'kPackDesign1')">Add External
+                                Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc" mat-button mat-raised-button color="primary" class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign1')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign1',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign1', i)">delete Video</button>-->
+
+                          </div>
+                          <div class="tooltip2 swap-section" (click)="onSwap1(element)"
+                               style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            <!--   <mat-icon>radio_button_checked</mat-icon> -->
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                            <span class="tooltiptext2">Swap</span>
+                          </div>
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                              [(ngModel)]="element.kPackDesign.kPackDesign2">
+                            </angular-editor>
+                            <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout3-2"
+                              *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign2')">Add
+                              EKS
+                              Links</button>
+                            <button mat-button mat-raised-button color="primary"
+                              (click)="videoHandler(element, 'kPackDesign2')" class=" add-video">Add Video</button> -->
+
+                            <div *ngIf="addTextSelected1">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign2" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign2 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected1" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign2">
+                              <iframe [src]="element.kPackDesign.kPackDesign2 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout3-2 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected1"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign2')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                                *ngIf="element.rowData != 'readonly' && addVideoSelected1"
+                                (click)="addExternalAddOns(type, element, 'kPackDesign2')">Add External
+                                Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign2')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign2',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc1" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign2', i)">delete Video</button>-->
+                          </div>
+                          <div class="tooltip2 swap-section" (click)="onSwap2(element)"
+                               style="display: block; text-align: right; padding-right:20px; background:none;">
+                            <mat-icon>keyboard_arrow_left</mat-icon>
+                            <!--  <mat-icon>radio_button_checked</mat-icon> -->
+                            <mat-icon>keyboard_arrow_right</mat-icon>
+                            <span class="tooltiptext2">Swap</span>
+                          </div>
+
+                          <div class="position-relative">
+                            <!-- <angular-editor class="layout3" [config]="config"
+                              [(ngModel)]="element.kPackDesign.kPackDesign3">
+                            </angular-editor>
+
+                            <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout3-3"
+                              *ngIf="element.rowData != 'readonly'" (click)="addAddOns(type, element, 'kPackDesign3')">Add
+                              EKS
+                              Links</button>
+                            <button mat-button mat-raised-button color="primary"
+                              (click)="videoHandler(element, 'kPackDesign3')" class=" add-video">Add Video</button> -->
+
+                            <div *ngIf="addTextSelected2">
+                              <app-texteditor [placeholder]="element.kPackDesign.kPackDesign3" (focusout)="checkFocusOut()" (focusin)="checkValueChange()"
+                                              [expandable]="true"
+                                              [canAttachEKSLink]="true"
+                                              (editorData)="element.kPackDesign.kPackDesign3 = $event"></app-texteditor>
+                            </div>
+
+                            <div *ngIf="!addVideoSelected2" class="layout3" contenteditable="true" ngDefaultControl (focusout)="checkFocusOut()" (focus)="checkValueChange()"
+                                 [(ngModel)]="element.kPackDesign.kPackDesign3">
+                              <iframe [src]="element.kPackDesign.kPackDesign3 | safeurl" width="400" height="315"
+                                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                            <!--                          <button mat-button mat-raised-button color="primary"-->
+                            <!--                            class="submit-btn add-eks-layout3-3 mt-1 mr-1"-->
+                            <!--                            *ngIf="element.rowData != 'readonly' && addVideoSelected2"-->
+                            <!--                            (click)="addAddOns(type, element , 'kPackDesign3')">Add-->
+                            <!--                            EKS-->
+                            <!--                            Links</button>-->
+
+                            <!-- <button mat-button mat-raised-button color="primary" class="submit-btn add-eks-layout1 mt-1 mr-1"
+                                *ngIf="element.rowData != 'readonly' && addVideoSelected2"
+                                (click)="addExternalAddOns(type, element, 'kPackDesign3')">Add External
+                                Link</button> -->
+
+                            <!--                          <button *ngIf="!safeSrc2" mat-button mat-raised-button color="primary"-->
+                            <!--                            class=" add-video mt-1">-->
+                            <!--                            <span (click)="addVideo(element, 'kPackDesign3')" #myDiv>Add Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc2" mat-button mat-raised-button color="primary" class=" add-video">-->
+                            <!--                            <span (click)="changeVideo(element, 'kPackDesign3',requestApprovalTemplate)" #myDiv1>Change-->
+                            <!--                              Video</span>-->
+                            <!--                          </button>-->
+                            <!--                          <button *ngIf="safeSrc2" mat-button mat-raised-button color="primary"-->
+                            <!--                            (click)="deleteVideo(element, 'kPackDesign3', i)">delete Video</button>-->
+                          </div>
+
+
+
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ng-container>
+                </ng-template>
+              </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+          </mat-table>
+        </div>
+      </div>
+    </div>
+    <!-- Draft View Section End Here -->
+
+    <!-- Publish View Section Start Here -->
+    <div *ngIf="kPacksPropertiesData && (kPacksPropertiesData.assetStatus === ASSET_STATUSES.PUBLISHED || kPacksPropertiesData.assetStatus === ASSET_STATUSES.CURRENT || kPacksPropertiesData.assetStatus === ASSET_STATUSES.OBSOLETE || kPacksPropertiesData.assetStatus === ASSET_STATUSES.APPROVED_WAITING_FOR_JC)">
+      <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+        <Br />
+        <!-- <label>{{title}}</label><Br /> -->
+        <label [innerHTML]="description | safe : 'html'"></label><Br />
+      </div>
+      <mat-table #table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="kPackDesign">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index">
+            <!-- <button  [disabled]="i === 0"style="background:none; height: 40px;" (click)="moveUpSimple(element,i)"><mat-icon>keyboard_arrow_up</mat-icon></button>
+          <button [disabled]="i == array.length - 1" style="background:none; height: 40px;" (click)="moveDownSimple(element,i)"><mat-icon>keyboard_arrow_down</mat-icon></button> -->
+            <ng-container *ngIf="element.layout == layoutFormat.layout1; else Layout2">
+              <label class="editor-label" id="KP1"[innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'">
+              </label>
+            </ng-container>
+
+            <ng-template #Layout2>
+              <ng-container *ngIf="element.layout == layoutFormat.layout2; else Layout3">
+                <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                <label class="editor-label" id="KP2" [innerHTML]="element.kPackDesign.kPackDesign2  | safe: 'html'"></label>
+              </ng-container>
+            </ng-template>
+            <ng-template #Layout3>
+              <ng-container *ngIf="element.layout == layoutFormat.layout3">
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign1 | safe: 'html'"></label>
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign2 | safe: 'html'"></label>
+                <label id="KP3" class="editor-label" [innerHTML]="element.kPackDesign.kPackDesign3 | safe: 'html'"></label>
+              </ng-container>
+            </ng-template>
+
+
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"> </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+      </mat-table>
+    </div>
+    <!-- KP Publish View Section End Here -->
+
+  </div>
+</ng-container>
+
+<ng-template #requestApprovalTemplate>
+  <div class="warning-msg"> Once Video is changed, Previous Video will be Lost. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+  <button mat-raised-button color="primary" style="float: right;" (click)="handleOnOkButton()"
+    class="mat-button ok-button">Cancel</button>
+</ng-template>

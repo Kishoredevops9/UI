@@ -1,0 +1,158 @@
+<h3>  Shape Properties    </h3>
+ 
+
+<div *ngIf="aType && aType==5" class="contantbox"> 
+    <ng-container>    
+        <mat-form-field>
+          <mat-label>Content ID</mat-label>
+          <input
+            matInput
+            placeholder="Content ID"
+            [(ngModel)]="componentData.description"/>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Title</mat-label>
+          <input
+          matInput
+          placeholder="Title"        
+          [(ngModel)]="componentData.name"/>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Activity page link</mat-label>
+            <input
+            matInput
+            placeholder="activity page link"           
+            [(ngModel)]="componentData.description"/>
+        </mat-form-field>
+   
+      <mat-form-field>
+        <mat-label>Review Gate</mat-label>
+        <input
+        matInput
+        placeholder="Gate Not Assigned"     
+        [(ngModel)]="componentData.reviewGate" 
+      />
+      </mat-form-field>
+        <!-- <mat-form-field>
+          <mat-label>Background Color</mat-label>
+            <input matInput [ngxMatColorPicker]="picker3"         [(ngModel)]="componentData.backgroundColor" >
+            <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker #picker3 [touchUi]="touchUi" [color]="'#ff00ff'"></ngx-mat-color-picker>
+          </mat-form-field>
+      
+          <mat-form-field>
+            <mat-label>Border Color</mat-label>
+              <input matInput [ngxMatColorPicker]="picker4"  [(ngModel)]="componentData.borderColor" >
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker4 [touchUi]="touchUi" [color]="componentData.borderColor"></ngx-mat-color-picker>
+          </mat-form-field>
+      
+        <mat-form-field>
+          <mat-label>Border Width</mat-label>
+          <input matInput placeholder="Border Width" type="number" [(ngModel)]="componentData.borderWidth"    />
+        </mat-form-field>
+      
+        <mat-form-field>
+          <mat-label>Border Style</mat-label>
+          <input matInput placeholder="Border Style" [(ngModel)]="componentData.borderStyle"    />
+        </mat-form-field> -->
+      </ng-container>
+ 
+
+ </div>
+
+
+ 
+ <div *ngIf="aType && aType==3" class="contantbox" > 
+    <ng-container  >
+    
+          <mat-form-field>
+            <mat-label>Sub Map Name</mat-label>
+            <input
+              matInput
+              placeholder="Sub Map Name"
+                       
+              [(ngModel)]="componentData.name"  
+            />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Sub Map link</mat-label>
+            <input
+            matInput 
+            [(ngModel)]="componentData.description"/>          
+            
+
+          </mat-form-field>
+          <!-- <mat-form-field>
+            <mat-label>Background Color</mat-label>
+              <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker3 [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+            </mat-form-field>
+  
+            <mat-form-field>
+              <mat-label>Border Color</mat-label>
+                <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                <ngx-mat-color-picker #picker4 [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+            </mat-form-field>
+    
+          <mat-form-field>
+            <mat-label>Border Width</mat-label>
+            <input matInput placeholder="Border Width" type="number" formControlName="borderWidth"/>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <mat-label>Border Style</mat-label>
+            <input matInput placeholder="Border Style" formControlName="borderStyle"/>
+          </mat-form-field> -->
+        </ng-container>
+     </div>
+
+
+
+     
+ <div *ngIf="aType && aType!=5 && aType!=3"  class="contantbox"  > 
+    <ng-container>       
+         
+        <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name"   [(ngModel)]="componentData.name"/>
+              </mat-form-field>
+       
+    
+            <mat-form-field>
+              <mat-label>Review Gate</mat-label>
+              <input
+                matInput
+                placeholder="Gate Not Assigned"
+     
+                [(ngModel)]="componentData.reviewGate"/>
+            </mat-form-field>
+            <!-- <mat-form-field>
+              <mat-label>Background Color</mat-label>
+                <input matInput [ngxMatColorPicker]="picker3" formControlName="backgroundColor">
+                <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker3"></ngx-mat-color-toggle>
+                <ngx-mat-color-picker #picker3 [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+              </mat-form-field>
+    
+              <mat-form-field>
+                <mat-label>Border Color</mat-label>
+                  <input matInput [ngxMatColorPicker]="picker4" formControlName="borderColor">
+                  <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+                  <ngx-mat-color-picker #picker4 [touchUi]="touchUi" [color]="color"></ngx-mat-color-picker>
+              </mat-form-field>
+      
+            <mat-form-field>
+              <mat-label>Border Width</mat-label>
+              <input matInput placeholder="Border Width" type="number" formControlName="borderWidth"/>
+            </mat-form-field>
+    
+            <mat-form-field>
+              <mat-label>Border Style</mat-label>
+              <input matInput placeholder="Border Style" formControlName="borderStyle"/>
+            </mat-form-field> -->
+            </ng-container>
+    
+     </div>

@@ -1,0 +1,33 @@
+.classifier-modal {
+
+    .mat-header {
+        h2 {
+            width: 100%;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 20px 15px;
+
+            .mat-icon {
+                float: right;
+            }
+        }
+    }
+
+    form {
+        padding: 24px;
+
+        .mat-form-field {
+            width: 100%;
+            display: block;
+            margin: 0 0 15px;
+        }
+
+        .mat-dialog-actions {
+            justify-content: flex-end;
+        }
+    }
+
+}
+
+.mat-dialog-container {
+    overflow: hidden;
+}

@@ -1,0 +1,46 @@
+@import '../../../theme/_colors';
+@import '../../../theme/_fonts';
+@import 'src/scss/helpers/mat-slide-toggle';
+
+.top-margn {
+  margin: 20px 0px 10px 0px !important;
+}
+
+.app-diagram-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-family: inherit !important;
+  gap: 12px;
+  font-size: inherit !important;
+  color: $black;
+  justify-content: flex-start;
+
+  &__export {
+    cursor: pointer;
+  }
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    width: 120px;
+    justify-content: space-between;
+
+    &-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 250px;
+    }
+  }
+}
+.custom-menu-item {
+  height: 25px;
+  line-height: 0px;
+  border-bottom: 1px solid #cfcfcf;
+  font-size: 11px;
+}
+
+:host {
+  @include slideToggle(green, gray, #fff, 33px, 21px);
+}

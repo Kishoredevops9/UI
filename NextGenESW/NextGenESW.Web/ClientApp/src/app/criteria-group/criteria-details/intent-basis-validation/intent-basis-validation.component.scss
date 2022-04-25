@@ -1,0 +1,71 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import "../../../../scss/base/_global.scss";
+
+.tab-margin {
+  font-size: 12px;
+}
+
+.arrow-icon {
+  margin-right: 5%;
+  margin-top: 1%;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
+.header-field {
+  font-family: "BarlowSemiCondensed-Medium";
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  margin: 20px 0 5px 0;
+  font-size: 1rem;
+}
+
+.editor-field {
+  width: calc(95%);
+  margin-right: 15px;
+}
+
+.sub-field {
+  letter-spacing: 0.67px;
+  font: normal normal normal 13px/24px Inter-regular;
+}
+
+::ng-deep .intent-preview .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  resize: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+
+  ol {
+    margin-left: 23px !important;
+  }
+
+  ul {
+    margin-left: 23px !important;
+  }
+}
+
+
+:host ::ng-deep angular-editor {
+
+  .angular-editor-button[title="Undo"],
+  .angular-editor-button[title="Redo"],
+  .angular-editor-button[title="Text Color"],
+  .angular-editor-button[title="Background Color"] {
+      display: none !important;
+  }
+
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+}

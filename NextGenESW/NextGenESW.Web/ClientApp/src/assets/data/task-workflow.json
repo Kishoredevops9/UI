@@ -1,0 +1,101 @@
+   [
+    {
+      "activityWorkFlow": [
+        {
+          "status":"Not Started",
+          "documentNumber":3
+        },
+        {
+         "status": "WIP",
+         "documentNumber": 16
+          },
+          {
+            "status": "Completed",
+            "documentNumber": 2
+          },
+          {
+            "status": "Submitted",
+            "documentNumber": 1
+          },
+          {
+            "status": "Supervisor Approved",
+            "documentNumber": 10
+          },
+           {
+            "status": "Chief Approved",
+            "documentNumber": 2
+
+          },
+           {
+            "status": "CIPTL Approved",
+            "documentNumber": 5
+          },
+          {
+            "status": "Approved",
+            "documentNumber": 1
+          }
+      ],
+      "deviationWorkFlow": [
+        {
+         "name": "Work-In-Progress",
+         "count": 0
+          },
+          {
+            "name": "Completed",
+            "count": 0
+          },
+          {
+            "name": "Submitted",
+            "count": 0
+          },
+          {
+            "name": "Supervisor Approved",
+            "count": 0
+          },
+           {
+            "name": "Chief Approved",
+            "count": 0
+
+          },
+           {
+            "name": "CIPTL Approved",
+            "count": 0
+          },
+          {
+            "name": "Approved",
+            "count": 0
+          },
+          {
+            "name": "Cancelled",
+            "count": 0
+          }
+      ],
+      "activityStatus": [
+        {
+          "status":"Not Started",
+          "documentNumber":3
+        },
+        {
+         "status": "WIP",
+         "documentNumber": 2
+          },
+          {
+            "status": "Completed",
+            "documentNumber": 19
+          },
+          {
+            "status": "Deviation Approved",
+            "documentNumber": 1
+          },
+          {
+            "status": "Submitted",
+            "documentNumber": 1
+          },
+           {
+            "status": "Approved",
+            "documentNumber": 1
+          }
+      ]
+
+    }
+  ]

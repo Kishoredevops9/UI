@@ -1,0 +1,322 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+
+// .tab-margin {
+//     margin-top: 5%;
+// }
+
+// .properties {
+//   margin-top: 2%;
+
+// }
+
+// form {
+//   width: 100%;
+//   padding-bottom: 50px;
+
+//   .message{
+//     color: red;
+//   }
+//   .mat-display-1 {
+//     margin: 0 0 10px;
+//     @include font-face-BarlowSemiCondensed-SemiBold(1.5rem, normal);
+//   }
+
+//   .mat-form-field,
+//   .mat-radio-group,
+//   .mat-raised-button {
+//     width: 100%;
+//     margin: 0 0 15px;
+//     display: block;
+//   }
+
+//   .mat-radio-group {
+//     .mat-radio-button {
+//       margin-right: 10px;
+//     }
+//   }
+
+//   }
+//   .toggle{
+//     float: left;
+//     ::ng-deep .mat-slide-toggle-thumb{
+//         background-color: #ffffff !important;
+//         height: 17px;
+//         width: 17px;
+//         margin-top: 3px;
+//     }
+//     ::ng-deep .mat-slide-toggle-thumb-container{
+//       top : -1px;
+//     }
+//     ::ng-deep .mat-slide-toggle-bar{
+//       background-color: gray;
+//         height: 21px;
+//     }
+//     ::ng-deep .mat-slide-toggle.mat-checked{
+//       .mat-slide-toggle-bar {
+
+//         background-color: green !important;
+//       }
+//     }
+//   }
+
+//   .submit-btn {
+//     margin-right: 8%;
+
+//   }
+// }
+
+// .global-sidenav {
+//   display: flex;
+//   justify-content: center;
+//   width: 60px;
+//   background: #25b7f7;
+//   color: #ffffff;
+//   float: right;
+// }
+
+// .toggleSpan {
+//   margin-left: 5px;
+//   margin-bottom: 5px;
+// }
+
+// .Keyword-area {
+//   padding-right: 30px;
+// }
+
+// .chips {
+//   padding-top: 20px;
+// }
+
+// .discipline-tree {
+//   max-width: fit-content;
+//   max-height: 300px;
+//   overflow: auto;
+// }
+
+// .nodePath {
+//   cursor: pointer;
+//   margin-top: 2%;
+//   width: 90%;
+//   height: 30px;
+//   button {
+//     width: 100%;
+//   }
+// }
+
+// .box-width {
+//   border-radius: 1px;
+//   background: #fff;
+//   box-sizing: border-box;
+//   background-color: #ebebeb;
+//   height: 1.7rem;
+//   padding: 4px;
+//   display: flex;
+//   margin-bottom: 0.1%;
+//   margin-right: 2px !important;
+// }
+// .box-space {
+//   margin-left: 2% !important
+// }
+// .header-space {
+//   margin-top: 2%;
+//   margin-bottom: -1%;
+// }
+
+//  .global-sidenav-expanded  {
+//   display: flex;
+//   justify-content: center;
+//   width: 480px;
+//   background: #ffffff;
+//   color: #000000;
+//   top: 192px;
+//   height: 68%;
+// }
+
+//////////////*****************************//////////////@at-root
+body {
+  font-family: verdana;
+}
+
+.filter-input {
+  margin-top: 20px;
+  font-size: 15px;
+  padding: 5px;
+  border-radius: 3px;
+  border: 2px solid #ccc;
+  margin-bottom: 0px;
+  padding-right: 30px;
+}
+
+.clear-selection {
+  font-size: 12px;
+  font-weight: bold;
+  color: red;
+  cursor: pointer;
+  position: absolute;
+}
+
+.game-list {
+  margin-top: 35px;
+}
+
+fgame-text li.game-item {
+  list-style: none;
+  font-size: 20px;
+  padding: 3px 0px;
+}
+
+li.game-item input {
+  height: 15px;
+  width: 10px;
+}
+
+.game-text {
+  font-size: 15px;
+  vertical-align: top;
+}
+
+.selected-game {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 12px;
+  background: #b9cfea;
+  margin-bottom: 10px;
+  padding: 2px 11px 4px 11px;
+  border-radius: 8px;
+}
+
+.delete-game {
+  font-size: 13px;
+  padding: 3px 6px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.delete-game:hover {
+  background: #99abc1;
+  padding: 3px 6px;
+  border-radius: 15px;
+}
+
+.filter-wrap {
+  position: relative;
+}
+
+.filter-clear {
+  position: absolute;
+  margin-left: -24px;
+  margin-top: 11px;
+  cursor: pointer;
+}
+
+//////////////////////***********************//////////////////
+
+.wrapper {
+  border-bottom: 1px solid #948f8f;
+
+  .containerLeft {
+    width: 250px;
+    float: left;
+    min-height: calc(100vh - 200px);
+
+    border-right: 1px solid rgba(222, 222, 222, 0.87);
+  }
+
+  .containerRight {
+    width: calc(100% - 325px);
+    float: left;
+    margin-left: 20px;
+
+    h2 {
+      font-size: 15px;
+      margin-top: 10px;
+      border-bottom: 1px solid #948f8f;
+    }
+
+    .applyFilters {
+      padding-top: 10px;
+      padding-bottom: 20px;
+      clear: both;
+    }
+
+    .rowgroup {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+.applyFilters {
+  float: left;
+  width: 100%;
+  display: block;
+
+  .applybox {
+    float: left;
+    display: block;
+    padding: 6px;
+  }
+
+  .chipbox {
+    float: left;
+    font-size: 11px;
+    max-width: 700px;
+  }
+}
+
+.workbox {
+  float: left;
+  width: 100%;
+
+  .workboxitem {
+    margin-top: 30px;
+  }
+
+  header {
+    position: relative;
+    float: left;
+    width: 100%;
+    padding-bottom: 1px;
+
+    b {
+      width: 30px;
+      text-align: center;
+      float: left;
+      color: white;
+      padding-top: 1px;
+    }
+
+    aside {
+      background: white;
+      width: calc(100% - 30px);
+      float: left;
+
+      span {
+        padding-left: 10px;
+      }
+    }
+  }
+
+
+  /* Create four equal columns that floats next to each other */
+  .column {
+    float: left;
+    width: 33%;
+    padding: 10px;
+    height: 30px;
+    /* Should be removed. Only for demonstration */
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+}

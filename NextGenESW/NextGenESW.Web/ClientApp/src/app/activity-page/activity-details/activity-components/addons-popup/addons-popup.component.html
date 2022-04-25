@@ -1,0 +1,202 @@
+<div class="addons addons-popup-wrapper">
+  <div class="add-on-wrapper">
+    <div class="add-on-header">
+      <h2 class="modal-title">EKS Addons <mat-icon class="close-icon" (click)="closeModal('No')">close </mat-icon>
+      </h2>
+
+    </div>
+    <div class="add-on-body">
+      <div class="top_bar_search">
+        <app-top-eks-searchbar (eksLeftSearchData)="eksLeftSearchData($event)"
+          (eksSearchOutput)="eksSearchOutput($event)" (eksSearchCount)="eksSearchCount($event)"
+          (eksSearchTitle)="eksSearchTitle($event)" (eksGlobalSearchTermOutput)="eksGlobalSearchTermOutput($event)"
+          (eksPWPlaySearchOutput)="eksPWPlaySearchOutput($event)" [stepPopUp]="disableAPSFSP">
+        </app-top-eks-searchbar>
+      </div>
+
+      <div class="eks-search-wrapper add-on">
+        <div class="table-wrapper box-wrapper">
+          <app-eks-filter-section (getSearchFilterType)="getSearchFilterType($event)"
+            (getSearchContentType)="getSearchContentType($event)" (eksLeftSearchData)="eksLeftSearchData($event)"
+            (eksSearchOutput)="eksSearchOutput($event)" (eksSearchCount)="eksSearchCount($event)"
+            class="col filter-by-type" [popUp]="'eksAddOnPopUp'" [eksPopupSearchData]= "eksPopupSearchData" [eksPopupPhaseData]="eksPopupPhaseData" [stepPopUp]="disableAPSFSP">
+          </app-eks-filter-section>
+        </div>
+
+        <div class="table-wrapper mdl-cell">
+          <div class="outline cg">
+            <loading *ngIf="isLoading">{{ isLoading }}</loading>
+            <mat-tab-group [selectedIndex]="selectedIndex" #tabGroup (selectedIndexChange)="onTabClick($event)">
+              <mat-tab class="mat-tab-label-content" label="EKS Search ( {{eksSearchCountCreated}} )">
+                <div class="eks_tab_new">
+                  <div class="Eks_tab_result">
+                    <!-- <app-eks-tab-result [eksAdvSearchData]="addonsTable$">
+                                        </app-eks-tab-result> -->
+                    <div class="table-wrapper mdl-cell result-table-wrapper">
+                      <mat-table *ngIf="eksAddOnInternalSearchData" [dataSource]="eksAddOnInternalSearchData" class="data-table">
+                        <ng-container matColumnDef="title">
+                          <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+                          <mat-cell *matCellDef="let element">
+                            <mat-checkbox class="example-margin" [checked]="element.isSelected" [disabled]="element.isSelected"  (change)="onChange($event, element)">
+                            </mat-checkbox>&nbsp;&nbsp;&nbsp;
+                            <label>{{
+                              element.title
+                              }}</label>
+                          </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="contentid">
+                          <mat-header-cell *matHeaderCellDef>
+                            Content Id
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let element; let i = index">
+                            <a style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(element)">{{
+                              element.contentid }}</a>
+                          </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="componenttype">
+                          <mat-header-cell *matHeaderCellDef>Content Type
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let element">
+                            <span class="all_type {{ element.assettypecode }}">{{
+                              element.assettypecode
+                              }}</span>
+                          </mat-cell>
+                        </ng-container>
+
+                        <ng-container matColumnDef="purpose">
+                          <mat-header-cell *matHeaderCellDef>Purpose
+                          </mat-header-cell>
+                          <mat-cell *matCellDef="let element">
+                            <span *ngIf="element.assettypecode !== 'K'">{{ removeHTMLTags(element.purpose) }}</span>
+                            <span *ngIf="element.assettypecode === 'K'">{{ formatPurposeData(element.purpose) }}</span>
+                          </mat-cell>
+                        </ng-container>
+
+                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
+                        </mat-header-row>
+
+                        <mat-row *matRowDef="let row; columns: displayedColumns">
+                        </mat-row>
+                      </mat-table>
+                    </div>
+                    <mat-paginator #paginator [pageSize]="pageSize" [pageSizeOptions]="pageRowCounters">
+                    </mat-paginator>
+                  </div>
+                  <div class="clearfix"></div>
+                </div>
+              </mat-tab>
+
+              <mat-tab class="mat-tab-label-content" label="Global Search ( {{eksGlobalSearchCount}} )">
+                <div class="result-table-wrapper">
+                  <mat-table #table [dataSource]="eksGlobalSearchData">
+                    <ng-container matColumnDef="arrow">
+                      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="title">
+                      <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        
+                        <!-- <mat-checkbox class="example-margin" [checked]="element.isSelected" [disabled]="element.isSelected"  (change)="onChange($event, element)">
+                        </mat-checkbox>&nbsp;&nbsp;&nbsp; -->
+                        <b>{{ element.title }}</b>
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="type">
+                      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        {{ element.type }}
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="link">
+                      <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        <b>{{ element.link }}</b>
+                      </mat-cell>
+                    </ng-container>
+                    <ng-container matColumnDef="publishDate">
+                      <mat-header-cell *matHeaderCellDef>Publish Date </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        {{ element.modified_date | date }}
+                      </mat-cell>
+                    </ng-container>
+                    <mat-header-row id="header-style" *matHeaderRowDef="globalDisplayedColumns; sticky: true">
+                    </mat-header-row>
+                    <mat-row *matRowDef="let row; columns: globalDisplayedColumns; let index = index" #searchDetails>
+                    </mat-row>
+                  </mat-table>
+                </div>
+                <mat-paginator #paginator2 [pageSize]="pageSize" [length]="globalLength"
+                  [pageSizeOptions]="pageRowCounters" (page)="eksAddonGlobalSearchPagination($event)"></mat-paginator>
+                <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="pageRowCounters"></mat-paginator> -->
+              </mat-tab>
+
+              <mat-tab class="mat-tab-label-content" label="PWPlay ( {{eksPWPlaySearchCount}} )">
+                <div class="result-table-wrapper">
+                  <mat-table #table [dataSource]="eksPWPlaySearchData">
+                    <ng-container matColumnDef="arrow">
+                      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                      </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="title">
+                      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        <video *ngIf="element.playbackUrl" width="200" height="120" controls>
+                          <source src="{{ element.playbackUrl }}" type="video/mp4">
+                        </video>
+                        <img *ngIf="!element.playbackUrl" height="150" width="200" src="{{ element.thumbnailUrl }}" />
+                        <label style="padding-left: 2%; overflow: auto"><b>{{ element.title }}</b></label>
+                      </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                      <mat-header-cell *matHeaderCellDef>Description </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        {{ element.description }}
+                      </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="count">
+                      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                      </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="publishDate">
+                      <mat-header-cell *matHeaderCellDef>Publish Date </mat-header-cell>
+                      <mat-cell *matCellDef="let element; let i = index">
+                        {{ element.whenPublished | date }}
+                      </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row id="header-style" *matHeaderRowDef="pwPlayDisplayedColumns; sticky: true">
+                    </mat-header-row>
+                    <mat-row *matRowDef="let row; columns: pwPlayDisplayedColumns; let index = index" #searchDetails>
+                    </mat-row>
+                  </mat-table>
+                </div>
+                <mat-paginator #paginator3 [pageSize]="pageSize" [pageSizeOptions]="pageRowCounters"></mat-paginator>
+              </mat-tab>
+            </mat-tab-group>
+            <!-- <div class="footer-button" *ngIf="!apiError">
+                <button mat-raised-button color="primary" class="submit-btn" (click)="submit()">Add</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="clearfix"></div>
+
+    </div>
+    <div class="add-on-footer" *ngIf="!apiError">
+      <button mat-raised-button color="primary" class="submit-btn" mat-button (click)="submit()">
+        Add
+      </button>
+    </div>
+  </div>
+</div>

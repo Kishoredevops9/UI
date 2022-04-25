@@ -1,0 +1,146 @@
+@mixin border-radius($pixel) {
+  border-radius: $pixel;
+  -webkit-border-radius: $pixel;
+  -moz-border-radius: $pixel;
+  -ms-border-radius: $pixel;
+  -o-border-radius: $pixel;
+}
+
+@mixin font-face-Barlow-Regular($sz, $lh) {
+  font-family: "Barlow-Regular", sans-serif;
+  font-weight: 400;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-Barlow-Medium($sz, $lh) {
+  font-family: "Barlow-Medium", sans-serif;
+  font-weight: 500;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-BarlowSemiCondensed-Regular($sz, $lh) {
+  font-family: "BarlowSemiCondensed-Regular", sans-serif;
+  font-weight: 400;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-BarlowSemiCondensed-Medium($sz, $lh) {
+  font-family: "BarlowSemiCondensed-Medium", sans-serif;
+  font-weight: 500;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-BarlowSemiCondensed-SemiBold($sz, $lh) {
+  font-family: "BarlowSemiCondensed-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-BarlowSemiCondensed-Bold($sz, $lh) {
+  font-family: "BarlowSemiCondensed-Bold", sans-serif;
+  font-weight: 700;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-Inter-Regular($sz, $lh) {
+  font-family: "Inter-Regular", sans-serif;
+  font-weight: 400;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-Inter-Medium($sz, $lh) {
+  font-family: "Inter-Medium", sans-serif;
+  font-weight: 500;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-Inter-SemiBold($sz, $lh) {
+  font-family: "Inter-SemiBold", sans-serif;
+  font-weight: 600;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin font-face-Inter-Bold($sz, $lh) {
+  font-family: "Inter-Bold", sans-serif;
+  font-weight: 700;
+  font-size: $sz;
+  line-height: $lh;
+}
+
+@mixin header-content-backgound-color($sz) {
+  background-color: $sz;
+  font-size: large;
+  color: #404040;
+  padding: 2px 4px 3px 4px;
+  margin-right: 4px;
+  letter-spacing: 1.6px;
+  font-size: x-large;
+}
+
+@mixin tab-wrapper($bac, $boc) {
+  background: $bac;
+  color: #404040;
+  opacity: 1;
+
+  .mat-tab-label-content {
+    color: #404040;
+    padding: 2px 4px 3px 4px;
+    margin-right: 4px;
+    letter-spacing: 1.6px;
+    font-size: x-large;
+  }
+
+  .mat-tab-container {
+    border-bottom: 2px solid $boc !important;
+  }
+
+  .mat-tab-header {
+    height: 40px;
+    border-bottom: 2px solid $boc !important;
+  }
+
+  .tab-wrapper.mat-tab-group.mat-tab-label-active {
+    background: $bac;
+    color: #404040;
+    opacity: 1;
+
+    .mat-tab-label-content {
+      color: #404040;
+    }
+  }
+}
+
+@mixin label-active($bac, $boc) {
+  background: $bac;
+  color: #404040 !important;
+  opacity: 1;
+
+  .mat-tab-label-content {
+    color: #404040;
+  }
+
+  .mat-tab-label-container {
+    border-bottom: 2px solid $boc !important;
+  }
+}
+
+@mixin border-bottom-color($bac) {
+  border-bottom: 2px solid $bac;
+}
+
+@mixin draged-list-content($bac) {
+  @include font-face-BarlowSemiCondensed-Regular(18px, 31px);
+  background: $bac;
+  text-align: center;
+  margin-right: 10px;
+  letter-spacing: 1.21px;
+}

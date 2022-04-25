@@ -1,0 +1,83 @@
+<!-- <div><app-global-content-list (getSearchContentType)="getSearchContentType($event)"></app-global-content-list></div> -->
+<div class="eks-search-wrapper">
+ 
+  <span [hidden]="EventIndex" class="table-wrapper box-wrapper" >
+
+
+    <!-- <div class="doverly" *ngIf="EventIndex" [disabled]="EventIndex"> </div> -->
+    <!-- <app-eks-filter-section (getSearchFilterType)="getSearchFilterType($event)" [EventIndex]="EventIndex"
+      (getSearchContentType)="getSearchContentType($event)" (eksLeftSearchData)="eksLeftSearchData($event)"
+      (eksSearchOutput)="eksSearchOutput($event)" (eksSearchCount)="eksSearchCount($event)" class="col filter-by-type">
+    </app-eks-filter-section> -->
+
+    <div class="eks-collection-filter" style="position: relative;">
+      <div class="doverly" *ngIf="EventIndex" [disabled]="EventIndex"> </div>
+      <div class="collection_box">
+        <h4>All EKS Collection </h4>
+        <div class="full-width md1-grid mdl-cell mdl-cell--12-col">
+   
+          <ul>
+            <li *ngFor="let eksCollection of allEKSCollection" [hidden]="!eksCollection.active">
+              
+              <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+                <label class="{{ eksCollection.class }}">
+                  <input type="checkbox" (change)="onChangeEKSCollection(eksCollection)"
+                    [(ngModel)]="eksCollection.checked">
+                  <span class="all_type {{ eksCollection.keyword }}">{{ eksCollection.code }}</span>
+                  <button> {{ eksCollection.name }} </button>
+                </label>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>    
+    </div>
+
+   <div class="filter_box collection_box">
+            <h4>Filter Selected By:</h4>
+            <mat-form-field class="example-full-width" >
+              <mat-label>Search Filter</mat-label>
+              <mat-icon matPrefix>search</mat-icon>
+            <form>
+              <input matInput [(ngModel)]="searchData" autocomplete="on" name="searchData"  (change)="filterSearch($event)" (keyup)="filterSearch($event)" placeholder="Ex.  Concept Initiation"  >
+
+            </form>
+          </mat-form-field>
+            <div class="treebox">
+          <eks-search-app-left-box [expendOpt]="edpendData"   (tagdata)="tagData($event)"
+                [treedata]="filterData"  >
+              </eks-search-app-left-box>
+            </div>
+          </div>
+  </span>
+  <span class="table-wrapper mdl-cell header-row">
+
+   <loading *ngIf="isLoading">{{ isLoading }}</loading>
+
+    <mat-tab-group [selectedIndex]="selectedIndex" #tabGroup (selectedTabChange)="onTabChanged($event);">
+
+      <mat-tab label="EKS Internal ( {{eksInternalSearchCount}} )">
+        <app-eks-internal-tab [eksInternalSearchContentType]="eksInternalSearchContentType"
+        [eksSearchCount1]="eksSearchCount1"
+          [eksInternalSearchFilterType]="eksInternalSearchFilterType" 
+          (eksInternalCount)="eksInternalCount($event)" 
+          (eksInternalSearchData) = "eksInternalSearchData($event)" 
+          [inputQuery]="eventsSubject.asObservable()">
+
+        </app-eks-internal-tab>
+      </mat-tab>
+
+      <mat-tab label="Global Search ( {{eksGlobalSearchCount}} )">
+        <app-eks-global-tab (eksGlobalCount)="eksGlobalCount($event)"></app-eks-global-tab>
+      </mat-tab>
+
+      <mat-tab label="PWPlay ( {{eksVideoSearchCount}} )">
+        <app-eks-video-tab (eksVideoCount)="eksVideoCount($event)" [filterActive]="isActive"></app-eks-video-tab>
+      </mat-tab>
+
+    </mat-tab-group>
+    <div class="slide-toggle" *ngIf="selectedIndex === 2">
+      All <mat-slide-toggle class="toggle" [(ngModel)]="isActive"></mat-slide-toggle> Active
+    </div>
+  </span>
+</div>

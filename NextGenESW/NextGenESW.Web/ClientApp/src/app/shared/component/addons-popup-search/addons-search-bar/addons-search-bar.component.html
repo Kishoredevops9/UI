@@ -1,0 +1,34 @@
+<div class="eks-top-srch-popup eks_page_top addons-popup">
+  <div class="menu centerMenu d-flex align-items-center mt-n2"
+       *ngIf="{ searchText: searchText$ | async } as vw">
+    <span class="ekstopleft"
+          style="margin-bottom: -13px">
+      <mat-form-field class="angularformcss no-line"
+                      floatLabel="never">
+        <input id="addonSearch"
+               type="text"
+               matInput
+               [placeholder]="placeholder"
+               [ngModel]="vw.searchText"
+               (ngModelChange)="onChangeSearchText($event)"
+               (keyup.enter)="onSearchTermChanged(vw.searchText)" />
+      </mat-form-field>
+    </span>
+    <span class="srch_cursor"
+          (click)="onSearchTermChanged(vw.searchText)">
+      <mat-icon class="srch_icon_cls">search</mat-icon>
+    </span>
+
+    <span class="eks_adv_pos">
+      <a [className]="showSearch ? 'adv_btn active' : 'adv_btn'"
+         (click)="advanceSearch()">Advance Search <i [className]="showSearch ? 'arrow up' : 'arrow down'"></i></a>
+
+      <div *ngIf="advancedSearchEnabled$ | async"
+           class="advance-search">
+        <app-addons-advanced-search-panel></app-addons-advanced-search-panel>
+      </div>
+    </span>
+
+    <div style="clear: both"></div>
+  </div>
+</div>

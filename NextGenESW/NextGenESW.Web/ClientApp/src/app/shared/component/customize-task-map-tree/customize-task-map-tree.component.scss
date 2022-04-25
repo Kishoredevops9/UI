@@ -1,0 +1,591 @@
+@import "/src/scss/helpers/mixins";
+@import "/src/scss/helpers/variables";
+@import "/src/scss/helpers/breakpoints";
+
+ 
+
+.buildtasksearchbox {
+  border-bottom: 2px solid rgba(222, 222, 222, 0.87);
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.spinnerbox { width: 60px;
+  position: absolute;
+  top:30px; left: 50%;
+  margin: 0px auto;
+  height: 0px;  }
+
+.mat-card {
+ max-height: 300px;
+  min-height: 150px;
+  overflow: auto;
+  padding: 0px !important;
+}
+span.contentId{
+  color: #FF7F00;
+  padding-left: 10px;
+    a.OriginContentId{
+      color: #FF7F00;
+      cursor: pointer;          
+    }
+    a.OriginContentId:hover{
+      color: #FF7F00;
+      text-decoration: none
+    }
+  }
+.pointer{
+    cursor: pointer;          
+  }
+.dropbox{
+  .example-tree-invisible {
+    display: none;
+  }
+
+  .mat-tree-node{
+    min-height: 0px !important;
+    width: 100%;
+    .mat-checkbox {
+      label.mat-checkbox-layout{
+        min-height: 48px;
+      }
+      
+    }
+    
+    .mat-checkbox.task-discipline-item-margin {
+      margin: 0 10px;
+      margin-top: 0px;
+    }
+
+  }
+
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+}
+
+.bodyPanel {
+  display: block;
+  margin-top: 20px;
+
+  h2 {
+    font-size: 14px;
+    color: #000000;
+    display: inline-block;
+  }
+  .addBtn { float: right; }
+  ul {
+    margin-left: 10px;
+    li {
+      width: 100%;
+      float: left;
+      position: relative;
+      .licopy{    
+        margin-bottom: 10px;
+        float: left;
+        width: 100%;
+      }
+      .bdr{border-bottom: 5px;}
+      mat-checkbox { float: left;
+        width: 30px;
+        margin-top: 8px; }
+    }
+  
+    .toolbar {
+      position: absolute;
+      right: 0px;
+      .shigh { position: absolute;
+ 
+      right: 130px;
+    top: -8px;
+      } 
+
+      a { mat-icon {   font-size: 16px!important; color:gray  } }
+  
+      mat-icon {
+        cursor: pointer;
+      }
+  
+      span {
+        padding: 5px;
+        img {
+          width: 10px;
+        }
+      }
+      img {
+        width: 10px;
+      }
+      span.expcol {
+        border: 1px solid green;
+      }
+    }
+  }
+}
+
+.g {
+    border-bottom: 2px solid green;
+    width:  calc(100% - 30px);
+    float: left;
+    aside {
+      float: left;
+      //background: green;
+      color: white;
+      padding: 5px;
+      float: left;
+     // background: green;
+      color: white;
+      padding: 5px 10px 5px 10px;
+      border-radius: 5px 0px 0px 0px;
+    }
+    span.title {
+      display: inline-block;
+      padding: 5px;
+    }
+    span.contentId{
+    color: #FF7F00;
+    padding-left: 10px;
+
+    }
+  }
+  
+  .D {
+    @extend .g;
+    border-bottom: 2px solid $task-type-d;
+    aside {
+      background: $task-type-d;
+    }
+  }
+  //ss
+  .A {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .C {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+  
+  .SF {
+    @extend .g;
+    border-bottom: 2px solid   $content-type-sf;
+    aside {
+      background:   $content-type-sf
+    }
+  }
+  
+  .WI, .I, .wi, .i {
+    @extend .g;
+    border-bottom: 2px solid $content-type-wi;
+    aside {
+      background: $content-type-wi;
+    }
+  }
+  
+  .GB {
+    @extend .g;
+    border-bottom: 2px solid $content-type-gb;
+    aside {
+      background: $content-type-gb;
+    }
+  }
+  
+  .DS {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ds;
+    aside {
+      background: $content-type-ds;
+    }
+  }
+  .M {
+    @extend .g;
+    border-bottom: 2px solid $content-type-m;
+    aside {
+      background: $content-type-m;
+    }
+  }
+  
+  .AP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .KP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-kp;
+    aside {
+      background: $content-type-kp;
+    }
+  }
+  
+  .CG {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+  .TC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RD {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .TOC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RC {
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .mat-card.dropbox {
+    position: absolute !important;
+    width: 50%;
+    z-index: 100;
+    background-color: #fff !important;
+    top: 45px;
+    max-height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 0px !important;
+  }
+
+  footer { 
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;   
+    border-bottom:  2px solid rgba(222, 222, 222, 0.87);
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+    float: left;
+    .mat-button {  margin-left: 10px }
+  }
+
+
+  .step {
+    margin-right: 20px;
+    min-height: 400px;
+    .stepOpc{
+      opacity: 0.6;
+    }
+    .mgl10{
+      margin-left: 10px;
+    }
+  }
+  ul {
+    margin-left: 10px;
+    li {
+      width: 100%;
+      float: left;
+      .licopy{    
+        margin-bottom: 5px;
+        float: left;
+        width: 99%;}
+    }
+  
+    .toolbar {
+      position: absolute;
+      right: 0px;
+  
+      mat-icon {
+        cursor: pointer;
+      }
+  
+      span {
+        padding: 5px;
+        img {
+          width: 10px;
+        }
+      }
+      span.expcol {
+        border: 1px solid green;
+      }
+    }
+  }
+  
+  header {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    .example-margin {
+      margin: 0 10px;
+    }
+  
+    div.rightbox {
+      right: 25px;
+      position: absolute;
+    }
+  }
+  
+  .g {
+    border-bottom: 2px solid green;
+  
+    float: left;
+    aside {
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px;
+      float: left;
+      background: green;
+      color: white;
+      padding: 5px 10px 5px 10px;
+      border-radius: 5px 0px 0px 0px;
+    }
+    span.title {
+      display: inline-block;
+      padding: 5px;
+    }
+  }
+  
+  .D  {
+    @extend .g;
+    border-bottom: 2px solid $task-type-d;
+    aside {
+      background: $task-type-d;
+    }
+  }
+  
+
+ .S {
+    @extend .g;
+    border-bottom: 2px solid    $content-type-ds;
+    aside {
+      background:   $content-type-ds
+    }
+  }
+  
+
+;
+    
+ 
+
+  
+  .A {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .C {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+      color: black;
+    }
+  }
+  
+  .SF {
+    @extend .g;
+    border-bottom: 2px solid $content-type-sf;
+    aside {
+      background: $content-type-sf;
+    }
+  }
+
+  .SP {
+    @extend .g;
+    border-bottom: 2px solid  $content-type-sp;
+    aside {
+      background:  $content-type-sp;
+    }
+  }
+  
+  .WI, .wi, .i, .I {
+    @extend .g;
+    border-bottom: 2px solid $content-type-wi;
+    aside {
+      background: $content-type-wi;
+    }
+  }
+  
+  .GB , .G {
+    @extend .g;
+    border-bottom: 2px solid $content-type-gb;
+    aside {
+      background: $content-type-gb;
+    }
+  }
+  
+  .DS {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ds;
+    aside {
+      background: $content-type-ds;
+    }
+  }
+  .M {
+    @extend .g;
+    border-bottom: 2px solid $content-type-m;
+    aside {
+      background: $content-type-m;
+    }
+  }
+  
+  .AP {
+    @extend .g;
+    border-bottom: 2px solid $content-type-ap;
+    aside {
+      background: $content-type-ap;
+    }
+  }
+  
+  .KP , .K{
+    @extend .g;
+    border-bottom: 2px solid $content-type-kp;
+    aside {
+      background: $content-type-kp;
+    }
+  }
+  
+  .CG {
+    @extend .g;
+    border-bottom: 2px solid $content-type-cg;
+    aside {
+      background: $content-type-cg;
+    }
+  }
+  .TC , .T {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RD , .R{
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  .TOC , .T {
+    @extend .g;
+    border-bottom: 2px solid $content-type-toc;
+    aside {
+      background: $content-type-toc;
+    }
+  }
+  
+  .RC , .R{
+    @extend .g;
+    border-bottom: 2px solid $content-type-rc;
+    aside {
+      background: $content-type-rc;
+    }
+  }
+  // .mat-card {
+  //   position: absolute !important;
+  //   width: 140%;
+  //   z-index: 100;
+  //   background-color: #fff !important;
+  //   top: 45px;
+  //   max-height: 300px;
+  //   overflow: auto;
+  // }
+
+  .dleft{
+    width:25%;float: left;
+  }
+
+  .dright{
+    width:75%;float: left;
+  }
+  
+  .dclear{
+    width:100%;clear:both
+  }
+  
+  .spinnerbox { width: 60px;
+    margin: 0px auto;
+    height: 0px;  }
+
+    .contentDiv{ margin-left: 30px; }
+
+    .active {background: #ffdfd1; float:left; width: 100%; }
+    .active2 {background: #ffdfd1; float:left; width: 100%; }
+    
+    .active.last { background: #fdf4f0; }
+    .active.active2 { background: #fdf4f0; }
+
+
+    .col-Criteria {
+      display: table;
+      width: calc( 100% - 28px);
+      margin-left: 30px;
+      margin-top: 5px;
+      float: left;
+      .col {
+        display: table-cell;
+        padding: 16px;
+        width: 50%;
+        margin:2px;
+        border-left:3px solid white;
+        background : #EEEEEE ;
+      }
+      .col.nobg{  background: none; }
+    }
+  
+
+::ng-deep .mat-checkbox.task-discipline-item-margin {
+  .mat-checkbox-layout{
+    .mat-checkbox-inner-container{
+      margin: 0px;
+      margin-right: 8px;
+    }
+    margin-bottom: 0px;
+  }
+}
+    
+.sfDropdownClass{
+  padding-left: 10px;
+  
+  .taskArrowSideOpen{
+    padding: 0;
+    min-width: 0;
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    line-height: 24px;
+  }
+}
+
+
+aside.sideBoxBg{
+  min-width: 43px;
+  text-align: center;
+}

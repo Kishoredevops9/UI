@@ -1,0 +1,33 @@
+ul {
+  margin-left: 10px;
+}
+ul li {
+  position: relative;
+  
+  div{
+    padding: 7px;
+  }
+}
+
+.expcol {
+  display: inline-block;
+}
+ul li span {
+  padding-left: 15px;
+  cursor: pointer;
+}
+.mat-icon {
+  position: absolute;
+  left: 0px;
+  top: 4px;
+}
+
+.imgbox {
+  padding: 15px;
+  background: #D9D9D9D9;
+  width: 100%;
+
+  img {
+    width: 100%;
+  }
+}

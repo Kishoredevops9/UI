@@ -1,0 +1,106 @@
+<aside>
+    <article>
+      <h2>Add STEP</h2>
+      <div class="formbox">
+        <form name="f" [formGroup]="stepform">
+            <div>
+                <label> Content ID </label>
+                  <mat-form-field>
+                    <input matInput readonly placeholder="Content ID" formControlName="assetContentId"   />
+                  </mat-form-field>
+              </div>
+        <div>
+            <label>Select Step</label>
+                <mat-form-field style="width: 145px;">
+                  <input matInput readonly placeholder="Published Step" formControlName="name" />
+                </mat-form-field>
+                <button mat-icon-button matSuffix (click)='openSearchDialog()'>
+                  <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon> &nbsp;<span>Select</span>
+                </button>
+          </div>
+        <div *ngIf="!isMapView">
+          <label>Phase</label>
+            <mat-form-field>
+             <mat-select formControlName="phaseId">
+                <mat-option *ngFor="let phase of phases" [value]="phase.id">{{ phase.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
+  
+        <div>
+          <label> Color </label>
+  
+  
+  
+            <mat-form-field>
+              <input placeholder="Color" matInput [ngxMatColorPicker]="picker4" formControlName="color">
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker4"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker4 [touchUi]="touchUi"></ngx-mat-color-picker>
+            </mat-form-field>
+  
+  
+  
+  
+        </div>
+        <div>
+          <label> Border Style </label>
+          <mat-form-field>
+            <mat-select formControlName="borderStyle">
+                <mat-option   [value]="'dotted'">dotted  </mat-option>
+                <mat-option   [value]="'dashed'">dashed  </mat-option>
+                <mat-option   [value]="'solid'">solid  </mat-option>
+                <mat-option   [value]="'double'">double  </mat-option>
+                <mat-option   [value]="'groove'">groove  </mat-option>
+                <mat-option   [value]="'ridge'">ridge  </mat-option>
+                <mat-option   [value]="'inset'">inset  </mat-option>
+                <mat-option   [value]="'outset'">outset </mat-option>
+                <mat-option   [value]="'none'">none  </mat-option>
+                <mat-option   [value]="'hidden'">hidden  </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <label> Border Width </label>
+          <mat-form-field>
+            <input matInput type="number" min="1" max="5" formControlName="borderWidth" onkeydown="return false" />
+          </mat-form-field>
+        </div>
+  
+        <div>
+          <label> Border Color </label>
+  
+  
+            <mat-form-field>
+              <input placeholder="Border Color" matInput [ngxMatColorPicker]="picker1" formControlName="borderColor">
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker1"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker1 [touchUi]="touchUi"></ngx-mat-color-picker>
+            </mat-form-field>
+  
+  
+        </div>
+  
+      </form>
+  
+      </div>
+  
+    </article>
+  
+    <div class="spinnerbox" *ngIf="loading">
+      <mat-spinner  diameter="20"></mat-spinner>
+  
+    </div>
+    <div  class="buttonbox" >
+  
+  
+  
+  
+  
+  
+     <button mat-raised-button [disabled]="loading"  class="mat-button"  color="primary" (click)="submitForm()" > Save </button>
+     <button mat-raised-button  class="mat-button"  color="primary"  (click)="onNoClick()"> Cancel </button>
+  
+  
+  
+    </div>
+  </aside>
+  

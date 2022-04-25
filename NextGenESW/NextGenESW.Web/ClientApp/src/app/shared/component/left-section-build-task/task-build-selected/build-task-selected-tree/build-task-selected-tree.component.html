@@ -1,0 +1,157 @@
+
+
+<div class="contentDiv">
+  <div  *ngIf="loading" class="tasktreebuildClass">
+    <div class="spinnerbox">
+      <mat-spinner  diameter="60"></mat-spinner>
+    </div>
+  </div>
+
+    <p *ngIf="!item && !loading">Data not found</p>
+
+
+  
+ 
+  
+    <ul  >
+      <ng-container
+        *ngTemplateOutlet="recursiveListTmpl; context:{ list: item , type : 'SP' }"
+      ></ng-container>
+    </ul>
+  
+  
+    
+    <ng-template #recursiveListTmpl let-list="list" let-type="type" >
+      <li *ngFor="let item of list; let i=index" > 
+       
+        <div   [ngClass]=" (type=='C') ?    stObj[item.AssetTypeCode] : type" > 
+  
+          <aside class="sideBgBoxTask" *ngIf="type=='C'" > 
+            {{ stObj[item.AssetTypeCode]}} 
+          </aside>  
+  
+          <aside class="sideBgBoxTask" *ngIf="type!='C'" > 
+            {{ stObj[type]}} 
+               </aside>  
+        
+  
+    
+       <span  class="title"  *ngIf="type!='D'"  >  {{  item.stepTitle  ||  item.swimLaneTitle || item.name || item.title  || item.Title  || item.stepContentId || 'N/A' }} </span>   
+
+       <span  class="title" *ngIf="type=='D'"   > 
+       
+        {{  item.Discipline1  }} 
+        
+        <span *ngIf="item.Discipline2"> >   {{  item.Discipline2 }}   </span>
+        <span *ngIf="item.Discipline3"> >  {{  item.Discipline3  }}   </span>
+          <span *ngIf="item.Discipline4"> >   {{  item.Discipline4  }}   </span>
+  
+        
+        
+        </span>   
+
+        
+
+      
+      <!-- <span class="contentIds" *ngIf="type == 'SP'"> {{item.OriginContentId}} </span> -->
+      <span class="contentIds" *ngIf="type == 'A'"> {{item.OriginContentId}} </span>
+      <span class="contentIds" *ngIf="type == 'C'"> {{item.OriginContentId}} </span>
+      
+      
+      
+      </div>
+       <!-- *ngIf="item.children && item.children.length" -->
+       <div  class="toolbar" *ngIf=" type=='D' || type=='SF'  || type=='SP'  " >
+    
+  
+        <span *ngIf="treetype=='s'">Move : </span>
+  
+        <span [globalData]="globalData"  *ngIf="treetype=='sf'"   (click)="goToStep(item.stepId)"> 
+           <img src="./assets/images/Check_Out.svg" class="openIcon" >  </span>
+  
+   
+        <span  style="display: inline !important;" *ngIf="treetype=='s' && docStatus == 1"  [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{name: item.swimLaneId }"   > 
+          <img src="/assets/icons/add.svg"  > 
+        
+        </span>
+        <span *ngIf="docStatus == 1" (click)="deleteData(item,type)" > <img src="/assets/icons/delete.svg" > </span> 
+  
+         
+  <span>
+      <span> 
+        
+        <a class="maticon" *ngIf="type=='SP' && fullScreen">
+          <mat-icon [size]="10"  [color]="black" (click)="addDisciplineSF(item)">add</mat-icon>
+        </a>   
+        <!-- <a class="maticon" *ngIf="type=='D' && fullScreen">
+          <mat-icon [size]="10"  [color]="black" (click)="addActivitySF(item)">add</mat-icon>
+        </a>     -->
+        
+          <img src="/assets/icons/tup.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="item.active">
+          <img src="/assets/icons/tdown.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="!item.active">
+          
+        </span>
+  
+  </span>
+  
+    
+           <!-- <span> <img src="/assets/icons/dup.svg" > </span>  -->
+        </div>
+  
+  
+        <div  class="toolbar" *ngIf=" type=='A'  " >
+    
+   
+    
+          <span [globalData]="globalData"  *ngIf="treetype=='sf'"   (click)="goToStep(item.stepId)">  <img src="./assets/images/Request_Approval_Icon.svg" >  </span>
+  
+        
+          
+          
+           
+          <span *ngIf="docStatus == 1" (click)="deleteData(item,type)" > <img src="/assets/icons/delete.svg" > </span> 
+    
+           
+    <span  >
+      <img src="/assets/icons/tup.svg" class="stepOpc" (click)="item.active = (item.active)?false:true" *ngIf="item.active" >
+      <img src="/assets/icons/tdown.svg" class="stepOpc"  (click)="item.active = (item.active)?false:true" *ngIf="!item.active" >
+    
+    </span>
+    
+      
+             
+          </div>
+  
+  
+  
+        <ul *ngIf="(item.Disciplines  && item.Disciplines.length > 0 && item.active) || expandall">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Disciplines , type : 'D' }"
+          ></ng-container>
+        </ul>
+  
+        <ul *ngIf="(item.Activities && item.Activities.length > 0 && item.active) || expandall">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.Activities , type : 'A' }"
+          ></ng-container>
+        </ul>
+  
+        <ul *ngIf="(item.ContainerItems && item.ContainerItems.length > 0 && item.active ) || type=='C' || expandall">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.ContainerItems  , type : 'C' }"
+          ></ng-container>
+        </ul>
+  
+        <ul *ngIf="( item.childList && item.childList.length > 0 && item.active ) || type=='C' || expandall">
+          <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.childList   , type :  'C'  }"
+          ></ng-container>
+        </ul>
+  
+  
+  
+      </li>
+    </ng-template>
+
+
+</div>

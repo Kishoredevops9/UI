@@ -1,0 +1,28 @@
+<input type="text" [(ngModel)]="disciplineSearchText" autocomplete="off" matInput placeholder="Search" class="discipline-search" (keyup)="searchDiscipline($event)"/>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="20">
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <mat-checkbox *ngIf="!multiflag" (change)="filterdata(node)" [(ngModel)]="selectedBox[node.rowNo]" tabindex="-1"></mat-checkbox>
+    <mat-checkbox *ngIf="multiflag" (change)="addDisciplineList($event,node)" [(ngModel)]="selectedBox[node.rowNo]"></mat-checkbox>
+    <span  [innerHtml]="node.name | highlight: disciplineSearchText"></span>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="20">
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" tabindex="-1">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+    <span *ngIf="node.selectable && !multiflag">
+      <mat-checkbox (change)="filterdata(node)" [(ngModel)]="selectedBox[node.rowNo]" tabindex="-1"></mat-checkbox>
+    </span>
+    <span *ngIf="node.selectable && multiflag">
+      <mat-checkbox (change)="addDisciplineList($event,node)" [(ngModel)]="selectedBox[node.rowNo]"></mat-checkbox>
+    </span>
+&nbsp;     <span  [innerHtml]="node.name | highlight: disciplineSearchText"></span>
+  </mat-tree-node>
+</mat-tree>
+
+<!-- (change)="addUserList($event,node)" -->

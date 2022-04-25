@@ -1,0 +1,51 @@
+<loading *ngIf="onLoading$ | async as onLoading">{{ onLoading }}</loading>
+<div class="addons-popup-wrapper">
+  <div class="row no-gutters w-100 px-3 align-items-center">
+    <div class="col-auto h4 mt-3 modal-heading">EKS Addons</div>
+    <div class="col">
+      <app-addons-search-bar (eksLeftSearchData)="eksLeftSearchData($event)"
+                             (eksSearchOutput)="eksSearchOutput($event)"
+                             (eksSearchCount)="eksSearchCount($event)"
+                             (eksSearchTitle)="eksSearchTitle($event)"
+                             (eksGlobalSearchTermOutput)="eksGlobalSearchTermOutput($event)"
+                             (eksPWPlaySearchOutput)="eksPWPlaySearchOutput($event)"
+                             [stepPopUp]="disableAPSFSP">
+      </app-addons-search-bar>
+    </div>
+    <div class="col-auto">
+      <mat-icon class="close-icon"
+                (click)="closeModal('No')">close </mat-icon>
+    </div>
+  </div>
+  <div class="row p-3 no-gutters addons-popup-content">
+    <mat-tab-group class="col"
+                   [(selectedIndex)]="sltResultTabIdx">
+      <mat-tab [label]="'ESK (' + ((eksSearchResult$ | async).totalResult || '') + ')'"
+               *ngIf="!hiddenAddonsTabs.includes(AddonsPopupTabDict.Eks)">
+        <app-addons-eks-result [excludedTypes]="(excludedTypes$ | async) || []"
+                               [existingContentIds]="existingContentIds"></app-addons-eks-result>
+      </mat-tab>
+      <mat-tab [label]="'Global (' + ((globalSearchResult$ | async).totalResult || '') + ')'"
+               *ngIf="!hiddenAddonsTabs.includes(AddonsPopupTabDict.Global)">
+        <app-addons-global-result></app-addons-global-result>
+      </mat-tab>
+      <mat-tab [label]="'PWPlay (' + ((pwPlaySearchResult$ | async).totalResult || '') + ')'"
+               *ngIf="!hiddenAddonsTabs.includes(AddonsPopupTabDict.PwPlay)">
+        <app-addons-pwplay-result></app-addons-pwplay-result>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="footer"
+       style="z-index: 10;"
+       *ngIf="!apiError">
+    <button *ngIf="{ sltEksResultItems: (sltEksResultItems$ | async) || [] } as vw"
+            mat-raised-button
+            color="primary"
+            class="submit-btn"
+            mat-button
+            [disabled]="!vw.sltEksResultItems.length"
+            (click)="onSubmitSelectedItems(vw.sltEksResultItems)">
+      Add
+    </button>
+  </div>
+</div>

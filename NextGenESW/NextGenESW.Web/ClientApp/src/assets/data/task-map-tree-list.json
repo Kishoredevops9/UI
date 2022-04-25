@@ -1,0 +1,854 @@
+[
+  {
+    "id": 248,
+    "type": "M",
+    "title": "MAP-Structures",
+    "contentId": "FC-M-101",
+    "swimLanes": [
+      {
+        "id": 100,
+        "type": "SL",
+        "name": "  Swimlane 101",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+          {
+            "id": 251,
+            "type": "M",
+            "title": "MAP-Controls & Diagnostics",
+            "name" : "MAP-Controls & Diagnostics",
+            "contentId": "FC-M-301",
+            "swimLanes": [
+              {
+                "id": 300,
+                "type": "SL",
+                "name": "  Swimlane 301",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 301,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES",
+                    "description": "SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 301,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 301 CG1",
+                        "description": "Review 301 CG1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 311,
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES 311",
+                    "description": "SIMILAR ENGINES 311",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 311,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 311 CG1",
+                        "description": "Review 311 CG1",
+                        "expended": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 400,
+                "type": "SL",
+                "name": " Swimlane 401",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 401,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES BSL1",
+                    "description": "SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 411,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review 411 CG1 CG1",
+                        "description": "Review 411 CG1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 411,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES 411",
+                    "description": "SIMILAR ENGINES 411",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 421,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review 421 CG1",
+                        "description": "Review 421 CG1",
+                        "expended": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extend": false
+          },
+          {
+            "id": 101,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "Review ESW, PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "description": "Review ESW, PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 101,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review content CG1",
+                "description": "Review content CG1",
+                "expended": true,
+                "protectedInd": true,
+                "excludedInd": true,
+                "childList": [
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "G",
+                    "type": "GB",
+                    "name": "Review childList GB1 101",
+                    "description": "Review GB1 101",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "childList": [
+                      {
+                        "id": 101,
+                        "acticityDocumentCode": "R",
+                        "type": "RC",
+                        "name": "Review childList RC1",
+                        "description": "Review RC1",
+                        "expended": false
+                      },
+                      {
+                        "id": 101,
+                        "acticityDocumentCode": "R",
+                        "type": "RC",
+                        "name": "Review childList RC2",
+                        "description": "Review RC2",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "I",
+                    "type": "WI",
+                    "name": "Review childList WI1",
+                    "description": "Review WI1",
+                    "expended": false
+                  }
+                ]
+              },
+              {
+                "id": 101,
+                "acticityDocumentCode": "I",
+                "type": "WI",
+                "name": "Review WI1",
+                "description": "Review WI1",
+                "expended": true,
+                "protectedInd": true,
+                "excludedInd": true,
+                "connectorsActivityBlock": [
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "G",
+                    "type": "GB",
+                    "name": "Review GB1",
+                    "description": "Review GB1",
+                    "expended": false
+                  },
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "C",
+                    "type": "CG",
+                    "name": "Review CG1",
+                    "description": "Review CG1",
+                    "expended": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "extend": false
+  },
+  {
+    "id": 241,
+    "type": "M",
+    "title": "MAP-Manufacturing Engineering",
+    "name": "MAP-Manufacturing Engineering",
+    "contentId": "FC-M-201",
+    "swimLanes": [
+      {
+        "id": 200,
+        "type": "SL",
+        "name": "Swimlane 201",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+          {
+            "id": 201,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "description": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 201,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review Content 201 CG1",
+                "description": "Review 201 CG1",
+                "expended": false
+              },
+              {
+                "id": 202,
+                "acticityDocumentCode": "I",
+                "type": "WI",
+                "name": "Review Content 202 WI1",
+                "description": "Review 202 WI1",
+                "expended": false
+              }
+            ]
+          },
+          {
+            "id": 2021,
+            "type": "M",
+            "title": "MAP-Manufacturing SM 1",
+            "name": "MAP-Manufacturing SM 1",
+            "contentId": "FC-M-000401",
+            "swimLanes": [
+              {
+                "id": 200,
+                "type": "SL",
+                "name": "  Swimlane FM",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 201,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                    "description": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 201,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 201 CG1",
+                        "description": "Review 201 CG1",
+                        "expended": false
+                      },
+                      {
+                        "id": 202,
+                        "acticityDocumentCode": "I",
+                        "type": "WI",
+                        "name": "Review Content 202 WI1",
+                        "description": "Review 202 WI1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2022,
+                    "type": "M",
+                    "title": "MAP-Manufacturing SM 2",
+                    "name": "MAP-Manufacturing SM 2",
+                    "contentId": "FC-M-000301",
+                    "swimLanes": [
+                      {
+                        "id": 200,
+                        "type": "SL",
+                        "name": "  Swimlane 898",
+                        "excludedInd": true,
+                        "protectedInd": true,
+                        "activityBlocks": [
+                          {
+                            "id": 201,
+                            "acticityDocumentCode": "A",
+                            "type": "AP",
+                            "name": "New PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                            "description": "New PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                            "expended": true,
+                            "protectedInd": true,
+                            "excludedInd": true,
+                            "content": [
+                              {
+                                "id": 201,
+                                "acticityDocumentCode": "C",
+                                "type": "CG",
+                                "name": "Cric Content FC-C-000092  CG1",
+                                "description": "Cric FC-C-000092 CG1",
+                                "expended": false
+                              },
+                              {
+                                "id": 501,
+                                "acticityDocumentCode": "C",
+                                "type": "CG",
+                                "name": "Cric Content FC-C-000093  CG1",
+                                "description": "Cric FC-C-000093 CG1",
+                                "expended": false
+                              },
+                              {
+                                "id": 202,
+                                "acticityDocumentCode": "I",
+                                "type": "WI",
+                                "name": "Review Content 202 WI1",
+                                "description": "Review 202 WI1",
+                                "expended": false
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "extend": false
+                  }
+                ]
+              }
+            ],
+            "extend": false
+          }
+        ]
+      }
+    ],
+    "extend": false
+  },
+  {
+    "id": 251,
+    "type": "M",
+    "title": "MAP-Controls & Diagnostics",
+    "name" : "MAP-Controls & Diagnostics",
+    "contentId": "FC-M-301",
+    "swimLanes": [
+      {
+        "id": 300,
+        "type": "SL",
+        "name": "  Swimlane 301",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+          {
+            "id": 301,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "SIMILAR ENGINES",
+            "description": "SIMILAR ENGINES",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 301,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review Content 301 CG1",
+                "description": "Review 301 CG1",
+                "expended": false
+              }
+            ]
+          },
+          {
+            "id": 311,
+            "type": "AP",
+            "name": "SIMILAR ENGINES 311",
+            "description": "SIMILAR ENGINES 311",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 311,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review Content 311 CG1",
+                "description": "Review 311 CG1",
+                "expended": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 400,
+        "type": "SL",
+        "name": " Swimlane 401",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+          {
+            "id": 401,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "SIMILAR ENGINES BSL1",
+            "description": "SIMILAR ENGINES",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 411,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review 411 CG1 CG1",
+                "description": "Review 411 CG1",
+                "expended": false
+              }
+            ]
+          },
+          {
+            "id": 411,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "SIMILAR ENGINES 411",
+            "description": "SIMILAR ENGINES 411",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 421,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review 421 CG1",
+                "description": "Review 421 CG1",
+                "expended": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "extend": false
+  },
+  {
+    "id": 245,
+    "type": "M",
+    "title": "MAP-Materials & Processes",
+    "name": "MAP-Materials & Processes",
+    "contentId": "FC-M-101",
+    "swimLanes": [
+
+      {
+        "id": 500,
+        "type": "SL",
+        "name": "  Swimlane 501",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+{
+    "id": 248,
+    "type": "M",
+    "title": "MAP-Structures",
+    "name": "name",
+    "contentId": "FC-M-101",
+    "swimLanes": [
+      {
+        "id": 100,
+        "type": "SL",
+        "name": "  Swimlane 101",
+        "excludedInd": true,
+        "protectedInd": true,
+        "activityBlocks": [
+          {
+            "id": 251,
+            "type": "M",
+            "title": "MAP-Controls & Diagnostics",
+            "name": "MAP-Controls & Diagnostics",
+            "contentId": "FC-M-301",
+            "swimLanes": [
+              {
+                "id": 300,
+                "type": "SL",
+                "name": "  Swimlane 301",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 301,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES",
+                    "description": "SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 301,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 301 CG1",
+                        "description": "Review 301 CG1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 311,
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES 311",
+                    "description": "SIMILAR ENGINES 311",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 311,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 311 CG1",
+                        "description": "Review 311 CG1",
+                        "expended": false
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": 400,
+                "type": "SL",
+                "name": " Swimlane 401",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 401,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES BSL1",
+                    "description": "SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 411,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review 411 CG1 CG1",
+                        "description": "Review 411 CG1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 411,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "SIMILAR ENGINES 411",
+                    "description": "SIMILAR ENGINES 411",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 421,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review 421 CG1",
+                        "description": "Review 421 CG1",
+                        "expended": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extend": false
+          },
+          {
+            "id": 101,
+            "acticityDocumentCode": "A",
+            "type": "AP",
+            "name": "Review ESW, PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "description": "Review ESW, PREFERRED CONFIG, LL, SIMILAR ENGINES",
+            "expended": true,
+            "protectedInd": true,
+            "excludedInd": true,
+            "content": [
+              {
+                "id": 101,
+                "acticityDocumentCode": "C",
+                "type": "CG",
+                "name": "Review content CG1",
+                "description": "Review content CG1",
+                "expended": true,
+                "protectedInd": true,
+                "excludedInd": true,
+                "childList": [
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "G",
+                    "type": "GB",
+                    "name": "Review childList GB1 101",
+                    "description": "Review GB1 101",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "childList": [
+                      {
+                        "id": 101,
+                        "acticityDocumentCode": "R",
+                        "type": "RC",
+                        "name": "Review childList RC1",
+                        "description": "Review RC1",
+                        "expended": false
+                      },
+                      {
+                        "id": 101,
+                        "acticityDocumentCode": "R",
+                        "type": "RC",
+                        "name": "Review childList RC2",
+                        "description": "Review RC2",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "I",
+                    "type": "WI",
+                    "name": "Review childList WI1",
+                    "description": "Review WI1",
+                    "expended": false
+                  }
+                ]
+              },
+              {
+                "id": 101,
+                "acticityDocumentCode": "I",
+                "type": "WI",
+                "name": "Review WI1",
+                "description": "Review WI1",
+                "expended": true,
+                "protectedInd": true,
+                "excludedInd": true,
+                "connectorsActivityBlock": [
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "G",
+                    "type": "GB",
+                    "name": "Review GB1",
+                    "description": "Review GB1",
+                    "expended": false
+                  },
+                  {
+                    "id": 101,
+                    "acticityDocumentCode": "C",
+                    "type": "CG",
+                    "name": "Review CG1",
+                    "description": "Review CG1",
+                    "expended": false
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "extend": false
+  },
+          {
+            "id": 241,
+            "type": "M",
+            "title": "MAP-Manufacturing Engineering",
+            "name": "MAP-Manufacturing Engineering",
+            "contentId": "FC-M-201",
+            "swimLanes": [
+              {
+                "id": 200,
+                "type": "SL",
+                "name": "Swimlane 201",
+                "excludedInd": true,
+                "protectedInd": true,
+                "activityBlocks": [
+                  {
+                    "id": 201,
+                    "acticityDocumentCode": "A",
+                    "type": "AP",
+                    "name": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                    "description": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                    "expended": true,
+                    "protectedInd": true,
+                    "excludedInd": true,
+                    "content": [
+                      {
+                        "id": 201,
+                        "acticityDocumentCode": "C",
+                        "type": "CG",
+                        "name": "Review Content 201 CG1",
+                        "description": "Review 201 CG1",
+                        "expended": false
+                      },
+                      {
+                        "id": 202,
+                        "acticityDocumentCode": "I",
+                        "type": "WI",
+                        "name": "Review Content 202 WI1",
+                        "description": "Review 202 WI1",
+                        "expended": false
+                      }
+                    ]
+                  },
+                  {
+                    "id": 2021,
+                    "type": "M",
+                    "title": "MAP-Manufacturing SM 1",
+                    "name": "MAP-Manufacturing SM 1",
+                    "contentId": "FC-M-000401",
+                    "swimLanes": [
+                      {
+                        "id": 200,
+                        "type": "SL",
+                        "name": "  Swimlane FM",
+                        "excludedInd": true,
+                        "protectedInd": true,
+                        "activityBlocks": [
+                          {
+                            "id": 201,
+                            "acticityDocumentCode": "A",
+                            "type": "AP",
+                            "name": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                            "description": "PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                            "expended": true,
+                            "protectedInd": true,
+                            "excludedInd": true,
+                            "content": [
+                              {
+                                "id": 201,
+                                "acticityDocumentCode": "C",
+                                "type": "CG",
+                                "name": "Review Content 201 CG1",
+                                "description": "Review 201 CG1",
+                                "expended": false
+                              },
+                              {
+                                "id": 202,
+                                "acticityDocumentCode": "I",
+                                "type": "WI",
+                                "name": "Review Content 202 WI1",
+                                "description": "Review 202 WI1",
+                                "expended": false
+                              }
+                            ]
+                          },
+                          {
+                            "id": 2022,
+                            "type": "M",
+                            "title": "MAP-Manufacturing SM 2",
+                            "name": "MAP-Manufacturing SM 2",
+                            "contentId": "FC-M-000301",
+                            "swimLanes": [
+                              {
+                                "id": 200,
+                                "type": "SL",
+                                "name": "  Swimlane 898",
+                                "excludedInd": true,
+                                "protectedInd": true,
+                                "activityBlocks": [
+                                  {
+                                    "id": 201,
+                                    "acticityDocumentCode": "A",
+                                    "type": "AP",
+                                    "name": "New PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                                    "description": "New PREFERRED CONFIG, LL, SIMILAR ENGINES",
+                                    "expended": true,
+                                    "protectedInd": true,
+                                    "excludedInd": true,
+                                    "content": [
+                                      {
+                                        "id": 201,
+                                        "acticityDocumentCode": "C",
+                                        "type": "CG",
+                                        "name": "Cric Content FC-C-000092  CG1",
+                                        "description": "Cric FC-C-000092 CG1",
+                                        "expended": false
+                                      },
+                                      {
+                                        "id": 501,
+                                        "acticityDocumentCode": "C",
+                                        "type": "CG",
+                                        "name": "Cric Content FC-C-000093  CG1",
+                                        "description": "Cric FC-C-000093 CG1",
+                                        "expended": false
+                                      },
+                                      {
+                                        "id": 202,
+                                        "acticityDocumentCode": "I",
+                                        "type": "WI",
+                                        "name": "Review Content 202 WI1",
+                                        "description": "Review 202 WI1",
+                                        "expended": false
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "extend": false
+                          }
+                        ]
+                      }
+                    ],
+                    "extend": false
+                  }
+                ]
+              }
+            ],
+            "extend": false
+          }
+        ]
+      }
+    ],
+    "extend": false
+  }
+]

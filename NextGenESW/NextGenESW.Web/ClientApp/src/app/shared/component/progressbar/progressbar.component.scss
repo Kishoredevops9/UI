@@ -1,0 +1,242 @@
+@import "../../../../scss/helpers/mixins";
+@import "../../../../scss/helpers/variables";
+
+.docType-Status {
+  display: inline-block;
+  max-width: 300px;
+  width: 100%;
+  float: right;
+
+  .progressbar {
+    counter-reset: step;
+    margin-top: 5px;
+    display: flex;
+
+    li {
+      list-style: none;
+      display: flex;
+      width: 20%;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+      @include font-face-BarlowSemiCondensed-Medium(9px, 9px);
+      letter-spacing: 0.21px;
+      padding-bottom: 10px;
+
+      &:before {
+        content: "";
+        width: 15px;
+        height: 15px;
+        line-height: 15px;
+        border-radius: 100%;
+        display: block;
+        text-align: center;
+        margin: 3px auto 3px auto;
+        border: 1px solid#C9C3C3;
+        filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
+        font-size: 12px;
+        background: #dcdcdb;
+        z-index: 9;
+        border: 1px solid #c9c3c3;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 70%;
+        height: 4px;
+        top: 10px;
+        left: -35%;
+        background-color: #707070;
+        z-index: -1;
+        opacity: 0.35;
+        z-index: 9;
+      }
+
+      &.active {
+        @include font-face-BarlowSemiCondensed-Medium(9px, 9px);
+        color: black;
+
+        &.WI,
+        &.I {
+          &:before {
+            background-color: $content-type-wi;
+          }
+        }
+
+        &.GB {
+          &:before {
+            background-color: $content-type-gb;
+            color: $white-color;
+          }
+        }
+
+        &.DS,
+        &.S {
+          &:before {
+            background-color: $content-type-ds;
+          }
+        }
+
+        &.CG,
+        &.C {
+          color: #404040;
+
+          &:before {
+            background-color: $content-type-cg;
+          }
+        }
+
+        &.KP,
+        &.K {
+          &:before {
+            background-color: $content-type-kp;
+          }
+        }
+
+        &.TOC,
+        &.T {
+          &:before {
+            background-color: $content-type-toc;
+          }
+        }
+
+        &.RC,
+        &.R {
+          &:before {
+            background-color: $content-type-rc;
+          }
+        }
+
+        &.AP,
+        &.A {
+          &:before {
+            background-color: $content-type-ap;
+            color: $white-color;
+          }
+        }
+
+        &.SF {
+          &:before {
+            background-color: $task-type-sf;
+          }
+        }
+
+        &.SP {
+          &:before {
+            background-color: $task-type-sp;
+          }
+        }
+
+        &.D {
+          &:before {
+            background-color: $task-type-d;
+          }
+        }
+
+        &.WI,
+        &.TOC,
+        &.DS,
+        &.KP,
+        &.AP {
+          &:before {
+            color: $white-color;
+          }
+        }
+      }
+
+      &.completed {
+        &::before {
+          background-color: #97d294;
+        }
+      }
+
+      &:nth-last-of-type(odd) {
+        flex-direction: column-reverse;
+
+        &:after {
+          top: 27px;
+        }
+      }
+
+      &:nth-last-of-type(even) {
+        flex-direction: column;
+        position: relative;
+        top: 16px;
+      }
+
+      &.status-green {
+        &:before {
+          background-color: #97d294;
+        }
+
+        .step-counter {
+          color: $white-color;
+        }
+      }
+
+      &.status-blue {
+        &:before {
+          background-color: #0089ff;
+        }
+
+        .step-counter {
+          color: $white-color;
+        }
+      }
+
+      .step-label {
+        color: $black-color;
+      }
+    }
+
+    &.counter {
+      li {
+        &:before {
+          position: relative;
+          top: -13px;
+        }
+
+        .wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column-reverse;
+          position: relative;
+          z-index: 99;
+
+          .step-label {
+            padding-bottom: 5px;
+          }
+
+          .step-counter {
+            position: relative;
+            top: 1px;
+          }
+        }
+
+        &:nth-last-of-type(even) {
+          top: 18px;
+
+          .wrapper {
+            flex-direction: column;
+
+            .step-counter {
+              position: relative;
+              top: -15px;
+              margin-bottom: -10px;
+            }
+          }
+
+          &:before {
+            top: 0px;
+          }
+        }
+      }
+    }
+  }
+
+  .progressbar li:first-child:after {
+    content: none;
+  }
+}

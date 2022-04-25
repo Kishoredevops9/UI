@@ -1,0 +1,113 @@
+@import "../../../../../scss/helpers/variables";
+@import "../../../../../scss/helpers/mixins";
+@import "../../../../../scss/helpers/breakpoints";
+@import "../../../../../scss/helpers/placeholders";
+@import "../../../../../scss/base/_global.scss";
+
+.task-execution {
+  .arrow-icon {
+    margin-top: 2%;
+    float: right;
+    cursor: pointer;
+  }
+
+  .header-field {
+    font-family: "BarlowSemiCondensed-Medium";
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: #000000;
+    margin: 20px 0;
+  }
+
+  .sub_child_container {
+    display: flex;
+
+    .mat_accordino_container {
+      flex-grow: 1;
+    }
+  }
+
+  .expand {
+    float: right;
+    margin-left: auto;
+    cursor: pointer;
+
+    .arrow {
+      width: 10px;
+      margin-left: 10px;
+      opacity: 0.6;
+    }
+  }
+
+  .item-details {
+    position: relative;
+  }
+
+  .mat_panel {
+    margin: 10px 0px !important;
+  }
+
+  .contentId {
+    flex-grow: 1;
+  }
+
+  //Approval Workflow Modal Window
+
+  ::ng-deep {
+    .mat-expansion-panel-header {
+      border-bottom: none !important;
+    }
+
+    .mat-expansion-panel-body {
+      ul {
+        margin: 0;
+
+        li {
+          .heading {
+            margin: 0;
+          }
+        }
+      }
+    }
+    .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+      border-color: #3f51b5;
+    }
+
+    .mat-radio-inner-circle {
+      background-color: #3f51b5;
+    }
+    .mat-radio-ripple .mat-ripple-element {
+      background-color: rgba(#3f51b5, 0.26);
+    }
+  }
+
+  .mat-expansion-panel-header {
+    .mat-expansion-panel-header-title {
+      align-items: center;
+
+      .hr {
+        display: flex;
+        width: 100%;
+        border-bottom: 1px solid transparent;
+
+        &.d {
+          border-bottom: 2px solid $task-type-d !important;
+        }
+      }
+    }
+  }
+  .expand {
+    float: right;
+    margin-left: auto;
+    cursor: pointer;
+
+    .arrow {
+      width: 10px;
+      margin-left: 10px;
+      opacity: 0.6;
+    }
+  }
+  .checkbox {
+    padding-right: 10px;
+  }
+}

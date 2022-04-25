@@ -1,0 +1,20 @@
+<div *ngIf="contentInfo.length > 0 && contentInfo.name == 'SP'" class="approval_container">
+  <ul>
+    <li *ngFor="let content of contentInfo; let i = index">
+      <div class="child_content">
+        <span> <mat-checkbox> </mat-checkbox></span>
+        <span class="title"
+          ><b>{{ content.heading }}</b></span
+        >
+      </div>
+      <div class="child_content">
+        <span> <mat-checkbox> </mat-checkbox></span>
+        <span class="title">
+          <b>{{ content.subHeading }}</b>
+          <br />
+          {{ content.innerContent }}
+        </span>
+      </div>
+    </li>
+  </ul>
+</div>

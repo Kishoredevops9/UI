@@ -1,0 +1,128 @@
+<div class="modify-group">
+  <div class="mat-dialoag-header">
+    <h2 mat-dialog-title>
+      {{ showUpdateButton ? 'Edit Swimlane' : 'Add Swimlane' }}
+    </h2>
+    <span class="material-icons" mat-dialog-close>
+      close
+    </span>
+  </div>
+  <div mat-dialog-content>
+    <form [formGroup]="groupForm">
+
+
+      <!-- <ng-container *ngIf="isStepFlow">
+        <div class="flexItemBox">
+
+          <div class="label"> Name </div>
+          <div class="blockBox">
+            <mat-form-field style="width: 100% !important;">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="name" formControlName="name" />
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </ng-container> -->
+
+      <div>
+        <div *ngIf="isStep" class="flexItemBox">
+
+          <div class="label"> Discipline </div>
+          <div class="blockBox">
+
+            <div class="example-form-field top_margin_new">
+              <mat-label *ngIf="selctdata.length > 0">
+                <div class="txtOverflows">{{selctdata}}</div>
+              </mat-label>
+              <mat-label *ngIf="!selctdata.length"> Select Discipline</mat-label>
+              <a class="iconwidth" mat-button matSuffix mat-icon-button
+                (click)="showDisciplineDropDown=(showDisciplineDropDown)?false:true">
+                <mat-icon>
+                  {{ ( showDisciplineDropDown ) ? 'close' : 'expand_more' }}
+                </mat-icon>
+              </a>
+              <mat-card class="dropbox" [hidden]="!showDisciplineDropDown">
+                <app-discipine-tree [flag]="true" [disciplineEvents]="eventsDiscipline.asObservable()"
+                  (setDisciplineData)="setDisciplineData($event)" [treedata]="discipline">
+                </app-discipine-tree>
+              </mat-card>
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+        <div class="flexItemBox">
+          <div class="label"> Background Color </div>
+          <div class="blockBox">
+            <mat-form-field class="iconFontS" style="width: 100% !important;">
+              <mat-label> Background Color</mat-label>
+              <input matInput [ngxMatColorPicker]="picker1" formControlName="color">
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker1"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker1 [touchUi]="touchUi"></ngx-mat-color-picker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="flexItemBox">
+          <div class="label"> Border Color </div>
+          <div class="blockBox">
+            <mat-form-field class="iconFontS" style="width: 100% !important;">
+              <mat-label>Border Color</mat-label>
+              <input matInput [ngxMatColorPicker]="picker2" formControlName="borderColor">
+              <ngx-mat-color-toggle style="font-size: 25px;" matSuffix [for]="picker2"></ngx-mat-color-toggle>
+              <ngx-mat-color-picker #picker2 [touchUi]="touchUi"></ngx-mat-color-picker>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+      <div>
+        <div class="flexItemBox">
+
+          <div class="label">Border Width</div>
+          <div class="blockBox">
+            <mat-form-field style="width: 100% !important;">
+              <mat-label>Border Width</mat-label>
+              <input matInput placeholder="Border Width" min="1" max="5" formControlName="borderWidth" type="number" />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="flexItemBox">
+          <div class="label"> Border Styles </div>
+          <div class="blockBox">
+            <mat-form-field style="width: 100% !important;">
+              <mat-select formControlName="borderStyle">
+                <mat-option [value]="'dotted'">dotted </mat-option>
+                <mat-option [value]="'dashed'">dashed </mat-option>
+                <mat-option [value]="'solid'">solid </mat-option>
+                <mat-option [value]="'double'">double </mat-option>
+                <mat-option [value]="'groove'">groove </mat-option>
+                <mat-option [value]="'ridge'">ridge </mat-option>
+                <mat-option [value]="'inset'">inset </mat-option>
+                <mat-option [value]="'outset'">outset </mat-option>
+                <mat-option [value]="'none'">none </mat-option>
+                <mat-option [value]="'hidden'">hidden </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button mat-raised-button [disabled]="!groupForm.valid" class="mat-button" color="primary"
+          (click)="onFormSubmit()">
+          {{ showUpdateButton ? 'Update' : 'Save' }}
+        </button>
+        &nbsp; &nbsp; &nbsp;
+        <button mat-raised-button mat-dialog-close class="mat-button" color="warn">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

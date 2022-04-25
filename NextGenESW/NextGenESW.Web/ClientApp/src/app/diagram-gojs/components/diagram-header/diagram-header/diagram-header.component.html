@@ -1,0 +1,32 @@
+<div class="app-diagram-header">
+  <div
+    *ngIf="!isTaskExecutionMap"
+    class="app-diagram-header__toggle-container"
+  >
+    <span>Show connectors:</span>
+    <div class="app-diagram-header__toggle">
+      <span>Hide</span>
+      <mat-slide-toggle
+        (change)="toggleLinksVisibility($event)"
+        [(ngModel)]="linksVisibility"></mat-slide-toggle>
+      <span>Show</span>
+    </div>
+  </div>
+  <div
+    *ngIf="showExportMenu || !isTaskExecutionMap"
+    class="app-diagram-header__export"
+  >
+    <img src="./assets/images/Dots_menu_Icon.svg" [matMenuTriggerFor]="beforeMenu"/>
+    <mat-menu #beforeMenu="matMenu" class="contentMatMenuMap">
+      <button mat-menu-item class="custom-menu-item" (click)="onPDFExportClick()">
+        <span>Export As PDF</span>
+      </button>
+      <button mat-menu-item class="custom-menu-item" (click)="onSVGExportClick()">
+        <span>Export As SVG</span>
+      </button>
+      <button mat-menu-item class="custom-menu-item" (click)="onPNGExportClick()">
+        <span>Export As PNG</span>
+      </button>
+    </mat-menu>
+  </div>
+</div>

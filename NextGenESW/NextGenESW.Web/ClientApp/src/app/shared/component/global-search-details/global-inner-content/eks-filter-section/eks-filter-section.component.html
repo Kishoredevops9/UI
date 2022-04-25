@@ -1,0 +1,30 @@
+<div class="eks-collection-filter" style="position: relative;">
+  <div class="doverly" *ngIf="EventIndex" [disabled]="EventIndex"> </div>
+  <div class="collection_box">
+    <h4>All EKS Collection </h4>
+    <div class="full-width md1-grid mdl-cell mdl-cell--12-col">
+      <ul>
+        <li *ngFor="let eksCollection of allEKSCollection" [hidden]="!eksCollection.active">
+          <span class="mdl-cell mdl-cell--2-col mdl-cell--2-col-tablet mdl-cell--2-col-phone header-row">
+            <label class="{{ eksCollection.class }}">
+              <input type="checkbox" (change)="onChangeEKSCollection(eksCollection)"
+                [(ngModel)]="eksCollection.checked">
+              <span class="all_type {{ eksCollection.keyword }}">{{ eksCollection.code }}</span>
+              <button> {{ eksCollection.name }} </button>
+            </label>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+<div class="filter_box collection_box" style="position: relative;">
+  <div class="doverly" *ngIf="EventIndex" [disabled]="EventIndex"> </div>
+  <h4>Filter Selected By:</h4>
+
+  <div class="treebox">
+    <eks-search-app-left-box (tagdata)="tagData($event)" [treedata]="filterData">
+    </eks-search-app-left-box>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="wrapper">
+  <div class="containerLeft">
+    <button mat-button
+            mat-raised-button
+            color="primary"
+            [disabled]="filtertype==1"
+            (click)="setFilterType(1)"
+            class="submit-btn">Search By Filter</button>
+    <!-- <button mat-button
+            mat-raised-button
+            color="primary"
+            [disabled]="filtertype==2"
+            (click)="setFilterType(2)"
+            class="submit-btn right">Browse STEP Flows</button> -->
+
+    <form [formGroup]="tagBuildSearchForm"
+          id="editActivity"
+          *ngIf="filtertype==1">
+      <div class="searchHeader">
+        <div class="searchbox">
+          <input matInput
+                 formControlName="searchText"
+                 type="text"
+                 placeholder="Search Text"
+                 onfocus="this.placeholder = ''"
+                 onblur="this.placeholder = 'Search Text'"
+                 (change)="filterSearchTextBSub.next($event.target.value)"
+                 (keyup)="filterSearchTextBSub.next($event.target.value)" />
+        </div>
+      </div>
+
+      <div class="treebox">
+        <app-left-box (tagdata)="tagData($event)"
+                      [checkednode]="taskItems$ | async"
+                      [delevents]="eventsSubject.asObservable()"
+                      [treedata]="treedata"
+                      [expendOpt]="filterExpandOpt">
+        </app-left-box>
+      </div>
+    </form>
+
+    <form [formGroup]="tagBuildSearchForm"
+          id="editActivity"
+          *ngIf="filtertype==2">
+      <div class="searchHeader">
+        <div class="searchbox">
+          <input matInput
+                 formControlName="mapsearchText"
+                 type="text"
+                 (change)="stepFSearchTextBSub.next($event.target.value)"
+                 (keyup)="stepFSearchTextBSub.next($event.target.value)"
+                 placeholder="Search Step Flows"
+                 onfocus="this.placeholder = ''"
+                 onblur="this.placeholder = 'Search Step Flows'" />
+        </div>
+      </div>
+      <!-- [checkednode]= "checkedmap"  -->
+      <div class="treebox">
+        <app-left-box (tagdata)="mapDataEvent($event)"
+                      [checkednode]="checkedmap"
+                      [treedata]="mapData"
+                      [expendOpt]="stepFExpandOpt">
+        </app-left-box>
+      </div>
+    </form>
+  </div>
+
+  <div class="containerRight">
+    <button mat-button
+            mat-raised-button
+            color="primary"
+            [disabled]="!filterBtn"
+            *ngIf="filtertype==1"
+            (click)="onSearchSubmit()"
+            class="submit-btn">Apply Filter </button>
+    <!-- <button mat-button
+            mat-raised-button
+            color="primary"
+            [disabled]="!param.taskId"
+            *ngIf="filtertype==2"
+            (click)="saveMap()"
+            class="submit-btn">Add Browsed Step Flow</button> -->
+
+    <div class="applyFilters selected-games-wrap">
+      <div class="applybox">Applied Filters: </div>
+      <div class="chipbox">
+        <mat-chip-list>
+          <mat-chip *ngFor="let chip of  taskItems$ | async"
+                    [selectable]="selectable">
+            {{ chip.name }}
+            <mat-icon matChipRemove
+                      (click)="removeChipData(chip)">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      </div>
+    </div>
+
+    <div class="workbox">
+      <app-task-build [stepflowlist]="stepFlowData"></app-task-build>
+    </div>
+  </div>
+</div>

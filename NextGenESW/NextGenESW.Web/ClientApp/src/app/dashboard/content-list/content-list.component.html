@@ -1,0 +1,333 @@
+<div *ngIf="isLoading" id="cover-spin"></div>
+<div class="table-wrapper">
+<ngx-ui-loader fgsSize="75" [loaderId]="'content-loader'"> </ngx-ui-loader>
+<div ngxUiLoaderBlurred blur="2" [loaderId]="'content-loader'">
+    <div class="heading-band">
+      <div class="mat-title">Your Content <span *ngIf="fullView">( {{totalRecords}} )</span></div>
+      <div class='slide-toggle' *ngIf="fullView">
+        All<mat-slide-toggle class="toggle" [(ngModel)]="isChecked" (change)="toogleChanges()"></mat-slide-toggle>
+        Pending
+      </div>
+      <div class="bar-icon" [hidden]="!fullView" (click)="filterpop()" tooltip="" data-tooltip="8006"
+        placement="bottom"></div>
+      <div class="fullview-icon" (click)="widgetFullView('back')" *ngIf="fullView">
+        <span class="expand" [ngClass]="fullView ? 'active' : ''"></span>
+      </div>
+    </div>
+
+
+    <div *ngIf="filterPopShow && fullView" fxLayout="row" fxLayoutAlign="center center" class="filterDiv">
+      <mat-card class="filter-card" *ngIf="filterPopShow">
+        <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title>Filter</mat-card-title>
+          <span (click)="closeFilterPop()" class="material-icons clsFilter">close</span>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="example-container" fxLayout="column" fxLayoutAlign="space-around center">
+            <div fxLayout="row" fxLayoutAlign="space-around center" class="fieldWidths" [formGroup]="contentFilterForm">
+              <mat-form-field class="filter-block">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="docType">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select Type
+                  </mat-option>
+                  <mat-option *ngFor="let documentType of uniqueDocType" [value]="documentType">
+                    {{ (documentType === 'ProcessMaps')? 'M' : documentType}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <!-- <mat-form-field class="filter-block">
+                <mat-label>Id</mat-label>
+                <input matInput type="text" formControlName="id"/>
+
+              </mat-form-field> -->
+
+              <mat-form-field class="filter-block">
+                <mat-label>Content Id</mat-label>
+                <mat-select formControlName="id">
+                  <input formControlName="uniqueContentInput" class="inside-select-filter-box" placeholder="Content Id" autocomplete="off" (keyup)="applyContentIdFilter($event.target.value)" />
+                  <!-- <mat-option (click)="clearFilter()" value="">
+                    Select Content Id
+                  </mat-option> -->
+                  <mat-option *ngFor="let contentId of uniqueContentFilterId" [value]="contentId">
+                    {{ contentId }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+
+
+              <!-- <mat-form-field class="filter-block">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" formControlName="title"/>
+
+              </mat-form-field> -->
+
+              <mat-form-field class="filter-block">
+                <mat-label>Name</mat-label>
+                <mat-select formControlName="title">
+                  <input matInput formControlName="uniqueNameInput" style="border: 1px solid #ccc; padding: 5px; margin: 5px; width: 95%;" placeholder="Name" autocomplete="off" (keyup)="applyNameFilter($event.target.value)" />
+                  <!-- <mat-option (click)="clearFilter()" value="">
+                    Select Name
+                  </mat-option> -->
+                  <mat-option *ngFor="let name of uniqueFilterName" [value]="name">
+                    {{ name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="pwStatus">
+                  <!-- <input matInput placeholder="Filter name" (keyup)="applyFilter($event.target.value)" />                   -->
+                  <mat-option *ngFor="let pwStatus of uniqueFilterStatus" [value]="pwStatus">
+                    {{ pwStatus }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block">
+                <mat-label>J&C</mat-label>
+                <mat-select formControlName="jc">
+                  <mat-option (click)="clearFilter()" value="">
+                    Select J&C
+                  </mat-option>
+                  <mat-option *ngFor="let jc of uniqueJC" [value]="jc">
+                    {{ jc }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="filter-block">
+                <mat-label>Update</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="updatedStartDate" placeholder="Start date">
+                  <input matEndDate formControlName="updatedEndDate" placeholder="End date">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+
+              </mat-form-field>
+
+              <button mat-button mat-raised-button (click)="applyContentFilter()" color="primary">Apply
+                Filter</button>
+              <button mat-button mat-raised-button (click)="resetFilterPop()" color="accent">Reset Filter</button>
+
+            </div>
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+    </div>
+
+
+
+
+    <mat-table [dataSource]="dataSource" class="data-table" matSort>
+
+      <ng-container matColumnDef="documentType">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Type</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="typeIcon">
+          <span class="type" [ngClass]="element.documentType | lowercase">{{ (element.documentType === 'ProcessMaps')?
+            'M' : element.documentType }}</span>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="contentId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Content Id#</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <ng-container>
+            <a (click)="openContent(element)" class="matCell-href"
+            matTooltip="{{element.contentId || element.id}}">{{element.contentId || element.id}}</a>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Name</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="titlePart" matTooltip="{{element.title}}">{{element.title}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="version">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">version </div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="version" matTooltip="{{element.version}}">{{element.version}}</div>
+        </mat-cell>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="pwStatus">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Status</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="statusPart" matTooltip="{{element.pwStatus}}">{{element.pwStatus}}</div>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="jc">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div tooltip="" data-tooltip="8005" placement="bottom" class="headingsContent">J&C</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="jcPart" matTooltip="{{element.jc}}">{{element.jc}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="comments">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Comments</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="commentsPart" matTooltip="{{element.comments}}">{{element.comments}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="modified">
+        <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="fullView ? 'bigView' : 'smallView' ">
+          <div class="headingsContent">Update</div>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <div class="modifiedPart">{{element.modified | date:"MM/dd/yy"}}</div>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef>&nbsp;</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="threeDots">
+          <!--
+        <ng-container *ngIf="element.pwStatus === 'Draft'">
+          <span class="material-icons link" title="Collaborate" (click)="onCollaborate(element)">person_add</span>&nbsp;&nbsp;
+          <span class="material-icons link" title="Publish" (click)="onPublish(element)">publish</span> Preview
+        </ng-container>
+        -->
+          <!-- Three Dot Dropdown -->
+          <button mat-icon-button [matMenuTriggerFor]="beforeMenu" class="dotBtn" tooltip="" data-tooltip="8009"
+            placement="bottom">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #beforeMenu="matMenu" xPosition="before" class="contentMatMenu">
+            <button mat-menu-item (click)="onCollaborate(element)" *ngIf="element.pwStatus == 'Draft'">
+              <span>Ask to Co-Author</span>
+            </button>
+
+            <button mat-menu-item (click)="openContent(element, true, false)" *ngIf="element.pwStatus == 'Published'">
+              <span>Revise</span>
+            </button>
+            <!--
+          <button mat-menu-item>
+            <span>Ask for Comments</span>
+          </button>
+          <button mat-menu-item>
+            <span>Ask for Review</span>
+          </button>
+          <button mat-menu-item>
+            <span>Extract</span>
+          </button>
+          -->
+            <button mat-menu-item (click)="openRequestModal(requestApprovalTemplate,element)"
+              *ngIf="element.pwStatus === 'Draft'">
+              <span>Ask for Approval</span>
+            </button>
+            <!-- <button mat-menu-item *ngIf="element.documentType === 'GB' || element.documentType === 'DS' || element.documentType === 'WI' ">
+            <span>Submit to Classification</span>
+          </button> -->
+            <button mat-menu-item (click)="openContent(element, false, true)"
+              *ngIf="(element.documentType === 'SP' || element.documentType === 'SF' || element.documentType === 'AP' || element.documentType === 'KP' || element.documentType === 'GB' || element.documentType === 'DS' || element.documentType === 'WI') &&(element.pwStatus.toLowerCase() !== 'published')">
+              <span>Preview</span>
+            </button>
+
+            <!--  <button mat-menu-item (click)="onPublish(element)" *ngIf="element.documentType === 'GB' || element.documentType === 'DS' || element.documentType === 'WI' ">
+            <span>Publish</span>
+          </button> -->
+
+          </mat-menu>
+
+        </mat-cell>
+      </ng-container>
+
+
+      <!-- Header and Row Declarations -->
+      <mat-header-row *matHeaderRowDef="displayedColumns">
+      </mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+
+    <div [hidden]='!fullView'>
+      <mat-paginator paginationCaching="yourContent" [length]="totalRecords" [pageSize]="pageRowCounts[0]" [pageSizeOptions]='pageRowCounts'
+        showFirstLastButtons>
+      </mat-paginator>
+    </div>
+
+    <mat-card *ngIf="isLoading" class="spiner">
+      <mat-progress-spinner color="primary" mode="indeterminate" diameter="25">
+      </mat-progress-spinner>
+    </mat-card>
+
+    <div fxLayout="row" fxLayoutAlign="center center" class="viewContainer">
+      <div class="viewMore">
+        <span *ngIf="!fullView" (click)="widgetFullView('viewMore')">View More</span>
+        <span *ngIf="fullView" (click)="widgetFullView('back')">Back to Dashboard</span>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #requestApprovalTemplate>
+  <div class="requestApprovals">
+    <h2 class="modal-title">REQUEST APPROVAL</h2>
+    <div>
+      <div class="request">
+        <mat-form-field>
+          <input matInput (ngModelChange)="filterCoauthor($event)" type="text" [matAutocomplete]="Coauthor"
+            name="Coauthor" [(ngModel)]="selectedcontentOwner" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <br />
+          <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor">
+            <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+              <span>{{ item.displayName }}</span>
+              &nbsp;(<span class="email">{{ item.displayName }}</span>)
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <textarea class="request-text-area" matInput placeholder="{{placeholder}}"
+          [(ngModel)]="requestComment"></textarea>
+      </div>
+      <div class="warning-dialg">
+        <p class="warning-heading"><b>WARNING</b></p>
+        <p class="warning-content"><b>Please make sure that you do not enter any Tech Data in the Comment column.</b>
+        </p>
+      </div>
+      <div>
+        <span style="margin-right:2%;margin-left: 53%;">
+          <button class="cancel-button" mat-raised-button color="primary" (click)="onCloseButtonClick()">
+            <div>Cancel</div>
+          </button>
+        </span>
+        <button class="send-button" mat-raised-button color="primary" [disabled]="disableSubmit"
+          (click)=onRequestApproval()>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

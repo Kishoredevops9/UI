@@ -1,0 +1,88 @@
+
+    {
+      "id": 100,
+      "type": "M",
+      "title": "APY System Engineering Map 100",
+      "contentId": "FC-M-101",
+      "swimLanes": [
+        {
+          "id": 100,
+          "type": "SL",
+          "name": "Blank Swimlane 101",  
+          "activityBlocks": [
+            {
+              "id": 101,
+              "type": "AP",
+              "title": "BSL1",
+              "description": "Review ESW, PREFERRED CONFIG, LL, SIMILAR ENGINES",
+              "expended": true,
+              "connectorsActivityBlock": [
+                {
+                  "id": 101,
+                  "type": "CG",
+                  "title": "CG1",
+                  "description": "Review CG1",
+                  "expended": true,
+                  "connectorsActivityBlock": [
+                    {
+                      "id": 101,
+                      "type": "GB",
+                      "title": "GB1",
+                      "description": "Review GB1 101",
+                      "expended": true,
+                      "connectorsActivityBlock": [
+                        {
+                          "id": 101,
+                          "type": "RC",
+                          "title": "RC1 345",
+                          "description": "Review RC1",
+                          "expended": false
+                        },
+                        {
+                          "id": 101,
+                          "type": "RC",
+                          "title": "RC1 345",
+                          "description": "Review RC2",
+                          "expended": false
+                        }
+                      ]
+                    },
+                    {
+                      "id": 101,
+                      "type": "WI",
+                      "title": "WI1",
+                      "description": "Review WI1",
+                      "expended": false
+                    }
+                  ]
+                },
+                {
+                  "id": 101,
+                  "type": "WI",
+                  "title": "WI1",
+                  "description": "Review WI1",
+                  "expended": true,
+                  "connectorsActivityBlock": [
+                    {
+                      "id": 101,
+                      "type": "GB",
+                      "title": "GB1",
+                      "description": "Review GB1",
+                      "expended": false
+                    },
+                    {
+                      "id": 101,
+                      "type": "CG",
+                      "title": "CG1",
+                      "description": "Review CG1",
+                      "expended": false
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "extend": false
+    }

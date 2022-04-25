@@ -1,0 +1,38 @@
+<div class="docType-Status" *ngIf="!deviationGlobalStatus">
+  <ul class="progressbar counter" *ngIf="counterEnable;else default">
+    <li [ngClass]="item.documentNumber != 0 ? documentcontentType + ' ' + 'status-green' :
+    i < selectedActivityIndex || i < firstIndexOfActivity && item.documentNumber == 0 ? documentcontentType + ' ' + 'status-blue':
+    i < lastIndexOfActivity ? 'status-green':
+    documentcontentType + ' ' +  'status-default'" *ngFor="let item of progressBarData; let i=index">
+      <div class="wrapper">
+        <span class=" step-counter">{{item.documentNumber}}</span>
+        <span class="step-label">{{item.status}}</span>
+      </div>
+    </li>
+  </ul>
+
+  <ng-template #default>
+    <ul class="progressbar">
+      <li
+        [ngClass]="docTypeStatus == item.status ? documentcontentType + ' ' + 'active': i < selectedIndex ? documentcontentType + ' ' + 'completed': documentcontentType"
+        *ngFor="let item of progressBarData; let i= index">
+        <span class="step-label">{{item.status}}</span>
+      </li>
+    </ul>
+  </ng-template>
+</div>
+
+<div class="docType-Status" *ngIf="deviationGlobalStatus">
+  <!-- Deviation Status -->
+  <ul class="progressbar counter">
+    <li [ngClass]="item.count != 0 ? documentcontentType + ' ' + 'status-green' :
+    i < selectedDeviationIndex || i < firstIndexOfDeviation && item.count == 0 ? documentcontentType + ' ' + 'status-blue':
+    i < lastIndexOfDeviation ? 'status-green':
+    documentcontentType + ' ' +  'status-default'" *ngFor="let item of progressBarData; let i=index">
+      <div class="wrapper">
+        <span class=" step-counter">{{item.count}}</span>
+        <span class="step-label">{{item.name}}</span>
+      </div>
+    </li>
+  </ul>
+</div>

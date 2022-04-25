@@ -1,0 +1,110 @@
+
+<mat-menu #contextmenu>
+  <div *ngIf="innernode.level==2"> <button mat-menu-item (click)="deleteActivityTree(innernode)">
+      <img src="../../../assets/images/Delete.svg" />
+      <span>Delete</span>
+    </button>
+    <button mat-menu-item (click)="treeAddActivityShape()">
+      <img src="../../../assets/images/Add.svg" />
+      <span>Add Activity Shape</span>
+    </button>
+    <button mat-menu-item (click)="treeEditActivityShape()">
+      <img src="../../../assets/images/Add.svg" />
+      <span>Edit Activity Shape</span>
+    </button>
+  </div>
+
+  <div *ngIf="innernode.level==1">
+
+    <button mat-menu-item (click)="moveUpFunction()">
+      <img src="../../../assets/images/move-up-tree.svg" />
+      <span>Move Up</span>
+    </button>
+    <button mat-menu-item (click)="moveDownFunction()">
+      <img src="../../../assets/images/move-down-tree.svg" />
+      <span>Move Down</span>
+    </button>
+    <button mat-menu-item (click)="onDeleteGroup(innernode)">
+      <img src="../../../assets/images/Delete.svg" />
+      <span>Delete</span>
+    </button>
+    <button mat-menu-item (click)="treeGroupModify()">
+      <img src="../../../assets/images/Add.svg" />
+      <span>Add New Swimlane</span>
+    </button>
+    <!-- Edit Swimlane Option-->
+    <button mat-menu-item (click)="editSwimlane(innernode)">
+      <img src="../../../assets/images/edit-24px.svg" />
+      <span>Edit Swimlane</span>
+    </button>
+    
+    <button mat-menu-item (click)="treeAddActivityShape()">
+      <img src="../../../assets/images/Add.svg" />
+      <span>Add Activity Shape</span>
+    </button>
+  </div>
+
+</mat-menu>
+<div [matMenuTriggerFor]="contextmenu" [style.position]="'absolute'" [style.left.px]="menuX" [style.top.px]="menuY">
+</div>
+ 
+<mat-tree  #tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+ 
+  <mat-tree-node class="leafNode" *matTreeNodeDef="let node" matTreeNodePadding matTreeNodeToggle
+    (click)="onLeafClicked(node)" [ngClass]="{ 'background-highlight': activeNode == node }">
+
+ 
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled *ngIf="node.level != 1; else elseBlock"></button>
+
+    <span>
+      <span class="material-icons roundBullet-blue" *ngIf="node.level == 1">circle</span>
+      <!-- <span class="material-icons" [style.color]="node.color">{{ node.icon }}</span> -->
+      <!-- <mat-icon class="material-icons" *ngIf="node.level == 1" >{{ node.icon }}</mat-icon> -->
+      <span class="material-icons roundBullet" *ngIf="node.level != 1">circle</span>
+      <!-- <span class="nodeText">{{ node.name }}</span> -->
+      <span class="nodeText" (contextmenu)="onTriggerContextMenu($event,node);" (click)="sendId(node)">{{ node.name  }}</span>
+
+
+    </span>
+
+    <ng-template #elseBlock>
+      <button mat-icon-button disabled class="btnDisabled"></button>
+    </ng-template>
+
+  </mat-tree-node>
+
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node (click)="onGroupClicked(node)" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
+    [ngClass]="{ clickable: activeNode }">
+     
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+      <!-- 
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+      </mat-icon>
+      -->
+      <mat-icon class="mat-icon-rtl-mirror triangleIcons">
+        {{ treeControl.isExpanded(node) ? 'arrow_drop_down' : 'arrow_right' }}
+      </mat-icon>
+
+    </button>
+
+    <!-- <mat-icon class="material-icons">{{ node.icon }}</mat-icon> -->
+    <!-- <span class="nodeText">{{ node.name }}</span> -->
+
+    <span class="nodeText"  (click)="sendToShape(node)" (contextmenu)="onTriggerContextMenu($event,node)">{{ node.name}}   </span>
+
+
+  </mat-tree-node>
+</mat-tree>
+
+<!-- <button
+    mat-raised-button
+    color="primary"
+    [disabled]="selectedActivityId == undefined"
+    (click)="onSelectLeaf(selectedActivityId)"
+  >
+    Click
+  </button> -->

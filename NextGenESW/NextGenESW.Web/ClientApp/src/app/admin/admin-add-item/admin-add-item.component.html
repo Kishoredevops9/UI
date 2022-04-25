@@ -1,0 +1,73 @@
+<div class="addItemParent">
+    <div fxLayout="column" fxLayoutAlign="space-around start">
+        <div class="addItemHeader">{{adminTitle}}</div>
+        
+        <div class="formClass" *ngIf="!adminTitleCond" novalidate>
+            <form [formGroup]="addItemForm" class="form">
+
+            <div fxLayout="row" class="">
+                <label class="formLabel">Title for {{adminContentTypes}}:</label> 
+                <mat-form-field class="example-full-width textBoxs" >
+                    <input matInput value="" formControlName="popupTitle" readonly>
+                    <mat-icon (click)="openSearchDialog()" matSuffix>visibility</mat-icon>
+                </mat-form-field>
+            </div>
+            
+            <div fxLayout="row" class="">
+                <label class="formLabel">URL:</label> 
+                <mat-form-field class="example-full-width textBoxs"  >
+                    <input matInput value="" formControlName="popupURL" readonly>
+                </mat-form-field>
+            </div>
+          
+            <!-- File Upload -->
+            <div class="flexItemBox" *ngIf="(adminContentTypes == 'Help') || (adminContentTypes == 'UserGuides')">
+                <label class="formLabel">Upload:</label>
+                <mat-form-field class="example-full-width textBoxs" >
+                    <input matInput placeholder="" class="inputElementHide" />
+                    <input type="file" name="files" (change)="onFileChanged($event)" formControlName="thumbnailImgString">
+                </mat-form-field>
+            </div>
+
+            <!-- <div fxLayout="row" class="" *ngIf="(adminContentTypes != 'Manuals') && (adminContentTypes != 'FooterLinks')">
+                <label class="formLabel">Select Parent:</label> 
+                <mat-form-field class="example-full-width textBoxs" >
+                    <input matInput value="" formControlName="selectField">
+                </mat-form-field>
+            </div> -->
+
+
+            
+
+            <div fxLayout="row" fxLayoutAlign="center center" class="actionButtons">
+                <button mat-button mat-raised-button color="primary" [disabled]="!addItemForm.valid" (click)="onItemSave()" class="submit-btn">Save</button>
+                <button mat-button mat-raised-button color="primary" (click)="onCancel()" class="submit-btn">Cancel</button>
+            </div>
+
+
+            </form>
+
+        </div>
+
+        <div class="formClass" *ngIf="adminTitleCond"  novalidate>
+            <form [formGroup]="addNewItemForm" class="form">
+
+            <div fxLayout="row" class="">
+                <label class="formLabel">Title for {{adminContentTypes}}:   </label> 
+                <mat-form-field class="example-full-width textBoxs" >
+                    <input matInput value="" formControlName="popupTitle">
+                </mat-form-field>
+            </div>
+          
+            <div fxLayout="row" fxLayoutAlign="center center" class="actionButtons">
+                <button mat-button mat-raised-button color="primary" [disabled]="!addNewItemForm.valid" (click)="onSubItemSave()" class="submit-btn">Save</button>
+                <button mat-button mat-raised-button color="primary" (click)="onCancel()" class="submit-btn">Cancel</button>
+            </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+</div>

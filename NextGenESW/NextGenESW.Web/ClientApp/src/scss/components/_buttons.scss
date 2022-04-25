@@ -1,0 +1,16 @@
+.mat-button {
+  @include font-face-Inter-Regular(13px, 18px);
+  padding: 7px 20px !important;
+  line-height: normal !important;
+  border-radius: 0 !important;
+  min-width: 110px !important;
+
+  &.mat-primary {
+    background: #3e485e;
+  }
+
+  &.mat-button-disabled {
+    background-color: rgba(0, 0, 0, 0.12) !important;
+    color: rgba(0, 0, 0, 0.26) !important;
+  }
+}

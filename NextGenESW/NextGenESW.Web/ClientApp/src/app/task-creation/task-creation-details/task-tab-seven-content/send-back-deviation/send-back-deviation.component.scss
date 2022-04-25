@@ -1,0 +1,34 @@
+@import '../../../../../scss/helpers/mixins';
+@import '../../../../../scss/helpers/variables';
+@import '../../../../../scss/helpers/breakpoints';
+@import '../../../../../scss/helpers/placeholders';
+@import '../../../../../scss/base/global';
+
+.deviation_approval {
+  textarea {
+    width: 100%;
+    border: 1px solid grey;
+    @include font-face-Barlow-Medium(14px, 30px);
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  .sub_title {
+    @include font-face-Inter-Medium(12px, normal);
+    text-transform: initial;
+    text-align: center;
+  }
+  .deviationId {
+    @include font-face-Inter-Medium(13px, normal);
+    padding: 10px 0px;
+  }
+  .deviationContent {
+    @include font-face-Inter-Regular(13px, normal);
+    padding: 10px 0px;
+  } 
+  .dev_title {
+    padding: 0px 5px;
+    padding-right:10px;
+  }
+}

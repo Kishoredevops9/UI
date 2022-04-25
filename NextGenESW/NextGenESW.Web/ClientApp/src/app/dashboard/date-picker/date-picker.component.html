@@ -1,0 +1,35 @@
+<div class="date-picker-container">
+  <form [formGroup]="dateRangeForm">
+    <mat-form-field class="startDate">
+      <input
+        matInput
+        [matDatepicker]="pickerStartDate"
+        [min]="minDate"
+        formControlName="startDate"
+        [ngModel]="dateF"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerStartDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerStartDate> </mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="endDate">
+      <input
+        matInput
+        [matDatepicker]="pickerEndDate"
+        [min]="minDate"
+        formControlName="endDate"
+        [ngModel]="dateF"
+      />
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="pickerEndDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #pickerEndDate> </mat-datepicker>
+    </mat-form-field>
+  </form>
+  <small *ngIf="dateRangeForm.hasError('notValid')" class="error"
+    >Not a Valid Date Range.</small
+  >
+</div>

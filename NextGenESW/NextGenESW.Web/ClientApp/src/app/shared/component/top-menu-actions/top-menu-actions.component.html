@@ -1,0 +1,149 @@
+<ng-template #requestApprovalTemplate>
+  <div class="modal-wrapper">
+    <h2 class="modal-title">REQUEST APPROVAL</h2>
+    <div>
+      <div class="request">
+        <mat-form-field>
+          <input matInput (ngModelChange)="filterCoauthor($event)" type="text" [matAutocomplete]="Coauthor"
+            name="Coauthor" [(ngModel)]="selectedcontentOwner" />
+          <span class="highlight"></span>
+          <span class="bar"></span>
+          <br />
+          <mat-autocomplete #Coauthor="matAutocomplete" [displayWith]="displayCoAuthor">
+            <mat-option *ngFor="let item of filteredCoauthor" [value]="item.displayName">
+              <span>{{ item.displayName }}</span>
+              &nbsp;(<span class="email">{{ item.displayName }}</span>)
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <textarea class="request-text-area" matInput placeholder="{{placeholder}}"
+          [(ngModel)]="requestComment"></textarea>
+      </div>
+      <div class="warning-dialg">
+        <p class="warning-heading"><b>WARNING</b></p>
+        <p class="warning-content"><b>Please make sure that you do not enter any Tech Data in the Comment column.</b>
+        </p>
+      </div>
+      <div class="btn-wrapper">
+        <button class="cancel-button" mat-button mat-raised-button (click)="onCloseButtonClick()">
+          Cancel
+        </button>
+        <button class="send-button" mat-button mat-raised-button color="primary" [disabled]="disableSubmit"
+          (click)=onRequestApproval()>
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #mytemplate>
+  <div class="modal-wrapper">
+    <h2 class="modal-title">APPROVE/SEND BACK</h2>
+    <div class="dropdown">
+      <mat-form-field>
+        <mat-select [(value)]="selected" (selectionChange)="handleOnMatSelect(selected)" required>
+          <mat-option value="Send">SELECT</mat-option>
+          <mat-option value="Approve">APPROVE</mat-option>
+          <mat-option value="Send Back">SEND BACK</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <div class="checkbox">
+        <p style="margin-bottom: 25px" *ngIf="(selected == 'Approve') && (showWarningMsg)">
+          You are approving an editorial revision. No changes to technical content
+          are allowed. The J&C will be inherited from the prior revision. The
+          content will be published automatically, upon your approval.
+        </p>
+        <mat-checkbox *ngIf="(selected == 'Approve') && (showWarningMsg)" (change)="handleOnCheckBoxChange($event)" [checked]="checked">I
+          acknowledge</mat-checkbox>
+        <textarea class="text-area" matInput placeholder="{{placeholder}}" *ngIf="selected == 'Send Back'"
+          [ngModel]="sendBackComment" (ngModelChange)="handleCommentChange($event)"></textarea>
+          <textarea class="text-area" matInput placeholder="{{placeholder}}" *ngIf="selected == 'Approve'"
+          [ngModel]="sendBackComment" (ngModelChange)="handleCommentChange($event)"></textarea>
+      </div>
+      <div>
+        <span style="margin-right:2%;margin-left: 53%;">
+          <button class="cancel-button" mat-raised-button color="primary" (click)="onCloseButtonClick()">
+            <div>Cancel</div>
+          </button>
+        </span>
+        <button class="send-button" mat-raised-button color="primary" [disabled]="optionDisable"
+          (click)=handleOnRequestApproval(selected,mytemplate)>
+          {{selected}}
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<div *ngIf="loading" id="cover-spin"></div>
+<span class="content_alignment">
+  <span class="flt-right" [ngClass]="publishMode ? 'compliance-published' : ''">
+    <img src="./assets/images/Export_Compliance_Icon.svg" class="image_alignment" />
+    <button class="button_style" (click)="onExportComplianceClick(warningTemplate)">
+      Export Compliance
+    </button>
+  </span>
+    <span class="author-guidance-button-container flt-right" *ngIf="authorGuidances && authorGuidances[globalContent.contentType?.toUpperCase()] && !isPublishMode">
+     <a class="button_style" [href]="authorGuidances[globalContent.contentType.toUpperCase()]" target="_blank">
+       <img src="../../../../assets/images/AuthorGuidance.svg" />
+       Author Guidance</a>
+    <span class="vertical_line"></span>
+  </span>
+  <span class="flt-right" *ngIf="ownerEdit && globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE">
+    <ng-container *ngIf="!editingPublishedDocument">
+      <img src="./assets/images/edit_Icon.svg" class="image_alignment" />
+    <button class="button_style" (click)="ownerEditValue(true)">Edit</button>
+    </ng-container>
+  </span>
+  <span *ngIf="globalContent?.assetStatus !== ASSET_STATUSES.OBSOLETE">
+  <span *ngIf="(!publishMode || publishPreviewMode)" class="flt-right dddd">
+    <span *ngIf="!showEditOption && (globalContent?.originalAssetStatus!==ASSET_STATUSES.SUBMITTED_FOR_APPROVAL || displayName1 === globalContent?.contentOwnerId)">
+      <img src="./assets/images/edit_Icon.svg" class="image_alignment" />
+      <button class="button_style" (click)="showPreviewMode(true,warningTemplate)">Edit</button>
+    </span>
+    <span *ngIf="(showEditOption && !ownerEditPreview)">
+      <img src="./assets/images/Preview_Icon.svg" class="image_alignment" />
+      <button class="button_style" (click)="showPreviewMode(false,warningTemplate)">Preview</button>
+    </span>
+    <span class="vertical_line"></span>
+    <span *ngIf="showEditOption && EKSConentGroupControl && showApprovalOption">
+      <img src="./assets/images/Request_Approval_Icon.svg" class="image_alignment" />
+      <button class="button_style" (click)="openRequestModal(requestApprovalTemplate,warningTemplate)"
+        *ngIf="requestOption == 'Request Approval'" [disabled]="(disableRequestApproval)">{{requestOption}}</button>
+      <button class="button_style" (click)="openModal(mytemplate,warningTemplate)"
+        *ngIf="requestOption == 'Approve Or Send Back'"  [disabled]="(disableRequestApproval)">{{requestOption}}</button>
+    </span>
+    <span *ngIf="showEditOption && EKSConentGroupControl && requestOptionInviteCoAuthor == 'Invite Co-Author' && requestOption == 'Request Approval'  && showApprovalOption" class="vertical_line"></span>
+    <span *ngIf="showEditOption && EKSConentGroupControl && requestOptionInviteCoAuthor == 'Invite Co-Author' && requestOption == 'Request Approval'  && showApprovalOption">
+      <img src="./assets/images/Invite_Coauthor_Icon.svg" class="image_alignment" />
+      <button *ngIf="requestOptionInviteCoAuthor == 'Invite Co-Author' && requestOption == 'Request Approval'" class="button_style" (click)="openDialog(warningTemplate)">
+        {{requestOptionInviteCoAuthor}}
+      </button>
+    </span>
+    <span *ngIf="showEditOption && EKSConentGroupControl && showApprovalOption" class="vertical_line"></span>
+
+    <!--<span class="export_published_view" *ngIf="publishMode">
+    <img
+      src="./assets/images/Export_Compliance_Icon.svg"
+      class="image_alignment"
+    />
+    <button class="button_style" (click)="onExportComplianceClick()">
+      Export Compliance
+    </button>
+  </span>-->
+
+  </span>
+  </span>
+  <span class="obsolete-document-label-tag" *ngIf="globalContent?.assetStatus === ASSET_STATUSES.OBSOLETE"></span>
+  <!-- <span _ngcontent-ren-c282="" class="bookmark_Space">
+    <img _ngcontent-ren-c282="" src="./assets/images/bookmark_icon.svg" width="60%"
+      style="position: absolute;left: 36px;width: 71%;top: -27px;z-index: 1;">
+  </span> -->
+</span>
+
+<ng-template #warningTemplate>
+  <div class="warning-msg"> You have unsaved changes. Save them to proceed. </div>
+  <button mat-raised-button color="primary" (click)="handleOnOkButton()" class="mat-button ok-button">OK</button>
+</ng-template>

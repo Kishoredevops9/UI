@@ -1,0 +1,87 @@
+
+<app-task-build-selected [selectedMapsInput]="selectedMap"></app-task-build-selected>
+ 
+
+
+<aside class="buildtasksearchbox">
+  <div class="row">
+    <div class="col-md-4">
+      <mat-form-field class="filter-block">
+        <mat-label>Content Id</mat-label>
+        <input type="text" matInput [(ngModel)]="filterForm.contentid" />
+      </mat-form-field>
+    </div>
+ 
+    <div class="col-md-4">
+      <mat-form-field class="filter-block">
+        <mat-label> Title </mat-label>
+        <input type="text" matInput [(ngModel)]="filterForm.title" />
+      </mat-form-field>
+    </div>
+
+    <!-- <div class="col-md-3">
+      <mat-form-field class="filter-block">
+        <mat-label> Disciplines </mat-label>
+        <input type="text" matInput [(ngModel)]="filterForm.disciplinecode" />
+      </mat-form-field>
+    </div> -->
+
+    <div class="col-md-4">
+      <button (click)="filterData()" mat-raised-button class="mat-button" color="primary">
+        Search
+      </button> &nbsp; &nbsp;
+      <button (click)="resetData()" mat-raised-button class="mat-button" color="primary">
+        Reset
+      </button>
+
+    </div>
+  </div>
+</aside>
+
+<aside class="bodyPanel  lower"  >
+  <h2> EKS  Main STEP Flow: </h2>
+  <button mat-raised-button color="primary" class="mat-button addBtn" (click)="addPvtSF()">Add Task Specific STEP Flow</button>
+  &nbsp;  &nbsp;
+  <button mat-raised-button color="primary" class="mat-button addBtn" (click)="addToSelected()">Add STEP Flow</button>
+  &nbsp;  &nbsp;
+
+
+  
+ 
+  <ul>
+    <li *ngFor="let item of stepflowlist | paginate: { itemsPerPage: pageSize, currentPage: page, totalItems: count }">
+      <mat-checkbox [(ngModel)]="item.checked"  (change)="setRadio(item)" ></mat-checkbox>
+      <div class="SF">
+        <aside class="sideBoxTask">SF</aside>
+        <span class="title"> {{item.title}} </span>
+        <span class="contentId"> {{item.contentid}} </span>
+      </div>
+      <div class="toolbar">
+        <a target="_blank" class="maticon" (click)="openSF(item)">
+          <mat-icon [size]="10">launch</mat-icon>
+        </a>
+      </div>
+    </li>
+  </ul>
+   <!-- <pagination-controls 
+  (pageChange)="p = $event" 
+  class="pagination-section"
+  ></pagination-controls>   -->
+  <div class="pagination-left">
+      Items per Page:
+      <select (change)="handlePageSizeChange($event)">
+        <option *ngFor="let size of pageSizes" [ngValue]="size">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+    <div class="pagination-right">
+      <pagination-controls 
+      responsive="true" 
+      previousLabel="Prev" 
+      nextLabel="Next" 
+      (pageChange)="handlePageChange($event)"></pagination-controls>
+    </div> 
+    
+</aside>
+

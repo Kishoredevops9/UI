@@ -1,0 +1,39 @@
+<mat-table #table [dataSource]="EKSGlobalSearchData">
+    <ng-container matColumnDef="arrow">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef>Title </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <b>{{ element.title }}</b>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>Type</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ element.type }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="link">
+      <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <a (click)="navigationLink(element.link0)" class="matCell-href" style="color: #0076ff; cursor: pointer">
+          <b>{{ element.link }}</b>
+        </a>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="publishDate">
+      <mat-header-cell *matHeaderCellDef>Publish Date </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        {{ element.modified_date | date }}
+      </mat-cell>
+    </ng-container>
+    <mat-header-row id="header-style" *matHeaderRowDef="globalDisplayedColumns; sticky: true">
+    </mat-header-row>
+    <mat-row *matRowDef="let row; columns: globalDisplayedColumns; let index = index" #searchDetails>
+    </mat-row>
+  </mat-table>
+  <mat-paginator #paginator2 [pageSize]="pageSize" [length]="globalLength" [pageSizeOptions]="pageRowCounters"
+    (page)="onPageGlobalEvent($event)"></mat-paginator>

@@ -1,0 +1,44 @@
+<div class="content-wraper">
+
+  <div fxLayout="row" fxLayoutAlign="start center" class="selectContainer"> 
+    <div class="textHeaders">Select a menu to edit</div>
+    <select [(ngModel)]="selectType" class="selectValue">
+      <option class="optionClass" value="Disciplines">Disciplines</option>
+      <option class="optionClass" value="Manuals">Manuals</option>
+      <option class="optionClass" value="STEP Flows">STEP Flows</option>
+      <option class="optionClass" value="Announcements">Announcements</option>
+      <option class="optionClass" value="Tool Tips">Tool Tips</option>
+      <option class="optionClass" value="Lobby Footer Links">Lobby Footer Links</option>
+      <option class="optionClass" value="Knowledge Assets">Featured Knowledge Assets</option>
+      
+    </select>
+  </div>
+      
+  <div class="bodyBox" *ngIf="selectType == 'Disciplines'">
+    <app-admin-tree></app-admin-tree>    
+  </div>
+
+  <div class="bodyBox" *ngIf="selectType == 'STEP Flows'">
+    <app-admin-maps></app-admin-maps>    
+  </div>
+
+  <div class="bodyBox" *ngIf="selectType == 'Lobby Footer Links'">
+    <app-admin-footer-links></app-admin-footer-links>
+  </div>
+  
+  <div class="bodyBox" *ngIf="selectType == 'Manuals'">
+    <app-admin-manuals></app-admin-manuals>
+  </div>  
+
+  <div class="bodyBox" *ngIf="selectType == 'Announcements'">
+    <app-admin-announcements></app-admin-announcements>
+  </div> 
+
+  <div class="bodyBox" *ngIf="selectType == 'Tool Tips'">
+  <app-admin-tooltip></app-admin-tooltip>
+  </div> 
+  <div class="bodyBox" *ngIf="selectType=='Knowledge Assets'">  
+    <app-knowledge-asset></app-knowledge-asset>
+  </div> 
+
+</div>

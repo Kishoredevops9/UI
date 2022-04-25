@@ -1,0 +1,22 @@
+<div class="modal" tabindex="-1" role="dialog" id="advpopbox">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Insert Video </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" mat-button mat-dialog-close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="insertVideoForm" (ngSubmit)="onSubmit(insertVideoForm)">
+          <input type="text" class="form-control" placeholder="Insert Video URL" formControlName="insertVideo">
+
+          <button type="submit" mat-button mat-raised-button color="primary" class="submit-btn"
+            [disabled]="!insertVideoForm.valid" data-dismiss="modal" mat-dialog-close>
+            Insert Video
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

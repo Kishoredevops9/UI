@@ -1,0 +1,244 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+
+
+    .toolTipTable {
+      width: 100%;
+
+      &.active {
+          overflow: auto;
+      }
+      h3 {text-align: left;
+        font: normal normal normal 28px/45px Roboto, "Helvetica Neue", sans-serif;
+        letter-spacing: 1.17px;
+        color: #000000; }
+
+        
+        .bar-icon {
+            background: url("../../../assets/images/icon-filter.svg") no-repeat;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            cursor: pointer;
+            margin: 10px;
+        }             
+        .fright {
+            float: right;
+        }
+        .announcefilterDiv {
+            position: relative;
+            z-index: 101;
+            
+        
+            .filter-card {
+                position: absolute;
+                top: 2px;
+                left: 0px;
+                width: 100%;
+                border-radius: 0px !important;
+                box-shadow: 0px 0px 12px $box-shadow-black;
+
+                .clsFilter{
+                    cursor: pointer;
+                }
+        
+                .mat-form-field {
+                width: 153px;
+                margin: 0 5px;
+                }
+        
+                .applyBtn {
+                background-color: $blue-darken-color;
+                border: 1px solid $blue-darken-color;
+                color: $white-color;
+                margin-right: 10px;
+                width: 180px;
+                }
+        
+                .closeBtn {
+                background-color: $white-color;
+                border: 1px solid $blue-darken-color;
+                width: 180px;
+                }
+            }
+        }
+
+
+      table {
+          overflow: auto;
+          width: 100%;
+          max-width: 100%;
+          overflow: auto;
+          margin-bottom: 10px;
+          display: table;
+          border-collapse: collapse;
+          margin: 0px;
+          @extend %table-style;
+          box-shadow: none !important;
+
+          tr.mat-row {
+              position: relative;
+          }
+
+          tr.mat-header-row {
+              height: 37px !important;
+          }
+
+          th {
+              background: #3C445C 0% 0% no-repeat padding-box;
+              opacity: 1;
+
+              &.mat-header-cell {
+                  text-align: left;
+                  font: normal normal medium 16px/27px Roboto !important;
+                  font-family: 'Barlow-Medium', sans-serif !important;
+                  letter-spacing: 0.64px;
+                  color: #FFFFFF;
+              }
+
+          }
+
+          th.mat-header-cell,
+          td.mat-cell,
+          td.mat-footer-cell {
+              padding: 5px 10px !important;
+          }
+
+          td.mat-cell {
+              font-family: 'Barlow-Medium' !important;
+          }
+
+          .mat-header-cell {
+              text-align: left;
+              font: normal normal medium 16px/27px Roboto !important;
+              font-family: 'Barlow-Medium', sans-serif !important;
+              letter-spacing: 0.64px;
+              color: #FFFFFF !important;
+          }
+
+          .mat-column-title {
+              width: 180px !important;
+          }
+
+          .mat-column-type {
+              width: 180px !important;
+          }
+
+          .mat-column-status {
+              width: 100px !important;
+          }
+
+          .mat-column-lastUpdateDateTime {
+              width: 180px !important;
+          }
+
+          .mat-column-lastUpdateUser {
+              width: 180px !important;
+          }
+
+          .mat-column-description {
+              width: 180px !important;
+          }
+
+          .mat-column-effectiveFrom {
+              width: 160px !important;
+          }
+
+          .mat-column-effectiveTo {
+              width: 180px !important;
+          }
+
+      }
+
+      .pencle {    position: absolute;
+        margin-left: -18px;
+        margin-top: 0px;
+        font-size: 19px;}
+
+        .editicon {   color: #275DAF   }
+
+  }
+
+
+  ::ng-deep table thead.fixedheader {  float: left;position: fixed; width: 100%;top: 73px;z-index: 1000   !important;}
+  .thpadding{width: 11%; font-size: 12px;  }
+
+  .fixBox { 
+    position: fixed;
+    background: #3c445c;
+    top: 70px;
+    width: calc(100vw - 73px);
+    z-index: 999;
+    color: white;
+    right: 7px;
+    height: 40px;
+    overflow:hidden;
+    display: none;
+
+  }
+  .fixBox.active { display: block;  } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .example-container {
+    height: 400px;
+    overflow: auto;
+  }
+  
+  .mat-table-sticky {
+    background: #59abfd;
+    opacity: 1;
+  }
+  
+  .example-sticky-toggle-group {
+    margin: 8px;
+  }
+  
+  .mat-column-filler {
+    padding: 0 8px;
+    font-size: 10px;
+    text-align: center;
+  }
+  
+  .mat-header-cell, .mat-footer-cell, .mat-cell {
+    min-width: 80px;
+    box-sizing: border-box;
+  }
+  
+  .mat-header-row, .mat-footer-row, .mat-row {
+    min-width: 1920px; /* 24 columns, 80px each */
+  }
+  
+  .mat-table-sticky-border-elem-top {
+    border-bottom: 2px solid midnightblue;
+  }
+  
+  .mat-table-sticky-border-elem-right {
+    border-left: 2px solid midnightblue;
+  }
+  
+  .mat-table-sticky-border-elem-bottom {
+    border-top: 2px solid midnightblue;
+  }
+  
+  .mat-table-sticky-border-elem-left {
+    border-right: 2px solid midnightblue;
+  }
+
+  .example-container-filters{
+    overflow: auto;
+  }

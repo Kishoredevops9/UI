@@ -1,0 +1,70 @@
+h1 { padding: 10px; } 
+.action-btnd { margin-top: 20px; border-top: 1px solid  #CFD1D7; text-align: center; padding: 15px; 
+    button { margin-left: 10px; }
+    
+}
+.disciplineHgt{
+    height: 230px;
+}
+.disciplineClass{
+    position: absolute;
+    top: 0px;
+    background: grey;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    margin: 0 auto;
+    left: 0px;
+    z-index: 1;
+    .spinnerbox { width: 60px;
+        margin: 0px auto;
+        height: 0px;  }
+}
+
+
+.formBox { 
+    ul {  margin-left: 20px;    
+        li { margin-bottom: 10px;         
+            label { float: left;
+                width: 116px;
+                padding: 17px;
+                padding-left: 0px; }                   
+                
+                mat-form-field { width: 330px;  }
+
+                .top_margin_new { 
+                    width: 330px;  
+                    display: inline-block;
+                    position: relative;
+                    margin-bottom: 15px;
+                    padding-bottom: 6px;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+                    mat-label{
+                        display: inline-block;
+                        width: 210px;
+                    }
+                    .iconwidth{
+                        display: inline-block;
+                    }
+                    .dropbox {
+                        position: fixed;
+                        height: 240px;
+                        background: white;
+                        z-index: 100;
+                        overflow: hidden;
+                        overflow-y: auto;
+                        padding: 3px;
+                      }
+                }
+
+                .mat-icon-button{
+                    line-height: 30px;
+                    width: 30px;
+                    height: 30px;
+                }
+        }
+    }
+
+
+
+}

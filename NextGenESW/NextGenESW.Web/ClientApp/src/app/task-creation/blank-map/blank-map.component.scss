@@ -1,0 +1,189 @@
+@import '../../../scss/helpers/variables';
+@import '../../../scss/helpers/mixins';
+@import '../../../scss/helpers/breakpoints';
+@import '../../../scss/helpers/placeholders';
+
+.mat-dialog-content {
+  max-height: auto;
+}
+
+.flexItemBox {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 45px;
+
+  .label {
+    padding: 22px 22px 22px 0px;
+    width: 35%;
+  }
+
+  .blockBox {
+    width: 100%;
+  }
+}
+
+.button-group {
+  text-align: center
+}
+
+.add-activities {
+  @extend %mat-dialog;
+  padding: 25px;
+
+  .mat-dialoag-header {
+    background: none;
+
+    h1 {
+      display: inline;
+      text-transform: uppercase;
+      font-size: 24px;
+    }
+
+    span {
+      display: inline;
+      float: right;
+    }
+  }
+
+
+  .mat-card {
+    box-shadow: none;
+    padding: 0;
+  }
+
+  form {
+    display: grid;
+    padding: 10px 10px 20px;
+    grid-template-columns: 100%;
+    grid-gap: 20px;
+
+    .help-block {
+      font-size: 0.65rem;
+      color: $alert-basic-bg;
+      position: relative;
+      top: -30px;
+    }
+
+    .mat-form-field {
+      width: 372px;
+      margin: 0px;
+      @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+      display: block;
+    }
+
+    .mat-radio-group,
+    .mat-raised-button {
+      width: 100%;
+      margin: 0px;
+      @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+      display: block;
+    }
+
+    .mat-radio-group {
+      .mat-radio-button {
+        margin-right: 10px;
+      }
+    }
+
+    .mat-raised-button {
+      margin-top: 15px;
+      padding: 10px 0;
+      max-width: 120px;
+      width: 100%;
+      margin: 0px auto;
+    }
+
+    @include breakpoint(mobileonly) {
+      padding: 0 1%;
+    }
+
+    .activityGroups {
+      position: relative;
+      background: #fafafa;
+      padding: 0 10px 10px;
+      margin: 0 0 10px;
+
+      .add-btn {
+        margin: 0;
+      }
+
+      .remove-btn {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        top: 0;
+        right: 0;
+
+        .mat-button-wrapper {
+          padding: 0 !important;
+
+          .material-icons {
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+
+    .button-group {
+      margin-top: 20px;
+
+      .mat-flat-button {
+        margin-right: 10px;
+      }
+    }
+
+    .meta-data {
+      @extend .activityGroups;
+
+      .group-wrapper {
+        position: relative;
+      }
+    }
+
+    @include breakpoint(mobileonly) {
+      grid-template-columns: 1fr;
+    }
+
+  }
+
+  //Add shape activity search icon
+  .selectText {
+    //color: blue;
+    cursor: pointer;
+  }
+
+  .searchSelect {
+    display: flex;
+
+    button {
+      display: flex;
+      position: relative;
+      bottom: -10px;
+
+      span {
+        color: #002A6E;
+      }
+    }
+  }
+}
+
+.button_style {
+  padding: 2px 20px !important;
+  color: white;
+  font-size: 14px !important;
+  background: #3C445C !important;
+  font-family: 'BarlowSemiCondensed-Medium' !important;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+::ng-deep mat-dialog-head {
+  display: inline;
+  text-transform: uppercase;
+  font-size: 24px;
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-infix {
+  width: 246px !important;
+}

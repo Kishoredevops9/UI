@@ -1,0 +1,409 @@
+@import '../../../../scss/helpers/variables';
+@import '../../../../scss/helpers/mixins';
+@import '../../../../scss/helpers/breakpoints';
+@import '../../../../scss/helpers/placeholders';
+@import "../../../../scss/base/_global.scss";
+
+.link-field {
+  width: fit-content !important;
+}
+
+.slider {
+  width: 70px;
+  margin-left: 20px;
+}
+
+.arrow-icon {
+  margin-top: 2%;
+  float: right;
+  cursor: pointer;
+}
+
+.delete-icon {
+  position: absolute;
+  margin-left: 30px;
+  margin-top: 25px;
+}
+
+.delete-text {
+  margin-left: -10px;
+  cursor: pointer;
+}
+
+.button {
+  height: fit-content;
+  float: right;
+}
+
+.header-field {
+  font-family: "BarlowSemiCondensed-Medium";
+  letter-spacing: 1px;
+  color: #000000;
+  opacity: 0.9;
+  margin: 20px 0;
+  font-size: large;
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+  background-color: rgba(0, 0, 0, 0.38);
+}
+
+:host ::ng-deep .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+  background-color: whitesmoke;
+}
+
+.toggle {
+  float: left;
+  margin-left: 10px;
+
+  @include slideToggle(gray, gray, #fff, 33px, 21px);
+
+  .leftToggleSpan {
+    vertical-align: top;
+    line-height: 24px;
+    margin-right: 0.2rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+
+  .rightToggleSpan {
+    vertical-align: top;
+    line-height: 24px;
+    margin-left: 0.2rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+  }
+}
+
+.page-layout {
+  width: 97% !important;
+  margin-left: 0px;
+}
+
+.mat-cell:nth-child(1),
+.mat-header-cell:nth-child(1) {
+  flex: 0 0 50px;
+  padding-left: 0;
+}
+
+.mat-header-cell {
+  font: normal normal normal 13px/28px Inter-regular;
+  color: black;
+  padding-left: 1.5%;
+}
+
+.mat-cell:nth-child(1) {
+  padding-left: 0.5% !important;
+}
+
+.mat-header-cell:nth-child(5) {
+  flex: 0 0 120px;
+}
+
+.mat-cell:nth-child(5) {
+  flex: 0 0 120px;
+}
+
+.mat-header-cell:nth-child(6) {
+  flex: 0 0 180px;
+}
+
+.mat-cell:nth-child(6) {
+  flex: 0 0 180px;
+  word-break: break-word;
+}
+
+.mat-header-cell:nth-child(7) {
+  flex: 0 0 73px;
+  padding-left: 0.5%;
+}
+
+.mat-cell:nth-child(7) {
+  flex: 0 0 100px;
+  padding: 0;
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+
+  .mat-icon {
+    font-size: 18px;
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+  }
+}
+
+.mat-raised-button {
+  max-width: 0px;
+  width: 100%;
+  color: black;
+  box-shadow: none;
+  background-color: #f5f5f5;
+}
+
+.chips {
+  width: 85%;
+}
+
+.chip-collection {
+  height: 10%;
+  border: 1px solid gray;
+  margin-top: 1%;
+  margin-bottom: 1%;
+
+  ::ng-deep .mat-form-field-underline {
+    height: 0;
+  }
+}
+
+mat-row {
+  border: 1px solid white !important;
+  align-items: stretch;
+  background-color: #f5f5f5;
+  font: normal normal normal 13px/28px Inter-regular;
+}
+
+mat-cell {
+  border: 1px solid white !important;
+  padding-left: 1%;
+  align-items: flex-start !important;
+  padding-top: 1%;
+}
+
+#link-outline {
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 4em !important;
+    width: 100%;
+  }
+
+  ::ng-deep .mat-input-wrapper {
+    width: 100% !important;
+  }
+}
+
+.mat-header-row {
+  min-height: 0px;
+}
+
+::ng-deep .previews .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  mat-cell {
+    padding: 0px !important;
+  }
+
+  //background-color: #f5f5f5 !important;
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+  //margin-left: 1%;
+
+  ol {
+    margin-left: 23px !important;
+  }
+
+  ul {
+    margin-left: 23px !important;
+  }
+}
+
+:host ::ng-deep angular-editor {
+  .angular-editor-toolbar {
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-tab-labels {
+  .mat-tab-label:nth-child(1) {
+    padding-left: 0;
+  }
+}
+
+.ok-button {
+  float: right;
+  background-color: #3f51b5;
+  color: white;
+  min-width: 64px !important;
+}
+
+.warning-msg {
+  font-family: 'BarlowSemiCondensed-Medium';
+  font-size: large;
+}
+
+::ng-deep .editor-error .k-editable-area {
+  border: 1px solid red !important;
+}
+
+#mat-chip-input {
+  width: 96px;
+}
+
+#angularEditor,
+#angularEditor1,
+#angularEditor2 {
+  width: 100%;
+}
+
+#error-close-button {
+  float: right;
+  cursor: pointer;
+}
+
+.topChipBox {
+  // padding: 0px 20px 20px 0px;
+  width: 100%;
+  margin-top: 13%;
+  //white-space:pre;
+}
+.textFilter {
+  padding: 5px 10px 10px 0px;
+  //display: inline-block;
+}
+// .cg-dropbox {
+//   height: 250px;
+//   overflow: auto;
+// }
+.cg-expand-button {
+  float: right;
+  padding: 0px !important;
+  min-width: 0px !important;
+}
+// .formData {
+//   width: 50%;
+// }
+// .top_margin_new {
+//   margin-top: 10px !important;
+
+//   a {
+//     float: right;
+//     top: -8px;
+//     padding: 3px 3px !important;
+//   }
+// }
+.tag-template {
+  padding-left: 5%;
+  a {
+    float: right;
+    padding: 0px !important;
+    min-width: 0px !important;
+  }
+  .mat-card {
+    width: 100%;
+  z-index: 100;
+  background-color: #fff!important;
+  top: 0;
+  max-height: 300px;
+  overflow: auto;
+  }
+}
+.tag-close-button {
+float: right;
+margin: 8px;
+cursor: pointer;
+}
+.item1 { grid-area: item1; }
+.item2 { grid-area: item2; overflow-x : auto }
+.item3 { grid-area: item3; overflow-x : auto }
+.item4 { grid-area: item4; overflow-x : auto }
+.item5 { grid-area: item5; }
+.item6 { grid-area: item6; }
+.criteria-container {
+  display: grid;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Barlow-Medium', sans-serif !important;
+  letter-spacing: 1px;
+  grid-template-columns: 10fr 4fr;
+  grid-template-areas:
+    'item1 item1'
+    'item2 item5'
+    'item3 item6'
+    'item4 item6';
+  grid-gap: 20px;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 2px solid #c1eeff;
+  div{
+    text-align: left;
+  .full-width {
+    display: flex;
+    .mdl-cell--6-col {
+      width: 70%;
+    }
+    .mdl-cell--4-col {
+      width: 20%;
+    }
+    .mdl-cell--2-col {
+      width: 10%;
+    }
+  }
+  }
+  .item1 {
+    display:inline;
+    border-bottom: 2px dashed #c1eeff;
+    padding-bottom: 5px;
+    .mat-icon {
+      font-size: 19px;
+    }
+    .action-items {
+      text-align: right;
+      cursor: pointer;
+      .action-delete-icon {
+        padding-right: 25%;
+        color:red;
+      }
+    }
+  }
+  .item5 {
+    .mat-form-field {
+      width: 365px;
+      max-width: 100%;
+      .mat-form-field-infix {
+        padding-bottom: 7px;
+      }
+    }
+  }
+}
+.phase-list {
+  padding-left: 21px;
+}
+
+.tag-style {
+  border-bottom: 1px solid black;
+  padding-bottom: 7px;
+}
+.container-background-style {
+  background-color: aliceblue;
+}
+.tag-bottom-style {
+  padding-bottom : 10px
+}
+
+::ng-deep .angular-editor .angular-editor-wrapper .angular-editor-textarea {
+  word-break: break-word;
+  img {
+    width: 50%;
+    padding-right: 30px !important;
+    vertical-align: bottom;
+    box-sizing: border-box;
+  }
+}
+
+:host ::ng-deep angular-editor {
+
+  .angular-editor-button[title="Undo"],
+  .angular-editor-button[title="Redo"],
+  .angular-editor-button[title="Text Color"],
+  .angular-editor-button[title="Background Color"] {
+      display: none !important;
+  }
+
+  padding: 0px !important;
+  outline: none !important;
+  border: none !important;
+  min-height: max-content !important;
+  height: max-content !important;
+  resize: none !important;
+}

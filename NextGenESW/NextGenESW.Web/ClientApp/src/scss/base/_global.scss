@@ -1,0 +1,277 @@
+@import "../helpers/mixins";
+@import "../helpers/variables";
+@import "../helpers/breakpoints";
+
+/*Common Classes */
+
+.clear {
+  clear: both;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.position-relative {
+  position: relative;
+}
+
+.nopadding {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.no-box-shadow {
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.hide {
+  display: none;
+}
+
+.spacer,
+.spacer1 {
+  width: 100%;
+  height: 113px;
+
+  @include breakpoint(laptop) {
+    height: 88px;
+  }
+
+  @include breakpoint(tablet) {
+    height: 70px;
+  }
+
+  @include breakpoint(mobileonly) {
+    height: 64px;
+  }
+
+  &.sub-header-spacer {
+    height: 155px;
+  }
+}
+
+.spacer1 {
+  height: 156px;
+}
+
+.alert-icon {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid $alert-basic-bg;
+  color: $white-color;
+  font-size: 11px;
+}
+
+//Background Freeze
+.spiner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cover-spin {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#cover-spin::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 48%;
+  top: 40%;
+  width: 40px;
+  height: 40px;
+  border-style: solid;
+  border-color: black;
+  border-top-color: transparent;
+  border-width: 4px;
+  border-radius: 50%;
+  -webkit-animation: spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
+}
+
+//mat button focus issue
+.mat-button,
+.mat-flat-button,
+.mat-stroked-button {
+  &.cdk-program-focused .mat-button-focus-overlay {
+    opacity: 0 !important;
+  }
+}
+
+.cdk-overlay-pane {
+  @include breakpoint(tablet) {
+    @include font-face-BarlowSemiCondensed-Medium(1rem, normal);
+  }
+
+  @include breakpoint(mobileonly) {
+    @include font-face-BarlowSemiCondensed-Medium(0.85rem, normal);
+  }
+}
+
+.tab-margin {
+  &.properties {
+    padding-left: 0;
+  }
+}
+
+.mat-dialog-container {
+  padding: 0px !important;
+  position: relative;
+
+  .modal-wrapper {
+    padding: 24px;
+  }
+}
+
+//Full View of Dashboard Widgets
+.listItem {
+  &.active {
+    .table-wrapper {
+      mat-table {
+        min-height: 588px !important;
+      }
+
+      .viewContainer {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+//Access for UL/OL in Angular Editor
+.angular-editor-wrapper {
+  ul,
+  ol {
+    margin: 16px 0;
+    padding-left: 40px;
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+}
+
+.request {
+  height: 234px;
+
+  .mat-form-field {
+    width: 100%;
+    padding-bottom: 20px;
+    display: block;
+  }
+}
+
+//Global Icons
+
+.icon {
+  display: inline-block;
+
+  &.info {
+    background: url("../../assets/icons/exclamation-circle.svg") no-repeat;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+//ETFF File Upload
+
+.file-options {
+  margin: 2px 0 0 0;
+  box-shadow: 0px 0px 1px rgba($color: #000000, $alpha: 0.8);
+
+  li {
+    position: relative;
+    display: block;
+    padding: 5px 10px;
+
+    &:hover {
+      background: #f5f2f2;
+    }
+  }
+}
+
+.dropdown-ddm {
+  position: absolute;
+  left: 112px;
+  top: 0;
+  width: 320px;
+  border: 1px solid #ededed;
+  background: #ffffff;
+  z-index: 999;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 1px rgba($color: #000000, $alpha: 0.8);
+  gap: 20px;
+
+  a {
+    max-width: 100px;
+    padding: 5px 8px !important;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      cursor: pointer;
+    }
+  }
+
+  .form-fields {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 10px;
+
+    input {
+      background: #f5f2f2;
+      padding: 5px 10px;
+    }
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      padding: 5px 8px !important;
+      min-width: 90px !important;
+      margin-left: 12px;
+    }
+  }
+}

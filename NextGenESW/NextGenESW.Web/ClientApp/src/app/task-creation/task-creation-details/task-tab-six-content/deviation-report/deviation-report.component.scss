@@ -1,0 +1,11 @@
+@import "../../../../../scss/helpers/variables";
+@import "../../../../../scss/helpers/mixins";
+@import "../../../../../scss/helpers/breakpoints";
+@import "../../../../../scss/helpers/placeholders";
+@import "../../../../../scss/base/_global.scss";
+
+h3 {
+  @include font-face-BarlowSemiCondensed-Medium(22px, 19px);
+  letter-spacing: 1px;
+  padding: 20px;
+}

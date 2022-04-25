@@ -1,0 +1,16 @@
+ <div *ngIf="isLoading" id="cover-spin"></div>
+ <form class="recall-revise-wrapper" [formGroup]='form'>
+   <h2>{{title}}</h2>
+   <textarea formControlName="comments" rows="4" cols="50" name="comments"
+     placeholder="Please share the comments"></textarea>
+
+   <div class="action-buttons">
+     <button mat-button mat-raised-button [disabled]="!form.valid" color="primary" (click)="onSubmit()"
+       class="mat-button mat-primary">
+       Confirm
+     </button>
+     <button mat-button mat-raised-button (click)="close()" class="mat-button mat-primary">
+       Cancel
+     </button>
+   </div>
+ </form>

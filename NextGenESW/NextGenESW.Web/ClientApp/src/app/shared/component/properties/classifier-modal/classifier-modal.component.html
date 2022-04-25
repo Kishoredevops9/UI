@@ -1,0 +1,69 @@
+<div class="classifier-modal">
+
+  <div class="modal-content">
+    <div class="mat-header">
+      <h2 mat-dialog-title>
+        Request J&C/Publish
+
+        <mat-icon [mat-dialog-close]>close</mat-icon>
+      </h2>
+
+    </div>
+    <form [formGroup]="classifierFormData">
+      <mat-form-field>
+        <mat-label>Business Unit</mat-label>
+        <mat-select formControlName="businessUnitCode" #businessUnitCoderef (selectionChange)="onChangeNewbusinessUnitCode(businessUnitCoderef.value)" required>
+          <mat-option *ngFor="let item of uniqueBusinessUnitArray" [value]="item.businessUnit">
+            <span>{{ item.businessUnit}}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf='isBusinessUnitName'>
+        <mat-label>Functional Area</mat-label>
+        <mat-select formControlName="functionalAreaCode" #functionalAreaCoderef (selectionChange)="onChangeNewfunctionalAreaCode(functionalAreaCoderef.value)" required>
+          <mat-option *ngFor="let item of uniqueFuntName" [value]="item.functionalArea">
+            <span>{{ item.functionalArea }}</span> 
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field *ngIf='isfunctionalAreaName'>
+        <mat-label>Classifier Name</mat-label>
+        <mat-select formControlName="classifierNameCode" #classifierNameCoderef required>
+          <mat-option *ngFor="let item of uniqueClassifierNameArray" [value]="item.classifiersId">
+          <span>{{ item.description }}</span>
+        </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field *ngIf='isfunctionalAreaName'>
+        <mat-label>Classifier Name</mat-label>
+        <input type="text"
+               matInput
+               (ngModelChange)="filterClassifers($event)"
+               [matAutocomplete]="gymAuto"
+               formControlName="functionalAreaCode"
+               formControlName="classifierNameCode" #classifierNameCoderef required
+               >
+        <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+        <mat-autocomplete autoActiveFirstOption
+                          [displayWith]="getDisplayClassifier"
+                          #gymAuto="matAutocomplete">
+          <mat-option class="classifierMatOption" *ngFor="let option of filteredClassifers"
+                      [value]="option.classifiersId">
+            {{option.lastName}} {{option.firstName}} 
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <div mat-dialog-actions class="btn-row">
+        <button mat-button mat-raised-button [mat-dialog-close]>Cancel</button>
+        <button mat-button mat-raised-button color="primary" (click)=onSubmit() 
+        [disabled]="!(classifierFormData.valid)">
+        Select
+      </button>
+      </div>
+    </form>
+  </div>
+</div>

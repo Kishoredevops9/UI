@@ -1,0 +1,38 @@
+<div class="userGuidesParent">
+    <div class="pw-logo">
+        <a [routerLink]="['/lobbyhome']" >
+            <img src="./assets/images/Logo.png" alt="Engine Works" title="Engine Works" />
+        </a>
+    </div>
+
+    <div class="header1">User Guides</div>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Filter User Guides</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input type="text" matInput placeholder="" [(ngModel)]="searchBox"
+        #myInput
+        (input)="filterItem(myInput.value)"
+        >
+      </mat-form-field>
+
+
+    <div fxLayout="row" fxLayoutAlign="space-between start" class="threeColumnContainer">
+        <div *ngFor="let parents of userGuides">
+            <div class="parents">{{parents.title}}</div>
+            <div fxLayout="column" fxLayoutAlign="space-around start">
+                <div *ngIf="parents.children.length==0"> No Data Found  </div>
+                <div *ngFor="let childs of parents.children">
+                    <div class="childsDiv">
+                        <a target="_blank" href="{{childs.userGuideUrl}}">
+                            <span class="bookIcon"></span>
+                            <!-- <span class="childs">{{childs.title}}</span> -->
+                            <span   class="childs"  [innerHtml]="childs.title | highlight: searchBox"   > </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

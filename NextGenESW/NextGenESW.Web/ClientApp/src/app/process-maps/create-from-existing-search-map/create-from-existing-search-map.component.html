@@ -1,0 +1,105 @@
+<div class="heading-band">
+    <hr class="divider">
+    <div class="title">
+        <span class="procesHead">M</span>
+        <span style="font-weight: 600;">
+            Operational Risk Management</span> <!-- {{this.model.name}} -->
+    </div>
+</div>
+<div class="search-wrap">
+    <div class="serachContainer" fxLayout="column">
+        <div class="searchHeading">
+            Please select a map
+        </div>
+        <div class="searchBar">
+
+            <mat-form-field appearance="legacy" class="searchField">
+                <!-- <mat-label>Search By Content Title or Number</mat-label> -->
+                <input matInput class="searchInput" placeholder="Search By Content Title or Number"
+                    [formControl]="inputFieldValue">
+                <mat-icon matPrefix class="searchIcon"></mat-icon>
+            </mat-form-field>
+
+            <button mat-raised-button class="btnSerach" color="primary" (click)="searchContents()">Search</button>
+        </div>
+        <ngx-ui-loader bgsPosition="center-center"></ngx-ui-loader>
+        <div class="activitySeatchTable">
+            <mat-table [dataSource]="dataSourceActivitySearch" class="data-table" matSort>
+
+                <!-- Type1 Column -->
+                <ng-container matColumnDef="selectFields">
+                    <mat-header-cell [ngClass]="'customWidthClass'" *matHeaderCellDef> &nbsp; </mat-header-cell>
+                    <mat-cell [ngClass]="'customWidthClass'" *matCellDef="let element">
+                        <mat-checkbox (change)="updateSelection(element, $event)" color="primary"
+                            [(ngModel)]="element.checkbox" [disabled]="checkboxDisabled"></mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <!-- Type1 Column -->
+                <ng-container class="contentTitle" matColumnDef="flagField">
+                    <mat-header-cell [ngClass]="'customWidthClassNew'" *matHeaderCellDef> &nbsp; </mat-header-cell>
+                    <mat-cell [ngClass]="'customWidthClassNew'" *matCellDef="let element"> &nbsp; </mat-cell>
+                </ng-container>
+
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="EffectiveDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Effective Date</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.effectiveFrom | date:'MM/dd/yyyy' }}</mat-cell>
+                </ng-container>
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="TRMReviewDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>TRM Review Date</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.TRMReviewDate | date:'MM/dd/yyyy' }}</mat-cell>
+                </ng-container>
+
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Content No</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+                </ng-container>
+
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="title">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Content Title</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+                </ng-container>
+
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="usJc">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>U.S J/C</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.usclassificationId}}</mat-cell>
+                </ng-container>
+
+                <!-- Name1 Column -->
+                <ng-container matColumnDef="version">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Version</mat-header-cell>
+                    <mat-cell *matCellDef="let element">{{element.version}}</mat-cell>
+                </ng-container>
+
+
+                <!-- Header and Row Declarations -->
+                <mat-header-row *matHeaderRowDef="displayActivitySearchColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayActivitySearchColumns;"></mat-row>
+
+            </mat-table>
+
+            <mat-paginator [pageSize]="10" [pageSizeOptions]='pageRowCounters' showFirstLastButtons>
+            </mat-paginator>
+
+            <!-- 
+        <mat-paginator 
+            [length]="totalActivitySearchRecords"
+            [pageSize]="pageRowCounters[0]"
+            [pageSizeOptions]='pageRowCounters'
+            showFirstLastButtons >
+        </mat-paginator>
+        -->
+
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="center center" class="dialogActions">
+            <button mat-raised-button color="primary" (click)="onClick()"
+                [mat-dialog-close]="selectedElement">Submit</button>
+        </div>
+    </div>
+</div>

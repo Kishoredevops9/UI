@@ -1,0 +1,13 @@
+.ok-button {
+    float: right;
+    min-width: 64px !important;
+}
+
+.warning-msg {
+    font-family: 'BarlowSemiCondensed-Medium';
+    font-size: large;
+}
+
+::ng-deep .custom-dialog-container .mat-dialog-container {
+    padding: 24px !important;
+}

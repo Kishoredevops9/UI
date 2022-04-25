@@ -1,0 +1,51 @@
+<ng-container *ngIf="open">
+  <app-node-menu
+    *ngIf="menuType === MenuType.Node"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [linksVisibility]="linksVisibility"
+    [published]="published"
+    [taskExecution]="taskExecution"
+  ></app-node-menu>
+  <app-lane-menu
+    *ngIf="menuType === MenuType.Lane"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [published]="published"
+    [stepFlow]="stepFlow"
+    [step]="step"
+  ></app-lane-menu>
+  <app-phase-menu
+    *ngIf="!blank && menuType === MenuType.Phase"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [published]="published"
+  ></app-phase-menu>
+  <app-lane-phase-menu
+    *ngIf="!published && menuType === MenuType.LanePhase"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [paletteItems]="paletteItems"
+  ></app-lane-phase-menu>
+  <app-diagram-menu
+    *ngIf="!published && menuType === MenuType.Diagram"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [blank]="blank"
+    [stepFlow]="stepFlow"
+    [step]="step"
+  ></app-diagram-menu>
+  <app-link-menu
+    *ngIf="!published && menuType === MenuType.Link"
+    [diagramApi]="diagramApi"
+    [model]="model"
+  ></app-link-menu>
+  <app-plus-button-menu
+    *ngIf="!published && menuType === MenuType.PlusButton"
+    [diagramApi]="diagramApi"
+    [model]="model"
+    [blank]="blank"
+    [stepFlow]="stepFlow"
+    [step]="step"
+  ></app-plus-button-menu>
+</ng-container>

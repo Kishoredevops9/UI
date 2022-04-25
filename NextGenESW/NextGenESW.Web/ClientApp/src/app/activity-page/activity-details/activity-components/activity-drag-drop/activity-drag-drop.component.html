@@ -1,0 +1,181 @@
+<div *ngIf="isLoading" id="cover-spin"></div><!-- {{nodes|json}} -->
+<div  *ngIf="isEditableMode" style="margin-top: 25px; margin-right: 25px;">
+<ng-template #tmplNode let-node="node">
+  <div class="node-item" [attr.data-id]="node.id" [attr.id]="'node-'+node.id">
+    <div class="node-title" (click)="node.isExpanded=!node.isExpanded">
+      {{node.children.length ? (node.isExpanded?'-&nbsp;':'+') : '&nbsp;&nbsp;&nbsp;'}} &nbsp;&nbsp;&nbsp;
+      <span [ngClass]="checkContentType(node)">{{ node.content.contentType}}</span>
+      <span *ngIf="node.content.version">
+          {{node.content.title}} /
+      </span>
+      <!-- <span>{{node.content.title}}</span> -->
+      <span *ngIf="!node.content.contentNo">
+        <a target="_blank"  style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(node)">
+          {{node.content.title}}</a>
+      </span>
+      <span *ngIf="node.content"> &nbsp;&nbsp;{{ node.content.version }}</span>
+      <a target="_blank" *ngIf="node.content" style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(node)">
+        {{node.content.contentNo ? node.content.contentNo : node.content.assetContentId}}</a>
+      <span *ngIf="node.content.assetStatus == 'Obsolete'" class="obsolete-document-label-tag"></span>
+
+      <span class="icons" *ngIf="!node.content.version">
+        <span>
+          <mat-icon class="materialIcons editIcon" (click)="editItem(node)">edit</mat-icon>
+        </span>
+        <span>
+            <mat-icon class="materialIcons1" (click)="deleteItem(node)">delete</mat-icon>
+        </span>
+
+      </span>
+
+    <span class="icons" *ngIf="node.content.version">
+      <span>
+          <mat-icon class="materialIcons" (click)="deleteItem(node)">delete</mat-icon>
+      </span>
+      <span>
+        <mat-icon class="bar-icon" (click)="addGuidance(node)"> </mat-icon>
+    </span>
+  </span>
+
+
+
+
+    </div>
+
+
+    <div *ngIf="node.isExpanded && node.children.length" class="node-children"
+         cdkDropList [cdkDropListData]="node.children"
+         [id]="node.id" [cdkDropListConnectedTo]="dropTargetIds"
+         (cdkDropListDropped)="drop($event)"
+         [cdkDropListSortingDisabled]="true">
+
+      <div *ngFor="let child of node.children" cdkDrag [cdkDragData]="child.id"
+           (cdkDragMoved)="dragMoved($event)">
+        <ng-container *ngTemplateOutlet="tmplNode,context:{node:child}"></ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<div
+  cdkDropList
+  [cdkDropListData]="nodes"
+  [id]="'main'"
+  [cdkDropListConnectedTo]="dropTargetIds"
+  (cdkDropListDropped)="drop($event)"
+  [cdkDropListSortingDisabled]="true"
+>
+  <div
+    *ngFor="let node of nodes"
+    cdkDrag
+    [cdkDragData]="node.uId"
+    (cdkDragMoved)="dragMoved($event)"
+  >
+    <ng-container
+      *ngTemplateOutlet="tmplNode; context: { node: node }"
+    ></ng-container>
+  </div>
+</div>
+
+</div>
+
+<!-- publish view -->
+<div *ngIf="!isEditableMode" style="margin-top: 25px; margin-right: 0px;">
+  <ng-template #tmplNode let-node="node">
+    <div class="node-item" [attr.data-id]="node.id" [attr.id]="'node-'+node.id">
+
+            <div style="display: inline;">
+      <div class="node-title" (click)="node.isExpanded=!node.isExpanded">
+        {{node.children.length ? (node.isExpanded?'-&nbsp;':'+') : '&nbsp;&nbsp;&nbsp;'}} &nbsp;&nbsp;&nbsp;
+        <span [ngClass]="checkContentType(node)">{{ node.content.contentType}}</span>
+        <!-- {{node.content.title}} -->
+
+        <span *ngIf="node.content.contentNo">
+            {{node.content.title}}
+        </span>
+
+        <span *ngIf="!node.content.contentNo">
+          <a target="_blank"  style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(node)">
+            {{node.content.title}}</a>
+        </span>
+
+        <span *ngIf="node.content"> &nbsp;&nbsp;{{ node.content.version }}</span>
+        <span *ngIf="node.content.contentNo">/</span>
+        <a target="_blank" *ngIf="node.content" style="color: #0076ff; cursor: pointer" (click)="handleOnContentIDClick(node)">
+          {{node.content.contentNo ? node.content.contentNo : node.content.assetContentId}}</a>
+        <span *ngIf="node.content.assetStatus == 'Obsolete'"  class="obsolete-document-label-tag"></span>
+        <div class="icons">
+            <span>
+                <span class="expand" *ngIf="!node['expanded']">
+                    <!-- <em (click)="expandChildItemDetails(node, '')">
+                        <mat-icon>chevron_left</mat-icon>
+                    </em> -->
+
+                    <em (click)="node['expanded']=true">
+                      <mat-icon>chevron_left</mat-icon>
+                  </em>
+                </span>
+                <span class="expand" *ngIf="node['expanded']">
+                    <!-- <em (click)="expandChildItemDetails(node, 'collapse')">
+                        <mat-icon>expand_more</mat-icon>
+                    </em> -->
+
+                    <em (click)="node['expanded']=false">
+                      <mat-icon>expand_more</mat-icon>
+                  </em>
+
+
+                </span>
+            </span>
+        </div>
+      </div>
+
+
+      </div>
+
+      <!-- <div class="item-details" *ngIf="expression" #contentDetails> </div> -->
+
+
+      <app-content-details *ngIf="node['expanded']" [contentInfo]="node.content"></app-content-details>
+      <div *ngIf="node.isExpanded && node.children.length" class="node-children"
+           cdkDropList [cdkDropListData]="node.children"
+           [id]="node.id" [cdkDropListConnectedTo]="dropTargetIds"
+           (cdkDropListDropped)="drop($event)"
+           [cdkDropListSortingDisabled]="true">
+
+        <div *ngFor="let child of node.children" cdkDrag [cdkDragData]="child.id"
+             (cdkDragMoved)="dragMoved($event)">
+          <ng-container *ngTemplateOutlet="tmplNode,context:{node:child}"></ng-container>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+  <!-- <ul>
+      <li *ngFor="let subItem of nodes.children">
+          <app-list-item [item]="subItem" [parentItem]="nodes" [connectedDropListsIds]="allDropListsIds"
+              [docStatus]="docStatus" (itemDrop)="onDragDrop($event)"
+              (deleteComponentEvent)="deleteComponent($event)">
+          </app-list-item>
+      </li>
+  </ul> -->
+  <div
+  cdkDropList
+  [cdkDropListData]="nodes"
+  [id]="'main'"
+  [cdkDropListConnectedTo]="dropTargetIds"
+  (cdkDropListDropped)="drop($event)"
+  [cdkDropListSortingDisabled]="true"
+>
+  <div
+    *ngFor="let node of nodes"
+    cdkDrag
+    [cdkDragData]="node.uId"
+    (cdkDragMoved)="dragMoved($event)"
+    [cdkDragDisabled]="dragDisabled"
+  >
+    <ng-container
+      *ngTemplateOutlet="tmplNode; context: { node: node }"
+    ></ng-container>
+  </div>
+</div>
+</div>

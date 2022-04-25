@@ -1,0 +1,103 @@
+<div class="app-diagram-context-menu"
+  #menuTrigger="matMenuTrigger"
+  [matMenuTriggerFor]="contextMenu"
+  [ngStyle]="{
+    left: model.position.left + 'px',
+    top: model.position.top + 'px'
+  }"
+></div>
+
+<mat-menu
+  class="app-diagram-context-menu__menu"
+  #contextMenu="matMenu"
+>
+  <button
+    *ngIf="!published"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onAddShapeClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:add"
+      text="Add shape"
+    ></app-context-menu-item>
+  </button>
+  <ng-container *ngIf="model.data.subProcessMapId">
+    <button
+      class="app-diagram-context-menu__menu-item"
+      (click)="onSubMapOpen()"
+      mat-menu-item
+    >
+      <app-context-menu-item
+        icon="map-view:open-sub-map"
+        text="Open Sub Map"
+      ></app-context-menu-item>
+    </button>
+  </ng-container>
+  <button
+    class="app-diagram-context-menu__menu-item"
+    (click)="onPinShapeClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:pin"
+      [text]="model.data.isPinned ? 'Unpin Shape' : 'Pin Shape'"
+    ></app-context-menu-item>
+  </button>
+  <ng-container *ngIf="linksVisibility">
+    <button
+      class="app-diagram-context-menu__menu-item"
+      (click)="onTraceShapeClick()"
+      mat-menu-item
+    >
+      <app-context-menu-item
+        icon="map-view:trace-shape"
+        [text]="model.data.isTraced ? 'Untrace Shape' : 'Trace Shape'"
+      ></app-context-menu-item>
+    </button>
+  </ng-container>
+  <button
+    *ngIf="!published && !model.data.primary"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onDeleteClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:delete"
+      text="Delete"
+    ></app-context-menu-item>
+  </button>
+  <button
+    *ngIf="model.data.activityTypeId === stepActivityTypeId"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onStepOpen()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:open-sub-map"
+      text="Open STEP"
+    ></app-context-menu-item>
+  </button>
+  <button
+    *ngIf="!published && model.data.primary"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onNodeSelectionToggleClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      [icon]="model.data.unselected ? 'map-view:select-node' : 'map-view:unselect-node'"
+      [text]="model.data.unselected ? 'Select' : 'Unselect'"
+    ></app-context-menu-item>
+  </button>
+  <button
+    *ngIf="!published"
+    class="app-diagram-context-menu__menu-item"
+    (click)="onPropertiesClick()"
+    mat-menu-item
+  >
+    <app-context-menu-item
+      icon="map-view:properties"
+      text="Properties"
+    ></app-context-menu-item>
+  </button>
+</mat-menu>

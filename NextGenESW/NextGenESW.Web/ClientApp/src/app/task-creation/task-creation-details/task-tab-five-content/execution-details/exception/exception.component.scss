@@ -1,0 +1,33 @@
+@import "../../../../../../scss/helpers/mixins";
+@import "../../../../../../scss/helpers/mat-slide-toggle";
+.exception {
+  @include font-face-Inter-Regular(14px, 24px);
+  .text-area {
+    width: 100%;
+    @include font-face-Inter-Regular(15px, 25px);
+    padding: 10px;
+    background-color: #fff;
+  }
+  .toggle {
+    mat-slide-toggle {
+      margin: 0px 3px;
+      vertical-align: middle;
+    }
+    .toggle_button {
+      padding-left: 5px;
+    }
+  }
+  .deviation_head {
+    @include font-face-Inter-Regular(16px, 24px);
+  }
+  .criteria_upadate {
+    padding: 10px 0px;
+  }
+  .deviation_container {
+    padding-left: 10px;
+  }
+}
+
+:host {
+  @include slideToggle(green, gray, #fff, 33px, 21px);
+}
